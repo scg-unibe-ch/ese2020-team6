@@ -1,0 +1,42 @@
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+}
+
+.title {
+  display: grid;
+  grid-row-gap: 10px;
+  position: relative;
+}
+
+.title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  background: #DBA295;
+  top: 0;
+  left: -20px;
+}
+
+h1 {
+  height: auto;
+  letter-spacing: 100px;
+  color: #352e34
+}
+
+h3 {
+  font-size: 12px;
+  letter-spacing: 24px;
+  text-transform: uppercase;
+  color: #8a838a
+}
