@@ -20,6 +20,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { HomeComponent } from './home/home.component';
 import { LoginBarComponent } from './login-bar/login-bar.component';
 import { LoginComponent } from './login/login.component';
+import { InputComponent } from './input/input.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { LoginComponent } from './login/login.component';
     UserLoginComponent,
     HomeComponent,
     LoginBarComponent,
-    LoginComponent
+    LoginComponent,
+    InputComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { LoginComponent } from './login/login.component';
     MatToolbarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'createaccount', component: CreateAccountComponent }
     ])
   ],
   providers: [

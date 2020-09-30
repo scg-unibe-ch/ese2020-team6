@@ -1,18 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body {margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.mat-card {
-  margin: 20px 0;
-  background-color: #EEE;
+html, body {
+  height: 100%;
+  width: 100%;
 }
 
-button, input {
-  margin-left: 15px !important;
-  margin-right: 15px !important;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mat-form-field-wrapper {
-  margin-right: 25px !important;
+button {
+  cursor: pointer;
+  text-transform: uppercase;
+  background: transparent;
+  padding: 13px 25px;
+  font-size: 16px;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.button-full-po {
+  border: 0;
+  background: #d9b9b2;
+  transition: all .1s ease-out;
+  color: white;
+}
+
+.button-full-po:hover {
+    background: #ccaea7;
+}
+
+.button-full-po:active {
+    background: #bfa39d;
+}
+
+.button-empty {
+  border: 0;
+  padding: 13px 0;
+  position: relative;
+}
+
+.button-empty::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: calc(100% + 20px);
+  position: absolute;
+  top: 0;
+  left: -10px;
+  z-index: -2;
+  transition: all .1s ease-out;
+}
+
+.button-empty:active::before {
+  background: rgba(223, 171, 160, .2);
 }

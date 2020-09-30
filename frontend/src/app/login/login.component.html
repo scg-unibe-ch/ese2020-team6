@@ -1,1 +1,13 @@
-<p>login works!</p>
+<div class="login-wrapper-wrapper">
+  <div class="login-wrapper">
+    <h3>Sign In</h3>
+    <form>
+      <app-input [type]="'text'" [placeholder]="'Username or Email'"></app-input>
+      <app-input [type]="'password'" [placeholder]="'Password'"></app-input>
+    </form>
+    <div class="action-wrapper">
+      <button class="button-empty" [routerLink]="['/createaccount']">Create Account</button>
+      <button class="button-full-po">Next</button>
+    </div>
+  </div>
+</div>
