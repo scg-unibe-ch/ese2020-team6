@@ -1,0 +1,1 @@
+![Logo](/home/severin/gitrepo/ESE/ese2020-team6/Logo.png)
