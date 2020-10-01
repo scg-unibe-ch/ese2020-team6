@@ -1,0 +1,62 @@
+.select {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.placeholder {
+  border: 0;
+  border-bottom: 2px solid #2f2f36;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0 5px 0;
+  font-size: 16px;
+  transition: all .2s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+}
+
+svg {
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+
+path {
+  stroke: #d9b9b2;
+  stroke-width: 4%;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: #d9b9b2;
+}
+
+svg:hover > path{
+  stroke: #ccaea7;
+  fill: #ccaea7;
+}
+
+svg:active > path {
+  stroke: #bfa39d;
+  fill: #bfa39d;
+}
+
+.up {
+  transform: rotate(180deg);
+}
+
+.placeholder-notSelected {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.options {
+  position: absolute;
+  background: #DBA295;
+  color: white;
+  z-index: 2;
+  width: 100%;
+}
+
+.option {
+  margin: 8px;
+  border-bottom: 1px solid white;
+}

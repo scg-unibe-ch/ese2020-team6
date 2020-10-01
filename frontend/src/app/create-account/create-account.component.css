@@ -19,10 +19,18 @@ h3 {
 
 form {
   margin-bottom: 40px;
+  background: transparent;
+  border: 0;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 40px;
 }
 
 .action-wrapper {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-column-gap: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }

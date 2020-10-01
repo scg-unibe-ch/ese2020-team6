@@ -22,6 +22,7 @@ import { LoginBarComponent } from './login-bar/login-bar.component';
 import { LoginComponent } from './login/login.component';
 import { InputComponent } from './input/input.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { SelectComponent } from './select/select.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     LoginBarComponent,
     LoginComponent,
     InputComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,

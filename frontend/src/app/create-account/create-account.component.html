@@ -2,22 +2,30 @@
   <div class="login-wrapper">
     <h3>Create Account</h3>
     <form>
-      <app-input [type]="'text'" [placeholder]="'Username'"></app-input>
-      <app-input [type]="'text'" [placeholder]="'Email'"></app-input>
-      <app-input [type]="'password'" [placeholder]="'Password'"></app-input>
-      <app-input [type]="'password'" [placeholder]="'Repeat Password'"></app-input>
-      <app-input [type]="'text'" [placeholder]="'First Name'"></app-input>
-      <app-input [type]="'text'" [placeholder]="'Last Name'"></app-input>
-      <select name="Gender">
-        <option value="Female">Female</option>
-        <option value="Male">Male</option>
-        <option value="Other">Other</option>
-      </select>
-      <app-input [type]="'text'" [placeholder]="'Phonenumber'"></app-input>
-      <app-input [type]="'number'" [placeholder]="'PLZ'"></app-input>
-      <app-input [type]="'text'" [placeholder]="'City'"></app-input>
-      <app-input [type]="'text'" [placeholder]="'Street'"></app-input>
-      <app-input [type]="'number'" [placeholder]="'House Number'"></app-input>
+      <div class="input-grid">
+        <app-select [name]="'Gender' "[options]="['Female', 'Male', 'Other']"></app-select>
+      </div>
+      <div class="input-grid">
+        <app-input [type]="'text'" [placeholder]="'First Name'"></app-input>
+        <app-input [type]="'text'" [placeholder]="'Last Name'"></app-input>
+      </div>
+      <div class="input-grid">
+        <app-input [type]="'text'" [placeholder]="'Username'"></app-input>
+        <app-input [type]="'text'" [placeholder]="'Email'"></app-input>
+      </div>
+        <app-input [type]="'password'" [placeholder]="'Password'"></app-input>
+        <app-input [type]="'password'" [placeholder]="'Repeat Password'"></app-input>
+        <app-input [type]="'number'" [placeholder]="'Phonenumber'"></app-input>
+
+      <div class="input-grid">
+        <app-input [type]="'number'" [placeholder]="'PLZ'"></app-input>
+        <app-input [type]="'text'" [placeholder]="'City'"></app-input>
+      </div>
+
+      <div class="input-grid">
+        <app-input [type]="'text'" [placeholder]="'Street'"></app-input>
+        <app-input [type]="'number'" [placeholder]="'House Number'"></app-input>
+      </div>
     </form>
     <div class="action-wrapper">
       <button class="button-full-po">Next</button>
