@@ -1,34 +1,35 @@
 <div class="login-wrapper-wrapper">
   <div class="login-wrapper">
     <h3>Create Account</h3>
-    <form>
+    <form #form="ngForm">
       <div class="input-grid">
-        <app-select [name]="'Gender' "[options]="['Female', 'Male', 'Other']"></app-select>
+        <app-select name="Gender "[options]="['Female', 'Male', 'Other']" [(ngModel)]="registerUser.gender"></app-select>
       </div>
       <div class="input-grid">
-        <app-input [type]="'text'" [placeholder]="'First Name'"></app-input>
-        <app-input [type]="'text'" [placeholder]="'Last Name'"></app-input>
+        <app-text-input placeholder="First Name" [(ngModel)]="registerUser.firstName" name="firstName"></app-text-input>
+        <app-text-input placeholder="Last Name" [(ngModel)]="registerUser.lastName" name="lastName"></app-text-input>
       </div>
       <div class="input-grid">
-        <app-input [type]="'text'" [placeholder]="'Username'"></app-input>
-        <app-input [type]="'text'" [placeholder]="'Email'"></app-input>
+        <app-text-input placeholder="Username" [(ngModel)]="registerUser.username" name="username"></app-text-input>
+        <app-text-input placeholder="Email" [(ngModel)]="registerUser.email" name="email"></app-text-input>
       </div>
-        <app-input [type]="'password'" [placeholder]="'Password'"></app-input>
-        <app-input [type]="'password'" [placeholder]="'Repeat Password'"></app-input>
-        <app-input [type]="'number'" [placeholder]="'Phonenumber'"></app-input>
+        <app-password-input placeholder="Password" [(ngModel)]="registerUser.password" name="password"></app-password-input>
+        <app-password-input placeholder="Repeat Password" [(ngModel)]="registerUser.repeatPassword" name="repeatPassword"></app-password-input>
+        <app-number-input placeholder="Phonenumber" [(ngModel)]="registerUser.phonenumber" name="phonenumber"></app-number-input>
 
       <div class="input-grid">
-        <app-input [type]="'number'" [placeholder]="'PLZ'"></app-input>
-        <app-input [type]="'text'" [placeholder]="'City'"></app-input>
+        <app-number-input placeholder="PLZ" [(ngModel)]="registerUser.plz" name="plz"></app-number-input>
+        <app-text-input placeholder="City" [(ngModel)]="registerUser.city" name="city"></app-text-input>
       </div>
 
       <div class="input-grid">
-        <app-input [type]="'text'" [placeholder]="'Street'"></app-input>
-        <app-input [type]="'number'" [placeholder]="'House Number'"></app-input>
+        <app-text-input placeholder="Street" [(ngModel)]="registerUser.street" name="street"></app-text-input>
+        <app-text-input placeholder="House Number" [(ngModel)]="registerUser.houseNumber" name="houseNumber"></app-text-input>
+      </div>
+
+      <div class="action-wrapper">
+        <button (click)="click()" class="button-full-po">Next</button>
       </div>
     </form>
-    <div class="action-wrapper">
-      <button class="button-full-po">Next</button>
-    </div>
   </div>
 </div>

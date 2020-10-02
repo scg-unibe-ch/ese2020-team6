@@ -2,12 +2,12 @@
   <div class="login-wrapper">
     <h3>Sign In</h3>
     <form>
-      <app-input [type]="'text'" [placeholder]="'Username or Email'"></app-input>
-      <app-input [type]="'password'" [placeholder]="'Password'"></app-input>
+      <app-text-input placeholder="Username or Email" [(ngModel)]="loginUser.username" name="username"></app-text-input>
+      <app-password-input placeholder="Password" [(ngModel)]="loginUser.password" name="password"></app-password-input>
     </form>
     <div class="action-wrapper">
-      <button class="button-empty" [routerLink]="['/createaccount']">Create Account</button>
-      <button class="button-full-po">Next</button>
+      <button class="button-empty" [routerLink]="['/user/register']">Create Account</button>
+      <button (click)="click()" class="button-full-po">Next</button>
     </div>
   </div>
 </div>

@@ -20,9 +20,11 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { HomeComponent } from './home/home.component';
 import { LoginBarComponent } from './login-bar/login-bar.component';
 import { LoginComponent } from './login/login.component';
-import { InputComponent } from './input/input.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SelectComponent } from './select/select.component';
+import { TextInputComponent } from './input/text-input/text-input.component';
+import { NumberInputComponent } from './input/number-input/number-input.component';
+import { PasswordInputComponent } from './input/password-input/password-input.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,11 @@ import { SelectComponent } from './select/select.component';
     HomeComponent,
     LoginBarComponent,
     LoginComponent,
-    InputComponent,
     CreateAccountComponent,
-    SelectComponent
+    SelectComponent,
+    TextInputComponent,
+    NumberInputComponent,
+    PasswordInputComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,8 @@ import { SelectComponent } from './select/select.component';
     MatToolbarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'createaccount', component: CreateAccountComponent }
+      { path: 'user/login', component: LoginComponent },
+      { path: 'user/register', component: CreateAccountComponent }
     ])
   ],
   providers: [

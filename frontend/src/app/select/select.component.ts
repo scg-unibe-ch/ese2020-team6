@@ -1,40 +1,50 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, Optional, Inject, ViewChild, OnInit } from '@angular/core';
+import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
+import { ValueAccessorBase } from '../value-accessor-base';
+import { RegisterUser } from "../models/register-user.model";
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css']
+  styleUrls: ['./select.component.css'],
+  providers: [
+    {provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}
+  ]
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent extends ValueAccessorBase<String> implements OnInit {
 
   @Input()
-  name: String = "";
+  name: String;
 
   @Input()
   options: Array<String> = new Array<String>();
 
-  selected: String;
   optionsHidden: Boolean = true;
+  current: String;
 
-  constructor() { }
+  constructor(
+    @Optional() @Inject(NG_VALIDATORS) private validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) private asyncValidators: Array<any>
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.selected = this.name;
+    this.current = this.name;
   }
 
   onShowOptions() {
     this.optionsHidden = !this.optionsHidden;
-    console.log(this.optionsHidden);
-
   }
 
   onSelect(option: String) {
-    this.selected = option;
+    this.value = option;
+    this.current = option;
     this.onShowOptions();
   }
 
   getPlaceholderClass() {
-    return this.selected === this.name ? 'placeholder-notSelected' : '';
+    return this.value === this.name ? 'placeholder-notSelected' : '';
   }
 
   getSVGClass() {
