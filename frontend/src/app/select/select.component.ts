@@ -1,7 +1,6 @@
 import { Component, Input, Optional, Inject, ViewChild, OnInit } from '@angular/core';
 import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base';
-import { RegisterUser } from "../models/register-user.model";
 
 @Component({
   selector: 'app-select',
@@ -14,7 +13,7 @@ import { RegisterUser } from "../models/register-user.model";
 export class SelectComponent extends ValueAccessorBase<String> implements OnInit {
 
   @Input()
-  name: String;
+  selectName: String;
 
   @Input()
   options: Array<String> = new Array<String>();
@@ -30,7 +29,7 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   }
 
   ngOnInit(): void {
-    this.current = this.name;
+    this.current = this.selectName;
   }
 
   onShowOptions() {
@@ -44,7 +43,7 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   }
 
   getPlaceholderClass() {
-    return this.value === this.name ? 'placeholder-notSelected' : '';
+    return this.value === this.selectName ? 'placeholder-notSelected' : '';
   }
 
   getSVGClass() {

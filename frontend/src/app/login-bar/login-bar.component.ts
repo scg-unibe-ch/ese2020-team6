@@ -12,4 +12,12 @@ export class LoginBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isLoggedIn(): boolean {
+    return localStorage.getItem('userToken') ? true : false;
+  }
+
+  getUserName(): String {
+    return localStorage.getItem('userName');
+  }
+
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { RegisterUser } from '../models/register-user.model';
+import { HttpClient } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-create-account',
@@ -8,9 +10,18 @@ import { RegisterUser } from '../models/register-user.model';
 })
 export class CreateAccountComponent {
 
-  registerUser: RegisterUser = new RegisterUser();
+  constructor(
+    private httpClient: HttpClient
+  ) { }
 
-  click() {
-    console.log(this.registerUser);
+  onSubmit(form: NgForm) {
+    this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
+      this.httpClient.post(environment.endpointURL + 'user/login', form.value).subscribe((res: any) => {
+        localStorage.setItem('userToken', res.token);
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userId', res.user.userId);
+        form.resetForm();
+      })
+    });
   }
 }

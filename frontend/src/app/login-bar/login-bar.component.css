@@ -39,3 +39,10 @@
     stroke-linejoin: round;
     fill: none;
 }
+
+.login-status {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-right: 40px;
+}
