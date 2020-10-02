@@ -11,12 +11,12 @@ securedEndpoint.get('/', (req: Request, res: Response) => {
     res.send({message: `This is a secured  Endpoint, ${req.body.tokenPayload.userName}` , decodedToken: req.body.tokenPayload });
 });
 
-securedEndpoint.post('/buy', (req: Request, res: Response) => {
+securedEndpoint.get('/buy', (req: Request, res: Response) => {
     // for demonstration purposes the content of the token and a message is returned
     res.send({message: `${req.body.tokenPayload.userName}, did you want to buy a product?` , decodedToken: req.body.tokenPayload });
 });
 
-securedEndpoint.post('/post', (req: Request, res: Response) => {
+securedEndpoint.get('/post', (req: Request, res: Response) => {
     // for demonstration purposes the content of the token and a message is returned
     res.send({message: `${req.body.tokenPayload.userName}, did you want to post a product?` , decodedToken: req.body.tokenPayload });
 });

@@ -18,7 +18,7 @@ export class HomeComponent {
   ) { }
 
   buy() {
-    this.httpClient.post(environment.endpointURL + 'secured/buy').subscribe((res: any) => {
+    this.httpClient.get(environment.endpointURL + 'secured/buy').subscribe((res: any) => {
       this.buyMessage = res.message;
     }, (error: any) => {
       this.buyMessage = "You need to login to use this feature!";
@@ -26,7 +26,7 @@ export class HomeComponent {
   }
 
   post() {
-    this.httpClient.post(environment.endpointURL + 'secured/post').subscribe((res: any) => {
+    this.httpClient.get(environment.endpointURL + 'secured/post').subscribe((res: any) => {
       this.buyMessage = res.message;
     }, (error: any) => {
       this.buyMessage = "You need to login to use this feature!";
