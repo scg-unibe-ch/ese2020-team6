@@ -3,6 +3,7 @@
 html, body {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -35,6 +36,21 @@ button:focus {
 
 .button-full-po:active {
     background: #bfa39d;
+}
+
+.button-full-primary {
+  border: 0;
+  background: #007bff;
+  transition: all .1s ease-out;
+  color: white;
+}
+
+.button-full-primary:hover {
+    background: #007bff;
+}
+
+.button-full-primary:active {
+    background: #007bff;
 }
 
 .button-empty {

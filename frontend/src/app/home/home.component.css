@@ -3,9 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   height: 100vh;
   width: 100vw;
   z-index: -1;
@@ -39,4 +37,34 @@ h3 {
   letter-spacing: 24px;
   text-transform: uppercase;
   color: #8a838a
+}
+
+.content-wrapper {
+  height: 100vh;
+  width: 100vw;
+  background: rgba(191, 191, 217, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 40px;
+}
+
+.answer {
+  margin-top: 100px;
+  position: relative;
+  height: 200px;
+  width: 400px;
+  background: black;
+  color: white;
+  padding: 40px;
+}
+
+.answer > p {
+  margin: 10px;
 }
