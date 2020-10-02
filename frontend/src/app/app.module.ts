@@ -25,6 +25,7 @@ import { SelectComponent } from './select/select.component';
 import { TextInputComponent } from './input/text-input/text-input.component';
 import { NumberInputComponent } from './input/number-input/number-input.component';
 import { PasswordInputComponent } from './input/password-input/password-input.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PasswordInputComponent } from './input/password-input/password-input.co
     SelectComponent,
     TextInputComponent,
     NumberInputComponent,
-    PasswordInputComponent
+    PasswordInputComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

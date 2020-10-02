@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -11,7 +12,8 @@ import { environment } from '../../environments/environment';
 export class CreateAccountComponent {
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) { }
 
   onSubmit(form: NgForm) {
@@ -21,6 +23,7 @@ export class CreateAccountComponent {
         localStorage.setItem('userName', res.user.userName);
         localStorage.setItem('userId', res.user.userId);
         form.resetForm();
+        this.router.navigate(['']);
       })
     });
   }
