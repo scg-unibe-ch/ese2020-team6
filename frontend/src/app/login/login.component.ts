@@ -12,38 +12,32 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  userNotFound: false;
-  errorMessage = '';
+  userNotFound: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
     private router: Router
   ) { }
 
-  // tslint:disable-next-line: typedef
   onSubmit(form: NgForm) {
-    this.errorMessage = '';
-    // tslint:disable-next-line: prefer-const
-    let requestBody = this.buildRequestBody(form.value);
-    this.httpClient
-    .post(environment.endpointURL + 'user/login', requestBody)
-    .subscribe((res: any) => {
-      localStorage.setItem('userToken', res.token);
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userId', res.user.userId);
-      form.resetForm();
-      this.router.navigate(['']);
-    }, (err: any) => {
-      setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
-      
-    });
+    console.log(form);
+
+    // let requestBody = this.buildRequestBody(form.value);
+    // this.httpClient.post(environment.endpointURL + 'user/login', requestBody).subscribe((res: any) => {
+    //   localStorage.setItem('userToken', res.token);
+    //   localStorage.setItem('userName', res.user.userName);
+    //   localStorage.setItem('userId', res.user.userId);
+    //   form.resetForm();
+    //   this.router.navigate(['']);
+    // }, (err: any) => {
+    //  severin.buchser@gmx.ch
+    // })
   }
 
-  // tslint:disable-next-line: typedef
   buildRequestBody(values: LoginForm) {
     return {
       userName: values.usernameEmail,
       password: values.password
-    };
+    }
   }
 }

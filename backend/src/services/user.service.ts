@@ -1,5 +1,5 @@
 import { UserAttributes, User } from '../models/user.model';
-import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -20,14 +20,14 @@ export class UserService {
         })
         .then(user => {
             if (user == null) {
-              return Promise.reject('No such user');
+              return Promise.reject({ message: 'no such user' });
             }
 
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the lognin request
                 const token: string = jwt.sign({ userName: user.userName, userId: user.userId }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
             } else {
-                return Promise.reject('Not authorized');
+                return Promise.reject({ message: 'not authorized' });
             }
         })
         .catch(err => Promise.reject({ message: err }));
