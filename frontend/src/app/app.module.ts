@@ -26,6 +26,8 @@ import { TextInputComponent } from './input/text-input/text-input.component';
 import { NumberInputComponent } from './input/number-input/number-input.component';
 import { PasswordInputComponent } from './input/password-input/password-input.component';
 import { LogoutComponent } from './logout/logout.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -50,11 +52,13 @@ import { LogoutComponent } from './logout/logout.component';
     HttpClientModule,
     MatButtonModule,
     MatListModule,
+    MatMenuModule,
     MatInputModule,
     MatCheckboxModule,
     MatCardModule,
     MatTabsModule,
     MatToolbarModule,
+    OverlayModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },

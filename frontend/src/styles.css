@@ -74,3 +74,6 @@ button:focus {
 .button-empty:active::before {
   background: rgba(223, 171, 160, .2);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
