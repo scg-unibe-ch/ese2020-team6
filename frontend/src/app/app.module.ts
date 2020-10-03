@@ -16,23 +16,27 @@ import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { UserLoginComponent } from './user-login/user-login.component';
 import { HomeComponent } from './home/home.component';
-import { LoginBarComponent } from './login-bar/login-bar.component';
 import { LoginComponent } from './login/login.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
-import { SelectComponent } from './select/select.component';
-import { TextInputComponent } from './input/text-input/text-input.component';
-import { NumberInputComponent } from './input/number-input/number-input.component';
-import { PasswordInputComponent } from './input/password-input/password-input.component';
-import { LogoutComponent } from './logout/logout.component';
+import { EmailValidatorDirective } from './validators/email/email-validator.directive';
+import { PasswordValidatorDirective } from './validators/password/password-validator.directive';
+
+// Login Bar
+import { LogoutComponent } from './login-bar/logout/logout.component';
+import { LoginBarComponent } from './login-bar/login-bar.component';
+
+// Custom Form
+import { SelectComponent } from './custom-form/select/select.component';
+import { TextInputComponent } from './custom-form/input/text-input/text-input.component';
+import { NumberInputComponent } from './custom-form/input/number-input/number-input.component';
+import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     TodoItemComponent,
-    UserLoginComponent,
     HomeComponent,
     LoginBarComponent,
     LoginComponent,
@@ -41,7 +45,9 @@ import { LogoutComponent } from './logout/logout.component';
     TextInputComponent,
     NumberInputComponent,
     PasswordInputComponent,
-    LogoutComponent
+    LogoutComponent,
+    EmailValidatorDirective,
+    PasswordValidatorDirective
   ],
   imports: [
     BrowserModule,

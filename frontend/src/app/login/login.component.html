@@ -2,8 +2,8 @@
   <div class="login-wrapper">
     <h3>Sign In</h3>
     <form #login="ngForm" (ngSubmit)="onSubmit(login)">
-      <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel"></app-text-input>
-      <app-password-input placeholder="Password" name="password" ngModel #password="ngModel"></app-password-input>
+      <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appEmailValidator></app-text-input>
+      <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
       <div class="action-wrapper">
         <button type="button" class="button-empty" [routerLink]="['/user/register']">Create Account</button>
         <button class="button-full-po">Next</button>
