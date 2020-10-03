@@ -1,5 +1,5 @@
 import { UserAttributes, User } from '../models/user.model';
-import { LoginResponse, LoginRequest } from '../models/login.model';
+import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -13,6 +13,7 @@ export class UserService {
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
+        console.log('Stone 1');
         return User.findOne({
             where: {
                 userName: loginRequestee.userName
@@ -20,13 +21,16 @@ export class UserService {
         })
         .then(user => {
             if (user == null) {
-              return Promise.reject({ message: 'no such user' });
+                console.log('Stone Username');
+              return Promise.reject('no such user');
             }
 
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the lognin request
+                console.log('Stone passwort');
                 const token: string = jwt.sign({ userName: user.userName, userId: user.userId }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
             } else {
+                console.log('Stone last');
                 return Promise.reject({ message: 'not authorized' });
             }
         })

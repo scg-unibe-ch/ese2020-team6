@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   userNotFound: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private httpClient: HttpClient,
@@ -20,18 +21,18 @@ export class LoginComponent {
   ) { }
 
   onSubmit(form: NgForm) {
-    console.log(form);
-
-    // let requestBody = this.buildRequestBody(form.value);
-    // this.httpClient.post(environment.endpointURL + 'user/login', requestBody).subscribe((res: any) => {
-    //   localStorage.setItem('userToken', res.token);
-    //   localStorage.setItem('userName', res.user.userName);
-    //   localStorage.setItem('userId', res.user.userId);
-    //   form.resetForm();
-    //   this.router.navigate(['']);
-    // }, (err: any) => {
-    //  severin.buchser@gmx.ch
-    // })
+    let requestBody = this.buildRequestBody(form.value);
+    this.httpClient
+    .post(environment.endpointURL + 'user/login', requestBody)
+    .subscribe((res: any) => {
+      localStorage.setItem('userToken', res.token);
+      localStorage.setItem('userName', res.user.userName);
+      localStorage.setItem('userId', res.user.userId);
+      form.resetForm();
+      this.router.navigate(['']);
+    }, (err: any) => {
+      this.errorMessage = err.error.message;
+    })
   }
 
   buildRequestBody(values: LoginForm) {
