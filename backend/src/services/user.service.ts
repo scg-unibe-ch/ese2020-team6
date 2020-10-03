@@ -13,7 +13,6 @@ export class UserService {
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
-        console.log('Stone 1');
         return User.findOne({
             where: {
                 userName: loginRequestee.userName
@@ -21,17 +20,14 @@ export class UserService {
         })
         .then(user => {
             if (user == null) {
-                console.log('Stone Username');
-              return Promise.reject('no such user');
+              return Promise.reject('No such user');
             }
 
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the lognin request
-                console.log('Stone passwort');
                 const token: string = jwt.sign({ userName: user.userName, userId: user.userId }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
             } else {
-                console.log('Stone last');
-                return Promise.reject({ message: 'not authorized' });
+                return Promise.reject('Not authorized');
             }
         })
         .catch(err => Promise.reject({ message: err }));
