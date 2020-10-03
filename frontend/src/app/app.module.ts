@@ -19,15 +19,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
-<<<<<<< HEAD
-import { SelectComponent } from './select/select.component';
-import { TextInputComponent } from './input/text-input/text-input.component';
-import { NumberInputComponent } from './input/number-input/number-input.component';
-import { PasswordInputComponent } from './input/password-input/password-input.component';
-import { LogoutComponent } from './logout/logout.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
-=======
 import { EmailValidatorDirective } from './validators/email/email-validator.directive';
 import { PasswordValidatorDirective } from './validators/password/password-validator.directive';
 
@@ -40,7 +33,6 @@ import { SelectComponent } from './custom-form/select/select.component';
 import { TextInputComponent } from './custom-form/input/text-input/text-input.component';
 import { NumberInputComponent } from './custom-form/input/number-input/number-input.component';
 import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
->>>>>>> 31e5b3cdfd7ca035cf7bb1fe0cdad3084dde5a54
 
 @NgModule({
   declarations: [
