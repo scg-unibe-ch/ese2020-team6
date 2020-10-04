@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAttributes, User } from './../../../../backend/src/models/user.model';
 
 @Component({
   selector: 'app-login-bar',
@@ -13,7 +14,11 @@ export class LoginBarComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('userToken') ? true : false;
+      return localStorage.getItem('userToken') ? true : false;
+  }
+
+  isAdmin(): boolean {
+    return JSON.parse(localStorage.getItem('isAdmin'));
   }
 
   getUserName(): string {

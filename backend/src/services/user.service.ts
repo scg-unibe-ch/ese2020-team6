@@ -22,7 +22,6 @@ export class UserService {
             if (user == null) {
               return Promise.reject('No such user');
             }
-
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the lognin request
                 const token: string = jwt.sign({ userName: user.userName, userId: user.userId }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });

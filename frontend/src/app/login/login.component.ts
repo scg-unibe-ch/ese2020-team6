@@ -1,3 +1,4 @@
+import { UserAttributes } from './../../../../backend/src/models/user.model';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
@@ -31,11 +32,11 @@ export class LoginComponent {
       localStorage.setItem('userToken', res.token);
       localStorage.setItem('userName', res.user.userName);
       localStorage.setItem('userId', res.user.userId);
+      localStorage.setItem('isAdmin', res.user.isAdmin);
       form.resetForm();
       this.router.navigate(['']);
     }, (err: any) => {
       setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
-      
     });
   }
 
