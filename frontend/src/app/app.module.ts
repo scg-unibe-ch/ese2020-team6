@@ -33,6 +33,7 @@ import { SelectComponent } from './custom-form/select/select.component';
 import { TextInputComponent } from './custom-form/input/text-input/text-input.component';
 import { NumberInputComponent } from './custom-form/input/number-input/number-input.component';
 import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PasswordInputComponent } from './custom-form/input/password-input/passw
     PasswordInputComponent,
     LogoutComponent,
     EmailValidatorDirective,
-    PasswordValidatorDirective
+    PasswordValidatorDirective,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { PasswordInputComponent } from './custom-form/input/password-input/passw
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
-      { path: 'user/register', component: CreateAccountComponent }
+      { path: 'user/register', component: CreateAccountComponent },
+      { path: 'user/profile', component: UserProfileComponent }
     ])
   ],
   providers: [

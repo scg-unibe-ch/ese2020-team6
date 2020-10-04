@@ -16,7 +16,7 @@ export class LoginBarComponent implements OnInit {
     return localStorage.getItem('userToken') ? true : false;
   }
 
-  getUserName(): String {
+  getUserName(): string {
     return localStorage.getItem('userName');
   }
 
