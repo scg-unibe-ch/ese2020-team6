@@ -22,6 +22,7 @@ export class CreateAccountComponent {
         localStorage.setItem('userToken', res.token);
         localStorage.setItem('userName', res.user.userName);
         localStorage.setItem('userId', res.user.userId);
+        localStorage.setItem('isAdmin', res.user.isAdmin);
         form.resetForm();
         this.router.navigate(['']);
       })

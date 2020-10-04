@@ -34,6 +34,7 @@ import { TextInputComponent } from './custom-form/input/text-input/text-input.co
 import { NumberInputComponent } from './custom-form/input/number-input/number-input.component';
 import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AdminUserProfileComponent } from './admin-user-profile/admin-user-profile.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     LogoutComponent,
     EmailValidatorDirective,
     PasswordValidatorDirective,
-    UserProfileComponent
+    UserProfileComponent,
+    AdminUserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
       { path: 'user/register', component: CreateAccountComponent },
-      { path: 'user/profile', component: UserProfileComponent }
+      { path: 'user/profile', component: UserProfileComponent },
+      { path: 'user/admin-user-profile', component: AdminUserProfileComponent }
     ])
   ],
   providers: [
