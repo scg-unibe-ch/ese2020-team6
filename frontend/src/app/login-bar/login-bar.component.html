@@ -1,19 +1,28 @@
 <div class="login-bar-wrapper">
   <app-logout *ngIf="isLoggedIn()"></app-logout>
-  <div class="login" [matMenuTriggerFor]="menu">
-    <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
-      <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>
-    </svg>
+  <div *ngIf="isLoggedIn()" class="login-status">
+    <div class="login" [matMenuTriggerFor]="menu">
+      <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+        <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>
+      </svg>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>{{getUserName()}}</span>
+      </button>
+      <button mat-menu-item disabled>
+        <span>blabla</span>
+      </button>
+      <button mat-menu-item disabled>
+        <span>blabla</span>
+      </button>
+    </mat-menu>
+  </div>  
+  <div *ngIf="!isLoggedIn()"> 
+    <div class="login" [routerLink]="['/user/login']">
+      <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+        <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>
+      </svg>
+    </div>
   </div>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <span>{{getUserName()}}</span>
-    </button>
-    <button mat-menu-item disabled>
-      <span>blabla</span>
-    </button>
-    <button mat-menu-item disabled>
-      <span>blabla</span>
-    </button>
-  </mat-menu>
 </div>

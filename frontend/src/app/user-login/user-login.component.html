@@ -6,12 +6,11 @@
     <mat-form-field>
       <input matInput placeholder="Password" [(ngModel)]="password" name="password" type="password">
     </mat-form-field>
-    <button mat-flat-button color="primary" (click)="login()">Lhhhhogin</button>
+    <button mat-flat-button color="primary" (click)="login()">Login</button>
   </div>
 
   <div *ngIf="loggedIn">
     <button mat-flat-button color="warn" (click)="logout()">Logout</button>
-    You are currently logged in as {{ userName }}
   </div>
 </mat-card>
 
