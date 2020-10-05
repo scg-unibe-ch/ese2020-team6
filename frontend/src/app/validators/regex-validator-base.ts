@@ -1,7 +1,10 @@
 import { AbstractControl } from '@angular/forms';
-import { RegexValidator } from '../models/regex-validator.model.ts';
+import { RegexValidator } from '../models/regex-validator.model';
 
 export class RegexValidatorBase {
+  regExp: RegExp;
+  regExValidatorName: string;
+  errorMessage: string;
 
   constructor(
     private regexValidator: RegexValidator
@@ -13,14 +16,17 @@ export class RegexValidatorBase {
 
   validate(control: AbstractControl): {[key: string]: any} | null {
     if (control.value != null) {
-      if (this.regExp.test(control.value)) return null;
+      if (this.regExp.test(control.value)) 
+      {
+        return null;
+      }
     }
     return {[this.regExValidatorName]: {valid: this.errorMessage}};
   }
 }
 
 
-export var validatorRegex = {
+export let validatorRegex = {
   gender: {
     regex: /^Female|Male|Other$/,
     name: "genderValidator",
