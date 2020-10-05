@@ -38,6 +38,11 @@ button:focus {
     background: #bfa39d;
 }
 
+.button-full-po:disabled {
+  background: rgba(217,185,178, 0.5);
+  cursor: default;
+}
+
 .button-full-primary {
   border: 0;
   background: #007bff;

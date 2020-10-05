@@ -6,7 +6,7 @@
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
       <div class="action-wrapper">
         <button type="button" class="button-empty" [routerLink]="['/user/register']">Create Account</button>
-        <button class="button-full-po">Next</button>
+        <button class="button-full-po" [disabled]="!loginForm.valid">Next</button>
       </div>
     </form>
     <h4> {{errorMessage}}</h4>

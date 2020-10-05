@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { LoginForm } from '../models/login-form.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-account',

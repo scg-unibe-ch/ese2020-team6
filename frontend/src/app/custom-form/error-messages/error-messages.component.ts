@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgForm, FormControl, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-error-messages',
@@ -8,6 +9,15 @@ import { Component, Input } from '@angular/core';
 export class ErrorMessagesComponent {
 
   @Input()
-  form: NgFrom;
+  form: NgForm;
+
+  getControls(): FormControl[] {
+    let keyControlArray = Object.entries(this.form.form.controls);
+    let controlArray: FormControl[] = new Array();
+    keyControlArray.forEach((element: [string, FormControl]) => {
+      controlArray.push(element[1]);
+    });
+    return controlArray;
+  }
 
 }

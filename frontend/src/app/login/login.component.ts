@@ -41,7 +41,7 @@ export class LoginComponent {
         setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
       });
     } else {
-      console.log(form);
+      console.log(Object.entries(form.form.controls));
     }
   }
 

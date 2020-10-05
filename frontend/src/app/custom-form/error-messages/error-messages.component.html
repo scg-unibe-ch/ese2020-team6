@@ -1,3 +1,3 @@
 <div class="error-messages">
-  <app-error-message *ngFor="let control of form._directives" [control]="control"></app-error-message>
+  <app-error-message *ngFor="let control of getControls()" [control]="control"></app-error-message>
 </div>
