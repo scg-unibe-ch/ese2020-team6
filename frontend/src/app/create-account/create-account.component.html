@@ -7,24 +7,68 @@
       </div>
       <div class="input-grid">
         <app-text-input placeholder="First Name" name="firstName" ngModel #firstName="ngModel" appNounValidator></app-text-input>
+        <div [hidden]="firstName.valid || firstName.pristine" class="error-message">
+          {{firstName.errors ? firstName.errors.nounValidator.valid : null}}
+        </div>
+
         <app-text-input placeholder="Last Name" name="lastName" ngModel #lastName="ngModel" appNounValidator></app-text-input>
+        <div [hidden]="lastName.valid || lastName.pristine" class="error-message">
+          {{lastName.errors ? lastName.errors.nounValidator.valid : null}}
+        </div>
+
       </div>
       <div class="input-grid">
         <app-text-input placeholder="Username" name="userName" ngModel #userName="ngModel" appUsernameValidator></app-text-input>
+        <div [hidden]="userName.valid || userName.pristine" class="error-message">
+          {{userName.errors ? userName.errors.usernameValidator.valid : null}}
+        </div>
+
         <app-text-input placeholder="Email" name="email" ngModel #email="ngModel" appEmailValidator></app-text-input>
+        <div [hidden]="email.valid || email.pristine" class="error-message">
+          {{email.errors ? email.errors.emailValidator.valid : null}}
+        </div>
+
       </div>
         <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
+        <div [hidden]="password.valid || password.pristine" class="error-message">
+          {{password.errors ? password.errors.passwordValidator.valid : null}}
+        </div>
+
         <app-password-input placeholder="Repeat Password" name="repeatPassword" ngModel #repeatPassword="ngModel" appPasswordValidator></app-password-input>
+        <div [hidden]="repeatPassword.valid || repeatPassword.pristine" class="error-message">
+          {{repeatPassword.errors ? repeatPassword.errors.passwordValidator.valid : null}}
+        </div>
+
         <app-number-input placeholder="Phonenumber" name="phonenumber" ngModel #phonenumber="ngModel" appPhonenumberValidator></app-number-input>
+        <div [hidden]="phonenumber.valid || phonenumber.pristine" class="error-message">
+          {{phonenumber.errors ? phonenumber.errors.phonenumberValidator.valid : null}}
+        </div>
+
 
       <div class="input-grid">
         <app-number-input placeholder="PLZ" name="plz" ngModel #plz="ngModel" appPlzValidator></app-number-input>
+        <div [hidden]="plz.valid || plz.pristine" class="error-message">
+          {{plz.errors ? plz.errors.plzValidator.valid : null}}
+        </div>
+
         <app-text-input placeholder="City" name="city" ngModel #city="ngModel" appNounValidator></app-text-input>
+        <div [hidden]="city.valid || city.pristine" class="error-message">
+          {{city.errors ? city.errors.nounValidator.valid : null}}
+        </div>
+
       </div>
 
       <div class="input-grid">
         <app-text-input placeholder="Street" name="street" ngModel #street="ngModel" appNounValidator></app-text-input>
+        <div [hidden]="street.valid || street.pristine" class="error-message">
+          {{street.errors ? street.errors.nounValidator.valid : null}}
+        </div>
+
         <app-text-input placeholder="House Number" name="houseNumber" ngModel #houseNumber="ngModel" appHouseNumberValidator></app-text-input>
+        <div [hidden]="houseNumber.valid || houseNumber.pristine" class="error-message">
+          {{houseNumber.errors ? houseNumber.errors.houseNumberValidator.valid : null}}
+        </div>
+
       </div>
 
       <div class="action-wrapper">

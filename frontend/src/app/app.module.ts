@@ -42,6 +42,8 @@ import { PlzValidatorDirective } from './validators/plz/plz-validator.directive'
 import { UsernameValidatorDirective } from './validators/username/username-validator.directive';
 import { GenderValidatorDirective } from './validators/gender/gender-validator.directive';
 import { UsernameOrEmailValidatorDirective } from './validators/username-or-email/username-or-email-validator.directive';
+import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
+import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { UsernameOrEmailValidatorDirective } from './validators/username-or-emai
     PlzValidatorDirective,
     UsernameValidatorDirective,
     GenderValidatorDirective,
-    UsernameOrEmailValidatorDirective
+    UsernameOrEmailValidatorDirective,
+    ErrorMessagesComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,

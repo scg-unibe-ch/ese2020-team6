@@ -12,6 +12,6 @@ import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 })
 export class PhonenumberValidatorDirective extends RegexValidatorBase implements Validator{
   constructor() {
-    super(validatorRegex.phonenumber.regex, validatorRegex.phonenumber.name)
+    super(validatorRegex.phonenumber);
   }
 }

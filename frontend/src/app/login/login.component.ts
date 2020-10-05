@@ -41,7 +41,7 @@ export class LoginComponent {
         setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
       });
     } else {
-      console.log("Form is not valid!");
+      console.log(form);
     }
   }
 
