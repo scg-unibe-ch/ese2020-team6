@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { NG_VALIDATORS, Validator , AbstractControl } from '@angular/forms';
+import { NG_VALIDATORS, AbstractControl } from '@angular/forms';
 import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 
 @Directive({
@@ -10,7 +10,7 @@ import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
     multi: true
   }]
 })
-export class EmailValidatorDirective extends RegexValidatorBase implements Validator{
+export class EmailValidatorDirective extends RegexValidatorBase {
   constructor() {
     super(validatorRegex.email);
   }

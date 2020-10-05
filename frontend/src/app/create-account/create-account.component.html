@@ -1,7 +1,7 @@
 <div class="login-wrapper-wrapper">
   <div class="login-wrapper">
     <h3>Create Account</h3>
-    <form #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)">
+    <form #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
       <div class="input-grid">
         <app-select name="gender" placeholder="Gender" selectName="Gender" [options]="['Female', 'Male', 'Other']" ngModel #gender="ngModel" appGenderValidator></app-select>
       </div>
@@ -26,11 +26,10 @@
         <app-text-input placeholder="Street" name="street" ngModel #street="ngModel" appNounValidator></app-text-input>
         <app-text-input placeholder="House Number" name="houseNumber" ngModel #houseNumber="ngModel" appHouseNumberValidator></app-text-input>
       </div>
-
       <div class="action-wrapper">
         <button class="button-full-po" [disabled]="!createAccountForm.valid">Next</button>
       </div>
     </form>
   </div>
-  <app-error-messages [form]="createAccountForm"></app-error-messages>
+  <!-- <app-error-messages [form]="createAccountForm"></app-error-messages> -->
 </div>

@@ -7,6 +7,7 @@
 }
 
 .login-wrapper {
+  width: 30%;
   padding: 40px;
   border: 2px solid #2f2f36;
 }
@@ -19,7 +20,7 @@ h3 {
 
 h4 {
   font-size: 24px;
-  color: red;  
+  color: red;
   margin-top: 20px;
 }
 

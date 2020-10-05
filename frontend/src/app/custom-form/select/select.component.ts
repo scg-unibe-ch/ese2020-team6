@@ -24,10 +24,7 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   optionsHidden: Boolean = true;
   current: String;
 
-  constructor(
-    @Optional() @Inject(NG_VALIDATORS) private validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) private asyncValidators: Array<any>
-  ) {
+  constructor() {
     super();
   }
 

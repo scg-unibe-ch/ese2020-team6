@@ -34,5 +34,17 @@ input:focus {
 input:focus + label, input:valid + label {
   top:-14px;
 	font-size:12px;
-  color: rgba(0, 0, 0, 1);
+  color: black;
+}
+
+.invalid {
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #DBA295;
+}
+
+.error-message {
+  max-width: 100%;
+  line-break: strict;
+  color: #DBA295;
 }

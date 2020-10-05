@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 @Component({
@@ -6,14 +6,9 @@ import { NgModel } from '@angular/forms';
   templateUrl: './error-message.component.html',
   styleUrls: ['./error-message.component.css']
 })
-export class ErrorMessageComponent implements OnInit {
+export class ErrorMessageComponent {
 
   @Input()
   control;
-
-  ngOnInit(): void {
-    console.log(this.control);
-
-  }
 
 }

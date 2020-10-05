@@ -1,7 +1,7 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, Validator } from '@angular/forms';
 import { RegexValidator } from '../models/regex-validator.model';
 
-export class RegexValidatorBase {
+export class RegexValidatorBase implements Validator {
   regExp: RegExp;
   regExValidatorName: string;
   errorMessage: string;
@@ -16,12 +16,12 @@ export class RegexValidatorBase {
 
   validate(control: AbstractControl): {[key: string]: any} | null {
     if (control.value != null) {
-      if (this.regExp.test(control.value)) 
+      if (this.regExp.test(control.value))
       {
         return null;
       }
     }
-    return {errorMessage: {name: this.regExValidatorName, control : control, message: this.errorMessage}};
+    return {errorMessage: {name: this.regExValidatorName, message: this.errorMessage}};
   }
 }
 
@@ -30,17 +30,17 @@ export let validatorRegex = {
   gender: {
     regex: /^Female|Male|Other$/,
     name: "genderValidator",
-    errorMessage: "You can choose between Female, Male or Other!"
+    errorMessage: "Choose between Female, Male or Other!"
   },
   noun: {
     regex: /^[A-Z][a-z]*$/,
     name: "nounValidator",
-    errorMessage: "Has to start with a capital Letter!"
+    errorMessage: "Start with a capital Letter!"
   },
   username: {
     regex: /^[A-Za-z\d@$!%*#?&]{5,}$/,
     name: "usernameValidator",
-    errorMessage: "Min. length of 5 characters including the alphabet, numbers and special characters: @$!%*#?&"
+    errorMessage: "Min. of 5 characters including numbers and special characters: @$!%*#?&"
   },
   phonenumber: {
     regex: /^(?=.{9,15})(([+]\d+ ){0,1}|0)[\d ]*$/,
@@ -50,22 +50,22 @@ export let validatorRegex = {
   plz: {
     regex: /^\d{3,10}$/,
     name: "plzValidator",
-    errorMessage: "Has to be inbetween three and ten numbers!"
+    errorMessage: "Inbetween three and ten numbers!"
   },
   houseNumber: {
     regex: /^[A-Za-z\d]{1,}$/,
     name: "houseNumberValidator",
-    errorMessage: "Has to be at least one character!"
+    errorMessage: "At least one character!"
   },
   email: {
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     name: "emailValidator",
-    errorMessage: "The email is not acceptable as an email!"
+    errorMessage: "Not a valid Email-Address!"
   },
   password: {
     regex: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
     name: "passwordValidator",
-    errorMessage: "The password needs to have min. 7 characters, at least one capital letter, at least one lowercase letter, at least one number and at least one special character: @$!%*#?&"
+    errorMessage: "Min. 7 characters, at least 1 capital letter, 1 lowercase letter, 1 number and 1 special character: @$!%*#?&"
   },
   usernameOrEmail: {
     regex: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[A-Za-z\d@$!%*#?&]{5,})$/,

@@ -1,16 +1,18 @@
-import { Component, Input, Output, EventEmitter, Optional, Inject, ViewChild } from '@angular/core';
+import { Component, Input, Optional, Inject, ViewChild } from '@angular/core';
 import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { ValueAccessorBase } from '../../value-accessor-base';
+import { ValueAccessorValidatorBase } from '../../value-accessor-validator-base';
 
 @Component({
   selector: 'app-number-input',
-  templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.css'],
+  templateUrl: '../input.component.html',
+  styleUrls: ['../input.component.css'],
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true}
   ]
 })
-export class NumberInputComponent extends ValueAccessorBase<Number> {
+export class NumberInputComponent extends ValueAccessorValidatorBase<Number> {
+  type: string = "number";
+
   @Input()
   placeholder: String;
 
@@ -18,9 +20,9 @@ export class NumberInputComponent extends ValueAccessorBase<Number> {
   model: NgModel;
 
   constructor(
-    @Optional() @Inject(NG_VALIDATORS) private validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) private asyncValidators: Array<any>
+    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>
   ) {
-    super();
+    super(validators, asyncValidators);
   }
 }

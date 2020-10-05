@@ -44,6 +44,7 @@ import { GenderValidatorDirective } from './validators/gender/gender-validator.d
 import { UsernameOrEmailValidatorDirective } from './validators/username-or-email/username-or-email-validator.directive';
 import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
 import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
+import { PasswordMatchValidatorDirective } from './validators/cross-field/password-match-validator.directive';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ErrorMessageComponent } from './custom-form/error-messages/error-messag
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
     ErrorMessagesComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    PasswordMatchValidatorDirective
   ],
   imports: [
     BrowserModule,
