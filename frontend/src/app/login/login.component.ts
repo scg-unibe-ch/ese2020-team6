@@ -24,8 +24,6 @@ export class LoginComponent {
 
   // tslint:disable-next-line: typedef
   onSubmit(form: NgForm) {
-    console.log(form);
-
     if (form.valid) {
       this.errorMessage = '';
       // tslint:disable-next-line: prefer-const

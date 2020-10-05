@@ -18,9 +18,6 @@ export class CreateAccountComponent {
   ) { }
 
   onSubmit(form: NgForm) {
-    form.value.queryValue = form.value.email;
-    console.log(form.value);
-
     if (form.valid) {
       this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
         this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(form.value)).subscribe((res: any) => {
