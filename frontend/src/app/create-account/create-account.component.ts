@@ -42,7 +42,7 @@ export class CreateAccountComponent {
 
   buildLoginRequestBody(values: LoginForm) {
     return {
-      queryValue: values.userName,
+      queryValue: values.usernameEmail,
       password: values.password,
       isUsername: true
     }
