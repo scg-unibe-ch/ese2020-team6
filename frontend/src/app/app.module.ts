@@ -35,6 +35,13 @@ import { NumberInputComponent } from './custom-form/input/number-input/number-in
 import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AdminUserProfileComponent } from './admin-user-profile/admin-user-profile.component';
+import { HouseNumberValidatorDirective } from './validators/house-number/house-number-validator.directive';
+import { NounValidatorDirective } from './validators/noun/noun-validator.directive';
+import { PhonenumberValidatorDirective } from './validators/phonenumber/phonenumber-validator.directive';
+import { PlzValidatorDirective } from './validators/plz/plz-validator.directive';
+import { UsernameValidatorDirective } from './validators/username/username-validator.directive';
+import { GenderValidatorDirective } from './validators/gender/gender-validator.directive';
+import { UsernameOrEmailValidatorDirective } from './validators/username-or-email/username-or-email-validator.directive';
 
 @NgModule({
   declarations: [
@@ -53,7 +60,14 @@ import { AdminUserProfileComponent } from './admin-user-profile/admin-user-profi
     EmailValidatorDirective,
     PasswordValidatorDirective,
     UserProfileComponent,
-    AdminUserProfileComponent
+    AdminUserProfileComponent,
+    HouseNumberValidatorDirective,
+    NounValidatorDirective,
+    PhonenumberValidatorDirective,
+    PlzValidatorDirective,
+    UsernameValidatorDirective,
+    GenderValidatorDirective,
+    UsernameOrEmailValidatorDirective
   ],
   imports: [
     BrowserModule,

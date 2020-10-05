@@ -1,10 +1,11 @@
-import { UserAttributes } from './../../../../backend/src/models/user.model';
+//import { UserAttributes } from './../../../../backend/src/models/user.model';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { LoginForm } from '../models/login-form.model';
 import { Router } from '@angular/router';
+import { validatorRegex } from '../validators/regex-validator-base';
 
 @Component({
   selector: 'app-login',
@@ -23,28 +24,38 @@ export class LoginComponent {
 
   // tslint:disable-next-line: typedef
   onSubmit(form: NgForm) {
-    this.errorMessage = '';
-    // tslint:disable-next-line: prefer-const
-    let requestBody = this.buildRequestBody(form.value);
-    this.httpClient
-    .post(environment.endpointURL + 'user/login', requestBody)
-    .subscribe((res: any) => {
-      localStorage.setItem('userToken', res.token);
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userId', res.user.userId);
-      localStorage.setItem('isAdmin', res.user.isAdmin);
-      form.resetForm();
-      this.router.navigate(['']);
-    }, (err: any) => {
-      setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
-    });
+    console.log(form);
+
+    if (form.valid) {
+      this.errorMessage = '';
+      // tslint:disable-next-line: prefer-const
+      let requestBody = this.buildRequestBody(form.value);
+      this.httpClient
+      .post(environment.endpointURL + 'user/login', requestBody)
+      .subscribe((res: any) => {
+        localStorage.setItem('userToken', res.token);
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userId', res.user.userId);
+        localStorage.setItem('isAdmin', res.user.isAdmin);
+        form.resetForm();
+        this.router.navigate(['']);
+      }, (err: any) => {
+        setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
+      });
+    } else {
+      console.log("Form is not valid!");
+    }
   }
 
   // tslint:disable-next-line: typedef
   buildRequestBody(values: LoginForm) {
+    const usernameOrEmail = values.usernameEmail
+    const emailValidatorInformation = validatorRegex.email;
+
     return {
-      userName: values.usernameEmail,
-      password: values.password
+      queryValue: values.usernameEmail,
+      password: values.password,
+      isUsername: !emailValidatorInformation.regex.test(usernameOrEmail.toString())
     };
   }
 }

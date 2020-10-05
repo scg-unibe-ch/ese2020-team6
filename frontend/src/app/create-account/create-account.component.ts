@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { LoginForm } from '../models/login-form.model';
 
 @Component({
   selector: 'app-create-account',
@@ -17,15 +18,30 @@ export class CreateAccountComponent {
   ) { }
 
   onSubmit(form: NgForm) {
-    this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
-      this.httpClient.post(environment.endpointURL + 'user/login', form.value).subscribe((res: any) => {
-        localStorage.setItem('userToken', res.token);
-        localStorage.setItem('userName', res.user.userName);
-        localStorage.setItem('userId', res.user.userId);
-        localStorage.setItem('isAdmin', res.user.isAdmin);
-        form.resetForm();
-        this.router.navigate(['']);
-      })
-    });
+    form.value.queryValue = form.value.email;
+    console.log(form.value);
+
+    if (form.valid) {
+      this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
+        this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(form.value)).subscribe((res: any) => {
+          localStorage.setItem('userToken', res.token);
+          localStorage.setItem('userName', res.user.userName);
+          localStorage.setItem('userId', res.user.userId);
+          localStorage.setItem('isAdmin', res.user.isAdmin);
+          form.resetForm();
+          this.router.navigate(['']);
+        })
+      });
+    } else {
+      console.log("Form is not valid!");
+    }
+  }
+
+  buildLoginRequestBody(values: LoginForm) {
+    return {
+      queryValue: values.userName,
+      password: values.password,
+      isUsername: true
+    }
   }
 }

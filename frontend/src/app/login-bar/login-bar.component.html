@@ -19,7 +19,7 @@
         <span>blabla</span>
       </button>
     </mat-menu>
-  </div>  
+  </div>
   <!--Button for user-profiles if logged in-->
   <div *ngIf="isLoggedIn() && !isAdmin()" class="login-status">
     <div class="login" [matMenuTriggerFor]="menu">
@@ -38,8 +38,9 @@
         <span>blabla</span>
       </button>
     </mat-menu>
+  </div>
   <!--Loginbutton if not logged in-->
-  <div *ngIf="!isLoggedIn()"> 
+  <div *ngIf="!isLoggedIn()">
     <div class="login" [routerLink]="['/user/login']">
       <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
         <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>

@@ -7,15 +7,28 @@ export class UserService {
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
+        console.log(user);
+
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
         return User.create(user).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
+
+        let queryKey: string;
+        if (loginRequestee.isUsername) {
+          queryKey = 'userName';
+        } else {
+          queryKey = 'email';
+        }
+
+        console.log(loginRequestee);
+
+
         return User.findOne({
             where: {
-                userName: loginRequestee.userName
+                [queryKey]: loginRequestee.queryValue
             }
         })
         .then(user => {

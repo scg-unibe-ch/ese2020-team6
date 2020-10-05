@@ -25,6 +25,10 @@ export var validatorRegex = {
     regex: /^[A-Z][a-z]*$/,
     name: "nounValidator"
   },
+  username: {
+    regex: /^[A-Za-z\d@$!%*#?&]{5,}$/,
+    name: "usernameValidator"
+  },
   phonenumber: {
     regex: /^(?=.{9,15})(([+]\d+ ){0,1}|0)[\d ]*$/,
     name: "phonenumberValidator"
@@ -45,5 +49,8 @@ export var validatorRegex = {
     regex: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
     name: "passwordValidator"
   },
-
+  usernameOrEmail: {
+    regex: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[A-Za-z\d@$!%*#?&]{5,})$/,
+    name: "usernameOrEmailValidator"
+  }
 }
