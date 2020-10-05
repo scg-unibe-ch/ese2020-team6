@@ -15,7 +15,7 @@ export class RegexValidatorBase {
     if (control.value != null) {
       if (this.regExp.test(control.value)) return null;
     }
-    return {[this.regExValidatorName]: {valid: this.errorMessage}};
+    return {errorMessage: {name: this.regExValidatorName, control : control, message: this.errorMessage}};
   }
 }
 
@@ -49,7 +49,7 @@ export var validatorRegex = {
   houseNumber: {
     regex: /^[A-Za-z\d]{1,}$/,
     name: "houseNumberValidator",
-    errorMessage: "Has to be at least one characters!"
+    errorMessage: "Has to be at least one character!"
   },
   email: {
     regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

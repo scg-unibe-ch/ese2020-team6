@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { LoginForm } from '../models/login-form.model';
@@ -18,6 +17,13 @@ export class CreateAccountComponent {
   ) { }
 
   onSubmit(form: NgForm) {
+    for(let i in form.form.controls) {
+      console.log(form.form.controls[i]);
+
+    }
+
+    console.log(form.value);
+
     if (form.valid) {
       this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
         this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(form.value)).subscribe((res: any) => {

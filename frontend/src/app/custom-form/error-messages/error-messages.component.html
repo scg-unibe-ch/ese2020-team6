@@ -1,1 +1,3 @@
-<p>error-messages works!</p>
+<div class="error-messages">
+  <app-error-message *ngFor="let control of form._directives" [control]="control"></app-error-message>
+</div>

@@ -1,15 +1,9 @@
 <div class="login-wrapper-wrapper">
   <div class="login-wrapper">
     <h3>Sign In</h3>
-    <form #login="ngForm" (ngSubmit)="onSubmit(login)">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
-      <div [hidden]="usernameEmail.valid || usernameEmail.pristine" class="error-message">
-        {{usernameEmail.errors ? usernameEmail.errors.usernameOrEmailValidator.valid : null}}
-      </div>
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
-      <div [hidden]="password.valid || password.pristine" class="error-message">
-        {{password.errors ? password.errors.passwordValidator.valid : null}}
-      </div>
       <div class="action-wrapper">
         <button type="button" class="button-empty" [routerLink]="['/user/register']">Create Account</button>
         <button class="button-full-po">Next</button>
@@ -17,4 +11,5 @@
     </form>
     <h4> {{errorMessage}}</h4>
   </div>
+  <app-error-messages [form]="loginForm"></app-error-messages>
 </div>

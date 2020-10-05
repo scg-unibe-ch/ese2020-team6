@@ -1,0 +1,18 @@
+.error-message {
+  display: grid;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+  background: rgba(227, 141, 123, 0.6);
+  color: black;
+}
+
+.error-message-title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.error-message-body {
+  font-size: 0.8rem;
+  margin: 0;
+}

@@ -13,6 +13,9 @@ import { ValueAccessorBase } from '../value-accessor-base';
 export class SelectComponent extends ValueAccessorBase<String> implements OnInit {
 
   @Input()
+  placeholder: String;
+
+  @Input()
   selectName: String;
 
   @Input()
