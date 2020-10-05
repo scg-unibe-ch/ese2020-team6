@@ -12,6 +12,6 @@ import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 })
 export class EmailValidatorDirective extends RegexValidatorBase implements Validator{
   constructor() {
-    super(validatorRegex.email.regex, validatorRegex.email.name)
+    super(validatorRegex.email);
   }
 }

@@ -12,6 +12,6 @@ import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 })
 export class PlzValidatorDirective extends RegexValidatorBase implements Validator{
   constructor() {
-    super(validatorRegex.plz.regex, validatorRegex.plz.name)
+    super(validatorRegex.plz);
   }
 }

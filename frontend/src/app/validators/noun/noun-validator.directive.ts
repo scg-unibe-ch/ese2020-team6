@@ -12,6 +12,6 @@ import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 })
 export class NounValidatorDirective extends RegexValidatorBase implements Validator{
   constructor() {
-    super(validatorRegex.noun.regex, validatorRegex.noun.name)
+    super(validatorRegex.noun);
   }
 }
