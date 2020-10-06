@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 export class LoginRequest {
@@ -31,7 +31,7 @@ export abstract class LoginBase<T> implements LoginRequestBuilder<T>, LoginSubsc
     protected httpClient: HttpClient
   ){ }
 
-  login(requestInformation: T) {
+  login(requestInformation: T): Subscription {
     return this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(requestInformation))
     .subscribe((res: any) => this.loginRes(res), (err: any) => this.loginErr(err));
   }
