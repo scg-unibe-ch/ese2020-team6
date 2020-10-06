@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { LoginForm } from '../models/login-form.model';
+import { CreateAccountForm } from '../models/create-account-form.model';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,8 @@ export class CreateAccountComponent {
   onSubmit(form: NgForm) {
     if (form.valid) {
       this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
+        console.log(form, this.buildLoginRequestBody(form.value));
+
         this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(form.value)).subscribe((res: any) => {
           localStorage.setItem('userToken', res.token);
           localStorage.setItem('userName', res.user.userName);
@@ -34,9 +36,9 @@ export class CreateAccountComponent {
     }
   }
 
-  buildLoginRequestBody(values: LoginForm) {
+  buildLoginRequestBody(values: CreateAccountForm): LoginForm {
     return {
-      queryValue: values.usernameEmail,
+      queryValue: values.userName,
       password: values.password,
       isUsername: true
     }

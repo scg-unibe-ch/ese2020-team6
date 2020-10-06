@@ -23,8 +23,6 @@ export class UserService {
           queryKey = 'email';
         }
 
-        console.log(loginRequestee);
-
 
         return User.findOne({
             where: {
