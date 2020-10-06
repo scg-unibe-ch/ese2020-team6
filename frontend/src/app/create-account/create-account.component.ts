@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.css']
+  styleUrls: ['./create-account.component.scss']
 })
 export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
 

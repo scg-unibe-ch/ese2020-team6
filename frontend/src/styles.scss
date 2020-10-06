@@ -1,3 +1,6 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body {
@@ -79,6 +82,3 @@ button:focus {
 .button-empty:active::before {
   background: rgba(223, 171, 160, .2);
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

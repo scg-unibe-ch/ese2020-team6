@@ -38,7 +38,7 @@ export let validatorRegex = {
     errorMessage: "Start with a capital Letter!"
   },
   username: {
-    regex: /^[A-Za-z\d@$!%*#?&]{5,}$/,
+    regex: /^[A-Za-z\d@$!%*#?&]{5,255}$/,
     name: "usernameValidator",
     errorMessage: "Min. of 5 characters including numbers and special characters: @$!%*#?&"
   },

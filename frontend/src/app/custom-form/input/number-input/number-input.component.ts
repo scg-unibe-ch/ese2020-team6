@@ -5,7 +5,7 @@ import { ValueAccessorValidatorBase } from '../../value-accessor-validator-base'
 @Component({
   selector: 'app-number-input',
   templateUrl: '../input.component.html',
-  styleUrls: ['../input.component.css'],
+  styleUrls: ['../input.component.scss'],
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true}
   ]

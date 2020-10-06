@@ -5,7 +5,7 @@ import { ValueAccessorBase } from '../value-accessor-base';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css'],
+  styleUrls: ['./select.component.scss'],
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}
   ]

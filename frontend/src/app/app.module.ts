@@ -45,6 +45,7 @@ import { UsernameOrEmailValidatorDirective } from './validators/username-or-emai
 import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
 import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
 import { PasswordMatchValidatorDirective } from './validators/cross-field/password-match-validator.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { PasswordMatchValidatorDirective } from './validators/cross-field/passwo
       { path: 'user/register', component: CreateAccountComponent },
       { path: 'user/profile', component: UserProfileComponent },
       { path: 'user/admin-user-profile', component: AdminUserProfileComponent }
-    ])
+    ]),
+    NgbModule
   ],
   providers: [
     {
