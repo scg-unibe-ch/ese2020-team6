@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { LoginForm } from '../models/login-form.model';
+import { LoginRequest, LoginRequestBuilder, LoginBase } from '../models/login-request.model';
 import { Router } from '@angular/router';
 import { validatorRegex } from '../validators/regex-validator-base';
 
@@ -12,48 +13,51 @@ import { validatorRegex } from '../validators/regex-validator-base';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent extends LoginBase<LoginForm> {
 
-  userNotFound: false;
-  errorMessage = '';
+  form: NgForm;
+  loginErrorMessage = '';
 
   constructor(
-    private httpClient: HttpClient,
+    httpClient: HttpClient,
     private router: Router
-  ) { }
+  ) {
+    super(httpClient);
+  }
 
   // tslint:disable-next-line: typedef
   onSubmit(form: NgForm) {
     if (form.valid) {
-      this.errorMessage = '';
-      // tslint:disable-next-line: prefer-const
-      let requestBody = this.buildRequestBody(form.value);
-      this.httpClient
-      .post(environment.endpointURL + 'user/login', requestBody)
-      .subscribe((res: any) => {
-        localStorage.setItem('userToken', res.token);
-        localStorage.setItem('userName', res.user.userName);
-        localStorage.setItem('userId', res.user.userId);
-        localStorage.setItem('isAdmin', res.user.isAdmin);
-        form.resetForm();
-        this.router.navigate(['']);
-      }, (err: any) => {
-        setTimeout(() => {  this.errorMessage = err.error.message; }, 250);
-      });
+      this.loginErrorMessage = '';
+      this.form = form;
+      this.login(form.value);
     } else {
-      console.log(Object.entries(form.form.controls));
+      console.log("Form is not valid!");
     }
   }
 
   // tslint:disable-next-line: typedef
-  buildRequestBody(values: LoginForm) {
-    const usernameOrEmail = values.usernameEmail
+  buildLoginRequestBody(loginForm: LoginForm): LoginRequest {
+    const usernameOrEmail = loginForm.usernameEmail
     const emailValidatorInformation = validatorRegex.email;
 
     return {
-      queryValue: values.usernameEmail,
-      password: values.password,
+      queryValue: loginForm.usernameEmail,
+      password: loginForm.password,
       isUsername: !emailValidatorInformation.regex.test(usernameOrEmail.toString())
     };
+  }
+
+  loginRes(res: any) {
+    localStorage.setItem('userToken', res.token);
+    localStorage.setItem('userName', res.user.userName);
+    localStorage.setItem('userId', res.user.userId);
+    localStorage.setItem('isAdmin', res.user.isAdmin);
+    this.form.resetForm();
+    this.router.navigate(['']);
+  }
+
+  loginErr(err: any) {
+    setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
   }
 }

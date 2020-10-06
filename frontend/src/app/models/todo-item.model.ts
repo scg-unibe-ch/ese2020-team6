@@ -1,5 +1,4 @@
 export class TodoItem {
-
   constructor(
     public itemId: number,
     public listId: number,
