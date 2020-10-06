@@ -13,7 +13,7 @@ export class LoginRequest {
 
 
 export interface LoginRequestBuilder<T> {
-  buildLoginRequestBody(form: T): LoginRequest;
+  buildLoginRequestBody(requestInformation: T): LoginRequest;
 }
 
 export interface LoginSubscriber {
@@ -23,7 +23,7 @@ export interface LoginSubscriber {
 
 
 export abstract class LoginBase<T> implements LoginRequestBuilder<T>, LoginSubscriber {
-  abstract buildLoginRequestBody(form: T): LoginRequest;
+  abstract buildLoginRequestBody(requestInformation: T): LoginRequest;
   abstract loginRes(res: any);
   abstract loginErr(err: any);
 
@@ -31,8 +31,8 @@ export abstract class LoginBase<T> implements LoginRequestBuilder<T>, LoginSubsc
     protected httpClient: HttpClient
   ){ }
 
-  login(requestBody: T) {
-    return this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(requestBody))
+  login(requestInformation: T) {
+    return this.httpClient.post(environment.endpointURL + 'user/login', this.buildLoginRequestBody(requestInformation))
     .subscribe((res: any) => this.loginRes(res), (err: any) => this.loginErr(err));
   }
 }
