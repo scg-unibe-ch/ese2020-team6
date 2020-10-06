@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { UserAttributes, User } from './../../../../backend/src/models/user.model';
+
 
 @Component({
   selector: 'app-login-bar',

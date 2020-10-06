@@ -1,5 +1,5 @@
 import { TodoItem, TodoItemAttributes, TodoItemCreationAttributes } from './todoitem.model';
-import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
 
 export interface UserAttributes {
     userId: number;
@@ -15,6 +15,7 @@ export interface UserAttributes {
     houseNumber: string;
     gender: string;
     isAdmin: boolean;
+    wallet: number;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -33,6 +34,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     houseNumber!: string;
     gender!: string;
     isAdmin!: boolean;
+    wallet!: number;
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -88,6 +90,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             isAdmin: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
+            },
+            wallet: {
+                type: DataTypes.NUMBER,
+                defaultValue: 0
             }
 
         },

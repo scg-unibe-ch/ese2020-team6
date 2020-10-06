@@ -48,6 +48,7 @@ export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
     localStorage.setItem('userName', res.user.userName);
     localStorage.setItem('userId', res.user.userId);
     localStorage.setItem('isAdmin', res.user.isAdmin);
+    localStorage.setItem('wallet', res.user.wallet);
     this.form.resetForm();
     this.router.navigate(['']);
   }
