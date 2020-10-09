@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
-import { CreateAccountForm } from '../models/create-account-form.model';
-import { LoginRequest, LoginRequestBuilder, LoginBase } from '../models/login-request.model';
+import { CreateAccountForm } from '../../../models/create-account-form.model';
+import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { NgForm } from '@angular/forms';
 
 @Component({

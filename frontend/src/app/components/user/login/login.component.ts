@@ -1,12 +1,11 @@
-//import { UserAttributes } from './../../../../backend/src/models/user.model';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-import { environment } from '../../environments/environment';
-import { LoginForm } from '../models/login-form.model';
-import { LoginRequest, LoginRequestBuilder, LoginBase } from '../models/login-request.model';
+import { environment } from '../../../../environments/environment';
+import { LoginForm } from '../../../models/login-form.model';
+import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { Router } from '@angular/router';
-import { validatorRegex } from '../validators/regex-validator-base';
+import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
 
 @Component({
   selector: 'app-login',
