@@ -1,8 +1,7 @@
+// Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,48 +10,71 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { EmailValidatorDirective } from './validators/email/email-validator.directive';
-import { PasswordValidatorDirective } from './validators/password/password-validator.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-// Login Bar
-import { LogoutComponent } from './login-bar/logout/logout.component';
-import { LoginBarComponent } from './login-bar/login-bar.component';
+
+
+// ---------------------------------------------------------------------------------//
+import { AppComponent } from './app.component';
+// Components
+//  User
+//    Login
+import { LoginComponent } from './components/user/login/login.component';
+//    Logout
+import { LogoutComponent } from './components/user/logout/logout.component';
+//    Create Account
+import { CreateAccountComponent } from './components/user/create-account/create-account.component';
+//    Profile
+//      User Profile
+import { UserProfileComponent } from './components/user/profile/user-profile/user-profile.component';
+//      Admin Profile
+import { AdminUserProfileComponent } from './components/user/profile/admin-user-profile/admin-user-profile.component';
+//    Wallet
+import { WalletComponent } from './components/user/wallet/wallet.component';
+
+
+//  Home
+import { HomeComponent } from './components/home/home.component';
+//  Login Bar
+import { LoginBarComponent } from './components/home/login-bar/login-bar.component';
+
 
 // Custom Form
-import { SelectComponent } from './custom-form/select/select.component';
-import { TextInputComponent } from './custom-form/input/text-input/text-input.component';
-import { NumberInputComponent } from './custom-form/input/number-input/number-input.component';
-import { PasswordInputComponent } from './custom-form/input/password-input/password-input.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { AdminUserProfileComponent } from './admin-user-profile/admin-user-profile.component';
-import { HouseNumberValidatorDirective } from './validators/house-number/house-number-validator.directive';
-import { NounValidatorDirective } from './validators/noun/noun-validator.directive';
-import { PhonenumberValidatorDirective } from './validators/phonenumber/phonenumber-validator.directive';
-import { PlzValidatorDirective } from './validators/plz/plz-validator.directive';
-import { UsernameValidatorDirective } from './validators/username/username-validator.directive';
-import { GenderValidatorDirective } from './validators/gender/gender-validator.directive';
-import { UsernameOrEmailValidatorDirective } from './validators/username-or-email/username-or-email-validator.directive';
-import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
-import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
-import { PasswordMatchValidatorDirective } from './validators/cross-field/password-match-validator.directive';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { WalletComponent } from './wallet/wallet.component';
+//  Input
+import { TextInputComponent } from './components/custom-form/input/text-input/text-input.component';
+import { NumberInputComponent } from './components/custom-form/input/number-input/number-input.component';
+import { PasswordInputComponent } from './components/custom-form/input/password-input/password-input.component';
+//  Select
+import { SelectComponent } from './components/custom-form/select/select.component';
+//  Validators
+import { HouseNumberValidatorDirective } from './components/custom-form/validators/house-number/house-number-validator.directive';
+import { NounValidatorDirective } from './components/custom-form/validators/noun/noun-validator.directive';
+import { PhonenumberValidatorDirective } from './components/custom-form/validators/phonenumber/phonenumber-validator.directive';
+import { PlzValidatorDirective } from './components/custom-form/validators/plz/plz-validator.directive';
+import { UsernameValidatorDirective } from './components/custom-form/validators/username/username-validator.directive';
+import { GenderValidatorDirective } from './components/custom-form/validators/gender/gender-validator.directive';
+import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/username-or-email/username-or-email-validator.directive';
+import { EmailValidatorDirective } from './components/custom-form/validators/email/email-validator.directive';
+import { PasswordValidatorDirective } from './components/custom-form/validators/password/password-validator.directive';
+//    Cross Field
+import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
+// ---------------------------------------------------------------------------------//
+
+
+
+// import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
+// import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
+// import { TodoListComponent } from './todo-list/todo-list.component';
+// import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
     HomeComponent,
     LoginBarComponent,
     LoginComponent,
@@ -73,8 +95,10 @@ import { WalletComponent } from './wallet/wallet.component';
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
-    ErrorMessagesComponent,
-    ErrorMessageComponent,
+    // ErrorMessagesComponent,
+    // ErrorMessageComponent,
+    // TodoListComponent,
+    // TodoItemComponent,
     PasswordMatchValidatorDirective,
     WalletComponent
   ],

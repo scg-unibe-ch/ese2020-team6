@@ -1,5 +1,5 @@
 import { AbstractControl, Validator } from '@angular/forms';
-import { RegexValidator } from '../models/regex-validator.model';
+import { RegexValidator } from '../../../models/regex-validator.model';
 
 export class RegexValidatorBase implements Validator {
   regExp: RegExp;
