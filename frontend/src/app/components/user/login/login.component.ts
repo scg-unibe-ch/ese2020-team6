@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
-import { LoginForm } from '../../../models/login-form.model';
+import { LoginForm } from '../../../models/form/login-form.model';
 import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { Router } from '@angular/router';
 import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
