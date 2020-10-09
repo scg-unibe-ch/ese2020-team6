@@ -21,7 +21,13 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   public build(): PostProductRequest {
-    return {hi:"hello"};
+    return {
+      title: "",
+      description: "",
+      price: 0,
+      category: "",
+      picture: ""
+    };
   }
 
 }
