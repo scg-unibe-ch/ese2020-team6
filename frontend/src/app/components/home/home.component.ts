@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,26 +15,28 @@ export class HomeComponent {
   approveMessage: String;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) { }
-
+/*
   buy() {
     this.httpClient.get(environment.endpointURL + 'secured/buy').subscribe((res: any) => {
       this.buyMessage = res.message;
     }, (error: any) => {
-      this.buyMessage = "You need to login to use this feature!";
+      this.buyMessage = 'Not implemented yet!';
     });
   }
+*/
 
-  post() {
+  post(): any {
     this.httpClient.get(environment.endpointURL + 'secured/post').subscribe((res: any) => {
-      this.buyMessage = res.message;
+      this.router.navigate(['/product/post']);
     }, (error: any) => {
-      this.buyMessage = "You need to login to use this feature!";
+      this.postMessage = 'You need to login to use this feature!';
     });
   }
 
   approve() {
-    this.approveMessage = "Not implemented yet!"
+    this.approveMessage = 'Not implemented yet!'
   }
 }

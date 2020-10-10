@@ -17,16 +17,16 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   ) { }
 
   public onSubmit() {
-    this.productService.post(this).subscribe((values)=>{console.log(values)});
+    this.productService.post(this).subscribe((values) => {console.log(values); });
   }
 
   public build(): PostProductRequest {
     return {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       price: 0,
-      category: "",
-      picture: ""
+      category: '',
+      picture: '',
     };
   }
 

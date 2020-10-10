@@ -31,13 +31,13 @@ export class LoginComponent extends LoginBase<LoginForm> {
       this.form = form;
       this.login(form.value);
     } else {
-      console.log("Form is not valid!");
+      console.log('Form is not valid!');
     }
   }
 
   // tslint:disable-next-line: typedef
   buildLoginRequestBody(loginForm: LoginForm): LoginRequest {
-    const usernameOrEmail = loginForm.usernameEmail
+    const usernameOrEmail = loginForm.usernameEmail;
     const emailValidatorInformation = validatorRegex.email;
 
     return {
@@ -47,6 +47,7 @@ export class LoginComponent extends LoginBase<LoginForm> {
     };
   }
 
+  // tslint:disable-next-line: typedef
   loginRes(res: any) {
     localStorage.setItem('userToken', res.token);
     localStorage.setItem('userName', res.user.userName);
@@ -57,6 +58,7 @@ export class LoginComponent extends LoginBase<LoginForm> {
     this.router.navigate(['']);
   }
 
+  // tslint:disable-next-line: typedef
   loginErr(err: any) {
     setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
   }

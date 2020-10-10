@@ -31,7 +31,7 @@ export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
         this.login(form.value);
       });
     } else {
-      console.log("Form is not valid!");
+      console.log('Form is not valid!');
     }
   }
 
@@ -40,7 +40,7 @@ export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
       queryValue: createAccountForm.userName,
       password: createAccountForm.password,
       isUsername: true
-    }
+    };
   }
 
   loginRes(res: any) {
