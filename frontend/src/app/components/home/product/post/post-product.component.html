@@ -1,22 +1,27 @@
 <div class="post-wrapper-wrapper">
   <div class="post-wrapper">
     <h3>Create</h3>
-    <form #createAccountForm="ngForm">
+    <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
-        <app-select name="productType" selectName="Product Type" [options]="['Item', 'Service']"></app-select>
-        <app-select name="offerType" selectName="Offer Type" [options]="['Sell', 'Rent']"></app-select>
+        <app-select name="productType" selectName="Product Type" ngModel #productType="ngModel" [options]="['Item', 'Service']"></app-select>
+        <app-select name="offerType" selectName="Offer Type" ngModel #offerType="ngModel" [options]="['Sell', 'Rent']"></app-select>
       </div>
-      <app-text-input placeholder="Title" name="Title"></app-text-input>
-      <textarea class="input" rows="4" placeholder="Description" name="description"></textarea>
+      <app-text-input placeholder="Title" name="title" ngModel #title="ngModel"></app-text-input>
+      <textarea class="input" rows="4" placeholder="Description" name="description" ngModel #description="ngModel"></textarea>
       <div class="input-grid">
-        <app-number-input placeholder="Price" name="price"></app-number-input>
-        <app-select name="status" selectName="Status" [options]="['Aviable', 'Lent', 'Sold']"></app-select>
+        <app-number-input placeholder="Price" name="price" ngModel #price="ngModel"></app-number-input>
+        <app-select name="status" selectName="Status" ngModel #status="ngModel" [options]="['Aviable', 'Lent', 'Sold']"></app-select>
       </div>
       <label>Picture
-        <input class="picture" name="picture" type="file" size="50" accept="png, jpg">
+        <input class="picture" name="picture" ngModel #picture="ngModel" type="file" size="50" accept="png, jpg">
       </label>
-      <div class="action-wrapper">
-        <button type="button" name="button" (click)="onSubmit()" >Create</button>
+      <div class="input-grid">
+        <div class="action-wrapper">
+            <button type="button" name="button" (click)="preview(postProductForm)" >Preview</button>
+        </div>
+        <div class="action-wrapper">
+            <button type="submit" name="button">Create</button>
+        </div>
       </div>
     </form>
   </div>

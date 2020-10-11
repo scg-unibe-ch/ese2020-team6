@@ -128,7 +128,7 @@ import { BuyProductComponent } from './components/home/product/buy-product/buy-p
       { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
-      { path: 'product/buy-product' , component: BuyProductComponent}
+      { path: 'product/buy-product' , component: BuyProductComponent},
     ]),
     NgbModule
   ],

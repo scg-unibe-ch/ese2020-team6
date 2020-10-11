@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
@@ -11,14 +12,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductForm> {
+  form: NgForm;
   requestInformation: PostProductForm;
+  productData: any;
 
   constructor(
     private productService: ProductService,
     private router: Router
   ) { }
 
-  public onSubmit() {
+  onSubmit(form: NgForm) {
     this.productService.post(this).subscribe((values) => {console.log(values); });
     this.router.navigate(['/product/buy-product']);
   }
@@ -35,4 +38,17 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     };
   }
 
+  public preview(form: NgForm) {
+    this.productData =
+      { title: form.value.title,
+        description: form.value.description,
+        price: form.value.price,
+        offerType: form.value.offerType,
+        productType: form.value.productType,
+        status: form.value.status,
+        picture: form.value.picture
+      };
+    console.log(this.productData.title);
+    // document.getElementById("overlay").style.display = "block";
+  }
 }
