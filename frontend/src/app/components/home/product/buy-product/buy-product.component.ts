@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,22 +7,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buy-product.component.scss']
 })
 export class BuyProductComponent implements OnInit {
+  products: any;
 
-  constructor() { 
-  }
+  constructor() {   }
 
   ngOnInit(): void {
     // only for testing till backend ready
-    /*this.products = [
+    this.products = [
       {
-        name: 'Tisch',
-        price: 50
+        title: 'Schöner Tisch',
+        price: 50,
+        description: 'Ein sehr schöner Tisch aus dem Jahre 1768',
+        offerType: 'sell',
+        productType: 'item',
+        status: 'aviable',
+        picture: '../../../../../assets/testImage1.jpeg'
       },
       {
-        name: 'Tisch',
-        price: 50
+        title: 'Sehr schneller Kochherd',
+        price: 700,
+        description: 'Guter Kochherd, der ausgesprochen schnell kocht',
+        offerType: 'sell',
+        productType: 'item',
+        status: 'aviable',
+        picture: '../../../../../assets/testImage2.jpeg'
       }
-    ];*/
+    ];
   }
-
 }
