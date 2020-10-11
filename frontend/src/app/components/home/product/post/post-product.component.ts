@@ -3,6 +3,7 @@ import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { PostProductRequest } from '../../../../models/request/product/post/post-product-request.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-product',
@@ -13,20 +14,24 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   requestInformation: PostProductForm;
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) { }
 
   public onSubmit() {
-    this.productService.post(this).subscribe((values)=>{console.log(values)});
+    this.productService.post(this).subscribe((values) => {console.log(values); });
+    this.router.navigate(['/product/buy-product']);
   }
 
   public build(): PostProductRequest {
     return {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       price: 0,
-      category: "",
-      picture: ""
+      offerType: '',
+      productType: '',
+      picture: '',
+      status: ''
     };
   }
 

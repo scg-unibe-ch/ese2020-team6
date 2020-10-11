@@ -64,6 +64,7 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 //    Cross Field
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 import { PostProductComponent } from './components/home/product/post/post-product.component';
+import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
 // ---------------------------------------------------------------------------------//
 
 
@@ -102,7 +103,8 @@ import { PostProductComponent } from './components/home/product/post/post-produc
     // TodoItemComponent,
     PasswordMatchValidatorDirective,
     WalletComponent,
-    PostProductComponent
+    PostProductComponent,
+    BuyProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,7 +127,8 @@ import { PostProductComponent } from './components/home/product/post/post-produc
       { path: 'user/profile', component: UserProfileComponent },
       { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
       { path: 'user/wallet' , component: WalletComponent},
-      { path: 'product/post' , component: PostProductComponent}
+      { path: 'product/post' , component: PostProductComponent},
+      { path: 'product/buy-product' , component: BuyProductComponent}
     ]),
     NgbModule
   ],
