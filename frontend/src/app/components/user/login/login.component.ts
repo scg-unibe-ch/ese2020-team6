@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
-import { LoginForm } from '../../../models/login-form.model';
+import { LoginForm } from '../../../models/form/login-form.model';
 import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { Router } from '@angular/router';
 import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
@@ -31,13 +31,13 @@ export class LoginComponent extends LoginBase<LoginForm> {
       this.form = form;
       this.login(form.value);
     } else {
-      console.log("Form is not valid!");
+      console.log('Form is not valid!');
     }
   }
 
   // tslint:disable-next-line: typedef
   buildLoginRequestBody(loginForm: LoginForm): LoginRequest {
-    const usernameOrEmail = loginForm.usernameEmail
+    const usernameOrEmail = loginForm.usernameEmail;
     const emailValidatorInformation = validatorRegex.email;
 
     return {
@@ -47,6 +47,7 @@ export class LoginComponent extends LoginBase<LoginForm> {
     };
   }
 
+  // tslint:disable-next-line: typedef
   loginRes(res: any) {
     localStorage.setItem('userToken', res.token);
     localStorage.setItem('userName', res.user.userName);
@@ -57,6 +58,7 @@ export class LoginComponent extends LoginBase<LoginForm> {
     this.router.navigate(['']);
   }
 
+  // tslint:disable-next-line: typedef
   loginErr(err: any) {
     setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
   }

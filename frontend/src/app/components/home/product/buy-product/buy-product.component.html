@@ -1,0 +1,14 @@
+<div class="buy-wrapper-wrapper">
+    <div class="buy-wrapper">
+        <h1>Offers for you</h1>
+        <div class="card" *ngFor = "let product of products">
+            <h3>{{product.title}}</h3>
+            <div class="input-grid">
+                <div class="cards">{{product.description}}</div>
+                <div class="cards">Price: {{product.price}}</div>
+                <p></p>
+                <div class="cards">Status: {{product.status}}</div>
+            </div>
+        <img src={{product.picture}}>
+    </div>
+</div>

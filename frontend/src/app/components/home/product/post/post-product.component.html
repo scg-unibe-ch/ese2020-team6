@@ -1,0 +1,24 @@
+<div class="post-wrapper-wrapper">
+  <div class="post-wrapper">
+    <h3>Create</h3>
+    <form #createAccountForm="ngForm">
+      <div class="input-grid">
+        <app-select name="productType" selectName="Product Type" [options]="['Item', 'Service']"></app-select>
+        <app-select name="offerType" selectName="Offer Type" [options]="['Sell', 'Rent']"></app-select>
+      </div>
+      <app-text-input placeholder="Title" name="Title"></app-text-input>
+      <textarea class="input" rows="4" placeholder="Description" name="description"></textarea>
+      <div class="input-grid">
+        <app-number-input placeholder="Price" name="price"></app-number-input>
+        <app-select name="status" selectName="Status" [options]="['Aviable', 'Lent', 'Sold']"></app-select>
+      </div>
+      <label>Picture
+        <input class="picture" name="picture" type="file" size="50" accept="png, jpg">
+      </label>
+      <div class="action-wrapper">
+        <button type="button" name="button" (click)="onSubmit()" >Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+
