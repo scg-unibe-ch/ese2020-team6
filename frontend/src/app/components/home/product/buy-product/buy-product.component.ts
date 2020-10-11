@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuyProductComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
+    // only for testing till backend ready
+    /*this.products = [
+      {
+        name: 'Tisch',
+        price: 50
+      },
+      {
+        name: 'Tisch',
+        price: 50
+      }
+    ];*/
   }
 
 }
