@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { MatMenuModule } from '@angular/material/menu';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { FullscreenOverlayContainer, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -65,6 +65,7 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 import { PostProductComponent } from './components/home/product/post/post-product.component';
 import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
+import { ProductDetailComponentComponent } from './components/home/product/product-detail-component/product-detail-component.component';
 // ---------------------------------------------------------------------------------//
 
 
@@ -105,6 +106,7 @@ import { BuyProductComponent } from './components/home/product/buy-product/buy-p
     WalletComponent,
     PostProductComponent,
     BuyProductComponent,
+    ProductDetailComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,11 +130,12 @@ import { BuyProductComponent } from './components/home/product/buy-product/buy-p
       { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
-      { path: 'product/buy-product' , component: BuyProductComponent}
+      { path: 'product/buy-product' , component: BuyProductComponent},
     ]),
     NgbModule
   ],
   providers: [
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
