@@ -1,14 +1,13 @@
 
 import express, { Router, Request, Response } from 'express';
-import { UserService } from '../services/user.service';
-import { verifyToken } from '../middlewares/checkAuth';
+import { ProductService } from '../services/product.service';
 
 const productController: Router = express.Router();
-const productService = new productService();
+const productService = new ProductService();
 
-productController.post('/post-a-product',
+productController.post('/product/post',
     (req: Request, res: Response) => {
-        productService.post(req.body).then(post => res.send(posted)).catch(err => res.status(500).send(err)); //not working because of post.service.ts
+        productService.create(req.body).then((post: any) => res.send(post)).catch((err: any) => res.status(500).send(err));
     }
 );
 

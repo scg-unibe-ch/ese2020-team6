@@ -1,25 +1,25 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
 
 export interface ServicesAttributes {
-    serviceId: number; //rename
+    serviceId: number; // rename
     titel: string;
     description: string;
-    servicePrice: number; //rename
-    //image?
+    servicePrice: number; // rename
+    // image?
     category: string;
     subcategory: string;
     expirationDate: number;
     status: string;
     workingStatus: string;
-    
+
 }
 export interface ServicesCreationAttributes extends Optional<ServicesAttributes, 'serviceId'> { }
 
 export class Services extends Model<ServicesAttributes, ServicesCreationAttributes> implements ServicesAttributes {
-    serviceId!: number; //rename
+    serviceId!: number; // rename
     titel!: string;
     description!: string;
-    servicePrice!: number; //rename
+    servicePrice!: number; // rename
     category!: string;
     subcategory!: string;
     expirationDate!: number;
