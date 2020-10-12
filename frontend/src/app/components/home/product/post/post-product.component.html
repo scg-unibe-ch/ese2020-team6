@@ -17,13 +17,21 @@
       </label>
       <div class="input-grid">
         <div class="action-wrapper">
-            <button type="button" name="button" (click)="preview(postProductForm)" >Preview</button>
+          <button (click)="showPreview(postProductForm, preview)" type="button" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+            Preview
+          </button>
         </div>
         <div class="action-wrapper">
             <button type="submit" name="button">Create</button>
         </div>
       </div>
     </form>
+
+    <!-- This template displays the overlay content and is connected to the button -->
+    <ng-template #preview>
+      <app-product-detail-component [data]="productData"></app-product-detail-component>
+    </ng-template>
+    
   </div>
 </div>
 
