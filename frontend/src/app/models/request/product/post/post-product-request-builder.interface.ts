@@ -1,8 +1,7 @@
-import { RequestBuilder } from '../../request-builder.interface';
-import { PostProductRequest } from './post-product-request.model';
+import { PostProductRequestModel } from './post-product-request.model';
 
-export interface PostProductRequestBuilder<T> extends RequestBuilder<T, PostProductRequest> {
+export interface PostProductRequestBuilder<T> {
   requestInformation: T;
-  
-  build(): PostProductRequest;
+
+  build(): PostProductRequestModel;
 }

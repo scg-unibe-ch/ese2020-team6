@@ -3,7 +3,7 @@ import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
-import { PostProductRequest } from '../../../../models/request/product/post/post-product-request.model';
+import { PostProductRequestModel } from '../../../../models/request/product/post/post-product-request.model';
 import { Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -31,7 +31,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     this.router.navigate(['/product/buy-product']);
   }
 
-  public build(): PostProductRequest {
+  public build(): PostProductRequestModel {
     return {
       title: '',
       description: '',

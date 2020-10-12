@@ -1,49 +1,66 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
-import { CreateAccountForm } from '../../../models/create-account-form.model';
-import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { NgForm } from '@angular/forms';
+
+import { RegisterUserRequestBuilder } from '../../../models/request/user/register/register-user-request-builder.interface';
+import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
+import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
+import { RegisterUserRequestModel } from '../../../models/request/user/register/register-user-request.model';
+import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
+export class CreateAccountComponent implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
 
-  form: NgForm;
-  loginErrorMessage = '';
+  private form: NgForm;
+  private values: RegisterUserFormModel;
+  public registerErrorMessage: string = '';
 
   constructor(
-    httpClient: HttpClient,
-    private router: Router
-  ) {
-    super(httpClient);
-  }
+    private router: Router,
+    private userService: UserService
+  ) { }
 
-  onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm): void {
     if (form.valid) {
-      this.httpClient.post(environment.endpointURL + 'user/register', form.value).subscribe((res: any) => {
-        this.loginErrorMessage = '';
-        this.form = form;
-        this.login(form.value);
+      this.form = form;
+      this.values = form.value;
+      this.registerErrorMessage = '';
+      this.userService.register(this).subscribe((res: any) => {
+        this.registerSuccess();
+      }, (err: any) => {
+        this.registerError(err);
       });
-    } else {
-      console.log('Form is not valid!');
     }
   }
 
-  buildLoginRequestBody(createAccountForm: CreateAccountForm): LoginRequest {
+  public buildRegisterUserRequest(): RegisterUserRequestModel {
+    return this.values;
+  }
+
+  public buildLoginUserRequest(): LoginUserRequestModel {
     return {
-      queryValue: createAccountForm.userName,
-      password: createAccountForm.password,
+      queryValue: this.values.userName,
+      password: this.values.password,
       isUsername: true
     };
   }
 
-  loginRes(res: any) {
+  private registerSuccess(): void {
+    this.userService.login(this).subscribe((res: any) => {
+      this.loginSuccess(res)
+    });
+  }
+
+  private registerError(err: any): void {
+    setTimeout(() => {  this.registerErrorMessage = err.error.message; }, 250);
+  }
+
+  private loginSuccess(res: any): void {
     localStorage.setItem('userToken', res.token);
     localStorage.setItem('userName', res.user.userName);
     localStorage.setItem('userId', res.user.userId);
@@ -51,9 +68,5 @@ export class CreateAccountComponent extends LoginBase<CreateAccountForm>{
     localStorage.setItem('wallet', res.user.wallet);
     this.form.resetForm();
     this.router.navigate(['']);
-  }
-
-  loginErr(err: any) {
-    setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
   }
 }

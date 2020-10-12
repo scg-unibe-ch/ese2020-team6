@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
-import { environment } from '../../../../environments/environment';
-import { LoginForm } from '../../../models/form/login-form.model';
-import { LoginRequest, LoginRequestBuilder, LoginBase } from '../../../models/login-request.model';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+
+import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
+import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
+import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
+import { UserService } from '../../../services/user/user.service';
 import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
 
 @Component({
@@ -12,43 +13,43 @@ import { validatorRegex } from '../../custom-form/validators/regex-validator-bas
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends LoginBase<LoginForm> {
+export class LoginComponent implements LoginUserRequestBuilder {
 
-  form: NgForm;
-  loginErrorMessage = '';
+  private form: NgForm;
+  private values: LoginUserFormModel;
+  public loginErrorMessage: string = '';
+
 
   constructor(
-    httpClient: HttpClient,
-    private router: Router
-  ) {
-    super(httpClient);
-  }
+    private router: Router,
+    private userService: UserService
+  ) { }
 
-  // tslint:disable-next-line: typedef
-  onSubmit(form: NgForm) {
+  public onSubmit(form: NgForm): void {
     if (form.valid) {
-      this.loginErrorMessage = '';
       this.form = form;
-      this.login(form.value);
-    } else {
-      console.log('Form is not valid!');
+      this.values = form.value;
+      this.loginErrorMessage = '';
+      this.userService.login(this).subscribe((res: any) => {
+        this.loginSuccess(res);
+      }, (err: any) => {
+        this.loginError(err);
+      });
     }
   }
 
-  // tslint:disable-next-line: typedef
-  buildLoginRequestBody(loginForm: LoginForm): LoginRequest {
-    const usernameOrEmail = loginForm.usernameEmail;
+  public buildLoginUserRequest(): LoginUserRequestModel {
+    const usernameOrEmail = this.values.usernameEmail;
     const emailValidatorInformation = validatorRegex.email;
 
     return {
-      queryValue: loginForm.usernameEmail,
-      password: loginForm.password,
+      queryValue: this.values.usernameEmail,
+      password: this.values.password,
       isUsername: !emailValidatorInformation.regex.test(usernameOrEmail.toString())
     };
   }
 
-  // tslint:disable-next-line: typedef
-  loginRes(res: any) {
+  private loginSuccess(res: any): void {
     localStorage.setItem('userToken', res.token);
     localStorage.setItem('userName', res.user.userName);
     localStorage.setItem('userId', res.user.userId);
@@ -58,8 +59,7 @@ export class LoginComponent extends LoginBase<LoginForm> {
     this.router.navigate(['']);
   }
 
-  // tslint:disable-next-line: typedef
-  loginErr(err: any) {
+  private loginError(err: any): void {
     setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
   }
 }

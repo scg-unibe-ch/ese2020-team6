@@ -1,4 +1,4 @@
-export interface PostProductRequest {
+export interface PostProductRequestModel {
   title: string;
   description: string;
   price: number;
