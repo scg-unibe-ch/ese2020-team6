@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
 
+import { ProductService } from '../../../../services/product/product.service';
+import { Component, OnInit, Input } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -9,9 +12,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductDetailComponentComponent implements OnInit {
   @Input() data: any;
- 
+  id: number;
 
-  constructor() {
+
+  constructor(private route: ActivatedRoute, productService: ProductService) {
+    this.route.params.subscribe( params => this.data = productService.get(params.id) );
    }
 
   ngOnInit(): void {

@@ -131,6 +131,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
       { path: 'product/buy-product' , component: BuyProductComponent},
+      { path: 'product/product-detail/:id' , component: ProductDetailComponentComponent}
     ]),
     NgbModule
   ],
