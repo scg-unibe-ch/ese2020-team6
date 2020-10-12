@@ -41,7 +41,7 @@ import { WalletComponent } from './components/user/wallet/wallet.component';
 //  Home
 import { HomeComponent } from './components/home/home.component';
 //  Login Bar
-import { LoginBarComponent } from './components/home/login-bar/login-bar.component';
+import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component';
 
 
 // Custom Form
@@ -79,7 +79,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginBarComponent,
+    MenuBarComponent,
     LoginComponent,
     CreateAccountComponent,
     SelectComponent,

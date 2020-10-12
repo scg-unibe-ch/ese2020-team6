@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-login-bar',
-  templateUrl: './login-bar.component.html',
-  styleUrls: ['./login-bar.component.scss']
+  selector: 'app-menu-bar',
+  templateUrl: './menu-bar.component.html',
+  styleUrls: ['./menu-bar.component.scss']
 })
-export class LoginBarComponent implements OnInit {
+export class MenuBarComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  isLoggedIn(): boolean {
+  get isLoggedIn(): boolean {
       return localStorage.getItem('userToken') ? true : false;
   }
 
-  isAdmin(): boolean {
+  get isAdmin(): boolean {
     return JSON.parse(localStorage.getItem('isAdmin'));
   }
 
