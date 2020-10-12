@@ -65,7 +65,8 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 import { PostProductComponent } from './components/home/product/post/post-product.component';
 import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
-import { ProductDetailComponentComponent } from './components/home/product/product-detail-component/product-detail-component.component';
+import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
+
 // ---------------------------------------------------------------------------------//
 
 
@@ -106,7 +107,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     WalletComponent,
     PostProductComponent,
     BuyProductComponent,
-    ProductDetailComponentComponent,
+    ProductInformationComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +132,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
       { path: 'product/buy-product' , component: BuyProductComponent},
-      { path: 'product/product-detail/:id' , component: ProductDetailComponentComponent}
+      { path: 'product/product-information/:id' , component: ProductInformationComponent}
     ]),
     NgbModule
   ],

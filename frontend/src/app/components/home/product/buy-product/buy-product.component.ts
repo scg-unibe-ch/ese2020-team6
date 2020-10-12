@@ -2,7 +2,7 @@ import { of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { Routes } from '@angular/router';
-import { ProductDetailComponentComponent } from '../product-detail-component/product-detail-component.component';
+import { ProductInformationComponent } from '../product-information/product-information.component';
 
 @Component({
   selector: 'app-buy-product',
@@ -15,7 +15,7 @@ export class BuyProductComponent implements OnInit {
   constructor() {
     // for routes with parameters
     const routes: Routes = [
-      { path: 'product-detail/:id' , component: ProductDetailComponentComponent}
+      { path: 'product-information/:id' , component: ProductInformationComponent}
      ];
   }
 
@@ -27,7 +27,7 @@ export class BuyProductComponent implements OnInit {
         title: 'Schöner Tisch',
         price: 50,
         description: 'Ein sehr schöner Tisch aus dem Jahre 1768',
-        offerType: 'sell',
+        offerType: 'rent',
         productType: 'item',
         status: 'aviable',
         picture: '../../../../../assets/testImage1.jpeg'

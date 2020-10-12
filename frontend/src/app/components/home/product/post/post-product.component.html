@@ -29,7 +29,12 @@
 
     <!-- This template displays the overlay content and is connected to the button -->
     <ng-template #preview>
-      <app-product-detail-component [data]="productData"></app-product-detail-component>
+      <div class="buy-wrapper-wrapper">
+        <div class="buy-wrapper">
+            <h2>Your product</h2>
+            <app-product-information [data]="productData"></app-product-information>
+        </div>
+      </div>
     </ng-template>
     
   </div>
