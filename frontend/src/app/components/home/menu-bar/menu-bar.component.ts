@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -6,11 +6,17 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.scss']
 })
-export class MenuBarComponent implements OnInit {
+export class MenuBarComponent {
+  private showDropdown: boolean = false;
+  private newReload: boolean = true;
 
-  constructor() { }
+  toggleDropDown(): void {
+    this.showDropdown = !this.showDropdown;
+    this.newReload = false;
+  }
 
-  ngOnInit(): void {
+  get userName(): string {
+    return localStorage.getItem('userName');
   }
 
   get isLoggedIn(): boolean {
