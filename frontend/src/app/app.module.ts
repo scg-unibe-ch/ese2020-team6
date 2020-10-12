@@ -28,7 +28,7 @@ import { LoginComponent } from './components/user/login/login.component';
 //    Logout
 import { LogoutComponent } from './components/user/logout/logout.component';
 //    Create Account
-import { CreateAccountComponent } from './components/user/create-account/create-account.component';
+import {  RegisterComponent } from './components/user/register/register.component';
 //    Profile
 //      User Profile
 import { UserProfileComponent } from './components/user/profile/user-profile/user-profile.component';
@@ -81,7 +81,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     HomeComponent,
     LoginBarComponent,
     LoginComponent,
-    CreateAccountComponent,
+    RegisterComponent,
     SelectComponent,
     TextInputComponent,
     NumberInputComponent,
@@ -125,7 +125,7 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
-      { path: 'user/register', component: CreateAccountComponent },
+      { path: 'user/register', component: RegisterComponent },
       { path: 'user/profile', component: UserProfileComponent },
       { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
       { path: 'user/wallet' , component: WalletComponent},

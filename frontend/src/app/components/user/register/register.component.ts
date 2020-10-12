@@ -10,11 +10,11 @@ import { RegisterUserFormModel } from '../../../models/form/register-user-form.m
 import { UserService } from '../../../services/user/user.service';
 
 @Component({
-  selector: 'app-create-account',
-  templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class CreateAccountComponent implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
+export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
 
   private form: NgForm;
   private values: RegisterUserFormModel;
