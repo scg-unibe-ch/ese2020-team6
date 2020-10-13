@@ -8,6 +8,9 @@ import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { UserService } from '../../../services/user/user.service';
 import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
 
+
+import { UserModel } from '../../../models/user/user.model';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -49,12 +52,7 @@ export class LoginComponent implements LoginUserRequestBuilder {
     };
   }
 
-  private loginSuccess(res: any): void {
-    localStorage.setItem('userToken', res.token);
-    localStorage.setItem('userName', res.user.userName);
-    localStorage.setItem('userId', res.user.userId);
-    localStorage.setItem('isAdmin', res.user.isAdmin);
-    localStorage.setItem('wallet', res.user.wallet);
+  private loginSuccess(res: { token: string, user: UserModel }): void {
     this.form.resetForm();
     this.router.navigate(['']);
   }

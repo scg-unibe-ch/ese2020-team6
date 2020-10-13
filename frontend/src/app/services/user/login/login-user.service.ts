@@ -13,7 +13,7 @@ export class LoginUserService {
     private httpClient: HttpClient
   ) { }
 
-  public login(requestBuilder: LoginUserRequestBuilder): Observable<any> {
+  public login(requestBuilder: LoginUserRequestBuilder): Observable<Object> {
     return this.httpClient.post(environment.endpointURL + 'user/login', requestBuilder.buildLoginUserRequest());
   }
 }
