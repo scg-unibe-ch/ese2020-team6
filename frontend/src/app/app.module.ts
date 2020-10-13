@@ -78,6 +78,8 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
 // import { TodoListComponent } from './todo-list/todo-list.component';
 // import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 
+import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -131,9 +133,11 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
       { path: 'user/register', component: CreateAccountComponent },
+      { path: 'user/profile', redirectTo: 'user/profile/' + defaultUserNavigationElements[defaultProfileComponent].path },
       {
         path: 'user/profile',
         component: ProfileComponent,
+        data: defaultUserNavigationElements[defaultProfileComponent],
         children: [
           {
             path: 'details',

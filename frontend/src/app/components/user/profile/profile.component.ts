@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
 import { ProfileNavigationElementModel } from '../../../models/form/profile-navigation-element.model';
+import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
 
 @Component({
   selector: 'app-profile',
@@ -8,21 +10,21 @@ import { ProfileNavigationElementModel } from '../../../models/form/profile-navi
 })
 export class ProfileComponent {
 
-  navigationElements = [
-    {
-      title: 'User Details',
-      path: 'details'
-    },
-    {
-      title: "My Products",
-      path: 'myproducts'
-    }, {
-      title: "Create New Product",
-      path: 'createnewproduct'
-    }
-  ];
+  public navigationElements = defaultUserNavigationElements;
+  public currentContent: ProfileNavigationElementModel;
 
-  private currentContent: ProfileNavigationElementModel;
+  public user = {
+    userName: localStorage.getItem('userName'),
+    id: localStorage.getItem('userId')
+  }
+
+  constructor(
+    private route: ActivatedRoute
+  ) {
+    route.data.subscribe((navigationElement: ProfileNavigationElementModel)=>{
+      this.currentContent = navigationElement;
+    });
+  }
 
   public setCurrentContent(navigationElement: ProfileNavigationElementModel): void {
     this.currentContent = navigationElement;
