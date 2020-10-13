@@ -13,7 +13,8 @@
         <app-select name="status" selectName="Status" ngModel #status="ngModel" [options]="['Aviable', 'Lent', 'Sold']"></app-select>
       </div>
       <label>Picture
-        <input class="picture" name="picture" ngModel #picture="ngModel" type="file" size="50" accept="png, jpg">
+        <input class="picture" name="picture" ngModel #picture="ngModel" 
+        type="file" (change)="onFileChanged($event)" size="50" accept="png, jpg">
       </label>
       <div class="input-grid">
         <div class="action-wrapper">

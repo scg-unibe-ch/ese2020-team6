@@ -17,6 +17,8 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   form: NgForm;
   requestInformation: PostProductForm;
   productData: any;
+  image: any;
+  url: any;
 
   constructor(
     private productService: ProductService,
@@ -41,7 +43,9 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       status: ''
     };
   }
-
+  onFileChanged(event) {
+    const file = event.target.files[0];
+  }
   public showPreview(form: NgForm, tpl: TemplateRef<any>) {
     this.productData =
     { title: form.value.title,
