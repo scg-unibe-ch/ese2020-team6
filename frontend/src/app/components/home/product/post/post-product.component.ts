@@ -17,7 +17,6 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   form: NgForm;
   requestInformation: PostProductForm;
   productData: any;
-  isOpen = false;
 
   constructor(
     private productService: ProductService,
@@ -51,16 +50,15 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       offerType: form.value.offerType,
       productType: form.value.productType,
       status: form.value.status,
-      picture: form.value.picture
+      picture: form.value.picture,
     };
-
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });
     configs.positionStrategy = this.overlay.position()
       .global()
       .centerHorizontally()
-      .centerVertically()
+      .centerVertically();
     const overlayRef = this.overlay.create(configs);
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());

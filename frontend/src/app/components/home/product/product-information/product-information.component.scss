@@ -1,25 +1,12 @@
 
-.buy-wrapper-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: auto;
+.product {
+    display: block;
+    margin: 2em;
   }
-  
-  .buy-wrapper {
-    height: 40em;
-    width: 40em;
-    padding: 50px;
-    padding-top: 40px;
-    border: 2px solid #2f2f36;
-    background: white;
-  }
-  
+    
   .card {
-    width: 100%;
-    height: 80%;
     padding: 10px;
+    display: flex;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
         border-radius: 4px;
@@ -63,4 +50,16 @@
   .price {
     color: #8a838a;
     letter-spacing: 4px;
+  }
+
+  img {
+      margin-top: 2em;
+    height: 200px;
+    width: 200px;
+  }
+
+  .button-full-po {
+    position: absolute;
+    left: 80%;
+    margin-top: 1em;
   }

@@ -1,9 +1,18 @@
-<div class="card">
-    <h1>{{data.title}} </h1>
-    <p>An {{data.productType}} for {{data.offerType}}</p>
-    <div class="innerCard">{{data.description}}</div>
-    <div class="grid">
-        <div class="price">Price: CHF {{data.price}}</div>
-        <p>{{data.status}} </p>
-    </div>
+<div class="product">
+    <mat-card class="card">
+        <h1>{{data.title}} </h1>
+        <p>An {{data.productType}} for {{data.offerType}}</p>
+        <div class="innerCard">{{data.description}}</div>
+        <div class="grid">
+            <div class="price">Price: CHF {{data.price}}</div>
+            <p>{{data.status}} </p>
+        </div>
+        <div *ngIf="!isPreview">
+            <img src={{data.picture}}>
+        </div>
+    </mat-card>
+        <mat-card-actions *ngIf="!isPreview">
+            <button class="button-full-po" [routerLink]="['/user/profile']">Buy Product</button>
+        </mat-card-actions>
+    
 </div>

@@ -9,6 +9,7 @@ import { ProductService } from '../../../../services/product/product.service';
 })
 export class ProductInformationComponent implements OnInit {
   @Input() data: any;
+  @Input() isPreview = false;
   id: number;
 
 
