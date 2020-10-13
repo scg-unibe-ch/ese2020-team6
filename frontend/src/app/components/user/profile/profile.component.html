@@ -1,0 +1,13 @@
+<div class="profile-wrapper">
+  <div class="navigation">
+    <app-profile-navigation [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
+  </div>
+  <div class="content-wrapper">
+    <div class="title">
+      title
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

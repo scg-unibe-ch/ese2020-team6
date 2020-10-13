@@ -1,0 +1,37 @@
+$navigation-width: 250px;
+$title-height: 80px;
+
+
+.profile-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.navigation {
+  width: $navigation-width;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid black;
+}
+
+.content-wrapper {
+  width: calc(100% - #{$navigation-width});
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  width: 100%;
+  height: $title-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.content {
+  width: 100%;
+  height: calc(100% - #{$title-height});
+}

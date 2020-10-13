@@ -30,10 +30,13 @@ import { LogoutComponent } from './components/user/logout/logout.component';
 //    Create Account
 import { CreateAccountComponent } from './components/user/create-account/create-account.component';
 //    Profile
-//      User Profile
-import { UserProfileComponent } from './components/user/profile/user-profile/user-profile.component';
-//      Admin Profile
-import { AdminUserProfileComponent } from './components/user/profile/admin-user-profile/admin-user-profile.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+//      My Products
+import { MyProductsComponent } from './components/user/profile/my-products/my-products.component';
+//      Profile Navigation
+import { ProfileNavigationComponent } from './components/user/profile/profile-navigation/profile-navigation.component';
+//      User Details
+import { UserDetailsComponent } from './components/user/profile/user-details/user-details.component';
 //    Wallet
 import { WalletComponent } from './components/user/wallet/wallet.component';
 
@@ -89,8 +92,6 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     LogoutComponent,
     EmailValidatorDirective,
     PasswordValidatorDirective,
-    UserProfileComponent,
-    AdminUserProfileComponent,
     HouseNumberValidatorDirective,
     NounValidatorDirective,
     PhonenumberValidatorDirective,
@@ -107,6 +108,10 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     PostProductComponent,
     BuyProductComponent,
     ProductDetailComponentComponent,
+    ProfileComponent,
+    ProfileNavigationComponent,
+    MyProductsComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,8 +131,24 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
       { path: 'user/register', component: CreateAccountComponent },
-      { path: 'user/profile', component: UserProfileComponent },
-      { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
+      {
+        path: 'user/profile',
+        component: ProfileComponent,
+        children: [
+          {
+            path: 'details',
+            component: UserDetailsComponent
+          },
+          {
+            path: 'myproducts',
+            component: MyProductsComponent
+          },
+          {
+            path: 'createnewproduct',
+            component: PostProductComponent
+          }
+        ]
+      },
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
       { path: 'product/buy-product' , component: BuyProductComponent},

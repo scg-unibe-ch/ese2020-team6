@@ -1,0 +1,3 @@
+<button *ngFor="let navigationElement of navigationElements" [routerLink]="[navigationElement.path]" (click)="onNavigationElementClick(navigationElement)">
+  {{navigationElement.title}}
+</button>
