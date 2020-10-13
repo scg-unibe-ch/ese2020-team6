@@ -1,3 +1,4 @@
+import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -123,6 +124,7 @@ import { ProductInformationComponent } from './components/home/product/product-i
     MatTabsModule,
     MatToolbarModule,
     OverlayModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
@@ -138,6 +140,7 @@ import { ProductInformationComponent } from './components/home/product/product-i
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

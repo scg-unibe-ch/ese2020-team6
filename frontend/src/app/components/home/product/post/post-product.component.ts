@@ -7,6 +7,7 @@ import { PostProductRequestModel } from '../../../../models/request/product/post
 import { Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-post-product',
@@ -24,11 +25,20 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private snackBar: MatSnackBar
   ) { }
+
+  openSnackBar() {
+    this.snackBar.open('Your product is crated', '', {
+      duration: 2000,
+      panelClass: ['snackbar']
+    });
+  }
 
   onSubmit(form: NgForm) {
     this.productService.post(this).subscribe((values) => {console.log(values); });
+    this.openSnackBar();
     this.router.navigate(['/product/buy-product']);
   }
 

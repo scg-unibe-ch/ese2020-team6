@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 
+
 @Component({
   selector: 'app-product-information',
   templateUrl: './product-information.component.html',
@@ -19,5 +20,4 @@ export class ProductInformationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
