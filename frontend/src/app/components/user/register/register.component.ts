@@ -30,11 +30,10 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
       this.form = form;
       this.values = form.value;
       this.registerErrorMessage = '';
-      this.userService.register(this).subscribe((res: any) => {
-        this.registerSuccess();
-      }, (err: any) => {
-        this.registerError(err);
-      });
+      this.userService.register(this).subscribe(
+        (res: any) => this.registerSuccess(),
+        (err: any) => this.registerError(err)
+      );
     }
   }
 
@@ -51,21 +50,14 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    this.userService.login(this).subscribe((res: any) => {
-      this.loginSuccess(res)
-    });
+    this.userService.login(this).subscribe((res: any) => this.loginSuccess());
   }
 
   private registerError(err: any): void {
-    setTimeout(() => {  this.registerErrorMessage = err.error.message; }, 250);
+    setTimeout(() => this.registerErrorMessage = err.error.message, 250);
   }
 
-  private loginSuccess(res: any): void {
-    localStorage.setItem('userToken', res.token);
-    localStorage.setItem('userName', res.user.userName);
-    localStorage.setItem('userId', res.user.userId);
-    localStorage.setItem('isAdmin', res.user.isAdmin);
-    localStorage.setItem('wallet', res.user.wallet);
+  private loginSuccess(): void {
     this.form.resetForm();
     this.router.navigate(['']);
   }

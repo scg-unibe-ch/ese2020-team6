@@ -33,11 +33,10 @@ export class LoginComponent implements LoginUserRequestBuilder {
       this.form = form;
       this.values = form.value;
       this.loginErrorMessage = '';
-      this.userService.login(this).subscribe((res: any) => {
-        this.loginSuccess(res);
-      }, (err: any) => {
-        this.loginError(err);
-      });
+      this.userService.login(this).subscribe(
+        (res: any) => this.loginSuccess(),
+        (err: any) => this.loginError(err)
+      );
     }
   }
 
@@ -52,12 +51,12 @@ export class LoginComponent implements LoginUserRequestBuilder {
     };
   }
 
-  private loginSuccess(res: { token: string, user: UserModel }): void {
+  private loginSuccess(): void {
     this.form.resetForm();
     this.router.navigate(['']);
   }
 
   private loginError(err: any): void {
-    setTimeout(() => {  this.loginErrorMessage = err.error.message; }, 250);
+    setTimeout(() => this.loginErrorMessage = err.error.message, 250);
   }
 }
