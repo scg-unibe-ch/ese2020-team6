@@ -1,0 +1,15 @@
+<div class="profile-wrapper">
+  <div class="header-wrapper">
+    <div class="header">
+      <span class="username">{{user.userName}}</span>
+      <span class="id">user-id <span>#{{user.id}}</span></span>
+    </div>
+  </div>
+  <app-profile-navigation class="navigation-wrapper" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
+  <div class="title">
+    {{ currentContent.title }}
+  </div>
+  <div class="content-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</div>

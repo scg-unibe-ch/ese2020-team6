@@ -1,0 +1,25 @@
+.navigation {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row-gap: 10px;
+}
+
+.navigation-element {
+  border: 0;
+  cursor: pointer;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #EADACB;
+  transition: all .1s ease-out;
+}
+
+.navigation-element:focus {
+  outline: none;
+  border: 1px solid black;
+}
+
+.navigation-element:hover {
+  background: #EADACB;
+}

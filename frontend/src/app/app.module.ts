@@ -31,10 +31,13 @@ import { LogoutComponent } from './components/user/logout/logout.component';
 //    Create Account
 import {  RegisterComponent } from './components/user/register/register.component';
 //    Profile
-//      User Profile
-import { UserProfileComponent } from './components/user/profile/user-profile/user-profile.component';
-//      Admin Profile
-import { AdminUserProfileComponent } from './components/user/profile/admin-user-profile/admin-user-profile.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+//      My Products
+import { MyProductsComponent } from './components/user/profile/my-products/my-products.component';
+//      Profile Navigation
+import { ProfileNavigationComponent } from './components/user/profile/profile-navigation/profile-navigation.component';
+//      User Details
+import { UserDetailsComponent } from './components/user/profile/user-details/user-details.component';
 //    Wallet
 import { WalletComponent } from './components/user/wallet/wallet.component';
 
@@ -42,7 +45,7 @@ import { WalletComponent } from './components/user/wallet/wallet.component';
 //  Home
 import { HomeComponent } from './components/home/home.component';
 //  Login Bar
-import { LoginBarComponent } from './components/home/login-bar/login-bar.component';
+import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component';
 
 
 // Custom Form
@@ -70,18 +73,13 @@ import { ProductInformationComponent } from './components/home/product/product-i
 
 // ---------------------------------------------------------------------------------//
 
-
-
-// import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
-// import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
-// import { TodoListComponent } from './todo-list/todo-list.component';
-// import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
+import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginBarComponent,
+    MenuBarComponent,
     LoginComponent,
     RegisterComponent,
     SelectComponent,
@@ -91,8 +89,6 @@ import { ProductInformationComponent } from './components/home/product/product-i
     LogoutComponent,
     EmailValidatorDirective,
     PasswordValidatorDirective,
-    UserProfileComponent,
-    AdminUserProfileComponent,
     HouseNumberValidatorDirective,
     NounValidatorDirective,
     PhonenumberValidatorDirective,
@@ -100,14 +96,14 @@ import { ProductInformationComponent } from './components/home/product/product-i
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
-    // ErrorMessagesComponent,
-    // ErrorMessageComponent,
-    // TodoListComponent,
-    // TodoItemComponent,
     PasswordMatchValidatorDirective,
     WalletComponent,
     PostProductComponent,
     BuyProductComponent,
+    ProfileComponent,
+    ProfileNavigationComponent,
+    MyProductsComponent,
+    UserDetailsComponent,
     ProductInformationComponent
   ],
   imports: [
@@ -129,8 +125,26 @@ import { ProductInformationComponent } from './components/home/product/product-i
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
       { path: 'user/register', component: RegisterComponent },
-      { path: 'user/profile', component: UserProfileComponent },
-      { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
+      { path: 'user/profile', redirectTo: 'user/profile/' + defaultUserNavigationElements[defaultProfileComponent].path },
+      {
+        path: 'user/profile',
+        component: ProfileComponent,
+        data: defaultUserNavigationElements[defaultProfileComponent],
+        children: [
+          {
+            path: 'details',
+            component: UserDetailsComponent
+          },
+          {
+            path: 'myproducts',
+            component: MyProductsComponent
+          },
+          {
+            path: 'createnewproduct',
+            component: PostProductComponent
+          }
+        ]
+      },
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
       { path: 'product/buy-product' , component: BuyProductComponent},
