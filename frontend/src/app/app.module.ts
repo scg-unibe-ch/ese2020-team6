@@ -75,6 +75,7 @@ import { ProductInformationComponent } from './components/home/product/product-i
 
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { ApproveProductsComponent } from './components/user/profile/approve-products/approve-products.component';
+import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { ApproveProductsComponent } from './components/user/profile/approve-prod
     MyProductsComponent,
     UserDetailsComponent,
     ProductInformationComponent,
-    ApproveProductsComponent
+    ApproveProductsComponent,
+    UserIconComponent
   ],
   imports: [
     BrowserModule,
