@@ -1,14 +1,15 @@
 <div class="buy-wrapper-wrapper">
     <div class="buy-wrapper">
         <h1>Offers for you</h1>
-        <div class="card" *ngFor = "let product of products">
+        <mat-card [routerLink]="['/product/product-information', product.id]" class="card" *ngFor = "let product of products">
             <h3>{{product.title}}</h3>
             <div class="input-grid">
                 <div class="cards">{{product.description}}</div>
-                <div class="cards">Price: {{product.price}}</div>
+                <p class="cards">Price: {{product.price}}</p>
                 <p></p>
-                <div class="cards">Status: {{product.status}}</div>
+                <p class="cards">Status: {{product.status}}</p>
             </div>
-        <img src={{product.picture}}>
+            <img src={{product.picture}}>
+        </mat-card>
     </div>
 </div>

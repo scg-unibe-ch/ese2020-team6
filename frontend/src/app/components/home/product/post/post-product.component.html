@@ -13,7 +13,8 @@
         <app-select name="status" selectName="Status" ngModel #status="ngModel" [options]="['Aviable', 'Lent', 'Sold']"></app-select>
       </div>
       <label>Picture
-        <input class="picture" name="picture" ngModel #picture="ngModel" type="file" size="50" accept="png, jpg">
+        <input class="picture" name="picture" ngModel #picture="ngModel" 
+        type="file" (change)="onFileChanged($event)" size="50" accept="png, jpg">
       </label>
       <div class="input-grid">
         <div class="action-wrapper">
@@ -22,14 +23,19 @@
           </button>
         </div>
         <div class="action-wrapper">
-            <button type="submit" name="button">Create</button>
+            <button type="submit" (click)="openSnackBar()" name="button">Create</button>
         </div>
       </div>
     </form>
 
     <!-- This template displays the overlay content and is connected to the button -->
     <ng-template #preview>
-      <app-product-detail-component [data]="productData"></app-product-detail-component>
+      <div class="buy-wrapper-wrapper">
+        <div class="buy-wrapper">
+            <h2>Your product</h2>
+            <app-product-information [data]="productData" [isPreview]="true"></app-product-information>
+        </div>
+      </div>
     </ng-template>
     
   </div>

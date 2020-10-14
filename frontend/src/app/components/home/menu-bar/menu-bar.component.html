@@ -1,0 +1,19 @@
+<div class="login-bar-wrapper">
+  <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
+    <button (click)="toggleDropDown()" class="dropdown-toggle button-full-po">{{userName}}</button>
+    <div [ngClass]="{'collapse': !showDropdown, 'expand': showDropdown, 'land': newReload}" class="dropdown">
+      <div class="dropdown-wrapper">
+        <button class="button-empty" [routerLink]="['/user/profile']">Profile</button>
+        <hr>
+        <app-logout></app-logout>
+      </div>
+    </div>
+  </div>
+  <ng-template #notLoggedIn>
+    <div class="not-logged-in" [routerLink]="['/user/login']">
+      <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+        <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>
+      </svg>
+    </div>
+  </ng-template>
+</div>

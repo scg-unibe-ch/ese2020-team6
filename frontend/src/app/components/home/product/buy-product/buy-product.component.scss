@@ -12,15 +12,37 @@
     padding: 40px;
     border: 2px solid #2f2f36;
   }
+h1 {
+  height: auto;
+  letter-spacing: 10px;
+  color: #8a838a;
+  text-transform: uppercase;
+}
 
 h3 {
-    border: 0;
-    background: transparent;
-    width: 100%;
-    padding: 8px 0 5px 0;
-    font-size: 16px;
-    transition: all .2s ease-in-out;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #352e34;
+  margin-bottom: 1em;
+  margin-top: 1em;
   }
+
+p {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #352e34;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 0.4em;
+  padding-left: 1em;
+}
+
+.card:hover { box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); }
 
 .cards {
     margin-top: 0.4em;

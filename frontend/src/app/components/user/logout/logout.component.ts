@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-logout',
@@ -8,11 +9,13 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) { }
 
-  // tslint:disable-next-line: typedef
-  logout() {
-    localStorage.clear();
+  public onSubmit(): void {
+    this.userService.logout();
     this.router.navigate(['user/login']);
   }
 }

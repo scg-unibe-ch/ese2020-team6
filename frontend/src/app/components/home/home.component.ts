@@ -18,15 +18,6 @@ export class HomeComponent {
     private httpClient: HttpClient,
     private router: Router
   ) { }
-/*
-  buy() {
-    this.httpClient.get(environment.endpointURL + 'secured/buy').subscribe((res: any) => {
-      this.buyMessage = res.message;
-    }, (error: any) => {
-      this.buyMessage = 'Not implemented yet!';
-    });
-  }
-*/
 
   post(): any {
     this.httpClient.get(environment.endpointURL + 'secured/post').subscribe((res: any) => {

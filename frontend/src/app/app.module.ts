@@ -1,3 +1,4 @@
+import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -28,12 +29,15 @@ import { LoginComponent } from './components/user/login/login.component';
 //    Logout
 import { LogoutComponent } from './components/user/logout/logout.component';
 //    Create Account
-import { CreateAccountComponent } from './components/user/create-account/create-account.component';
+import {  RegisterComponent } from './components/user/register/register.component';
 //    Profile
-//      User Profile
-import { UserProfileComponent } from './components/user/profile/user-profile/user-profile.component';
-//      Admin Profile
-import { AdminUserProfileComponent } from './components/user/profile/admin-user-profile/admin-user-profile.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+//      My Products
+import { MyProductsComponent } from './components/user/profile/my-products/my-products.component';
+//      Profile Navigation
+import { ProfileNavigationComponent } from './components/user/profile/profile-navigation/profile-navigation.component';
+//      User Details
+import { UserDetailsComponent } from './components/user/profile/user-details/user-details.component';
 //    Wallet
 import { WalletComponent } from './components/user/wallet/wallet.component';
 
@@ -41,7 +45,7 @@ import { WalletComponent } from './components/user/wallet/wallet.component';
 //  Home
 import { HomeComponent } from './components/home/home.component';
 //  Login Bar
-import { LoginBarComponent } from './components/home/login-bar/login-bar.component';
+import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component';
 
 
 // Custom Form
@@ -65,23 +69,20 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 import { PostProductComponent } from './components/home/product/post/post-product.component';
 import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
-import { ProductDetailComponentComponent } from './components/home/product/product-detail-component/product-detail-component.component';
+import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
+
 // ---------------------------------------------------------------------------------//
 
-
-
-// import { ErrorMessagesComponent } from './custom-form/error-messages/error-messages.component';
-// import { ErrorMessageComponent } from './custom-form/error-messages/error-message/error-message.component';
-// import { TodoListComponent } from './todo-list/todo-list.component';
-// import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
+import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
+import { ApproveProductsComponent } from './components/user/profile/approve-products/approve-products.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginBarComponent,
+    MenuBarComponent,
     LoginComponent,
-    CreateAccountComponent,
+    RegisterComponent,
     SelectComponent,
     TextInputComponent,
     NumberInputComponent,
@@ -89,8 +90,6 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     LogoutComponent,
     EmailValidatorDirective,
     PasswordValidatorDirective,
-    UserProfileComponent,
-    AdminUserProfileComponent,
     HouseNumberValidatorDirective,
     NounValidatorDirective,
     PhonenumberValidatorDirective,
@@ -98,15 +97,16 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
-    // ErrorMessagesComponent,
-    // ErrorMessageComponent,
-    // TodoListComponent,
-    // TodoItemComponent,
     PasswordMatchValidatorDirective,
     WalletComponent,
     PostProductComponent,
     BuyProductComponent,
-    ProductDetailComponentComponent,
+    ProfileComponent,
+    ProfileNavigationComponent,
+    MyProductsComponent,
+    UserDetailsComponent,
+    ProductInformationComponent,
+    ApproveProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -122,20 +122,45 @@ import { ProductDetailComponentComponent } from './components/home/product/produ
     MatTabsModule,
     MatToolbarModule,
     OverlayModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'user/login', component: LoginComponent },
-      { path: 'user/register', component: CreateAccountComponent },
-      { path: 'user/profile', component: UserProfileComponent },
-      { path: 'user/admin-user-profile', component: AdminUserProfileComponent },
+      { path: 'user/register', component: RegisterComponent },
+      { path: 'user/profile', redirectTo: 'user/profile/' + defaultUserNavigationElements[defaultProfileComponent].path },
+      {
+        path: 'user/profile',
+        component: ProfileComponent,
+        data: defaultUserNavigationElements[defaultProfileComponent],
+        children: [
+          {
+            path: 'details',
+            component: UserDetailsComponent
+          },
+          {
+            path: 'myproducts',
+            component: MyProductsComponent
+          },
+          {
+            path: 'createnewproduct',
+            component: PostProductComponent
+          },
+          {
+            path: 'approveproducts',
+            component: ApproveProductsComponent
+          }
+        ]
+      },
       { path: 'user/wallet' , component: WalletComponent},
       { path: 'product/post' , component: PostProductComponent},
       { path: 'product/buy-product' , component: BuyProductComponent},
+      { path: 'product/product-information/:id' , component: ProductInformationComponent}
     ]),
     NgbModule
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
