@@ -7,6 +7,8 @@ import { RegisterUserRequestBuilder } from '../../models/request/user/register/r
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
 import { UserModel } from '../../models/user/user.model';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +20,23 @@ export class UserService {
   constructor(
     private loginUserService: LoginUserService,
     private logoutUserService: LogoutUserService,
-    private registerUserService: RegisterUserService
-  ) { }
+    private registerUserService: RegisterUserService,
+    private httpClient: HttpClient
+  ) {
+    if (localStorage.getItem('userId')) {
+        httpClient.get(environment.endpointURL + 'user/userid:' + localStorage.getItem('userId')).subscribe((res: any) => {
+          this._user = res;
+        });
+    }
+  }
 
-  public login(requestBuilder: LoginUserRequestBuilder): Observable<Object> {
-    const loginResponse: Observable<Object> = this.loginUserService.login(requestBuilder);
-    loginResponse.subscribe((res: LoginUserResponseModel) => this.loginSuccess(res));
-    return loginResponse;
+  public login(requestBuilder: LoginUserRequestBuilder): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.loginUserService.login(requestBuilder).subscribe((res: LoginUserResponseModel) => {
+        this.loginSuccess(res);
+        resolve(true);
+      }, (err: any) => reject(err))
+    });
   }
 
   private loginSuccess(res: LoginUserResponseModel): void {
@@ -38,22 +50,19 @@ export class UserService {
 
   private saveUserToLocalStorage(token: string): void {
     localStorage.setItem('userToken', token);
-    localStorage.setItem('userName', this.user.userName);
     localStorage.setItem('userId', this.user.userId.toString());
-    localStorage.setItem('isAdmin', this.user.isAdmin.toString());
-    localStorage.setItem('wallet', this.user.wallet.toString());
   }
 
   get user(): UserModel {
-    return this._user;
+    return this.isLoggedIn ? this._user : null;
   }
 
   get isLoggedIn(): boolean {
-    return this.user ? true : false;
+    return this._user ? true : false;
   }
 
   get isAdmin(): boolean {
-    return this.user.isAdmin;
+    return this.isLoggedIn ? this.user.isAdmin : false;
   }
 
   public logout(): void {

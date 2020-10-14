@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../../services/user/user.service';
 
 
 @Component({
@@ -10,25 +11,20 @@ export class MenuBarComponent {
   private showDropdown: boolean = false;
   private newReload: boolean = true;
 
+  constructor(
+    private userService: UserService
+  ) { }
+
   toggleDropDown(): void {
     this.showDropdown = !this.showDropdown;
     this.newReload = false;
   }
 
   get userName(): string {
-    return localStorage.getItem('userName');
+    return this.userService.user.userName;
   }
 
   get isLoggedIn(): boolean {
-      return localStorage.getItem('userToken') ? true : false;
+    return this.userService.isLoggedIn;
   }
-
-  get isAdmin(): boolean {
-    return JSON.parse(localStorage.getItem('isAdmin'));
-  }
-
-  getUserName(): string {
-    return localStorage.getItem('userName');
-  }
-
 }

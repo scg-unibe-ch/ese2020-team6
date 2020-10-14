@@ -50,7 +50,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    this.userService.login(this).subscribe((res: any) => this.loginSuccess());
+    this.userService.login(this).then((res: any) => this.loginSuccess());
   }
 
   private registerError(err: any): void {

@@ -33,10 +33,9 @@ export class LoginComponent implements LoginUserRequestBuilder {
       this.form = form;
       this.values = form.value;
       this.loginErrorMessage = '';
-      this.userService.login(this).subscribe(
-        (res: any) => this.loginSuccess(),
-        (err: any) => this.loginError(err)
-      );
+      this.userService.login(this)
+        .then((res: boolean) => this.loginSuccess())
+        .catch((err: any) => this.loginError(err));
     }
   }
 
