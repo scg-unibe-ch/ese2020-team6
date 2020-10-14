@@ -23,10 +23,14 @@ export class UserService {
     private registerUserService: RegisterUserService,
     private httpClient: HttpClient
   ) {
+    this.getUserFromLocalStorage();
+  }
+
+  private getUserFromLocalStorage(): void {
     if (localStorage.getItem('userId')) {
-        httpClient.get(environment.endpointURL + 'user/userid:' + localStorage.getItem('userId')).subscribe((res: any) => {
-          this._user = res;
-        });
+      this.httpClient.get(environment.endpointURL + 'user/userid:' + localStorage.getItem('userId')).subscribe((res: any) => {
+        this._user = res;
+      });
     }
   }
 
@@ -62,7 +66,7 @@ export class UserService {
   }
 
   get isAdmin(): boolean {
-    return this.isLoggedIn ? this.user.isAdmin : false;
+    return true//return this.isLoggedIn ? this.user.isAdmin : false;
   }
 
   public logout(): void {
