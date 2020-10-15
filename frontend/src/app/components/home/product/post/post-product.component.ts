@@ -47,10 +47,12 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       title: '',
       description: '',
       price: 0,
+      category: '',
       offerType: '',
       productType: '',
       picture: '',
-      status: ''
+      status: '',
+      location: ''
     };
   }
   onFileChanged(event) {

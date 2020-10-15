@@ -6,5 +6,7 @@ export interface PostProductRequestModel {
   picture: string; // <- custom type
   offerType: string;
   productType: string;
+  category: string;
+  location: string;
 
 }
