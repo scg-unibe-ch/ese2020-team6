@@ -1,7 +1,6 @@
 //Models
 import { UserModel } from '../../../user/user.model';
 
-export interface LoginUserResponseModel {
-  token: string;
+export interface RegisterUserResponseModel {
   user: UserModel;
 }

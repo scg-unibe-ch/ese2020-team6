@@ -1,8 +1,8 @@
 <div class="profile-wrapper">
   <div class="header-wrapper">
     <div class="header">
-      <span class="username">{{userName | async}}</span>
-      <span class="id">user-id <span>#{{userId | async}}</span></span>
+      <span class="username">{{userName}}</span>
+      <span class="id">user-id <span>#{{userId}}</span></span>
     </div>
   </div>
   <app-profile-navigation class="navigation-wrapper" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
