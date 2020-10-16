@@ -31,4 +31,9 @@ export class PostProductService {
     return this.httpClient.get(
       environment.endpointURL + 'user/profile/myproducts:' + id);
   }
+
+  public deleteProduct(id: number): Observable<any> {
+    return this.httpClient.delete(
+      environment.endpointURL + 'product/delete:' + id);
+  }
 }
