@@ -1,0 +1,10 @@
+$primary: #4F8AC9;
+
+path {
+  stroke: $primary;
+  stroke-width: 4%;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: $primary;
+  transform: rotate(-90deg);
+}

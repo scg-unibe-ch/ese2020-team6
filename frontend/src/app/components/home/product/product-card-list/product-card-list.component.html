@@ -1,4 +1,4 @@
-<div class="product-card">
+<div class="product-card" [routerLink]="['/product/information', product.productId]">
   <div class="picture">
     <img src="/assets/XAMPP.png" alt=""> <!--placeholder image-->
   </div>
@@ -12,8 +12,8 @@
     <div>{{product.description ? product.description : 'No Description available!'}}</div>
   </div>
   <div class="go-to-product">
-    <svg class="svg-icon-34" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
-      <path class="path-1" d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
+    <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+      <path d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
     </svg>
   </div>
   <div class="details">

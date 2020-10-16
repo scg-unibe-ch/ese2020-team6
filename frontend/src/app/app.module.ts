@@ -102,6 +102,7 @@ import { PasswordMatchValidatorDirective } from './components/custom-form/valida
 import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
+import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { UserIconComponent } from './components/icons/user-icon/user-icon.compon
     UserDetailsComponent,
     ProductInformationComponent,
     UserIconComponent,
-    ApproveProductsComponent
+    ApproveProductsComponent,
+    AngleIconComponent
   ],
   imports: [
     BrowserModule,
