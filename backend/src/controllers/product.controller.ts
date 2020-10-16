@@ -19,7 +19,6 @@ productController.get('/buyProduct',
 productController.get('/productInformation::id',
     (req: Request, res: Response) => {
         const id: number = +req.params.id;
-        console.log(req.params);
         productService.get(id).then((product: any) => res.send(product)).catch((err: any) => {
             console.log(err);
             res.status(500).send(err); });

@@ -2,9 +2,9 @@ import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequeliz
 
 export interface ProductsAttributes { // maybe rename
     productId: number; // rename
-    titel: string;
+    title: string;
     description: string;
-    productPrice: number; // rename
+    price: number; // rename
     category: string;
     location: string;
     productType: string;
@@ -20,9 +20,9 @@ export interface GoodsCreationAttributes extends Optional<ProductsAttributes, 'p
 
 export class Products extends Model<ProductsAttributes, GoodsCreationAttributes> implements ProductsAttributes {
     productId!: number; // rename
-    titel!: string;
+    title!: string;
     description!: string;
-    productPrice!: number; // rename
+    price!: number; // rename
     category!: string;
     location!: string;
     productType!: string;
@@ -40,7 +40,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 autoIncrement: true,
                 primaryKey: true
             },
-            titel: {
+            title: {
                 type: DataTypes.STRING,
                 allowNull: true
             },
@@ -48,7 +48,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 type: DataTypes.STRING,
                 allowNull: true
             },
-            productPrice: {
+            price: {
                 type: DataTypes.INTEGER,
                 allowNull: true
             },
