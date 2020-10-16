@@ -7,7 +7,7 @@ $header-default-color: black;
 
 
 .profile-wrapper {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: $navigation-width auto;

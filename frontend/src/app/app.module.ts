@@ -63,7 +63,7 @@ import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component'
 import { PostProductComponent } from './components/home/product/post/post-product.component';
 import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
 import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
-
+import { ProductCardListComponent } from './components/home/product/product-card-list/product-card-list.component';
 
 
 // Custom Form
@@ -123,6 +123,7 @@ import { defaultUserNavigationElements, defaultProfileComponent } from './compon
     UserDetailsComponent,
     ProductInformationComponent,
     ApproveProductsComponent,
+    ProductCardListComponent,
     //Validators
     EmailValidatorDirective,
     PasswordValidatorDirective,

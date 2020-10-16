@@ -1,0 +1,30 @@
+<div class="product-card">
+  <div class="picture">
+    <img src="/assets/XAMPP.png" alt=""> <!--placeholder image-->
+  </div>
+  <div class="title bottom-left-card">
+    <div>{{product.title ? product.title : 'No Title available!'}}</div>
+  </div>
+  <div class="price">
+    <div>Price: {{product.price ? product.price : 'No Pricing available!'}}</div>
+  </div>
+  <div class="description">
+    <div>{{product.description ? product.description : 'No Description available!'}}</div>
+  </div>
+  <div class="go-to-product">
+    <svg class="svg-icon-34" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+      <path class="path-1" d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
+    </svg>
+  </div>
+  <div class="details">
+    <div class="offer-type details-child" [ngClass]="detailsPillColorClass(product.offerType)">
+      <div>{{product.offerType}}</div>
+    </div>
+    <div class="product-type details-child" [ngClass]="detailsPillColorClass(product.productType)">
+      <div>{{product.productType}}</div>
+    </div>
+    <div class="status details-child" [ngClass]="[statusPillColorClass, detailsPillColorClass(product.status)]">
+      <div>{{product.status}}</div>
+    </div>
+  </div>
+</div>
