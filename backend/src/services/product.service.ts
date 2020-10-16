@@ -2,6 +2,7 @@
 import { Products, ProductsAttributes } from '../models/products.model';
 
 export class ProductService {
+    product: any;
 
     public create(product: ProductsAttributes): Promise<ProductsAttributes> {
         return Products.create(product).then(
@@ -20,11 +21,17 @@ export class ProductService {
         });
     }
 
-    public getMyProducts(id: number): Promise<Products> {
-        return Products.findOne({
+    public delete(id: number): Promise<Products> {
+        this.product = Products.findOne({
+            where: {
+              productId: id
+            }
+          });
+        Products.destroy({
           where: {
-            userId: id
+            productId: id
           }
         });
+        return this.product;
     }
 }

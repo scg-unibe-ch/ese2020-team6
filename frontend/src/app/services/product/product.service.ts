@@ -28,4 +28,9 @@ export class ProductService {
   public getMyProducts(id: number): Observable<any> {
     return this.postProductService.getMyProducts(id);
   }
+
+  public deleteProduct(id: number): Observable<any> {
+    console.log(id, 'dddddddddddddddddddddddddddddwwwwwww');
+    return this.postProductService.deleteProduct(id);
+  }
 }

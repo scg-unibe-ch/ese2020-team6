@@ -1,9 +1,6 @@
-// Packages
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-// Services
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
-import { UserService } from '../../../../services/user/user.service';
 // Models
 //import { ProductModel } from '../../../../models/product/product.model'; implemented in other branch
 
@@ -14,22 +11,26 @@ import { UserService } from '../../../../services/user/user.service';
   styleUrls: ['./product-information.component.scss']
 })
 export class ProductInformationComponent implements OnInit {
+  @Input() data: any;
+  @Input() isPreview = false;
+  id: number;
+  productId: any;
+  productService: ProductService;
 
   //public product: ProductModel; implemented in other branch
   public product: any = {};
   public isNotCreator: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private userService: UserService
-  ) {
+  constructor(private route: ActivatedRoute, productService: ProductService) {
+    this.productService = productService;
    }
 
    public ngOnInit(): void {
      this.route.params.subscribe((params: {productId: string}) => {
          this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
            this.product = product;
+           this.productId = product.productId;
+
          });
        });
    }
@@ -55,5 +56,10 @@ export class ProductInformationComponent implements OnInit {
   //remove later (for demo)
   toggleCreator() {
     this.isNotCreator = !this.isNotCreator;
+  }
+
+  deleteProduct(): void {
+    this.productService.deleteProduct(this.productId).subscribe(
+      product => console.log(product));
   }
 }
