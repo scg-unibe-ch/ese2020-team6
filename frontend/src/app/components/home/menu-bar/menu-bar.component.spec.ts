@@ -1,24 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoginBarComponent } from './login-bar.component';
-
-describe('LoginBarComponent', () => {
-  let component: LoginBarComponent;
-  let fixture: ComponentFixture<LoginBarComponent>;
-
+import { MenuBarComponent } from './menu-bar.component';
+describe('MenuBarComponent', () => {
+  let component: MenuBarComponent;
+  let fixture: ComponentFixture<MenuBarComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginBarComponent ]
+      declarations: [ MenuBarComponent ]
     })
     .compileComponents();
   }));
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginBarComponent);
+    fixture = TestBed.createComponent(MenuBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
