@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ValueAccessorBase } from 'src/app/components/custom-form/value-accessor-base';
 
 @Component({
   selector: 'app-post-product',
@@ -37,22 +38,25 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   onSubmit(form: NgForm) {
-    this.productService.post(this).subscribe((values) => {console.log(values); });
-    this.openSnackBar();
-    this.router.navigate(['/product/buy-product']);
+    this.form = form;
+    this.productService.post(this).subscribe((values) => {
+      console.log(values);
+      this.openSnackBar();
+    });
+    this.router.navigate(['/user/profile/myproducts']);
   }
 
   public build(): PostProductRequestModel {
     return {
-      title: '',
-      description: '',
-      price: 0,
-      category: '',
-      offerType: '',
-      productType: '',
-      picture: '',
-      status: '',
-      location: ''
+      title: this.form.value.title,
+      description: this.form.value.description,
+      price: this.form.value.price,
+      category: this.form.value.category,
+      offerType: this.form.value.offerType,
+      productType: this.form.value.productType,
+      picture: this.form.value.picture,
+      status: this.form.value.status,
+      location: this.form.value.location
     };
   }
   onFileChanged(event) {

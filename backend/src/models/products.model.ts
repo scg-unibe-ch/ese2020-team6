@@ -5,8 +5,11 @@ export interface ProductsAttributes { // maybe rename
     titel: string;
     description: string;
     productPrice: number; // rename
-    // image?
     category: string;
+    location: string;
+    productType: string;
+    offerType: string;
+    picture: string;
     subcategory: string;
     expirationDate: number;
     status: string;
@@ -21,6 +24,10 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     description!: string;
     productPrice!: number; // rename
     category!: string;
+    location!: string;
+    productType!: string;
+    offerType!: string;
+    picture!: string;
     subcategory!: string;
     expirationDate!: number;
     status!: string;
@@ -35,35 +42,47 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             },
             titel: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             description: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             productPrice: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             category: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
+            },
+            location: {
+                type: DataTypes.STRING
+            },
+            productType: {
+                type: DataTypes.STRING
+            },
+            offerType: {
+                type: DataTypes.STRING
+            },
+            picture: {
+                type: DataTypes.STRING
             },
             subcategory: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             expirationDate: {
                 type: DataTypes.NUMBER,
-                allowNull: false
+                allowNull: true
             },
             status: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             workingStatus: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
 
         },
