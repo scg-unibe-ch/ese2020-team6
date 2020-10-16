@@ -2,8 +2,11 @@ import { UserAttributes, User } from '../models/user.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Products } from '../models/products.model';
+import { any } from 'sequelize/types/lib/operators';
 
 export class UserService {
+  datas: any;
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
@@ -52,4 +55,12 @@ export class UserService {
         }
       });
     }
+    public getMyProducts(id: number): Promise<Products> {
+      this.datas = Products.findAll({
+        where: {
+            userId: id
+        }
+    });
+    return this.datas;
+  }
 }

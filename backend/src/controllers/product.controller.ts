@@ -27,4 +27,5 @@ productController.get('/productInformation::id',
 
 
 
+
 export const ProductController: Router = productController;

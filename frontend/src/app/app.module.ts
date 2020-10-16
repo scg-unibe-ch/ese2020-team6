@@ -143,8 +143,8 @@ import { UserIconComponent } from './components/icons/user-icon/user-icon.compon
     MyProductsComponent,
     UserDetailsComponent,
     ProductInformationComponent,
-    
-    UserIconComponent
+    UserIconComponent,
+    ApproveProductsComponent
   ],
   imports: [
     BrowserModule,

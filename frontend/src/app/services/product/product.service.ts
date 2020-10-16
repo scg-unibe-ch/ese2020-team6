@@ -24,4 +24,8 @@ export class ProductService {
   public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {
     return this.postProductService.post(requestBuilder);
   }
+
+  public getMyProducts(id: number): Observable<any> {
+    return this.postProductService.getMyProducts(id);
+  }
 }

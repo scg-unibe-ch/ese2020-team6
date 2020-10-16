@@ -18,7 +18,6 @@ export class ProfileComponent {
 
   public navigationElements = defaultUserNavigationElements;
   public currentContent: ProfileNavigationElementModel;
-
   public userName: string;
   public userId: number;
 
@@ -35,8 +34,10 @@ export class ProfileComponent {
       userService.userObservable.subscribe((user: UserModel) => {
         this.userName = user.userName;
         this.userId = user.userId;
-        if (user.isAdmin) this.navigationElements = adminNavigationElements;
-      })
+        if (user.isAdmin) {
+          this.navigationElements = adminNavigationElements;
+        }
+      });
     }
   }
 
