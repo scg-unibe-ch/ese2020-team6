@@ -49,6 +49,11 @@
 
 .logged-in {
   position: relative;
+  min-width: 200px;
+}
+
+.logged-in > button {
+  width: 100%;
 }
 
 .dropdown-toggle {
