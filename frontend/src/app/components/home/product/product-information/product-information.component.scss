@@ -1,65 +1,96 @@
 
-.product {
-    display: block;
-    margin: 2em;
+.container {
+  display: block;
+  margin: 5em;
+
 }
-    
-.card {
-    padding: 10px;
+
+.imgcard {
+    max-width: 80%;
+    margin-top: 2em;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 400px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-        border-radius: 4px;
-        width: 100%;
+      transition: 0.3s;
+      border-radius: 4px;
+      width: 100%;
 }
-  
-h2 {
-    height: auto;
-    letter-spacing: 10px;
-    color: #8a838a;
-    text-transform: uppercase;
+
+.card {
+  padding: 10px;
+  display: flex;
+  justify-content: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 4px;
+    width: 100%;
 }
-  
+
+.status {
+  font-size: 20px;
+  align-self: start;
+  height: auto;
+  letter-spacing: 2px;
+  color: #8a838a;
+  text-transform: uppercase;
+}
+
 h1 {
+  margin-left: 0.3em;
+  align-self: start;
+  font-size: 40px;
+  letter-spacing: 2px;
+  color: #352e34;
+  margin-bottom: 1em;
+}
+
+.price {
+  margin-left: 2em;
+  font-size: 20px;
+  align-self: start;
+  height: auto;
+  color: #8a838a;
+  letter-spacing: 4px;
+}
+
+p {
+    align-self: flex-start;
+    margin-left: 0.75em;
     font-size: 20px;
     letter-spacing: 2px;
     color: #352e34;
-    margin-bottom: 2em;
 }
-  
-p {
-    font-size: 15px;
-    letter-spacing: 2px;
-    color: #352e34;
-}
-  
+
 .innerCard {
+    align-self: start;
     padding: 5px;
     height: 10em;
+    width: 100%;
     background: #dba2951e;
     color: #8a838a;
     overflow-x: auto;
 }
-  
-.grid {
+
+.priceAndStatus {
+    align-self: start;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 2em;
+    margin-bottom: 5em;
 }
-  
-.price {
-    color: #8a838a;
-    letter-spacing: 4px;
-}
+
 
 img {
     margin-top: 2em;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 300px;
 }
 
 .button-full-po {
-    position: absolute;
-    left: 80%;
-    margin-top: 1em;
+  position: absolute;
+  left: 50%;
+  margin-top: 3em;
+  margin-bottom: 3em;
 }

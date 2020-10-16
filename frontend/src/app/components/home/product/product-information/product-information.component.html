@@ -1,18 +1,53 @@
-<div class="product">
-    <mat-card class="card">
-        <h1>{{data.title}} </h1>
-        <p>An {{data.productType}} for {{data.offerType}}</p>
-        <div class="innerCard">{{data.description}}</div>
-        <div class="grid">
-            <div class="price">Price: CHF {{data.price}}</div>
-            <p>{{data.status}} </p>
-        </div>
+<app-menu-bar height="60%" width="60%"></app-menu-bar>
+<div class="container">
+  <h1>Product Page</h1>
+  <div class="row text-center no-gutters">
+    <div class="col">
+      <mat-card class="imgcard">
         <div *ngIf="!isPreview">
-            <img src={{data.picture}}>
+          <img src={{data.picture}}>
         </div>
-    </mat-card>
-        <mat-card-actions *ngIf="!isPreview">
-            <button class="button-full-po" [routerLink]="['/user/wallet']">Buy Product</button>
-        </mat-card-actions>
-    
+      </mat-card>
+      <button class="button-full-po" [routerLink]="['/product/buy-product']">back</button>
+    </div>
+    <div class="col">
+      <mat-card class="card">
+        <h1>{{data.title}} </h1>
+        <p>This {{data.productType}} is for {{data.offerType}}</p>
+        <div class="priceAndStatus">
+          <div class="status">Status: {{data.status}}</div>
+          <div class="price">Price: CHF {{data.price}}</div>
+          <button class="button-full-po" [routerLink]="['/user/wallet']">{{data.offerType}} Product</button>
+        </div>
+          <table class="table table-hover">
+            <tbody>
+              <tr class="table-active">
+                <th scope="row"><p>Type:</p></th>
+                <td><p>{{data.productType}}</p></td>
+              </tr>
+              <tr>
+                <th scope="row"> <p>Location:</p>
+                </th>
+                <td><p>{{data.location}}</p>
+                </td>
+              </tr>
+              <tr class="table-active">
+                <th scope="row"><p>Category:</p></th>
+                <td><p>{{data.category}}</p></td>
+              </tr>
+              <tr>
+                <th scope="row"><p>Deliverable:</p></th>
+                <td><p>{{data.deliverable}}</p></td>
+              </tr>
+            </tbody>
+          </table>
+        <p>Description: </p>
+        <div class="innerCard">
+          {{data.description}}
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <mat-card-actions *ngIf="!isPreview">
+  </mat-card-actions>
 </div>

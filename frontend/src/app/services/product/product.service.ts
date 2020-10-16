@@ -14,8 +14,8 @@ export class ProductService {
   ) { }
 
   public get(id: number): any {
-    // TODO: Implement    
-    
+    // TODO: Implement
+
     // only for testing till backend ready
     this.products = [
       {
@@ -26,7 +26,10 @@ export class ProductService {
         offerType: 'sell',
         productType: 'item',
         status: 'aviable',
-        picture: '../../../../../assets/testImage1.jpeg'
+        picture: '../../../../../assets/testImage1.jpeg',
+        location: 'bern',
+        category: 'Möbel',
+        deliverable: 'yes'
       },
       {
         id: 1,
@@ -36,7 +39,10 @@ export class ProductService {
         offerType: 'sell',
         productType: 'item',
         status: 'aviable',
-        picture: '../../../../../assets/testImage2.jpeg'
+        picture: '../../../../../assets/testImage2.jpeg',
+        location: 'zürich',
+        category: 'Küche',
+        deliverable: 'no'
       }
     ];
     return this.products[id];
