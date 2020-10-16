@@ -60,7 +60,7 @@ export class UserService {
     localStorage.setItem('userId', res.user.userId.toString());
   }
 
-  public isLoggedIn(): boolean {
+  get isLoggedIn(): boolean {
     return this.userObservable ? true : false;
   }
 

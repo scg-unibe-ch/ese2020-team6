@@ -31,7 +31,7 @@ export class ProfileComponent {
       this.currentContent = navigationElement;
     });
 
-    if (userService.isLoggedIn()) {
+    if (userService.isLoggedIn) {
       userService.userObservable.subscribe((user: UserModel) => {
         this.userName = user.userName;
         this.userId = user.userId;

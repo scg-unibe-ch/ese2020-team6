@@ -21,7 +21,7 @@ export class MenuBarComponent {
   constructor(
     private userService: UserService
   ) {
-    if(userService.isLoggedIn()) {
+    if(userService.isLoggedIn) {
         userService.userObservable.subscribe((user: UserModel) => {
         this.isLoggedIn = true;
         this.userName = user.userName;
