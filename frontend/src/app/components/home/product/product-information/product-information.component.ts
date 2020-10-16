@@ -17,8 +17,8 @@ export class ProductInformationComponent implements OnInit {
   constructor(private route: ActivatedRoute, productService: ProductService) {
     this.route.params.subscribe(
       params => {
-        console.log(params.id);
-        productService.get(params.id).subscribe(product => this.data = product);
+        console.log(params.productId);
+        productService.get(params.productId).subscribe(product => this.data = product);
       });
    }
 
