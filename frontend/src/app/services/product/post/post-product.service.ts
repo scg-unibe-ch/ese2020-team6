@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { PostProductRequestBuilder } from '../../../models/request/product/post/post-product-request-builder.interface';
-import { Observable, Subscription } from 'rxjs';
+import { identity, Observable, Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostProductService {
-
   constructor(
-    private httpClient: HttpClient
-  ) { }
+    private httpClient: HttpClient,
+  ) {
+  }
 
   public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {
-    return this.httpClient.post(environment.endpointURL + 'product/post', requestBuilder.build());
+    return this.httpClient.post(
+      environment.endpointURL + 'product/post', requestBuilder.build());
+  }
+
+  public getAll(): Observable<any> {
+    return this.httpClient.get(environment.endpointURL + 'product/buyProduct');
+  }
+
+  public get(id: number): Observable<any> {
+    return this.httpClient.get(
+      environment.endpointURL + 'product/productInformation:' + id);
   }
 }

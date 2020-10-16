@@ -13,33 +13,12 @@ export class ProductService {
     private postProductService: PostProductService
   ) { }
 
-  public get(id: number): any {
-    // TODO: Implement    
-    
-    // only for testing till backend ready
-    this.products = [
-      {
-        id: 0,
-        title: 'Schöner Tisch',
-        price: 50,
-        description: 'Ein sehr schöner Tisch aus dem Jahre 1768',
-        offerType: 'sell',
-        productType: 'item',
-        status: 'aviable',
-        picture: '../../../../../assets/testImage1.jpeg'
-      },
-      {
-        id: 1,
-        title: 'Sehr schneller Kochherd',
-        price: 700,
-        description: 'Guter Kochherd, der ausgesprochen schnell kocht',
-        offerType: 'sell',
-        productType: 'item',
-        status: 'aviable',
-        picture: '../../../../../assets/testImage2.jpeg'
-      }
-    ];
-    return this.products[id];
+  public getAll(): Observable<any> {
+    return this.postProductService.getAll();
+  }
+
+  public get(id: number): Observable<any> {
+    return this.postProductService.get(id);
   }
 
   public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {

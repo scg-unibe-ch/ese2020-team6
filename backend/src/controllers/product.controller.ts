@@ -11,4 +11,21 @@ productController.post('/post',
     }
 );
 
+productController.get('/buyProduct',
+    (req: Request, res: Response) => {
+        productService.getAll().then(product => res.send(product)).catch(err => res.status(500).send(err));
+    }
+);
+productController.get('/productInformation::id',
+    (req: Request, res: Response) => {
+        const id: number = +req.params.id;
+        console.log(req.params);
+        productService.get(id).then((product: any) => res.send(product)).catch((err: any) => {
+            console.log(err);
+            res.status(500).send(err); });
+    }
+);
+
+
+
 export const ProductController: Router = productController;
