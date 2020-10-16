@@ -10,10 +10,6 @@
     </div>
   </div>
   <ng-template #notLoggedIn>
-    <div class="not-logged-in" [routerLink]="['/user/login']">
-      <svg class="svg-icon-39" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
-        <path class="path-1" d="M 0 -48 a 20 20 0 0 0 0 40 a 20 20 0 0 0 0 -40 Z M 40 48 a 40 40 0 0 0 -40 -40 a 40 40 0 0 0 -40 40"></path>
-      </svg>
-    </div>
+      <app-user-icon class="not-logged-in" [routerLink]="['/user/login']" height="60%" width="60%"></app-user-icon>
   </ng-template>
 </div>

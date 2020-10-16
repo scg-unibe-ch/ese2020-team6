@@ -101,6 +101,7 @@ import { PasswordMatchValidatorDirective } from './components/custom-form/valida
 
 import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
+import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,15 @@ import { defaultUserNavigationElements, defaultProfileComponent } from './compon
     UsernameOrEmailValidatorDirective,
     //Crossfield
     PasswordMatchValidatorDirective,
+    PostProductComponent,
+    BuyProductComponent,
+    ProfileComponent,
+    ProfileNavigationComponent,
+    MyProductsComponent,
+    UserDetailsComponent,
+    ProductInformationComponent,
+    
+    UserIconComponent
   ],
   imports: [
     BrowserModule,
