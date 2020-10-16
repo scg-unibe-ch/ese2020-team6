@@ -1,19 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuBarComponent } from './menu-bar.component';
-describe('MenuBarComponent', () => {
-  let component: MenuBarComponent;
-  let fixture: ComponentFixture<MenuBarComponent>;
+
+import { UserIconComponent } from './user-icon.component';
+
+describe('UserIconComponent', () => {
+  let component: UserIconComponent;
+  let fixture: ComponentFixture<UserIconComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuBarComponent ]
+      declarations: [ UserIconComponent ]
     })
     .compileComponents();
   }));
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuBarComponent);
+    fixture = TestBed.createComponent(UserIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

@@ -1,3 +1,4 @@
+import { ProductController } from './product.controller';
 
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
@@ -27,6 +28,15 @@ userController.get('/userid::userId', verifyToken,
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
         userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
+    }
+);
+
+userController.get('/profile/myproducts::id',
+    (req: Request, res: Response) => {
+        const id: number = +req.params.id;
+        userService.getMyProducts(id).then((product: any) => res.send(product)).catch((err: any) => {
+            console.log(err);
+            res.status(500).send(err); });
     }
 );
 

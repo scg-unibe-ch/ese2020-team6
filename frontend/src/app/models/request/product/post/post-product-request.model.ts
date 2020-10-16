@@ -8,5 +8,6 @@ export interface PostProductRequestModel {
   productType: string;
   category: string;
   location: string;
+  userId: number;
 
 }

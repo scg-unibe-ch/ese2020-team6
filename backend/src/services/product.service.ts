@@ -12,16 +12,19 @@ export class ProductService {
         return Products.findAll();
     }
 
-    // public get(id: number): any {
-    //     return Products.findByPk(id).then(
-    //         product => Promise.resolve(product)).catch(err => Promise.reject(err));
-    // }
-
     public get(id: number): Promise<Products> {
         return Products.findOne({
           where: {
             productId: id
           }
         });
-      }
+    }
+
+    public getMyProducts(id: number): Promise<Products> {
+        return Products.findOne({
+          where: {
+            userId: id
+          }
+        });
+    }
 }

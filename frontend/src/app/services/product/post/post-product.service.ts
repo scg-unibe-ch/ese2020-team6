@@ -26,4 +26,9 @@ export class PostProductService {
     return this.httpClient.get(
       environment.endpointURL + 'product/productInformation:' + id);
   }
+
+  public getMyProducts(id: number): Observable<any> {
+    return this.httpClient.get(
+      environment.endpointURL + 'user/profile/myproducts:' + id);
+  }
 }
