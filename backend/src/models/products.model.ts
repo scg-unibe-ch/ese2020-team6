@@ -14,6 +14,7 @@ export interface ProductsAttributes { // maybe rename
     expirationDate: number;
     status: string;
     workingStatus: string;
+    ownerId: number;
 
 }
 export interface GoodsCreationAttributes extends Optional<ProductsAttributes, 'productId'> { }
@@ -32,6 +33,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     expirationDate!: number;
     status!: string;
     workingStatus!: string;
+    ownerId!: number;
 
     public static initialize(sequelize: Sequelize) {
         Products.init({
@@ -83,6 +85,10 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             workingStatus: {
                 type: DataTypes.STRING,
                 allowNull: true
+            },
+            ownerId: {
+                type: DataTypes.NUMBER,
+                allowNull: false
             },
 
         },
