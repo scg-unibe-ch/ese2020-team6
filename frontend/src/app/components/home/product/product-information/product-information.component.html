@@ -4,30 +4,30 @@
       <img src="/assets/Logo.png" alt="">
     </div>
     <div class="title">
-      <div>{{title}}</div>
+      <div>{{product.title}}</div>
     </div>
     <div class="details">
       <div class="offer-type">
-        <div class="name" [ngClass]="detailsPillColorClass(offerType)">Offer Type:</div>
-        <div class="pill" [ngClass]="detailsPillColorClass(offerType)">{{offerType}}</div>
+        <div class="name" [ngClass]="detailsPillColorClass(product.offerType)">Offer Type:</div>
+        <div class="pill" [ngClass]="detailsPillColorClass(product.offerType)">{{product.offerType}}</div>
       </div>
       <div class="product-type">
-        <div class="name" [ngClass]="detailsPillColorClass(productType)">Product Type:</div>
-        <div class="pill" [ngClass]="detailsPillColorClass(productType)">{{productType}}</div>
+        <div class="name" [ngClass]="detailsPillColorClass(product.productType)">Product Type:</div>
+        <div class="pill" [ngClass]="detailsPillColorClass(product.productType)">{{product.productType}}</div>
       </div>
       <div class="status">
-        <div class="name" [ngClass]="detailsPillColorClass(status)">Status:</div>
-        <div class="pill" [ngClass]="[statusPillColorClass, detailsPillColorClass(status)]">{{status}}</div>
+        <div class="name" [ngClass]="detailsPillColorClass(product.status)">Status:</div>
+        <div class="pill" [ngClass]="[statusPillColorClass, detailsPillColorClass(product.status)]">{{product.status}}</div>
       </div>
       <div class="status">
-        <div class="name" [ngClass]="detailsPillColorClass(deliverable)">Delivarable:</div>
-        <div class="pill" [ngClass]="[deliverablePillColorClass, detailsPillColorClass(deliverable)]">{{deliverable}}</div>
+        <div class="name" [ngClass]="detailsPillColorClass(product.deliverable)">Delivarable:</div>
+        <div class="pill" [ngClass]="[deliverablePillColorClass, detailsPillColorClass(product.deliverable)]">{{product.deliverable}}</div>
       </div>
     </div>
   </div>
   <div class="lower-section">
     <div class="description">
-      {{description}}
+      {{product.description}}
     </div>
     <div class="options">
       <ng-template [ngIf]="isNotCreator" [ngIfElse]="isCreator">

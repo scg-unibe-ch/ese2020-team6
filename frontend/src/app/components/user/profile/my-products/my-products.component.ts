@@ -36,15 +36,9 @@ export class MyProductsComponent implements OnInit {
       this.userService.userObservable.subscribe((user: UserModel) => {
         this.userId = user.userId;
         this.productService.getMyProducts(this.userId).subscribe(data => {
-          console.log(this.products, 'AAAAAAAAAAAAAa');
           this.products = data;
-          console.log(data, 'MMMMMMMMMMMMMMMMMMMm');
-          console.log(this.products, 'vvvvvvvvvvvvvvvvv');
-        }
-        );
-      } );
+        });
+      });
     }
   }
 }
-
-
