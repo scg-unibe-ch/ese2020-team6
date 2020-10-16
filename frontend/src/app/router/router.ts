@@ -20,51 +20,69 @@ export const routes = [
     component: HomeComponent
   },
   {
-    path: 'user/login',
-    component: LoginComponent
+    path: 'user',
+    redirectTo: 'user/profile'
   },
   {
-    path: 'user/register',
-    component: RegisterComponent
-  },
-  {
-    path: 'user/profile',
-    redirectTo: 'user/profile/' + defaultUserNavigationElements[defaultProfileComponent].path
-  },
-  {
-    path: 'user/profile',
-    component: ProfileComponent,
-    data: defaultUserNavigationElements[defaultProfileComponent],
-    canActivate: [AuthGuard],
+    path: 'user',
     children: [
       {
-        path: 'details',
-        component: UserDetailsComponent
+        path: 'login',
+        component: LoginComponent
       },
       {
-        path: 'myproducts',
-        component: MyProductsComponent
+        path: 'register',
+        component: RegisterComponent
       },
       {
-        path: 'createnewproduct',
-        component: PostProductComponent
+        path: 'profile',
+        redirectTo: 'profile/' + defaultUserNavigationElements[defaultProfileComponent].path
       },
       {
-        path: 'approveproducts',
-        component: ApproveProductsComponent
+        path: 'profile',
+        component: ProfileComponent,
+        data: defaultUserNavigationElements[defaultProfileComponent],
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'details',
+            component: UserDetailsComponent
+          },
+          {
+            path: 'myproducts',
+            component: MyProductsComponent
+          },
+          {
+            path: 'createnewproduct',
+            component: PostProductComponent
+          },
+          {
+            path: 'approveproducts',
+            component: ApproveProductsComponent
+          }
+        ]
       }
     ]
   },
   {
-    path: 'product/post' ,
-    component: PostProductComponent
+    path: 'product',
+    redirectTo: 'product/buy'
   },
   {
-    path: 'product/buy-product' ,
-    component: BuyProductComponent
-  },
-  {
-    path: 'product/product-information/:id' ,
-    component: ProductInformationComponent
+    path: 'product',
+    children: [
+      {
+        path: 'post' ,
+        component: PostProductComponent
+      },
+      {
+        path: 'buy' ,
+        component: BuyProductComponent
+      },
+      {
+        path: 'information/:productId' ,
+        component: ProductInformationComponent
+      }
+    ]
   }
 ]
