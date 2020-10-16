@@ -1,1 +1,15 @@
-<p>my-products works!</p>
+<div class="buy-wrapper-wrapper">
+    <div class="buy-wrapper">
+        <h1>Your products</h1>
+        <mat-card [routerLink]="['/product/product-information', product.productId]" class="card" *ngFor = "let product of products">
+            <h3>{{product.title}}</h3>
+            <div class="input-grid">
+                <div class="cards">{{product.description}}</div>
+                <p class="cards">Price: {{product.price}}</p>
+                <p></p>
+                <p class="cards">Status: {{product.status}}</p>
+            </div>
+            <img src={{product.picture}}>
+        </mat-card>
+    </div>
+</div>
