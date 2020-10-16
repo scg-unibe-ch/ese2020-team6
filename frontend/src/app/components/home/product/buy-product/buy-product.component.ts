@@ -20,8 +20,6 @@ export class BuyProductComponent implements OnInit {
      ];
   }
 
-  build() {}
-
   ngOnInit(): void {
     this.productService.getAll().subscribe(data => {
       this.products = data;
