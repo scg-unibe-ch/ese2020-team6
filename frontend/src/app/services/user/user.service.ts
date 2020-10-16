@@ -1,13 +1,21 @@
+//Packages
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { share } from 'rxjs/operators';
+//Services
 import { LoginUserService } from './login/login-user.service';
 import { LogoutUserService } from './logout/logout-user.service';
 import { RegisterUserService } from './register/register-user.service';
+import { GetUserService } from './get/get-user.service';
+//Interfaces
 import { LoginUserRequestBuilder } from '../../models/request/user/login/login-user-request-builder.interface';
 import { RegisterUserRequestBuilder } from '../../models/request/user/register/register-user-request-builder.interface';
+//Models
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
+import { RegisterUserResponseModel } from '../../models/response/user/register/register-user-response.model';
 import { UserModel } from '../../models/user/user.model';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -15,65 +23,53 @@ import { environment } from '../../../environments/environment';
 })
 export class UserService {
 
-  private _user: UserModel;
+  public userObservable: Observable<UserModel>;
 
   constructor(
     private loginUserService: LoginUserService,
     private logoutUserService: LogoutUserService,
     private registerUserService: RegisterUserService,
+    private getUserService: GetUserService,
     private httpClient: HttpClient
   ) {
     this.getUserFromLocalStorage();
   }
 
   private getUserFromLocalStorage(): void {
-    if (localStorage.getItem('userId')) {
-      this.httpClient.get(environment.endpointURL + 'user/userid:' + localStorage.getItem('userId')).subscribe((res: any) => {
-        this._user = res;
-      });
+    let userId = localStorage.getItem('userId');
+    if (userId) {
+      this.userObservable = this.getUserService.getById(parseInt(userId));
     }
   }
 
-  public login(requestBuilder: LoginUserRequestBuilder): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this.loginUserService.login(requestBuilder).subscribe((res: LoginUserResponseModel) => {
-        this.loginSuccess(res);
-        resolve(true);
-      }, (err: any) => reject(err))
+  public login(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseModel> {
+    let loginResponse = this.loginUserService.login(requestBuilder);
+    loginResponse.subscribe((res: LoginUserResponseModel) => {
+      this.loginSuccess(res);
     });
-  }
+    return loginResponse;
+}
 
   private loginSuccess(res: LoginUserResponseModel): void {
-    this.saveUser(res.user);
-    this.saveUserToLocalStorage(res.token);
+    this.userObservable = of(res.user);
+    this.saveUserToLocalStorage(res);
   }
 
-  private saveUser(user: UserModel): void {
-    this._user = user;
+  private saveUserToLocalStorage(res: LoginUserResponseModel): void {
+    localStorage.setItem('userToken', res.token);
+    localStorage.setItem('userId', res.user.userId.toString());
   }
 
-  private saveUserToLocalStorage(token: string): void {
-    localStorage.setItem('userToken', token);
-    localStorage.setItem('userId', this.user.userId.toString());
-  }
-
-  get user(): UserModel {
-    return this.isLoggedIn ? this._user : null;
-  }
-
-  get isLoggedIn(): boolean {
-    return this._user ? true : false;
-  }
-
-  get isAdmin(): boolean {
-    return true//return this.isLoggedIn ? this.user.isAdmin : false;
+  public isLoggedIn(): boolean {
+    return this.userObservable ? true : false;
   }
 
   public logout(): void {
-    return this.logoutUserService.logout();
+    this.logoutUserService.logout();
+    this.userObservable = null;
   }
 
-  public register(requestBuilder: RegisterUserRequestBuilder): Observable<Object> {
+  public register(requestBuilder: RegisterUserRequestBuilder): Observable<RegisterUserResponseModel> {
     return this.registerUserService.register(requestBuilder);
   }
 }

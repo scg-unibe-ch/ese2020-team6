@@ -1,12 +1,17 @@
+//Packages
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-
+//Interfaces
 import { RegisterUserRequestBuilder } from '../../../models/request/user/register/register-user-request-builder.interface';
 import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
+//Models
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
+import { LoginUserResponseModel } from '../../../models/response/user/login/login-user-response.model';
 import { RegisterUserRequestModel } from '../../../models/request/user/register/register-user-request.model';
+import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
+//Services
 import { UserService } from '../../../services/user/user.service';
 
 @Component({
@@ -31,7 +36,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
       this.values = form.value;
       this.registerErrorMessage = '';
       this.userService.register(this).subscribe(
-        (res: any) => this.registerSuccess(),
+        (res: RegisterUserResponseModel) => this.registerSuccess(),
         (err: any) => this.registerError(err)
       );
     }
@@ -50,7 +55,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    this.userService.login(this).then((res: any) => this.loginSuccess());
+    this.userService.login(this).subscribe((res: LoginUserResponseModel) => this.loginSuccess());
   }
 
   private registerError(err: any): void {
