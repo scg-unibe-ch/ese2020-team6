@@ -1,6 +1,6 @@
 // Packages
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 // Services
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
@@ -27,49 +27,52 @@ export class ProductInformationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     productService: ProductService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) {
-    this.productService = productService;
-    this.route.params.subscribe(
-      params => {
-        this.productId = params.id;
-        productService.get(params.id).subscribe(product => this.data = product);
-      });
-    }
-
-   public ngOnInit(): void {
-     this.route.params.subscribe((params: {productId: string}) => {
-         this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
-           this.product = product;
-         });
-       });
+      this.productService = productService;
+      this.route.params.subscribe(
+        params => {
+          this.productId = params.id;
+          productService.get(params.id).subscribe(product => this.data = product);
+        });
    }
 
-
-  get statusPillColorClass(): string {
-    return this.product.status === 'Available' ? 'success' :
-    (this.product.status === 'Sold' || this.product.status === 'Lent' ? 'warn' : '');
+   public ngOnInit(): void {
+    this.route.params.subscribe((params: {productId: string}) => {
+        this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
+          this.product = product;
+          this.productId = product.productId;
+        });
+      });
   }
 
-  get deliverablePillColorClass(): string {
-    return this.product.deliverable ? 'success' : 'warn';
-  }
 
-  detailsPillColorClass(pillContent: string): string {
-    return pillContent ? 'faded' : 'fainted';
-  }
+ get statusPillColorClass(): string {
+   return this.product.status === 'Available' ? 'success' :
+   (this.product.status === 'Sold' || this.product.status === 'Lent' ? 'warn' : '');
+ }
 
-  get isForSale(): boolean {
-    return this.product.offerType === 'Sell';
-  }
+ get deliverablePillColorClass(): string {
+   return this.product.deliverable ? 'success' : 'warn';
+ }
 
-  // remove later (for demo)
-  toggleCreator() {
-    this.isNotCreator = !this.isNotCreator;
+ detailsPillColorClass(pillContent: string): string {
+   return pillContent ? 'faded' : 'fainted';
+ }
+
+ get isForSale(): boolean {
+   return this.product.offerType === 'Sell';
+ }
+
+ // remove later (for demo)
+ toggleCreator() {
+   this.isNotCreator = !this.isNotCreator;
   }
 
   deleteProduct(): void {
     this.productService.deleteProduct(this.productId).subscribe(
-      product => console.log(product));
-  }
+    product => console.log(product));
+    this.router.navigate(['/product/buy']);
+    }
 }
