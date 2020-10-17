@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 // Models
 //import { ProductModel } from '../../../../models/product/product.model'; implemented in other branch
@@ -21,7 +21,8 @@ export class ProductInformationComponent implements OnInit {
   public product: any = {};
   public isNotCreator: boolean = false;
 
-  constructor(private route: ActivatedRoute, productService: ProductService) {
+  constructor(private route: ActivatedRoute, productService: ProductService, private router: Router
+    ) {
     this.productService = productService;
    }
 
@@ -61,5 +62,6 @@ export class ProductInformationComponent implements OnInit {
   deleteProduct(): void {
     this.productService.deleteProduct(this.productId).subscribe(
       product => console.log(product));
+      this.router.navigate(['/product/buy']);
   }
 }
