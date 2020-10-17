@@ -1,7 +1,13 @@
+//Packages
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RegisterUserRequestBuilder } from '../../../models/request/user/register/register-user-request-builder.interface';
 import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
+//Interfaces
+import { RegisterUserRequestBuilder } from '../../../models/request/user/register/register-user-request-builder.interface';
+//Models
+import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
+
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -13,7 +19,7 @@ export class RegisterUserService {
     private httpClient: HttpClient
   ) { }
 
-  public register(requestBuilder: RegisterUserRequestBuilder): Observable<any> {
-    return this.httpClient.post(environment.endpointURL + 'user/register', requestBuilder.buildRegisterUserRequest());
+  public register(requestBuilder: RegisterUserRequestBuilder): Observable<RegisterUserResponseModel> {
+    return this.httpClient.post<RegisterUserResponseModel>(environment.endpointURL + 'user/register', requestBuilder.buildRegisterUserRequest()).pipe(share());
   }
 }

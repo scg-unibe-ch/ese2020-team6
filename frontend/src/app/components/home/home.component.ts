@@ -28,6 +28,6 @@ export class HomeComponent {
   }
 
   approve() {
-    this.approveMessage = 'Not implemented yet!'
+    this.approveMessage = 'Not implemented yet!';
   }
 }

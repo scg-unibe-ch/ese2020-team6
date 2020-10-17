@@ -6,4 +6,6 @@ export interface PostProductForm {
   picture: string; // <- custom type
   offerType: string;
   productType: string;
+  location: string;
+  category: string;
 }

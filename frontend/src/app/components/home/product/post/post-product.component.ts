@@ -4,10 +4,14 @@ import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { PostProductRequestModel } from '../../../../models/request/product/post/post-product-request.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ValueAccessorBase } from 'src/app/components/custom-form/value-accessor-base';
+import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
+import { UserService } from 'src/app/services/user/user.service';
+import { UserModel } from 'src/app/models/user/user.model';
 
 @Component({
   selector: 'app-post-product',
@@ -20,14 +24,27 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   productData: any;
   image: any;
   url: any;
+  public currentContent: ProfileNavigationElementModel;
+  public userId: number;
 
   constructor(
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {
+    route.data.subscribe((navigationElement: ProfileNavigationElementModel) => {
+      this.currentContent = navigationElement;
+    });
+    if (userService.isLoggedIn) {
+      userService.userObservable.subscribe((user: UserModel) => {
+        this.userId = user.userId;
+      } );
+    }
+  }
 
   openSnackBar() {
     this.snackBar.open('Your product is crated', '', {
@@ -37,20 +54,26 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   onSubmit(form: NgForm) {
-    this.productService.post(this).subscribe((values) => {console.log(values); });
-    this.openSnackBar();
-    this.router.navigate(['/product/buy-product']);
+    this.form = form;
+    this.productService.post(this).subscribe((values) => {
+      console.log(values);
+      this.openSnackBar();
+    });
+    this.router.navigate(['/user/profile/myproducts']);
   }
 
   public build(): PostProductRequestModel {
     return {
-      title: '',
-      description: '',
-      price: 0,
-      offerType: '',
-      productType: '',
-      picture: '',
-      status: ''
+      title: this.form.value.title,
+      description: this.form.value.description,
+      price: this.form.value.price,
+      category: this.form.value.category,
+      offerType: this.form.value.offerType,
+      productType: this.form.value.productType,
+      picture: this.form.value.picture,
+      status: this.form.value.status,
+      location: this.form.value.location,
+      userId: this.userId
     };
   }
   onFileChanged(event) {

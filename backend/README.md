@@ -276,6 +276,49 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 	```
 	</details>
 
+### `/product`
+- POST `/product/post`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+		"title": "string",
+  		"description": "string",
+  		"price": "number",
+  		"status": "string", 
+  		"picture": "string", 
+		"offerType": "string",
+		"ProductType": "string",
+  		"category": "string",
+  		"location": "string"
+	}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+		"title": "string",
+  		"description": "string",
+  		"price": "number",
+  		"status": "string", 
+  		"picture": "string", 
+		"offerType": "string",
+		"ProductType": "string",
+  		"category": "string",
+  		"location": "string"
+	}
+
+	```
+	</details>
+
 ### `/secured`
 - GET
 	<details>
