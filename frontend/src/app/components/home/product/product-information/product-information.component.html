@@ -37,7 +37,7 @@
         </ng-template>
       </ng-template>
       <ng-template #isCreator>
-        <button (click)="deleteProduct()" class="button-full-po">Delete</button>
+        <button (click)="openWithTemplate(tpl)" class="button-full-po">Delete</button>
         <button class="button-full-po">Update</button>
       </ng-template>
     </div>
@@ -45,4 +45,21 @@
   <div class="toggle-creator">
     <button class="button-full-po" (click)="toggleCreator()">Toggle creator</button><--- for demo
   </div>
+
+  <ng-template #tpl>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            Do you want to delete the product? 
+          </header>
+          <section class="modal-card-body">
+            <button (click)="deleteProduct()" class="button-full-po">Delete</button>
+            <button (click)="doNothing()" class="button-full-po">Cancel</button>
+          </section>
+          <footer class="modal-card-foot">
+          </footer>
+        </div>
+  </ng-template>
+  <ng-template #tplClose>
+  </ng-template>
 </div>
+

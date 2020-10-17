@@ -30,7 +30,6 @@ export class ProductService {
   }
 
   public deleteProduct(id: number): Observable<any> {
-    console.log(id, 'dddddddddddddddddddddddddddddwwwwwww');
     return this.postProductService.deleteProduct(id);
   }
 }
