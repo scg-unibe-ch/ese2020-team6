@@ -1,8 +1,7 @@
 <div class="buy-wrapper-wrapper">
     <div class="buy-wrapper">
         <h1>Your products</h1>
-        <mat-card [routerLink]="['/product/product-information', product.productId]" 
-        class="card" *ngFor = "let product of products">
+        <mat-card [routerLink]="['/product/information', product.productId]" class="card" *ngFor = "let product of products">
             <h3>{{product.title}}</h3>
             <div class="input-grid">
                 <div class="cards">{{product.description}}</div>

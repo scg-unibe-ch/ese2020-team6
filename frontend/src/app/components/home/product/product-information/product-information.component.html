@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <app-menu-bar height="60%" width="60%"></app-menu-bar>
 <div class="container">
   <h1>Product Page</h1>
@@ -9,46 +10,53 @@
         </div>
       </mat-card>
       <button class="button-full-po" >back</button>
+=======
+<div class="content-wrapper">
+  <div class="upper-section">
+    <div class="picture">
+      <img src="/assets/Logo.png" alt="">
+>>>>>>> 6d35af73c2e013bb4c63b78fa590b7f8b38c5d53
     </div>
-    <div class="col">
-      <mat-card class="card">
-        <h1>{{data.title}} </h1>
-        <p>This {{data.productType}} is for {{data.offerType}}</p>
-        <div class="priceAndStatus">
-          <div class="status">Status: {{data.status}}</div>
-          <div class="price">Price: CHF {{data.price}}</div>
-          <button class="button-full-po" [routerLink]="['/user/wallet']">{{data.offerType}} Product</button>
-        </div>
-          <table class="table table-hover">
-            <tbody>
-              <tr class="table-active">
-                <th scope="row"><p>Type:</p></th>
-                <td><p>{{data.productType}}</p></td>
-              </tr>
-              <tr>
-                <th scope="row"> <p>Location:</p>
-                </th>
-                <td><p>{{data.location}}</p>
-                </td>
-              </tr>
-              <tr class="table-active">
-                <th scope="row"><p>Category:</p></th>
-                <td><p>{{data.category}}</p></td>
-              </tr>
-              <tr>
-                <th scope="row"><p>Deliverable:</p></th>
-                <td><p>{{data.deliverable}}</p></td>
-              </tr>
-            </tbody>
-          </table>
-        <p>Description: </p>
-        <div class="innerCard">
-          {{data.description}}
-        </div>
-    </mat-card>
-        <mat-card-actions *ngIf="!isPreview">
-            <button class="button-full-po" [routerLink]="['/user/profil/myProducts']">Buy Product</button>
-        </mat-card-actions>
-    
-
+    <div class="title">
+      <div>{{product.title}}</div>
+    </div>
+    <div class="details">
+      <div class="offer-type">
+        <div class="name" [ngClass]="detailsPillColorClass(product.offerType)">Offer Type:</div>
+        <div class="pill" [ngClass]="detailsPillColorClass(product.offerType)">{{product.offerType}}</div>
+      </div>
+      <div class="product-type">
+        <div class="name" [ngClass]="detailsPillColorClass(product.productType)">Product Type:</div>
+        <div class="pill" [ngClass]="detailsPillColorClass(product.productType)">{{product.productType}}</div>
+      </div>
+      <div class="status">
+        <div class="name" [ngClass]="detailsPillColorClass(product.status)">Status:</div>
+        <div class="pill" [ngClass]="[statusPillColorClass, detailsPillColorClass(product.status)]">{{product.status}}</div>
+      </div>
+      <div class="status">
+        <div class="name" [ngClass]="detailsPillColorClass(product.deliverable)">Delivarable:</div>
+        <div class="pill" [ngClass]="[deliverablePillColorClass, detailsPillColorClass(product.deliverable)]">{{product.deliverable}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="lower-section">
+    <div class="description">
+      {{product.description}}
+    </div>
+    <div class="options">
+      <ng-template [ngIf]="isNotCreator" [ngIfElse]="isCreator">
+        <button *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
+        <ng-template #isForRent>
+            <button class="button-full-po">Lend</button>
+        </ng-template>
+      </ng-template>
+      <ng-template #isCreator>
+        <button class="button-full-po">Delete</button>
+        <button class="button-full-po">Update</button>
+      </ng-template>
+    </div>
+  </div>
+  <div class="toggle-creator">
+    <button class="button-full-po" (click)="toggleCreator()">Toggle creator</button><--- for demo
+  </div>
 </div>
