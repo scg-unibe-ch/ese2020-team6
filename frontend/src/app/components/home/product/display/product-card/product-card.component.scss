@@ -27,7 +27,8 @@ $success: #73BC58;
 }
 
 .picture > img {
-  height: $picture-dim;
+  max-height: $picture-dim;
+  max-width: $picture-dim;
 }
 
 .title {

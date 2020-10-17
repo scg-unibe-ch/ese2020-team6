@@ -63,7 +63,9 @@ import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component'
 import { PostProductComponent } from './components/home/product/post/post-product.component';
 import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
 import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
-import { ProductCardListComponent } from './components/home/product/product-card-list/product-card-list.component';
+import { ProductCardListComponent } from './components/home/product/display/product-card/list/product-card-list.component';
+import { ProductCardGridComponent } from './components/home/product/display/product-card/grid/product-card-grid.component';
+import { ProductCardComponent } from './components/home/product/display/product-card/product-card.component';
 
 
 // Custom Form
@@ -75,6 +77,8 @@ import { PasswordInputComponent } from './components/custom-form/input/password-
 import { SelectComponent } from './components/custom-form/select/select.component';
 
 
+import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
+import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.component';
 
 // --------------------------------------------------------------------------------- //
 
@@ -101,8 +105,6 @@ import { PasswordMatchValidatorDirective } from './components/custom-form/valida
 
 import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
-import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
-import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +149,9 @@ import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.com
     ProductInformationComponent,
     UserIconComponent,
     ApproveProductsComponent,
-    AngleIconComponent
+    AngleIconComponent,
+    ProductCardGridComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
