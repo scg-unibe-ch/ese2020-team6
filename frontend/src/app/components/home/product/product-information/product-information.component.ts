@@ -37,26 +37,26 @@ export class ProductInformationComponent implements OnInit {
    }
 
 
-  get statusPillColorClass(): string {
-    return this.product.status === 'Available' ? 'success' :
-    (this.product.status === 'Sold' || this.product.status === 'Lent' ? 'warn' : '');
-  }
+ get statusPillColorClass(): string {
+   return this.product.status === 'Available' ? 'success' :
+   (this.product.status === 'Sold' || this.product.status === 'Lent' ? 'warn' : '');
+ }
 
-  get deliverablePillColorClass(): string {
-    return this.product.deliverable ? 'success' : 'warn';
-  }
+ get deliverablePillColorClass(): string {
+   return this.product.deliverable ? 'success' : 'warn';
+ }
 
-  detailsPillColorClass(pillContent: string): string {
-    return pillContent ? 'faded' : 'fainted';
-  }
+ detailsPillColorClass(pillContent: string): string {
+   return pillContent ? 'faded' : 'fainted';
+ }
 
-  get isForSale(): boolean {
-    return this.product.offerType === 'Sell';
-  }
+ get isForSale(): boolean {
+   return this.product.offerType === 'Sell';
+ }
 
-  //remove later (for demo)
-  toggleCreator() {
-    this.isNotCreator = !this.isNotCreator;
+ // remove later (for demo)
+ toggleCreator() {
+   this.isNotCreator = !this.isNotCreator;
   }
 
   deleteProduct(): void {
