@@ -30,6 +30,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   productId: any;
 
   constructor(
+    
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
@@ -72,6 +73,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
 
   public build(): PostProductRequestModel {
     return {
+      productId: this.productId,
       title: this.form.value.title,
       description: this.form.value.description,
       price: this.form.value.price,
@@ -112,11 +114,14 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   updateProduct(): void {
     this.productService.get(this.productId).subscribe((product: any) => {
       this.formValues = product;
+      console.log(this.form, 'MUUUUUUUUUUUUUUUUUUUUU');
       this.form.form.get('title').setValue(product.title);
       this.form.form.get('description').setValue(product.description);
-      //this.form.form.get('options').setValue(product.offerType);
-      this.form.form.get('productType').setValue(1);
       this.form.form.get('price').setValue(product.price);
+      this.form.form.get('location').setValue(product.location);
+      this.form.form.get('offerType').setValue(product.offerType);
+      this.form.form.get('productType').setValue(product.productType);
+      
     });
   }
 }
