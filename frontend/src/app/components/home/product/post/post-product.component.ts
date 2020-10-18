@@ -20,14 +20,10 @@ import { UserModel } from 'src/app/models/user/user.model';
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductForm> {
   @ViewChild('postProductForm') form: NgForm;
-  registerForm: FormGroup;
   requestInformation: PostProductForm;
   productData: any;
-  image: any;
-  url: any;
   public currentContent: ProfileNavigationElementModel;
   public userId: number;
-  formValues: any;
   productId: any;
   product: any;
 
@@ -117,7 +113,6 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   updateProduct(): void {
     this.productService.get(this.productId).subscribe((product: any) => {
       this.product = product;
-      this.formValues = product;
       this.form.form.get('title').setValue(product.title);
       this.form.form.get('description').setValue(product.description);
       this.form.form.get('price').setValue(product.price);
@@ -129,6 +124,34 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     });
   }
 
+  setTitle(): string {
+    if (this.productId !== null) {
+      return this.product.title;
+    } else {
+      return 'Title';
+    }
+  }
+  setDescription(): string {
+    if (this.productId !== null) {
+      return this.product.description;
+    } else {
+      return 'Description';
+    }
+  }
+  setPrice(): string {
+    if (this.productId !== null) {
+      return this.product.price;
+    } else {
+      return 'Price';
+    }
+  }
+  setLocation(): string {
+    if (this.productId !== null) {
+      return this.product.location;
+    } else {
+      return 'Location';
+    }
+  }
   setType(): string {
     if (this.productId !== null) {
       return this.product.productType;
