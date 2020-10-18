@@ -36,4 +36,5 @@ export class PostProductService {
     return this.httpClient.delete(
       environment.endpointURL + 'product/delete:' + id);
   }
+  
 }

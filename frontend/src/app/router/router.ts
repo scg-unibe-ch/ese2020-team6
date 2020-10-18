@@ -76,6 +76,10 @@ export const routes = [
         component: PostProductComponent
       },
       {
+        path: 'post/:productId' ,
+        component: PostProductComponent
+      },
+      {
         path: 'buy' ,
         component: BuyProductComponent
       },

@@ -1,5 +1,6 @@
-import { NgForm } from '@angular/forms';
-import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
+
+import { FormGroup, NgForm } from '@angular/forms';
+import { Component, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
@@ -8,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { ValueAccessorBase } from 'src/app/components/custom-form/value-accessor-base';
 import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserModel } from 'src/app/models/user/user.model';
@@ -19,15 +19,20 @@ import { UserModel } from 'src/app/models/user/user.model';
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductForm> {
-  form: NgForm;
+  @ViewChild('postProductForm') form: NgForm;
+  registerForm: FormGroup;
   requestInformation: PostProductForm;
   productData: any;
   image: any;
   url: any;
   public currentContent: ProfileNavigationElementModel;
   public userId: number;
+  formValues: any;
+  productId: any;
+  product: any;
 
   constructor(
+
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
@@ -43,6 +48,13 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       userService.userObservable.subscribe((user: UserModel) => {
         this.userId = user.userId;
       } );
+    }
+  }
+
+  ngOnInit(): void {
+    this.productId = this.route.snapshot.paramMap.get('productId');
+    if (this.productId !== null) {
+      this.updateProduct();
     }
   }
 
@@ -64,6 +76,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
 
   public build(): PostProductRequestModel {
     return {
+      productId: this.productId,
       title: this.form.value.title,
       description: this.form.value.description,
       price: this.form.value.price,
@@ -99,5 +112,49 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     const overlayRef = this.overlay.create(configs);
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
+  }
+
+  updateProduct(): void {
+    this.productService.get(this.productId).subscribe((product: any) => {
+      this.product = product;
+      this.formValues = product;
+      this.form.form.get('title').setValue(product.title);
+      this.form.form.get('description').setValue(product.description);
+      this.form.form.get('price').setValue(product.price);
+      this.form.form.get('location').setValue(product.location);
+      this.form.form.get('offerType').setValue(product.offerType);
+      this.form.form.get('productType').setValue(product.productType);
+      this.form.form.get('category').setValue(product.category);
+      this.form.form.get('status').setValue(product.status);
+    });
+  }
+
+  setType(): string {
+    if (this.productId !== null) {
+      return this.product.productType;
+    } else {
+      return 'Product Type';
+    }
+  }
+  setOffer(): string {
+    if (this.productId !== null) {
+      return this.product.offerType;
+    } else {
+      return 'Offer Type';
+    }
+  }
+  setStatus(): string {
+    if (this.productId !== null) {
+      return this.product.status;
+    } else {
+      return 'Status';
+    }
+  }
+  setCategory(): string {
+    if (this.productId !== null) {
+      return this.product.category;
+    } else {
+      return 'Category';
+    }
   }
 }
