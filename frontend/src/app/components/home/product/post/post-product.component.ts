@@ -12,6 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserModel } from 'src/app/models/user/user.model';
+import { SelectComponent } from 'src/app/components/custom-form/select/select.component';
 
 @Component({
   selector: 'app-post-product',
@@ -20,6 +21,15 @@ import { UserModel } from 'src/app/models/user/user.model';
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductForm> {
   @ViewChild('postProductForm') form: NgForm;
+  @ViewChild('productTypeChild') productType: SelectComponent;
+  @ViewChild('offerTypeChild') offerType: SelectComponent;
+  @ViewChild('titleChild') title: SelectComponent;
+  @ViewChild('descriptionChild') description: SelectComponent;
+  @ViewChild('priceChild') price: SelectComponent;
+  @ViewChild('locationChild') location: SelectComponent;
+  @ViewChild('statusChild') status: SelectComponent;
+  @ViewChild('categoryChild') category: SelectComponent;
+  @ViewChild('pictureChild') picture: SelectComponent;
   requestInformation: PostProductForm;
   productData: any;
   public currentContent: ProfileNavigationElementModel;
@@ -97,7 +107,6 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       status: form.value.status,
       picture: form.value.picture,
     };
-    console.log(this.productData,'iiiiiiiiii')
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });
@@ -118,66 +127,13 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       this.form.form.get('price').setValue(product.price);
       this.form.form.get('location').setValue(product.location);
       this.form.form.get('offerType').setValue(product.offerType);
+      this.offerType.current = product.offerType;
       this.form.form.get('productType').setValue(product.productType);
+      this.productType.current = product.productType;
       this.form.form.get('category').setValue(product.category);
+      this.category.current = product.category;
       this.form.form.get('status').setValue(product.status);
+      this.status.current = product.status;
     });
-  }
-
-  setTitle(): string {
-    if (this.productId !== null) {
-      return this.product.title;
-    } else {
-      return 'Title';
-    }
-  }
-  setDescription(): string {
-    if (this.productId !== null) {
-      return this.product.description;
-    } else {
-      return 'Description';
-    }
-  }
-  setPrice(): string {
-    if (this.productId !== null) {
-      return this.product.price;
-    } else {
-      return 'Price';
-    }
-  }
-  setLocation(): string {
-    if (this.productId !== null) {
-      return this.product.location;
-    } else {
-      return 'Location';
-    }
-  }
-  setType(): string {
-    if (this.productId !== null) {
-      return this.product.productType;
-    } else {
-      return 'Product Type';
-    }
-  }
-  setOffer(): string {
-    if (this.productId !== null) {
-      return this.product.offerType;
-    } else {
-      return 'Offer Type';
-    }
-  }
-  setStatus(): string {
-    if (this.productId !== null) {
-      return this.product.status;
-    } else {
-      return 'Status';
-    }
-  }
-  setCategory(): string {
-    if (this.productId !== null) {
-      return this.product.category;
-    } else {
-      return 'Category';
-    }
   }
 }
