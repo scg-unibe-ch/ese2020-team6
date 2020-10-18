@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Overlay, OverlayConfig, OverlayModule} from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { Component, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 // Models
@@ -16,12 +18,18 @@ export class ProductInformationComponent implements OnInit {
   id: number;
   productId: any;
   productService: ProductService;
+  overlayRef: any;
 
   //public product: ProductModel; implemented in other branch
   public product: any = {};
   public isNotCreator: boolean = false;
 
-  constructor(private route: ActivatedRoute, productService: ProductService, private router: Router
+  constructor(
+    private route: ActivatedRoute,
+    productService: ProductService,
+    private router: Router,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef
     ) {
     this.productService = productService;
    }
@@ -62,6 +70,26 @@ export class ProductInformationComponent implements OnInit {
   deleteProduct(): void {
     this.productService.deleteProduct(this.productId).subscribe(
       product => console.log(product));
-      this.router.navigate(['/product/buy']);
+      this.router.navigate(['/user/profile/myproducts']);
+      this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+  }
+
+  openWithTemplate(tpl: TemplateRef<any>) {
+    const configs = new OverlayConfig({
+     hasBackdrop: true,
+     });
+    configs.positionStrategy = this.overlay.position()
+     .global()
+     .centerHorizontally()
+     .centerVertically();
+    const overlayRef = this.overlay.create(configs);
+    this.overlayRef = overlayRef;
+    overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
+  }
+
+  doNothing(tplClose: TemplateRef<any>) {
+    this.router.navigate(['/user/profile/myproducts']);
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+
   }
 }
