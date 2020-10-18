@@ -13,7 +13,6 @@ import { ProductService } from '../../../../services/product/product.service';
   styleUrls: ['./product-information.component.scss']
 })
 export class ProductInformationComponent implements OnInit {
-  @Input() data: any;
   @Input() isPreview = false;
   id: number;
   productId: any;
@@ -21,7 +20,7 @@ export class ProductInformationComponent implements OnInit {
   overlayRef: any;
 
   //public product: ProductModel; implemented in other branch
-  public product: any = {};
+  @Input() public product: any = {};
   public isNotCreator: boolean = false;
 
   constructor(
@@ -36,10 +35,13 @@ export class ProductInformationComponent implements OnInit {
 
    public ngOnInit(): void {
      this.route.params.subscribe((params: {productId: string}) => {
-         this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
-           this.product = product;
-           this.productId = product.productId;
-         });
+       if (params.productId === undefined) {
+         return;
+       }
+       this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
+          this.product = product;
+          this.productId = product.productId;
+        });
        });
    }
 

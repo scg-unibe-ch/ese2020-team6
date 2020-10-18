@@ -104,6 +104,7 @@ import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,7 +166,7 @@ import { UserIconComponent } from './components/icons/user-icon/user-icon.compon
     MatToolbarModule,
     MatSnackBarModule,
     OverlayModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {
