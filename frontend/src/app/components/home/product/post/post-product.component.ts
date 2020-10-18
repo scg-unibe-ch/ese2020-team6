@@ -28,7 +28,6 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   product: any;
 
   constructor(
-
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
@@ -55,14 +54,14 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   openSnackBar() {
-    this.snackBar.open('Your product is crated', '', {
+    this.snackBar.open('Your product is created', '', {
       duration: 2000,
       panelClass: ['snackbar']
     });
   }
 
   onSubmit(form: NgForm) {
-    this.form = form;
+    //this.form = form;
     this.productService.post(this).subscribe((values) => {
       console.log(values);
       this.openSnackBar();
@@ -98,6 +97,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       status: form.value.status,
       picture: form.value.picture,
     };
+    console.log(this.productData,'iiiiiiiiii')
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });

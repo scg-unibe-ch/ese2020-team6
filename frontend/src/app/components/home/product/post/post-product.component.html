@@ -3,18 +3,18 @@
     <h3>Create</h3>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
-        <app-select name="productType" selectName="{{setType()}}" ngModel #productType="ngModel" [options]="['Item', 'Service']"></app-select>
-        <app-select name="offerType" selectName="{{setOffer()}}" ngModel #offerType="ngModel" [options]="['Sell', 'Rent']"></app-select>
+        <app-select name="productType" selectName="Product Type" ngModel #productType="ngModel" [options]="['Item', 'Service']"></app-select>
+        <app-select name="offerType" selectName="Offer Type" ngModel #offerType="ngModel" [options]="['Sell', 'Rent']"></app-select>
       </div>
-      <app-text-input placeholder="{{setTitle()}}" name="title" ngModel #title="ngModel"></app-text-input>
-      <textarea class="input" rows="4" placeholder="{{setDescription()}}" name="description" ngModel #description="ngModel"></textarea>
+      <app-text-input placeholder="Title" name="title" ngModel #title="ngModel"></app-text-input>
+      <textarea class="input" rows="4" placeholder="Description" name="description" ngModel #description="ngModel"></textarea>
       <div class="input-grid">
-        <app-number-input placeholder="{{setPrice()}}" name="price" ngModel #price="ngModel"></app-number-input>
-        <app-select name="status" selectName="{{setStatus()}}" ngModel #status="ngModel" [options]="['Available', 'Lent', 'Sold']"></app-select>
+        <app-number-input placeholder="Price" name="price" ngModel #price="ngModel"></app-number-input>
+        <app-select name="status" selectName="Status" ngModel #status="ngModel" [options]="['Available', 'Lent', 'Sold']"></app-select>
       </div>
       <div class="input-grid">
-        <app-text-input placeholder="{{setLocation()}}" name="location" ngModel #location="ngModel"></app-text-input>
-        <app-select name="category" selectName="{{setCategory()}}" ngModel #category="ngModel" [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
+        <app-text-input placeholder="Location" name="location" ngModel #location="ngModel"></app-text-input>
+        <app-select name="category" selectName="Category" ngModel #category="ngModel" [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
       </div>
       <label>Picture
         <input class="picture" name="picture" ngModel #picture="ngModel" 

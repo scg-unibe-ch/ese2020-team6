@@ -34,15 +34,16 @@ export class ProductInformationComponent implements OnInit {
    }
 
    public ngOnInit(): void {
-     this.route.params.subscribe((params: {productId: string}) => {
-       if (params.productId === undefined) {
-         return;
-       }
-       this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
-          this.product = product;
-          this.productId = product.productId;
-        });
-       });
+    this.route.params.subscribe((params: {productId: string}) => {
+      console.log(this.product)
+      if (params.productId === undefined || Object.entries(this.product).length !== 0) { // important!! dont delete
+        return;
+      }
+      this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
+        this.product = product;
+        this.productId = product.productId;
+      });
+    });
    }
 
 
