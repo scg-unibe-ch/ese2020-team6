@@ -7,7 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 //  Angular Material
@@ -164,6 +165,7 @@ import { UserIconComponent } from './components/icons/user-icon/user-icon.compon
     MatToolbarModule,
     MatSnackBarModule,
     OverlayModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

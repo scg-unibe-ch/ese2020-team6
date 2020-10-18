@@ -39,7 +39,6 @@ export class ProductInformationComponent implements OnInit {
          this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
            this.product = product;
            this.productId = product.productId;
-
          });
        });
    }
@@ -70,8 +69,8 @@ export class ProductInformationComponent implements OnInit {
   deleteProduct(): void {
     this.productService.deleteProduct(this.productId).subscribe(
       product => console.log(product));
-      this.router.navigate(['/user/profile/myproducts']);
-      this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+    this.router.navigate(['/user/profile/myproducts']);
+    this.overlayRef.dispose();
   }
 
   openWithTemplate(tpl: TemplateRef<any>) {
@@ -88,8 +87,6 @@ export class ProductInformationComponent implements OnInit {
   }
 
   doNothing(tplClose: TemplateRef<any>) {
-    this.router.navigate(['/user/profile/myproducts']);
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
-
+    this.overlayRef.dispose();
   }
 }

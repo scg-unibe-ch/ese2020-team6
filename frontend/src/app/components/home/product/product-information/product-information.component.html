@@ -38,7 +38,7 @@
       </ng-template>
       <ng-template #isCreator>
         <button (click)="openWithTemplate(tpl)" class="button-full-po">Delete</button>
-        <button class="button-full-po">Update</button>
+        <button class="button-full-po" [routerLink]="['/product/post', productId]">Update</button>
       </ng-template>
     </div>
   </div>

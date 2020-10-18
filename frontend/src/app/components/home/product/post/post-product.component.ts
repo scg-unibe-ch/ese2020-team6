@@ -1,5 +1,5 @@
-import { NgForm } from '@angular/forms';
-import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
+import { FormControl, FormGroup, NgForm} from '@angular/forms';
+import { Component, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { ValueAccessorBase } from 'src/app/components/custom-form/value-accessor-base';
 import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserModel } from 'src/app/models/user/user.model';
@@ -19,13 +18,16 @@ import { UserModel } from 'src/app/models/user/user.model';
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductForm> {
-  form: NgForm;
+  @ViewChild('postProductForm') form: NgForm;
+  registerForm: FormGroup;
   requestInformation: PostProductForm;
   productData: any;
   image: any;
   url: any;
   public currentContent: ProfileNavigationElementModel;
   public userId: number;
+  formValues: any;
+  productId: any;
 
   constructor(
     private productService: ProductService,
@@ -44,6 +46,11 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
         this.userId = user.userId;
       } );
     }
+    this.productId = this.route.snapshot.paramMap.get('productId');
+    console.log(this.productId, 'AAAAAAAAAAAAAAAaaaaa');
+    if (this.productId !== null) {
+      this.updateProduct();
+    }
   }
 
   openSnackBar() {
@@ -54,6 +61,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   onSubmit(form: NgForm) {
+    console.log("SUBMIT")
     this.form = form;
     this.productService.post(this).subscribe((values) => {
       console.log(values);
@@ -99,5 +107,16 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
     const overlayRef = this.overlay.create(configs);
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
+  }
+
+  updateProduct(): void {
+    this.productService.get(this.productId).subscribe((product: any) => {
+      this.formValues = product;
+      this.form.form.get('title').setValue(product.title);
+      this.form.form.get('description').setValue(product.description);
+      //this.form.form.get('options').setValue(product.offerType);
+      this.form.form.get('productType').setValue(1);
+      this.form.form.get('price').setValue(product.price);
+    });
   }
 }
