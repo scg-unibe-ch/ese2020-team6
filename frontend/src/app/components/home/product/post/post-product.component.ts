@@ -1,4 +1,5 @@
-import { FormControl, FormGroup, NgForm} from '@angular/forms';
+
+import { FormGroup, NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
 import { PostProductRequestBuilder } from '../../../../models/request/product/post/post-product-request-builder.interface';
@@ -28,9 +29,10 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   public userId: number;
   formValues: any;
   productId: any;
+  product: any;
 
   constructor(
-    
+
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
@@ -47,8 +49,10 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
         this.userId = user.userId;
       } );
     }
+  }
+
+  ngOnInit(): void {
     this.productId = this.route.snapshot.paramMap.get('productId');
-    console.log(this.productId, 'AAAAAAAAAAAAAAAaaaaa');
     if (this.productId !== null) {
       this.updateProduct();
     }
@@ -62,7 +66,6 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   onSubmit(form: NgForm) {
-    console.log("SUBMIT")
     this.form = form;
     this.productService.post(this).subscribe((values) => {
       console.log(values);
@@ -113,15 +116,45 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
 
   updateProduct(): void {
     this.productService.get(this.productId).subscribe((product: any) => {
+      this.product = product;
       this.formValues = product;
-      console.log(this.form, 'MUUUUUUUUUUUUUUUUUUUUU');
       this.form.form.get('title').setValue(product.title);
       this.form.form.get('description').setValue(product.description);
       this.form.form.get('price').setValue(product.price);
       this.form.form.get('location').setValue(product.location);
       this.form.form.get('offerType').setValue(product.offerType);
       this.form.form.get('productType').setValue(product.productType);
-      
+      this.form.form.get('category').setValue(product.category);
+      this.form.form.get('status').setValue(product.status);
     });
+  }
+
+  setType(): string {
+    if (this.productId !== null) {
+      return this.product.productType;
+    } else {
+      return 'Product Type';
+    }
+  }
+  setOffer(): string {
+    if (this.productId !== null) {
+      return this.product.offerType;
+    } else {
+      return 'Offer Type';
+    }
+  }
+  setStatus(): string {
+    if (this.productId !== null) {
+      return this.product.status;
+    } else {
+      return 'Status';
+    }
+  }
+  setCategory(): string {
+    if (this.productId !== null) {
+      return this.product.category;
+    } else {
+      return 'Category';
+    }
   }
 }
