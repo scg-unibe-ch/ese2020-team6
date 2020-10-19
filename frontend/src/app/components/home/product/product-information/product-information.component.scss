@@ -1,16 +1,22 @@
+@import '../../../../../variables.scss';
+
+
 $margin: 50px;
 
 .content-wrapper {
   padding: $margin;
-  height: 100%;
   width: 100%;
 }
 
-.upper-section {
+.section-margin {
   width: 100%;
+  margin: 0;
   margin-bottom: $margin;
+}
+
+.upper-section {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-column-gap: $margin;
   grid-row-gap: 20px;
@@ -32,6 +38,8 @@ img {
 }
 
 .title {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
   display: flex;
   align-items: center;
 }
@@ -41,22 +49,39 @@ img {
   line-height: 50px;
 }
 
-.details {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+.creator {
+  grid-column: 4 / 6;
+  grid-row: 1 / 2;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
-.middle-section {
-  width: 100%;
-  margin-bottom: $margin;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 1fr;
-  grid-column-gap: $margin;
-  grid-row-gap: 20px;
+.creator > div {
+  position: relative;
+}
+
+.creator > div::before {
+  content: '';
+  height: 100%;
+  left: -10px;
+  position: absolute;
+  border-left: 2px solid black;
+}
+
+.category {
+  position: relative;
+}
+
+.subcategory {
+  position: absolute;
+  left: $margin;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .lower-section {
@@ -69,7 +94,7 @@ img {
 .options {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .options > button {

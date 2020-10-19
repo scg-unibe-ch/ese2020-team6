@@ -71,6 +71,11 @@ export class ProductInformationComponent implements OnInit {
       });
   }
 
+  get priceLabel(): string {
+    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
+    else return '$';
+  }
+
   get isForSale(): boolean {
     return this.product.offerType === 'Sell';
   }
