@@ -5,7 +5,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
 // Models
-//import { ProductModel } from '../../../../models/product/product.model'; implemented in other branch
+import { ProductModel, NullProduct } from '../../../../models/product/product.model';
+import { CutUserModel, NullCutUser } from '../../../../models/user/cut-user.model';
+import { UserModel, NullUser } from '../../../../models/user/user.model';
 
 
 @Component({
@@ -15,9 +17,9 @@ import { UserService } from '../../../../services/user/user.service';
 })
 export class ProductInformationComponent implements OnInit {
 
-  //public product: ProductModel; implemented in other branch
-  public product: any = {};
-  public isNotCreator: boolean = false;
+  public product: ProductModel = new NullProduct();
+  public creator: CutUserModel = new NullCutUser();
+  public currentUser: UserModel = new NullUser();
 
   statusIndicatorPillColorClass: () => string = () => {
     let status: string = this.product.status;
@@ -39,23 +41,42 @@ export class ProductInformationComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService
-  ) {
-   }
+  ) { }
 
    public ngOnInit(): void {
      this.route.params.subscribe((params: {productId: string}) => {
-         this.productService.get(parseInt(params.productId, 10)).subscribe((product: any) => {
-           this.product = product;
-         });
-       });
+       this.getProduct(parseInt(params.productId, 10));
+     });
    }
+
+  private getProduct(productId: number): void {
+    this.productService.get(productId).subscribe((product: any) => {
+      this.product = product;
+      this.getCreator(product.userId);
+    });
+  }
+
+  private getCreator(creatorId: number) {
+    this.userService.getUserById(creatorId).subscribe((cutUser: CutUserModel) => {
+      this.creator = cutUser;
+      if (this.userService.isLoggedIn) {
+        this.getCurrentUser();
+      }
+    });
+  }
+
+  private getCurrentUser() {
+      this.userService.userObservable.subscribe((currentUser: UserModel) => {
+        this.currentUser = currentUser;
+      });
+  }
 
   get isForSale(): boolean {
     return this.product.offerType === 'Sell';
   }
 
-  //remove later (for demo)
-  toggleCreator() {
-    this.isNotCreator = !this.isNotCreator;
+  get isNotCreator(): boolean {
+    if (this.currentUser.userId == this.creator.userId) return false;
+    return true;
   }
 }

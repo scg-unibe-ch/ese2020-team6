@@ -19,3 +19,8 @@ export function verifyToken(req: Request, res: Response, next: any) {
         res.status(403).send({ message: 'Unauthorized' });
     }
 }
+
+export function checkForAuth(req: Request, res: Response, next: any) {
+    const auth = req.headers.authorization;
+    if (auth) { verifyToken(req, res, next); } else { next(); }
+}

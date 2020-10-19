@@ -8,6 +8,14 @@ import { any } from 'sequelize/types/lib/operators';
 export class UserService {
   datas: any;
 
+    public static cutUserInformation(user: User): {userName: string, email: string, userId: number} {
+      return {
+        userName: user.userName,
+        email: user.email,
+        userId: user.userId
+      };
+    }
+
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
@@ -60,7 +68,7 @@ export class UserService {
         where: {
             userId: id
         }
-    });
-    return this.datas;
-  }
+      });
+      return this.datas;
+    }
 }

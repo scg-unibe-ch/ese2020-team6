@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 //Models
 import { UserModel } from '../../../models/user/user.model';
+import { CutUserModel } from '../../../models/user/cut-user.model';
 
 import { environment } from '../../../../environments/environment';
 
@@ -17,7 +18,11 @@ export class GetUserService {
     private httpClient: HttpClient
   ) { }
 
-  public getById(id: number): Observable<UserModel> {
-    return this.httpClient.get<UserModel>(environment.endpointURL + 'user/userid:' + id.toString()).pipe(share())
+  public getUserByIdSecured(userId: number): Observable<UserModel> {
+    return this.httpClient.get<UserModel>(environment.endpointURL + 'user/userid:' + userId.toString()).pipe(share())
+  }
+
+  public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {
+    return this.httpClient.get<CutUserModel>(environment.endpointURL + 'user/userid:' + userId.toString()).pipe(share())
   }
 }

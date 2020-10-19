@@ -15,6 +15,7 @@ import { RegisterUserRequestBuilder } from '../../models/request/user/register/r
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
 import { RegisterUserResponseModel } from '../../models/response/user/register/register-user-response.model';
 import { UserModel } from '../../models/user/user.model';
+import { CutUserModel } from '../../models/user/cut-user.model';
 
 import { environment } from '../../../environments/environment';
 
@@ -38,8 +39,12 @@ export class UserService {
   private getUserFromLocalStorage(): void {
     let userId = localStorage.getItem('userId');
     if (userId) {
-      this.userObservable = this.getUserService.getById(parseInt(userId));
+      this.userObservable = this.getUserService.getUserByIdSecured(parseInt(userId));
     }
+  }
+
+  public getUserById(userId: number): Observable<CutUserModel> {
+    return this.getUserService.getUserByIdUnsecured(userId);
   }
 
   public login(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseModel> {

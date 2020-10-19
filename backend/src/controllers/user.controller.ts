@@ -2,7 +2,7 @@ import { ProductController } from './product.controller';
 
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
-import { verifyToken } from '../middlewares/checkAuth';
+import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -19,13 +19,24 @@ userController.post('/login',
     }
 );
 
-userController.get('/userid::userId', verifyToken,
-  (req: Request, res: Response) => {
-    userService.getUserById(parseInt(req.params.userId, 10)).then(user => res.send(user)).catch(err => res.status(500).send(err));
+userController.get('/userid::userId', checkForAuth,
+  (req: Request, res: Response, next) => {
+    userService.getUserById(parseInt(req.params.userId, 10)).then(user => {
+      const tokenPayload = req.body.tokenPayload;
+      if (tokenPayload) {
+        if (tokenPayload.userId === user.userId) {
+          res.send(user);
+        } else {
+          res.send(UserService.cutUserInformation(user));
+        }
+      } else {
+        res.send(UserService.cutUserInformation(user));
+      }
+    }).catch(err => res.status(500).send(err));
   }
 );
 
-userController.get('/', verifyToken, // you can add middleware on specific requests like that
+userController.get('/',
     (req: Request, res: Response) => {
         userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
     }

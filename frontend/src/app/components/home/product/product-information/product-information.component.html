@@ -6,11 +6,33 @@
     <div class="title">
       <div>{{product.title}}</div>
     </div>
+    <div class="creator">
+      Creator:
+      <div>{{creator.userName}}</div>
+      <div>{{creator.email}}</div>
+    </div>
+    <div class="price">
+      <div>{{product.price}}</div>
+    </div>
     <div class="details">
       <app-product-pill [pillValue]="product.offerType" title="Offer Type" [size]="1.3"></app-product-pill>
       <app-product-pill [pillValue]="product.productType" title="Product Type" [size]="1.3"></app-product-pill>
       <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass" title="Status" [size]="1.3"></app-product-pill>
       <app-product-pill [pillValue]="product.deliverable" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass" title="Delivarable" [size]="1.3"></app-product-pill>
+    </div>
+  </div>
+  <div class="middle-section">
+    <div class="location">
+      <div>{{product.location}}</div>
+    </div>
+    <div class="expiration-date">
+      <div>{{product.expirationDate}}</div>
+    </div>
+    <div class="category">
+      <div>{{product.category}}</div>
+      <div class="subcategory">
+          <div>{{product.subcategory}}</div>
+      </div>
     </div>
   </div>
   <div class="lower-section">
@@ -29,8 +51,5 @@
         <button class="button-full-po">Update</button>
       </ng-template>
     </div>
-  </div>
-  <div class="toggle-creator">
-    <button class="button-full-po" (click)="toggleCreator()">Toggle creator</button><--- for demo
   </div>
 </div>
