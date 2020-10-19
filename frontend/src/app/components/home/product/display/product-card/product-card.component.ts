@@ -28,4 +28,9 @@ export class ProductCardComponent {
     } else return '';
   }
 
+  get priceLabel(): string {
+    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
+    else return '$';
+  }
+
 }

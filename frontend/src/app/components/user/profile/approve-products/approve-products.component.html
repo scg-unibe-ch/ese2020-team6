@@ -1,10 +1,1 @@
-<div class="product-display list" *ngIf="isList; else isGrid">
-  <app-product-card-list *ngFor="let unapprovedProduct of unapprovedProducts" [product]="unapprovedProduct">
-  </app-product-card-list>
-</div>
-<ng-template #isGrid>
-  <div class="product-display grid">
-    <app-product-card-grid *ngFor="let unapprovedProduct of unapprovedProducts" [product]="unapprovedProduct">
-    </app-product-card-grid>
-  </div>
-</ng-template>
+<app-product-view [products]="unapprovedProducts"></app-product-view>

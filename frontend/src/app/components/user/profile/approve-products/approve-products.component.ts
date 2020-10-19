@@ -13,7 +13,7 @@ import { ProductModel } from '../../../../models/product/product.model';
 export class ApproveProductsComponent {
 
   public unapprovedProducts: Array<ProductModel>;
-  public displayList: boolean = true;
+  public displayList: boolean = false;
 
   constructor(
     private productService: ProductService

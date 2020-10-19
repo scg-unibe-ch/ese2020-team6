@@ -1,0 +1,11 @@
+<div class="product-view">
+  <div class="control">
+    <button type="button" name="button" (click)="switchView()">Switch View</button>
+  </div>
+  <div class="view">
+    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products"></app-product-view-list>
+    <ng-template #isGrid>
+      <app-product-view-grid class="product-display grid" [products]="products"></app-product-view-grid>
+    </ng-template>
+  </div>
+</div>
