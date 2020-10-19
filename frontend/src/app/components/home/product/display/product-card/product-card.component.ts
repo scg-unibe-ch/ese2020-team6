@@ -5,20 +5,27 @@ import { ProductModel } from '../../../../../models/product/product.model';
 
 @Component({
   selector: 'app-product-card',
-  template: ``,
-  styleUrls: ['./product-card.component.scss']
+  template: ``
 })
 export class ProductCardComponent {
 
   @Input()
   product: ProductModel;
 
-  get statusPillColorClass(): string {
-    return this.product.status.toLowerCase();
+  statusIndicatorPillColorClass: () => string = () => {
+    let status: string = this.product.status;
+    if (status) {
+      if (status === 'Available') return 'success';
+      else if (status === 'Sold' || status === 'Lent') return 'warn';
+    } else return '';
   }
 
-  detailsPillColorClass(pillContent: string): string {
-    return pillContent ? 'faded' : 'fainted';
+  deliverableIndicatorPillColorClass: () => string = () => {
+    let deliverable: boolean = this.product.deliverable;
+    if (deliverable == true || deliverable == false) {
+      if (deliverable) return 'success';
+      else return 'warn';
+    } else return '';
   }
-  
+
 }

@@ -13,4 +13,5 @@ export interface ProductModel {
   createdAt: string;
   price: number;
   productId: number;
+  deliverable: boolean;
 }

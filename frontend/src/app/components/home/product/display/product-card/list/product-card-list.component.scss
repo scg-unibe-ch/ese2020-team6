@@ -1,11 +1,7 @@
+@import '../../../../../../../variables.scss';
+
 $picture-dim: 300px;
 $title-height: 100px;
-
-$primary: #4F8AC9;
-$faded: #EBD4C5;
-$fainted: #FBF1EA;
-$warn: #c55051;
-$success: #73BC58;
 
 .product-card {
   border: 2px solid black;
@@ -15,6 +11,7 @@ $success: #73BC58;
   grid-template-rows: $title-height auto;
   grid-gap: 20px;
   cursor: pointer;
+  font-size: calc(#{$title-height} * .3);
 }
 
 .product-card:hover > .go-to-product > svg {
@@ -38,10 +35,6 @@ $success: #73BC58;
   align-items: center;
 }
 
-.title > div {
-  font-size: calc(#{$title-height} * .3);
-}
-
 .price {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
@@ -50,7 +43,7 @@ $success: #73BC58;
 }
 
 .price > div {
-  font-size: calc(#{$title-height} * .2);
+  font-size: .6em;;
 }
 
 .go-to-product {
@@ -79,6 +72,7 @@ svg > path {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  font-size: .6em;
 }
 
 .description > div {
@@ -92,35 +86,4 @@ svg > path {
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
-}
-
-.details-child > div {
-  width: 100px;
-  height: 50px;
-  border-radius: 25px;
-  background: red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-}
-
-.faded > div {
-  background: $faded;
-}
-
-.fainted > div {
-  background: $fainted;
-}
-
-.available > div {
-  background: $success;
-}
-
-.lend > div {
-  background: $warn;
-}
-
-.sold > div {
-  background: $warn;
 }

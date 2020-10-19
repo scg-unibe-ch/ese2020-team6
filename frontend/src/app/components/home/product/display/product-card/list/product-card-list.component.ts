@@ -8,16 +8,8 @@ import { ProductCardComponent } from '../product-card.component';
 @Component({
   selector: 'app-product-card-list',
   templateUrl: './product-card-list.component.html',
-  styleUrls: ['../product-card.component.scss']
+  styleUrls: ['./product-card-list.component.scss']
 })
 export class ProductCardListComponent extends ProductCardComponent {
-
-  get statusPillColorClass(): string {
-    return this.product.status.toLowerCase();
-  }
-
-  detailsPillColorClass(pillContent: string): string {
-    return pillContent ? 'faded' : 'fainted';
-  }
 
 }

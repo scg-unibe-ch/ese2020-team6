@@ -19,6 +19,22 @@ export class ProductInformationComponent implements OnInit {
   public product: any = {};
   public isNotCreator: boolean = false;
 
+  statusIndicatorPillColorClass: () => string = () => {
+    let status: string = this.product.status;
+    if (status) {
+      if (status === 'Available') return 'success';
+      else if (status === 'Sold' || status === 'Lent') return 'warn';
+    } else return '';
+  }
+
+  deliverableIndicatorPillColorClass: () => string = () => {
+    let deliverable: boolean = this.product.deliverable;
+    if (deliverable == true || deliverable == false) {
+      if (deliverable) return 'success';
+      else return 'warn';
+    } else return '';
+  }
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -33,20 +49,6 @@ export class ProductInformationComponent implements OnInit {
          });
        });
    }
-
-
-  get statusPillColorClass(): string {
-    return this.product.status === 'Available' ? 'success' :
-    (this.product.status === 'Sold' || this.product.status === 'Lent' ? 'warn' : '');
-  }
-
-  get deliverablePillColorClass(): string {
-    return this.product.deliverable ? 'success' : 'warn';
-  }
-
-  detailsPillColorClass(pillContent: string): string {
-    return pillContent ? 'faded' : 'fainted';
-  }
 
   get isForSale(): boolean {
     return this.product.offerType === 'Sell';

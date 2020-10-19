@@ -12,11 +12,16 @@ import { ProductModel } from '../../../../models/product/product.model';
 })
 export class ApproveProductsComponent {
 
-  public products: Array<ProductModel>;
+  public unapprovedProducts: Array<ProductModel>;
+  public displayList: boolean = true;
 
   constructor(
     private productService: ProductService
   ) {
-    this.productService.getAll().subscribe((products: Array<ProductModel>) => this.products = products);
+    this.productService.getAll().subscribe((unapprovedProducts: Array<ProductModel>) => this.unapprovedProducts = unapprovedProducts);
+  }
+
+  get isList(): boolean {
+    return this.displayList;
   }
 }

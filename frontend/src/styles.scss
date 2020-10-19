@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import './variables.scss';
+
 html, body {
   height: 100%;
   width: 100%;
@@ -77,4 +79,20 @@ button:focus {
 
 .button-empty:active::before {
   background: rgba(223, 171, 160, .2);
+}
+
+.faded {
+  background: $faded;
+}
+
+.fainted{
+  background: $fainted;
+}
+
+.success {
+  background: $success;
+}
+
+.warn {
+  background: $warn;
 }

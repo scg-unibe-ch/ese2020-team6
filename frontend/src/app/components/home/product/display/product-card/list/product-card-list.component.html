@@ -17,14 +17,9 @@
     </svg>
   </div>
   <div class="details">
-    <div class="offer-type details-child" [ngClass]="detailsPillColorClass(product.offerType)">
-      <div>{{product.offerType}}</div>
-    </div>
-    <div class="product-type details-child" [ngClass]="detailsPillColorClass(product.productType)">
-      <div>{{product.productType}}</div>
-    </div>
-    <div class="status details-child" [ngClass]="[statusPillColorClass, detailsPillColorClass(product.status)]">
-      <div>{{product.status}}</div>
-    </div>
+    <app-product-pill [pillValue]="product.offerType"></app-product-pill>
+    <app-product-pill [pillValue]="product.productType"></app-product-pill>
+    <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass"></app-product-pill>
+    <app-product-pill [pillValue]="product.deliverable" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass"></app-product-pill>
   </div>
 </div>

@@ -7,22 +7,10 @@
       <div>{{product.title}}</div>
     </div>
     <div class="details">
-      <div class="offer-type">
-        <div class="name" [ngClass]="detailsPillColorClass(product.offerType)">Offer Type:</div>
-        <div class="pill" [ngClass]="detailsPillColorClass(product.offerType)">{{product.offerType}}</div>
-      </div>
-      <div class="product-type">
-        <div class="name" [ngClass]="detailsPillColorClass(product.productType)">Product Type:</div>
-        <div class="pill" [ngClass]="detailsPillColorClass(product.productType)">{{product.productType}}</div>
-      </div>
-      <div class="status">
-        <div class="name" [ngClass]="detailsPillColorClass(product.status)">Status:</div>
-        <div class="pill" [ngClass]="[statusPillColorClass, detailsPillColorClass(product.status)]">{{product.status}}</div>
-      </div>
-      <div class="status">
-        <div class="name" [ngClass]="detailsPillColorClass(product.deliverable)">Delivarable:</div>
-        <div class="pill" [ngClass]="[deliverablePillColorClass, detailsPillColorClass(product.deliverable)]">{{product.deliverable}}</div>
-      </div>
+      <app-product-pill [pillValue]="product.offerType" title="Offer Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.productType" title="Product Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass" title="Status" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.deliverable" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass" title="Delivarable" [size]="1.3"></app-product-pill>
     </div>
   </div>
   <div class="lower-section">

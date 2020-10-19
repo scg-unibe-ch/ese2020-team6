@@ -105,6 +105,7 @@ import { PasswordMatchValidatorDirective } from './components/custom-form/valida
 
 import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
+import { ProductPillComponent } from './components/home/product/display/product-card/product-pill/product-pill.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { defaultUserNavigationElements, defaultProfileComponent } from './compon
     ApproveProductsComponent,
     AngleIconComponent,
     ProductCardGridComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ProductPillComponent
   ],
   imports: [
     BrowserModule,
