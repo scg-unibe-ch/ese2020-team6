@@ -14,7 +14,7 @@
       </div>
       <div class="input-grid">
         <app-text-input placeholder="Location" name="location" ngModel #location="ngModel"></app-text-input>
-        <app-select name="category" selectName="Categiry" ngModel #category="ngModel" [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
+        <app-select name="category" selectName="Category" ngModel #category="ngModel" [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
       </div>
       <label>Picture
         <input class="picture" name="picture" ngModel #picture="ngModel" 
@@ -27,7 +27,7 @@
           </button>
         </div>
         <div class="action-wrapper">
-            <button type="submit" (click)="openSnackBar()" name="button">Create</button>
+            <button type="submit" name="button">Create</button>
         </div>
       </div>
     </form>
@@ -36,8 +36,8 @@
     <ng-template #preview>
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
-            <h2>Your product</h2>
-            <app-product-information [data]="productData" [isPreview]="true"></app-product-information>
+              <h2>Your product</h2>
+            <app-product-information [product]="productData" [isPreview]="true"></app-product-information>
         </div>
       </div>
     </ng-template>

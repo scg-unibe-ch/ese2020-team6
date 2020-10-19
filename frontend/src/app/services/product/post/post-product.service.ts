@@ -20,5 +20,10 @@ export class PostProductService {
   public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {
     return this.httpClient.post(environment.endpointURL + 'product/post', requestBuilder.build());
   }
+  
+  public deleteProduct(id: number): Observable<any> {
+    return this.httpClient.delete(
+      environment.endpointURL + 'product/delete:' + id);
+  }
 
 }

@@ -39,4 +39,7 @@ export class ProductService {
     return this.postProductService.post(requestBuilder);
   }
 
+  public deleteProduct(id: number): Observable<any> {
+    return this.postProductService.deleteProduct(id);
+  }
 }

@@ -49,7 +49,7 @@
     <div class="description">
       {{product.description}}
     </div>
-    <div class="options">
+    <div class="options" *ngIf="!isPreview">
       <ng-template [ngIf]="isNotCreator" [ngIfElse]="isCreator">
         <button *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
         <ng-template #isForRent>
@@ -57,9 +57,24 @@
         </ng-template>
       </ng-template>
       <ng-template #isCreator>
-        <button class="button-full-po">Delete</button>
-        <button class="button-full-po">Update</button>
+        <button (click)="openWithTemplate(tpl)" class="button-full-po">Delete</button>
+        <button class="button-full-po" [routerLink]="['/product/post', product.productId]">Update</button>
       </ng-template>
     </div>
   </div>
+  <ng-template #tpl>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            Do you want to delete the product?
+          </header>
+          <section class="modal-card-body">
+            <button (click)="deleteProduct()" class="button-full-po">Delete</button>
+            <button (click)="doNothing()" class="button-full-po">Cancel</button>
+          </section>
+          <footer class="modal-card-foot">
+          </footer>
+        </div>
+  </ng-template>
+  <ng-template #tplClose>
+  </ng-template>
 </div>

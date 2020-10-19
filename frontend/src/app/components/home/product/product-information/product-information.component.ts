@@ -1,7 +1,7 @@
-// Packages
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-// Services
+import {Overlay, OverlayConfig, OverlayModule} from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { Component, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
 // Models
@@ -16,6 +16,10 @@ import { UserModel, NullUser } from '../../../../models/user/user.model';
   styleUrls: ['./product-information.component.scss']
 })
 export class ProductInformationComponent implements OnInit {
+  @Input() isPreview = false;
+  id: number;
+  productId: any;
+  private overlayRef: any;
 
   public product: ProductModel = new NullProduct();
   public creator: CutUserModel = new NullCutUser();
@@ -40,7 +44,10 @@ export class ProductInformationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef
   ) { }
 
    public ngOnInit(): void {
@@ -76,12 +83,32 @@ export class ProductInformationComponent implements OnInit {
     else return '$';
   }
 
-  get isForSale(): boolean {
-    return this.product.offerType === 'Sell';
+  public deleteProduct(): void {
+    this.productService.deleteProduct(this.productId).subscribe(
+      product => console.log(product));
+    this.router.navigate(['/user/profile/myproducts']);
+    this.overlayRef.dispose();
+  }
+
+  public openWithTemplate(tpl: TemplateRef<any>) {
+    const configs = new OverlayConfig({
+     hasBackdrop: true,
+     });
+    configs.positionStrategy = this.overlay.position()
+     .global()
+     .centerHorizontally()
+     .centerVertically();
+    const overlayRef = this.overlay.create(configs);
+    this.overlayRef = overlayRef;
+    overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
   }
 
   get isNotCreator(): boolean {
     if (this.currentUser.userId == this.creator.userId) return false;
     return true;
+  }
+
+  public doNothing(tplClose: TemplateRef<any>) {
+        this.overlayRef.dispose();
   }
 }

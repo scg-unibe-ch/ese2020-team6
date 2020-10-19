@@ -7,7 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 //  Angular Material
@@ -110,6 +111,7 @@ import { ProductViewComponent } from './components/home/product/display/product-
 import { ProductViewListComponent } from './components/home/product/display/product-view/list/product-view-list.component';
 import { ProductViewGridComponent } from './components/home/product/display/product-view/grid/product-view-grid.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -179,6 +181,7 @@ import { ProductViewGridComponent } from './components/home/product/display/prod
     MatToolbarModule,
     MatSnackBarModule,
     OverlayModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

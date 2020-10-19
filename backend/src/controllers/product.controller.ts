@@ -25,6 +25,14 @@ productController.get('/productInformation::id',
     }
 );
 
+productController.delete('/delete::id',
+    (req: Request, res: Response) => {
+        const id: number = +req.params.id;
+        productService.delete(id).then(
+            product => res.send(product)).catch(err => res.status(500).send(err));
+    }
+);
+
 
 
 
