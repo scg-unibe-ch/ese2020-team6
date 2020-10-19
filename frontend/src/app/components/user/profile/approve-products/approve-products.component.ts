@@ -18,7 +18,7 @@ export class ApproveProductsComponent {
   constructor(
     private productService: ProductService
   ) {
-    this.productService.getAll().subscribe((unapprovedProducts: Array<ProductModel>) => this.unapprovedProducts = unapprovedProducts);
+    this.productService.getAllProducts().subscribe((unapprovedProducts: Array<ProductModel>) => this.unapprovedProducts = unapprovedProducts);
   }
 
   get isList(): boolean {

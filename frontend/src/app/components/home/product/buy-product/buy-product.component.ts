@@ -19,9 +19,9 @@ export class BuyProductComponent implements OnInit {
       { path: 'product-information/:id' , component: ProductInformationComponent}
      ];
   }
-  
+
   ngOnInit(): void {
-    this.productService.getAll().subscribe(data => {
+    this.productService.getAllProducts().subscribe(data => {
       this.products = data;
     });
   }

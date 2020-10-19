@@ -50,7 +50,7 @@ export class ProductInformationComponent implements OnInit {
    }
 
   private getProduct(productId: number): void {
-    this.productService.get(productId).subscribe((product: any) => {
+    this.productService.getProductById(productId).subscribe((product: any) => {
       this.product = product;
       this.getCreator(product.userId);
     });
