@@ -1,5 +1,5 @@
 import { AbstractControl, Validator } from '@angular/forms';
-import { RegexValidator } from '../../../models/regex-validator.model';
+import { RegexValidator } from '../../../../models/regex-validator.model';
 
 export class RegexValidatorBase implements Validator {
   regExp: RegExp;
@@ -26,7 +26,7 @@ export class RegexValidatorBase implements Validator {
 }
 
 
-export let validatorRegex = {
+export const validatorRegex = {
   gender: {
     regex: /^Female|Male|Other$/,
     name: "genderValidator",
@@ -71,5 +71,30 @@ export let validatorRegex = {
     regex: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[A-Za-z\d@$!%*#?&]{5,})$/,
     name: "usernameOrEmailValidator",
     errorMessage: "You either need to enter your username or your email address."
+  },
+  title: {
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?& ]){4,30}$/,
+    name: "titleValidatdor",
+    errorMessage: "Max. length of 30 and min. length of 5 and characters. You can use special characters: '@$!%*#?&'"
+  },
+  description: {
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?&. ]){50,}$/,
+    name: "descriptionValidatdor",
+    errorMessage: "Min. length of 50 characters. Has to start with a capital letter. You can use special characters: '@$!%*#?&.'"
+  },
+  price: {
+    regex: /^\d*([.]\d{1,})?$/,
+    name: "priceValidator",
+    errorMessage: "You can either enter an Integer or a Float."
+  },
+  location: {
+    regex: /^[A-Za-z\d,\-. ]{1,}$/,
+    name: "locationValidator",
+    errorMessage: "You can either enter an Integer or a Float."
+  },
+  date: {
+    regex: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|(1|2)[0-9]|3[0-1])T(0[1-9]|1[0-9]|2[0-3]):(0[0-9]|([1-5])[0-9])$/,
+    name: "dateValidator",
+    errorMessage: "Date and Time: yyyy-mm-ddThh:minmin"
   }
 }
