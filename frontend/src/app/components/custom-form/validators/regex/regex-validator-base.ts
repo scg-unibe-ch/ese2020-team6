@@ -73,12 +73,12 @@ export const validatorRegex = {
     errorMessage: "You either need to enter your username or your email address."
   },
   title: {
-    regex: /^[A-Z]([A-Za-z\d@$!%*#?& ]){4,30}$/,
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?&, ]){4,30}$/,
     name: "titleValidatdor",
     errorMessage: "Max. length of 30 and min. length of 5 and characters. You can use special characters: '@$!%*#?&'"
   },
   description: {
-    regex: /^[A-Z]([A-Za-z\d@$!%*#?&. ]){50,}$/,
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?&,. ]){50,}$/,
     name: "descriptionValidatdor",
     errorMessage: "Min. length of 50 characters. Has to start with a capital letter. You can use special characters: '@$!%*#?&.'"
   },
@@ -88,7 +88,7 @@ export const validatorRegex = {
     errorMessage: "You can either enter an Integer or a Float."
   },
   location: {
-    regex: /^[A-Za-z\d,\-. ]{1,}$/,
+    regex: /^[A-Za-z\d,\-., ]{1,}$/,
     name: "locationValidator",
     errorMessage: "You can either enter an Integer or a Float."
   },
