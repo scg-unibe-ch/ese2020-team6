@@ -13,8 +13,7 @@ export class UserService {
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
         try {
               return User.create(user).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
-        }
-        catch (uniqueContraintError) {}
+        } catch (uniqueContraintError) {}
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
