@@ -1,6 +1,6 @@
 <div class="product-view">
   <div class="control">
-    <button type="button" name="button" (click)="switchView()">Switch View</button>
+    <button class="button-full-po" (click)="switchView()">Switch View</button>
   </div>
   <div class="view">
     <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products"></app-product-view-list>

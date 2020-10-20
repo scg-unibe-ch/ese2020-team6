@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product/product.service';
+import { UserService } from '../../services/user/user.service';
+import { ProductModel } from '../../models/product/product.model';
 
 @Component({
   selector: 'app-home',
@@ -10,24 +12,15 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  buyMessage: String;
-  postMessage: String;
-  approveMessage: String;
+  public products: Array<ProductModel> = new Array();
+  public isLoggedIn: boolean = false;
 
   constructor(
-    private httpClient: HttpClient,
-    private router: Router
-  ) { }
-
-  post(): any {
-    this.httpClient.get(environment.endpointURL + 'secured/post').subscribe((res: any) => {
-      this.router.navigate(['/product/post']);
-    }, (error: any) => {
-      this.postMessage = 'You need to login to use this feature!';
-    });
-  }
-
-  approve() {
-    this.approveMessage = 'Not implemented yet!';
+    private router: Router,
+    private productService: ProductService,
+    private userService: UserService
+  ) {
+    productService.getAllProducts().subscribe((products: Array<ProductModel>) => this.products = products);
+    this.isLoggedIn = userService.isLoggedIn;
   }
 }

@@ -1,21 +1,17 @@
-<app-menu-bar></app-menu-bar>
-
 <div class="title-wrapper">
   <div class="title">
     <h1>TEAM6</h1>
     <h3>Shoppingplatform</h3>
   </div>
+  <div *ngIf="isLoggedIn" class="go-to-post" [routerLink]="['/product/post']">
+    <svg class="plus" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+      <path d="M 0 -50 A 50 50 0 0 0 0 50 A 50 50 0 0 0 0 -50 Z M -9 9 L -30 9 A 2 2 0 0 1 -32 7 L -32 -7 A 2 2 0 0 1 -30 -9 L -9 -9 L -9 -30 A 2 2 0 0 1 -7 -32 L 7 -32 A 2 2 0 0 1 9 -30 L 9 -9 L 30 -9 A 2 2 0 0 1 32 -7 L 32 7 A 2 2 0 0 1 30 9 L 9 9 L 9 30 A 2 2 0 0 1 7 32 L -7 32 A 2 2 0 0 1 -9 30 Z"></path>
+    </svg>
+  </div>
 </div>
 
+<app-menu-bar></app-menu-bar>
+
 <div class="content-wrapper">
-  <div class="product">
-    <button class="button-full-po" [routerLink]="['/product/buy']">Buy Product</button>
-    <button class="button-full-po" (click)="post()">Post Product</button>
-    <button class="button-full-po" (click)="approve()">Approve Product</button>
-  </div>
-  <div class="answer">
-    <p>{{ this.buyMessage }}</p>
-    <p>{{ this.postMessage }}</p>
-    <p>{{ this.approveMessage }}</p>
-  </div>
+  <app-product-view [products]="products"></app-product-view>
 </div>

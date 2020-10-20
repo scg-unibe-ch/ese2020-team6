@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .title-wrapper {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,6 @@
   position: relative;
   height: 100vh;
   width: 100vw;
-  z-index: -1;
 }
 
 .title {
@@ -40,13 +41,10 @@ h3 {
 }
 
 .content-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background: rgba(191, 191, 217, 0.4);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 50px;
 }
 
 .product {
@@ -67,4 +65,34 @@ h3 {
 
 .answer > p {
   margin: 10px;
+}
+
+.go-to-post {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  right: 50px;
+  bottom: 50px;
+}
+
+.go-to-post:active, .go-to-post:focus {
+  outline: 0;
+}
+
+.plus > path {
+  stroke: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: $primary;
+}
+
+.plus {
+  transition: all .1s ease-in-out;
+  cursor: pointer;
+}
+
+
+
+.plus:hover {
+  transform: scale(1.1);
 }
