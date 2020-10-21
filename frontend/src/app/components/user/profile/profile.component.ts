@@ -17,7 +17,7 @@ import { defaultUserNavigationElements, adminNavigationElements } from './naviga
 export class ProfileComponent {
 
   public navigationElements = defaultUserNavigationElements;
-  public currentContent: ProfileNavigationElementModel;
+  public currentContent: ProfileNavigationElementModel = { title: null, path: null};
   public userName: string;
   public userId: number;
 
@@ -27,8 +27,6 @@ export class ProfileComponent {
     private userService: UserService
   ) {
 
-    this.setCurrentContentOnReload();
-
     if (userService.isLoggedIn) {
       userService.userObservable.subscribe((user: UserModel) => {
         this.userName = user.userName;
@@ -36,6 +34,7 @@ export class ProfileComponent {
         if (user.isAdmin) {
           this.navigationElements = adminNavigationElements;
         }
+        this.setCurrentContentOnReload();
       });
     }
   }
