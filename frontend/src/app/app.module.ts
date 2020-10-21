@@ -86,17 +86,18 @@ import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.com
 
 
 //  Validators
-import { HouseNumberValidatorDirective } from './components/custom-form/validators/house-number/house-number-validator.directive';
-import { NounValidatorDirective } from './components/custom-form/validators/noun/noun-validator.directive';
-import { PhonenumberValidatorDirective } from './components/custom-form/validators/phonenumber/phonenumber-validator.directive';
-import { PlzValidatorDirective } from './components/custom-form/validators/plz/plz-validator.directive';
-import { UsernameValidatorDirective } from './components/custom-form/validators/username/username-validator.directive';
-import { GenderValidatorDirective } from './components/custom-form/validators/gender/gender-validator.directive';
-import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/username-or-email/username-or-email-validator.directive';
-import { EmailValidatorDirective } from './components/custom-form/validators/email/email-validator.directive';
-import { PasswordValidatorDirective } from './components/custom-form/validators/password/password-validator.directive';
+import { HouseNumberValidatorDirective } from './components/custom-form/validators/regex/house-number/house-number-validator.directive';
+import { NounValidatorDirective } from './components/custom-form/validators/regex/noun/noun-validator.directive';
+import { PhonenumberValidatorDirective } from './components/custom-form/validators/regex/phonenumber/phonenumber-validator.directive';
+import { PlzValidatorDirective } from './components/custom-form/validators/regex/plz/plz-validator.directive';
+import { UsernameValidatorDirective } from './components/custom-form/validators/regex/username/username-validator.directive';
+import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/regex/username-or-email/username-or-email-validator.directive';
+import { EmailValidatorDirective } from './components/custom-form/validators/regex/email/email-validator.directive';
+import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
 //    Cross Field
-import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
+import { PasswordMatchValidatorDirective } from './components/custom-form/validators/regex/cross-field/password-match-validator.directive';
+//    Select
+import { GenderValidatorDirective } from './components/custom-form/validators/select/gender/gender-validator.directive';
 
 
 
@@ -115,6 +116,18 @@ import { EditProductComponent } from './components/home/product/product-informat
 import { ReviewProductComponent } from './components/home/product/product-information/review-product/review-product.component';
 import { ProductDetailsComponent } from './components/home/product/product-information/product-details/product-details.component';
 import { ProductPreviewComponent } from './components/home/product/product-information/product-preview/product-preview.component';
+import { TitleValidatorDirective } from './components/custom-form/validators/regex/title/title-validator.directive';
+import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
+import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
+import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
+import { DateValidatorDirective } from './components/custom-form/validators/regex/date/date-validator.directive';
+import { TextAreaComponent } from './components/custom-form/text-area/text-area.component';
+import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
+import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
+import { StatusValidatorDirective } from './components/custom-form/validators/select/status/status-validator.directive';
+import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
+import { CategoryValidatorDirective } from './components/custom-form/validators/select/category/category-validator.directive';
+import { SubcategoryValidatorDirective } from './components/custom-form/validators/select/category/subcategory/subcategory-validator.directive';
 
 
 @NgModule({
@@ -172,6 +185,18 @@ import { ProductPreviewComponent } from './components/home/product/product-infor
     ReviewProductComponent,
     ProductDetailsComponent,
     ProductPreviewComponent,
+    TitleValidatorDirective,
+    DescriptionValidatorDirective,
+    PriceValidatorDirective,
+    LocationValidatorDirective,
+    DateValidatorDirective,
+    TextAreaComponent,
+    ProductTypeValidatorDirective,
+    OfferTypeValidatorDirective,
+    StatusValidatorDirective,
+    DeliverableValidatorDirective,
+    CategoryValidatorDirective,
+    SubcategoryValidatorDirective,
   ],
   imports: [
     BrowserModule,
