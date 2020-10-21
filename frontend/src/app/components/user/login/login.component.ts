@@ -12,7 +12,7 @@ import { UserModel } from '../../../models/user/user.model';
 //Services
 import { UserService } from '../../../services/user/user.service';
 
-import { validatorRegex } from '../../custom-form/validators/regex-validator-base';
+import { validatorRegex } from '../../custom-form/validators/regex/regex-validator-base';
 
 
 

@@ -36,10 +36,18 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
     this.optionsHidden = !this.optionsHidden;
   }
 
-  onSelect(option: String) {
+  onSelect(option: string) {
     this.value = option;
     this.current = option;
+
     this.onShowOptions();
+  }
+
+  writeValue(value: string) {
+    if (value) {
+      this.value = value;
+      this.current = value;
+    }
   }
 
   getPlaceholderClass() {
