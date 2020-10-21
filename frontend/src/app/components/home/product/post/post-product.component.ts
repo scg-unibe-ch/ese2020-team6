@@ -21,16 +21,7 @@ import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navig
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductFormModel> {
   @ViewChild('postProductForm') form: NgForm;
-  @ViewChild('productTypeChild') productType: SelectComponent;
-  @ViewChild('offerTypeChild') offerType: SelectComponent;
-  @ViewChild('titleChild') title: SelectComponent;
-  @ViewChild('descriptionChild') description: SelectComponent;
-  @ViewChild('priceChild') price: SelectComponent;
-  @ViewChild('locationChild') location: SelectComponent;
-  @ViewChild('statusChild') status: SelectComponent;
-  @ViewChild('categoryChild') category: SelectComponent;
-  @ViewChild('pictureChild') picture: SelectComponent;
-  requestInformation: PostProductForm;
+  requestInformation: PostProductFormModel;
   productData: any;
   public currentContent: ProfileNavigationElementModel;
   public userId: number;
@@ -118,18 +109,7 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   updateProduct(): void {
     this.productService.get(this.productId).subscribe((product: any) => {
       this.product = product;
-      this.form.form.get('title').setValue(product.title);
-      this.form.form.get('description').setValue(product.description);
-      this.form.form.get('price').setValue(product.price);
-      this.form.form.get('location').setValue(product.location);
-      this.form.form.get('offerType').setValue(product.offerType);
-      this.offerType.current = product.offerType;
-      this.form.form.get('productType').setValue(product.productType);
-      this.productType.current = product.productType;
-      this.form.form.get('category').setValue(product.category);
-      this.category.current = product.category;
-      this.form.form.get('status').setValue(product.status);
-      this.status.current = product.status;
+      this.values = product;
     });
   }
 }

@@ -3,29 +3,29 @@
     <h3>Create</h3>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
-        <app-select #productTypeChild name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
-        <app-select #offerChild name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]="['Sell', 'Rent']" appOfferTypeValidator></app-select>
+        <app-select name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
+        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]="['Sell', 'Rent']" appOfferTypeValidator></app-select>
       </div>
       <div class="input-grid">
-        <app-select #categoryChild name="category" selectName="Category" [(ngModel)]="values.category" [options]="['Houses', 'Pets', 'Nice Stuff']" appCategoryValidator></app-select>
-        <app-select #subCategoryChild name="subcategory" selectName="Subcategory" [(ngModel)]="values.subcategory" [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']" appSubCategoryValidator></app-select>
+        <app-select name="category" selectName="Category" [(ngModel)]="values.category" [options]="['Houses', 'Pets', 'Nice Stuff']" appCategoryValidator></app-select>
+        <app-select name="subcategory" selectName="Subcategory" [(ngModel)]="values.subcategory" [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']" appSubCategoryValidator></app-select>
       </div>
-      <app-text-input #titleChild placeholder="Title" name="title" [(ngModel)]="values.title" appTitleValidator></app-text-input>
-      <app-text-area #descriptionChild class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>
+      <app-text-input placeholder="Title" name="title" [(ngModel)]="values.title" appTitleValidator></app-text-input>
+      <app-text-area class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>
       <div class="input-grid">
-        <app-text-input #priceChild placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
-        <app-select #statusChild name="status" selectName="Status" [(ngModel)]="values.status" [options]="['Available', 'Lent', 'Sold']" appStatusValidator></app-select>
+        <app-text-input placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
+        <app-select name="status" selectName="Status" [(ngModel)]="values.status" [options]="['Available', 'Lent', 'Sold']" appStatusValidator></app-select>
       </div>
       <div class="input-grid">
-        <app-text-input #locationChild placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
+        <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
         <app-select name="deliverable" selectName="Deliverable" [(ngModel)]="values.deliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
       </div>
       <div class="input-grid">
         <label>Picture
-          <input #pictureChild class="picture" name="picture" ngModel
+          <input class="picture" name="picture" ngModel
           type="file" (change)="onFileChanged($event)" size="50" accept="png, jpg">
         </label>
-        <input #expirationChild placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
+        <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
       </div>
       <div class="input-grid">
         <div class="action-wrapper">
