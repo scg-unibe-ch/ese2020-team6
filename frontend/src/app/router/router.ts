@@ -46,7 +46,6 @@ export const routes = [
       {
         path: 'profile',
         component: ProfileComponent,
-        data: defaultUserNavigationElements[defaultProfileComponent],
         canActivate: [AuthGuard],
         children: [
           {

@@ -23,12 +23,11 @@ export class ProfileComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService
   ) {
 
-    route.data.subscribe((navigationElement: ProfileNavigationElementModel)=>{
-      this.currentContent = navigationElement;
-    });
+    this.setCurrentContentOnReload();
 
     if (userService.isLoggedIn) {
       userService.userObservable.subscribe((user: UserModel) => {
@@ -39,6 +38,12 @@ export class ProfileComponent {
         }
       });
     }
+  }
+
+  private setCurrentContentOnReload(): void {
+    let currentNavigationElementPath: string = this.router.url.split("/").reverse()[0];
+    let currentNavigationElement: ProfileNavigationElementModel = this.navigationElements.find((element: ProfileNavigationElementModel) => element.path === currentNavigationElementPath);
+    this.setCurrentContent(currentNavigationElement);
   }
 
   public setCurrentContent(navigationElement: ProfileNavigationElementModel): void {
