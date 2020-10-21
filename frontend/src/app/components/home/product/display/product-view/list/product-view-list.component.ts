@@ -11,6 +11,9 @@ import { ProductModel } from '../../../../../../models/product/product.model';
 export class ProductViewListComponent {
 
   @Input()
+  path: string = "";
+
+  @Input()
   products: Array<ProductModel>;
 
 }

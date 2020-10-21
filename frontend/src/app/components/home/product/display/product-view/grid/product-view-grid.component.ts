@@ -11,6 +11,9 @@ import { ProductModel } from '../../../../../../models/product/product.model';
 export class ProductViewGridComponent {
 
   @Input()
+  path: string = "";
+
+  @Input()
   products: Array<ProductModel>;
 
 }

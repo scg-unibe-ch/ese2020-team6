@@ -11,6 +11,9 @@ import { ProductModel } from '../../../../../models/product/product.model';
 export class ProductViewComponent {
 
   @Input()
+  path: string = "";
+
+  @Input()
   products: Array<ProductModel>;
 
   private displayList: boolean = true;

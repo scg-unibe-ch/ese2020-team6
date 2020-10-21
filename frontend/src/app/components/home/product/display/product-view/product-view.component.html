@@ -3,9 +3,9 @@
     <button class="button-full-po" (click)="switchView()">Switch View</button>
   </div>
   <div class="view">
-    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products"></app-product-view-list>
+    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products" [path]="path"></app-product-view-list>
     <ng-template #isGrid>
-      <app-product-view-grid class="product-display grid" [products]="products"></app-product-view-grid>
+      <app-product-view-grid class="product-display grid" [products]="products" [path]="path"></app-product-view-grid>
     </ng-template>
   </div>
 </div>
