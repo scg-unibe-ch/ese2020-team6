@@ -11,6 +11,8 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserModel } from 'src/app/models/user/user.model';
+import { SelectComponent } from 'src/app/components/custom-form/select/select.component';
+import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
 
 @Component({
   selector: 'app-post-product',
@@ -19,17 +21,17 @@ import { UserModel } from 'src/app/models/user/user.model';
 })
 export class PostProductComponent implements PostProductRequestBuilder<PostProductFormModel> {
   @ViewChild('postProductForm') form: NgForm;
-  requestInformation: PostProductFormModel; // remove this later when cleaning up post product request
+  requestInformation: PostProductFormModel;
   productData: any;
+  public currentContent: ProfileNavigationElementModel;
+  public userId: number;
+  productId: any;
+  product: any;
   image: any;
   url: any;
-  private userId: number;
-  private productId: any;
-  product: any;
   public values: PostProductFormModel = new NullPostProductForm();
 
   constructor(
-
     private productService: ProductService,
     private router: Router,
     private overlay: Overlay,
@@ -52,21 +54,19 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
   }
 
   openSnackBar() {
-    this.snackBar.open('Your product is crated', '', {
+    this.snackBar.open('Your product is created', '', {
       duration: 2000,
       panelClass: ['snackbar']
     });
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      this.form = form;
-      this.values = form.value;
-      this.productService.post(this).subscribe((values) => {
-        this.openSnackBar();
-        this.router.navigate(['/user/profile/myproducts']);
-      });
-    }
+    //this.form = form;
+    this.productService.post(this).subscribe((values) => {
+      console.log(values);
+      this.openSnackBar();
+    });
+    this.router.navigate(['/user/profile/myproducts']);
   }
 
   public build(): PostProductRequestModel {
@@ -111,34 +111,5 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
       this.product = product;
       this.values = product;
     });
-  }
-
-  setType(): string {
-    if (this.productId !== null) {
-      return this.product.productType;
-    } else {
-      return 'Product Type';
-    }
-  }
-  setOffer(): string {
-    if (this.productId !== null) {
-      return this.product.offerType;
-    } else {
-      return 'Offer Type';
-    }
-  }
-  setStatus(): string {
-    if (this.productId !== null) {
-      return this.product.status;
-    } else {
-      return 'Status';
-    }
-  }
-  setCategory(): string {
-    if (this.productId !== null) {
-      return this.product.category;
-    } else {
-      return 'Category';
-    }
   }
 }
