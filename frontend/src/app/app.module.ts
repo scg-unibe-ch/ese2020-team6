@@ -110,6 +110,11 @@ import { ProductPillComponent } from './components/home/product/display/product-
 import { ProductViewComponent } from './components/home/product/display/product-view/product-view.component';
 import { ProductViewListComponent } from './components/home/product/display/product-view/list/product-view-list.component';
 import { ProductViewGridComponent } from './components/home/product/display/product-view/grid/product-view-grid.component';
+import { PurchaseProductComponent } from './components/home/product/product-information/purchase-product/purchase-product.component';
+import { EditProductComponent } from './components/home/product/product-information/edit-product/edit-product.component';
+import { ReviewProductComponent } from './components/home/product/product-information/review-product/review-product.component';
+import { ProductDetailsComponent } from './components/home/product/product-information/product-details/product-details.component';
+import { ProductPreviewComponent } from './components/home/product/product-information/product-preview/product-preview.component';
 
 
 @NgModule({
@@ -161,7 +166,12 @@ import { ProductViewGridComponent } from './components/home/product/display/prod
     ProductPillComponent,
     ProductViewComponent,
     ProductViewListComponent,
-    ProductViewGridComponent
+    ProductViewGridComponent,
+    PurchaseProductComponent,
+    EditProductComponent,
+    ReviewProductComponent,
+    ProductDetailsComponent,
+    ProductPreviewComponent,
   ],
   imports: [
     BrowserModule,

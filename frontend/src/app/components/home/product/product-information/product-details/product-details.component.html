@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+  <div class="upper-section section-margin">
+    <div class="picture">
+      <img src="/assets/Logo.png" alt="">
+    </div>
+    <div class="title">
+      <div>{{product.title}}</div>
+    </div>
+    <div class="creator">
+      <div>
+        Created By {{creator.userName}}
+        <br/>
+        Contact Creator at {{creator.email}}
+      </div>
+    </div>
+    <div class="price">
+      Price:
+      <div>{{product.price}}{{priceLabel}}</div>
+    </div>
+
+    <div class="location">
+      Location:
+      <div>{{product.location}}</div>
+    </div>
+    <div class="expiration-date">
+      Expiration Date:
+      <div>{{product.expirationDate}}</div>
+    </div>
+    <div class="category">
+      Category:
+      <div>{{product.category}}</div>
+      <div class="subcategory">
+          Subcategory:
+          <div>{{product.subcategory}}</div>
+      </div>
+    </div>
+  </div>
+  <hr class="separator section-margin"/>
+  <div class="middle-section section-margin">
+    <div class="details">
+      <app-product-pill [pillValue]="product.offerType" title="Offer Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.productType" title="Product Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass" title="Status" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.deliverable" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass" title="Delivarable" [size]="1.3"></app-product-pill>
+    </div>
+  </div>
+  <hr class="separator section-margin"/>
+  <div class="lower-section">
+    <div class="description">
+      {{product.description}}
+    </div>
+    <div class="options">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

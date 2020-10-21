@@ -9,9 +9,14 @@ import { PostProductComponent } from './../components/home/product/post/post-pro
 import { BuyProductComponent } from './../components/home/product/buy-product/buy-product.component';
 import { ProductInformationComponent } from './../components/home/product/product-information/product-information.component';
 import { ApproveProductsComponent } from './../components/user/profile/approve-products/approve-products.component';
+import { PurchaseProductComponent } from './../components/home/product/product-information/purchase-product/purchase-product.component';
+import { EditProductComponent } from './../components/home/product/product-information/edit-product/edit-product.component';
+import { ReviewProductComponent } from './../components/home/product/product-information/review-product/review-product.component';
 
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';
+import { AuthAdminGuard } from './guards/auth-guard/auth-admin.guard';
+import { CreatorGuard, NotCreatorGuard } from './guards/product/creator.guard';
 import { defaultUserNavigationElements, defaultProfileComponent } from './../components/user/profile/navigation-elements';
 
 export const routes = [
@@ -84,8 +89,42 @@ export const routes = [
         component: BuyProductComponent
       },
       {
-        path: 'information/:productId' ,
-        component: ProductInformationComponent
+        path: 'information/:productId',
+        redirectTo: 'information/:productId/purchase'
+      },
+      {
+        path: 'information/:productId',
+        component: ProductInformationComponent,
+        children : [
+          {
+            path: 'review',
+            component: ReviewProductComponent,
+            canActivate: [AuthAdminGuard, AuthGuard],
+            data: {
+              canActivateDestination: 'purchase'
+            }
+          },
+          {
+            path: 'purchase',
+            component: PurchaseProductComponent,
+            canActivate: [NotCreatorGuard],
+            data: {
+              canActivate: {
+                destination: 'edit'
+              }
+            }
+          },
+          {
+            path: 'edit',
+            component: EditProductComponent,
+            canActivate: [CreatorGuard, AuthGuard],
+            data: {
+              canActivate: {
+                destination: 'purchase'
+              }
+            }
+          }
+        ]
       }
     ]
   }

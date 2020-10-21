@@ -1,0 +1,17 @@
+<app-product-details [product]="product" [creator]="creator">
+  <button (click)="openWithTemplate(tpl)" class="button-full-po">Delete</button>
+  <button class="button-full-po" [routerLink]="['/product/post', product.productId]">Update</button>
+  <ng-template #tpl>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        Do you want to delete the product?
+      </header>
+      <section class="modal-card-body">
+        <button (click)="deleteProduct()" class="button-full-po">Delete</button>
+        <button (click)="doNothing()" class="button-full-po">Cancel</button>
+      </section>
+    </div>
+  </ng-template>
+  <ng-template #tplClose>
+  </ng-template>
+</app-product-details>

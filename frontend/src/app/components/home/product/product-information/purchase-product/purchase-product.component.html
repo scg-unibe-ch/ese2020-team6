@@ -1,0 +1,6 @@
+<app-product-details [product]="product" [creator]="creator">
+  <button *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
+  <ng-template #isForRent>
+      <button class="button-full-po">Lend</button>
+  </ng-template>
+</app-product-details>
