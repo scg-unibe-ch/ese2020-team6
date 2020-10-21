@@ -62,7 +62,6 @@ import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component'
 
 
 import { PostProductComponent } from './components/home/product/post/post-product.component';
-import { BuyProductComponent } from './components/home/product/buy-product/buy-product.component';
 import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
 import { ProductCardListComponent } from './components/home/product/display/product-card/list/product-card-list.component';
 import { ProductCardGridComponent } from './components/home/product/display/product-card/grid/product-card-grid.component';
@@ -144,7 +143,6 @@ import { SubcategoryValidatorDirective } from './components/custom-form/validato
     PasswordInputComponent,
     LogoutComponent,
     PostProductComponent,
-    BuyProductComponent,
     ProfileComponent,
     ProfileNavigationComponent,
     MyProductsComponent,
@@ -165,7 +163,6 @@ import { SubcategoryValidatorDirective } from './components/custom-form/validato
     //Crossfield
     PasswordMatchValidatorDirective,
     PostProductComponent,
-    BuyProductComponent,
     ProfileComponent,
     ProfileNavigationComponent,
     MyProductsComponent,

@@ -6,7 +6,6 @@ import { MyProductsComponent } from './../components/user/profile/my-products/my
 import { UserDetailsComponent } from './../components/user/profile/user-details/user-details.component';
 import { HomeComponent } from './../components/home/home.component';
 import { PostProductComponent } from './../components/home/product/post/post-product.component';
-import { BuyProductComponent } from './../components/home/product/buy-product/buy-product.component';
 import { ProductInformationComponent } from './../components/home/product/product-information/product-information.component';
 import { ApproveProductsComponent } from './../components/user/profile/approve-products/approve-products.component';
 import { PurchaseProductComponent } from './../components/home/product/product-information/purchase-product/purchase-product.component';
@@ -41,7 +40,8 @@ export const routes = [
       },
       {
         path: 'profile',
-        redirectTo: 'profile/' + defaultUserNavigationElements[defaultProfileComponent].path
+        redirectTo: 'profile/' + defaultUserNavigationElements[defaultProfileComponent].path,
+        pathMatch: 'full'
       },
       {
         path: 'profile',
@@ -70,7 +70,8 @@ export const routes = [
   },
   {
     path: 'product',
-    redirectTo: 'product/buy'
+    redirectTo: 'product/post',
+    pathMatch: 'full'
   },
   {
     path: 'product',
@@ -84,12 +85,9 @@ export const routes = [
         component: PostProductComponent
       },
       {
-        path: 'buy' ,
-        component: BuyProductComponent
-      },
-      {
         path: 'information/:productId',
-        redirectTo: 'information/:productId/purchase'
+        redirectTo: 'information/:productId/purchase',
+        pathMatch: 'full'
       },
       {
         path: 'information/:productId',
