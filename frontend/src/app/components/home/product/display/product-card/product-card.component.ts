@@ -12,6 +12,9 @@ export class ProductCardComponent {
   @Input()
   product: ProductModel;
 
+  @Input()
+  path: string = "";
+
   statusIndicatorPillColorClass: () => string = () => {
     let status: string = this.product.status;
     if (status) {
@@ -31,6 +34,11 @@ export class ProductCardComponent {
   get priceLabel(): string {
     if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
     else return '$';
+  }
+
+  get routerLink(): Array<any> {
+    if (this.path === '') return ['/product/information', this.product.productId];
+    else return ['/product/information', this.product.productId, this.path];
   }
 
 }
