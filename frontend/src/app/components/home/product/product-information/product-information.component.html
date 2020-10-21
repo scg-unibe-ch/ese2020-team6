@@ -29,7 +29,7 @@
     <div class="description">
       {{product.description}}
     </div>
-    <div class="options">
+    <div class="options" *ngIf="!isPreview">
       <ng-template [ngIf]="isNotCreator" [ngIfElse]="isCreator">
         <button *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
         <ng-template #isForRent>
@@ -38,7 +38,7 @@
       </ng-template>
       <ng-template #isCreator>
         <button (click)="openWithTemplate(tpl)" class="button-full-po">Delete</button>
-        <button class="button-full-po" [routerLink]="['/product/post', productId]">Update</button>
+        <button class="button-full-po" [routerLink]="['/product/post', product.productId]">Update</button>
       </ng-template>
     </div>
   </div>
