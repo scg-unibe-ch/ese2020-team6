@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../../services/user/user.service';
+import { UserModel, NullUser } from '../../../../models/user/user.model';
 
 @Component({
   selector: 'app-user-details',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor() { }
+  public user: UserModel = new NullUser();
+
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
+    this.userService.userObservable.subscribe((user: UserModel) => {
+      this.user = user;
+      console.log(user);
+
+    })
   }
 
 }
