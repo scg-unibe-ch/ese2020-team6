@@ -31,7 +31,7 @@
     </div>
     <div class="options" *ngIf="!isPreview">
       <ng-template [ngIf]="isNotCreator" [ngIfElse]="isCreator">
-        <button *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
+        <button (click)="redirectToLogin()" *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
         <ng-template #isForRent>
             <button class="button-full-po">Lend</button>
         </ng-template>
@@ -49,7 +49,7 @@
   <ng-template #tpl>
         <div class="modal-card">
           <header class="modal-card-head">
-            Do you want to delete the product? 
+            Do you want to delete the product?
           </header>
           <section class="modal-card-body">
             <button (click)="deleteProduct()" class="button-full-po">Delete</button>

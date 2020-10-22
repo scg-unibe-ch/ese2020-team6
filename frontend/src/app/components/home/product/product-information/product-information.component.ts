@@ -3,6 +3,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
+import { UserService } from '../../../../services/user/user.service';
 // Models
 //import { ProductModel } from '../../../../models/product/product.model'; implemented in other branch
 
@@ -28,10 +29,20 @@ export class ProductInformationComponent implements OnInit {
     productService: ProductService,
     private router: Router,
     private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private userService: UserService
     ) {
     this.productService = productService;
    }
+
+
+   public redirectToLogin(): void {
+    console.log(this.userService.isLoggedIn);
+    if(this.userService.isLoggedIn==false){
+      this.router.navigate(['/user/login']);
+    }
+  }
+
 
    public ngOnInit(): void {
      this.route.params.subscribe((params: {productId: string}) => {
