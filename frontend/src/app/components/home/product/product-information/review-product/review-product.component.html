@@ -11,7 +11,7 @@
       appDescriptionValidator
       ngModel></app-text-area>
     <div>
-      <button class="button-full-po">Send Rejection</button>
+      <button class="button-full-po" [disabled]="!rejectResponseForm.valid">Send Rejection</button>
       <button type="button" (click)="toggleReject()" class="button-full-po">Cancel</button>
     </div>
   </form>
