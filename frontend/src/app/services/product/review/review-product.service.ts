@@ -20,7 +20,7 @@ export class ReviewProductService {
   public acceptProduct(requestBuilder: AcceptProductRequestBuilder): Observable<AcceptProductResponseModel> {
     let requestBody = requestBuilder.buildAcceptProductRequest();
     let productId = requestBody.productId;
-    return this.httpClient.put<AcceptProductResponseModel>(environment.endpointURL + 'product/accept' + productId.toString(), requestBody);
+    return this.httpClient.put<AcceptProductResponseModel>(environment.endpointURL + 'product/accept/' + productId.toString(), requestBody);
   }
 
 }
