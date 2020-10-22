@@ -1,5 +1,9 @@
 
+import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
+import { request } from 'http';
+import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
+import { ProductsAttributes } from '../models/products.model';
 import { ProductService } from '../services/product.service';
 import { verifyToken, checkIsAdmin } from '../middlewares/checkAuth';
 import { Products, ProductsAttributes } from '../models/products.model';
@@ -9,60 +13,86 @@ const productService = new ProductService();
 
 productController.post('/post',
     (req: Request, res: Response) => {
-        productService.create(req.body).then((post: any) => res.send(post)).catch((err: any) => res.status(500).send(err));
+        productService.createProduct(req.body)
+        .then((post: any) => res.send(post))
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
-productController.get('/buyProduct',
+productController.get('/all', verifyToken,
     (req: Request, res: Response) => {
-        productService.getAll().then(product => res.send(product)).catch(err => res.status(500).send(err));
+        productService.getAllProducts()
+        .then(product => res.send(product))
+        .catch(err => res.status(500).send(err));
     }
 );
-productController.get('/productInformation::id',
+
+productController.get('/details/:prouctId',
     (req: Request, res: Response) => {
-        const id: number = +req.params.id;
-        productService.get(id).then((product: any) => res.send(product)).catch((err: any) => {
+        const productId: number = parseInt(req.params.productId, 10);
+        productService.getProductById(productId)
+        .then((product: any) => res.send(product))
+        .catch((err: any) => {
             console.log(err);
             res.status(500).send(err); });
     }
 );
 
-productController.delete('/delete::id',
+productController.delete('/delete/:productId', verifyToken,
     (req: Request, res: Response) => {
-        const id: number = +req.params.id;
-        productService.delete(id).then(
-            product => res.send(product)).catch(err => res.status(500).send(err));
+        const productId: number = parseInt(req.params.productId, 10);
+        productService.deleteProduct(productId)
+        .then(product => res.send(product))
+        .catch(err => res.status(500).send(err));
     }
 );
 
-productController.get('/accepted',
-  (req: Request, res: Response) => {
-    productService.getAllAccepted()
-    .then((products: ProductsAttributes[]) => res.send(products)).catch((err: any) => res.status(500).send(err));
-  }
-);
+productController.get('/unreviewed', verifyToken, verifyIsAdmin,
+(   req: Request, res: Response) => {
+        productService.getAllUnreviewedProducts()
+    .then((products: any) => res.send(products))
+    .catch((err: any) => res.status(500).send(err));
+});
 
-productController.get('/unreviewed', verifyToken, checkIsAdmin,
-  (req: Request, res: Response) => {
-    productService.getAllUnreviewed()
-    .then((products: ProductsAttributes[]) => res.send(products)).catch((err: any) => res.status(500).send(err));
-  }
-);
+productController.get('/acctepted', verifyToken, verifyIsAdmin,
+    (req: Request, res: Response) => {
+        productService.getAllAcceptedProducts()
+        .then((products: any) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
+    });
 
-productController.put('/accept/:productId', verifyToken, checkIsAdmin,
-  (req: Request, res: Response) => {
+productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
+(req: Request, res: Response) => {
     const productId: number = parseInt(req.params.productId, 10);
-    productService.accept(productId).then(value => res.send(value)).catch((err: any) => res.status(500).send(err));
-  }
-);
+    productService.acceptProduct(productId)
+    .then((products: any) => res.send(products))
+    .catch((err: any) => res.status(500).send(err));
+});
 
-productController.put('/reject/:productid', verifyToken, checkIsAdmin,
-  (req: Request, res: Response) => {
-    const productId: number = parseInt(req.params.productId, 10);
-    const rejectionMessage: string = req.body.rejectionMessage;
-    productService.reject(productId, rejectionMessage).then(value => res.send(value)).catch((err: any) => res.status(500).send(err));
-  }
-);
+productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
+    (req: Request, res: Response) => {
+        const rejectionMessage: string = req.params.rejectionMessage;
+        const productId: number = parseInt(req.params.productId, 10);
+        productService.rejectProduct(productId, rejectionMessage)
+        .then((products: any) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
+    });
 
+productController.put('/update/:productId', verifyToken, verifyIsAdmin,
+    (req: Request, res: Response) => {
+        const product: ProductsAttributes = req.body.product;
+        productService.updateProduct(product)
+        .then((products: any) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
+    });
+
+ productController.get('/myproducts/:userId', verifyToken,
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10);
+        productService.getMyProducts(userId)
+        .then((product: any) => res.send(product))
+        .catch((err: any) => res.status(500).send(err));
+    }
+);
 
 export const ProductController: Router = productController;
