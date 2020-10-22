@@ -19,9 +19,8 @@ import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navig
   templateUrl: './post-product.component.html',
   styleUrls: ['./post-product.component.scss']
 })
-export class PostProductComponent implements PostProductRequestBuilder<PostProductFormModel> {
+export class PostProductComponent implements PostProductRequestBuilder {
   @ViewChild('postProductForm') form: NgForm;
-  requestInformation: PostProductFormModel;
   productData: any;
   public currentContent: ProfileNavigationElementModel;
   public userId: number;
@@ -62,14 +61,14 @@ export class PostProductComponent implements PostProductRequestBuilder<PostProdu
 
   onSubmit(form: NgForm) {
     //this.form = form;
-    this.productService.post(this).subscribe((values) => {
+    this.productService.postProduct(this).subscribe((values) => {
       console.log(values);
       this.openSnackBar();
     });
     this.router.navigate(['/user/profile/myproducts']);
   }
 
-  public build(): PostProductRequestModel {
+  public buildPostProductRequest(): PostProductRequestModel {
     const request: PostProductRequestModel = Object.assign(
       this.values,
       {

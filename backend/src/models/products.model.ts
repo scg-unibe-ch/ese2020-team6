@@ -13,7 +13,8 @@ export interface ProductsAttributes { // maybe rename
     subcategory: string;
     expirationDate: number;
     status: string;
-    workingStatus: string;
+    accepted: boolean;
+    rejectionMessage: string;
     userId: number;
 
 }
@@ -32,7 +33,8 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     subcategory!: string;
     expirationDate!: number;
     status!: string;
-    workingStatus!: string;
+    accepted!: boolean;
+    rejectionMessage!: string;
     userId!: number;
 
     public static initialize(sequelize: Sequelize) {
@@ -82,8 +84,12 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 type: DataTypes.STRING,
                 allowNull: true
             },
-            workingStatus: {
+            rejectionMessage: {
                 type: DataTypes.STRING,
+                allowNull: true
+            },
+            accepted: {
+                type: DataTypes.BOOLEAN,
                 allowNull: true
             },
             userId: {

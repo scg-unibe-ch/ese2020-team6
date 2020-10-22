@@ -21,6 +21,23 @@ export class ProductService {
         });
     }
 
+    public getAllAccepted(): Promise<Products[]> {
+      return Products.findAll({
+        where: {
+          accepted: true
+        }
+      });
+    }
+
+    public getAllUnreviewed(): Promise<Products[]> {
+      return Products.findAll({
+        where: {
+          accepted: false,
+          rejectionMessage: null
+        }
+      });
+    }
+
     public delete(id: number): Promise<Products> {
         this.product = Products.findOne({
             where: {
@@ -33,5 +50,21 @@ export class ProductService {
           }
         });
         return this.product;
+    }
+
+    public accept(productId: number): Promise<[number, Products[]]> {
+      return Products.update({ accepted: true, rejectionMessage: null }, {
+        where: {
+          productId: productId
+        }
+      });
+    }
+
+    public reject(productId: number, rejectionMessage: string): Promise<[number, Products[]]> {
+      return Products.update({ accepted: false, rejectionMessage: rejectionMessage}, {
+        where: {
+          productId: productId
+        }
+      });
     }
 }

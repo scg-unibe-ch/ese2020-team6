@@ -1,6 +1,8 @@
 
 import express, { Router, Request, Response } from 'express';
 import { ProductService } from '../services/product.service';
+import { verifyToken, checkIsAdmin } from '../middlewares/checkAuth';
+import { Products, ProductsAttributes } from '../models/products.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
@@ -33,7 +35,34 @@ productController.delete('/delete::id',
     }
 );
 
+productController.get('/accepted',
+  (req: Request, res: Response) => {
+    productService.getAllAccepted()
+    .then((products: ProductsAttributes[]) => res.send(products)).catch((err: any) => res.status(500).send(err));
+  }
+);
 
+productController.get('/unreviewed', verifyToken, checkIsAdmin,
+  (req: Request, res: Response) => {
+    productService.getAllUnreviewed()
+    .then((products: ProductsAttributes[]) => res.send(products)).catch((err: any) => res.status(500).send(err));
+  }
+);
+
+productController.put('/accept/:productId', verifyToken, checkIsAdmin,
+  (req: Request, res: Response) => {
+    const productId: number = parseInt(req.params.productId, 10);
+    productService.accept(productId).then(value => res.send(value)).catch((err: any) => res.status(500).send(err));
+  }
+);
+
+productController.put('/reject/:productid', verifyToken, checkIsAdmin,
+  (req: Request, res: Response) => {
+    const productId: number = parseInt(req.params.productId, 10);
+    const rejectionMessage: string = req.body.rejectionMessage;
+    productService.reject(productId, rejectionMessage).then(value => res.send(value)).catch((err: any) => res.status(500).send(err));
+  }
+);
 
 
 export const ProductController: Router = productController;

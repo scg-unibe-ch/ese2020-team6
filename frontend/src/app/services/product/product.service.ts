@@ -5,12 +5,21 @@ import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';
 import { GetProductService } from './get/get-product.service';
 import { ReviewProductService } from './review/review-product.service';
+import { EditProductService } from './edit/edit-product.service';
 // Models
 import { ProductModel } from '../../models/product/product.model';
-import { AcceptProductResponseModel } from '../../models/response/product/accept/accept-product-response.model';
+import {
+  AcceptProductResponseModel,
+  RejectProductResponseModel,
+  UpdateProductResponseModel,
+  PostProductResponseModel,
+  DeleteProductResponseModel } from '../../models/response/product/product-response-model.module';
 // Interfaces
-import { AcceptProductRequestBuilder } from '../../models/request/product/accept/accept-product-request-builder.interface';
-import { PostProductRequestBuilder } from '../../models/request/product/post/post-product-request-builder.interface';
+import {
+  PostProductRequestBuilder,
+  UpdateProductRequestBuilder,
+  AcceptProductRequestBuilder,
+  RejectProductRequestBuilder } from '../../models/request/product/product-request-builder.module';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +29,8 @@ export class ProductService {
   constructor(
     private postProductService: PostProductService,
     private getProductService: GetProductService,
-    private reviewProductService: ReviewProductService
+    private reviewProductService: ReviewProductService,
+    private editProductService: EditProductService
   ) { }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
@@ -39,15 +49,23 @@ export class ProductService {
     return this.getProductService.getProductById(productId);
   }
 
-  public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {
-    return this.postProductService.post(requestBuilder);
+  public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {
+    return this.postProductService.postProduct(requestBuilder);
   }
 
-  public deleteProduct(id: number): Observable<any> {
-    return this.postProductService.deleteProduct(id);
+  public deleteProduct(productId: number): Observable<DeleteProductResponseModel> {
+    return this.editProductService.deleteProduct(productId);
+  }
+
+  public updateProduct(requestBuilder: UpdateProductRequestBuilder): Observable<UpdateProductResponseModel> {
+    return this.editProductService.updateProduct(requestBuilder);
   }
 
   public acceptProduct(requestBuilder: AcceptProductRequestBuilder): Observable<AcceptProductResponseModel> {
     return this.reviewProductService.acceptProduct(requestBuilder);
+  }
+
+  public rejectProduct(requestBuilder: RejectProductRequestBuilder): Observable<RejectProductResponseModel> {
+    return this.reviewProductService.rejectProduct(requestBuilder);
   }
 }

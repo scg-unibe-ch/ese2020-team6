@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import { User, UserAttributes } from '../models/user.model';
 
 // this way you can just define a function and export it instead of a whole class
 export function verifyToken(req: Request, res: Response, next: any) {
@@ -23,4 +24,23 @@ export function verifyToken(req: Request, res: Response, next: any) {
 export function checkForAuth(req: Request, res: Response, next: any) {
     const auth = req.headers.authorization;
     if (auth) { verifyToken(req, res, next); } else { next(); }
+}
+
+export function checkIsAdmin(req: Request, res: Response, next: any) {
+  if (req.body.tokenPayload) {
+    const userId: number = req.body.tokenPayload.userId;
+    User.findOne({
+      where: {
+        userId: userId
+      }
+    }).then((user: UserAttributes) => {
+      if (user.isAdmin) {
+        req.body.tokenPayload.isAdmin = true;
+        next();
+      } else {
+        res.status(403).send({ message: 'Unauthorized' });
+      }
+    }).catch((err: any) => res.status(403).send(err));
+
+  } else { res.status(403).send({ message: 'Unauthorized' }); }
 }

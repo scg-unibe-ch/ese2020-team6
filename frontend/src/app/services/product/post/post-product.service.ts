@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // Models
-import { ProductModel } from '../../../models/product/product.model';
+import { PostProductResponseModel } from '../../../models/response/product/post/post-product-response.model';
 // Interfaces
 import { PostProductRequestBuilder } from '../../../models/request/product/post/post-product-request-builder.interface';
 
@@ -13,17 +13,12 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class PostProductService {
+
   constructor(
     private httpClient: HttpClient,
   ) { }
 
-  public post(requestBuilder: PostProductRequestBuilder<any>): Observable<any> {
-    return this.httpClient.post(environment.endpointURL + 'product/post', requestBuilder.build());
+  public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {
+    return this.httpClient.post<PostProductResponseModel>(environment.endpointURL + 'product/post', requestBuilder.buildPostProductRequest());
   }
-  
-  public deleteProduct(id: number): Observable<any> {
-    return this.httpClient.delete(
-      environment.endpointURL + 'product/delete:' + id);
-  }
-
 }
