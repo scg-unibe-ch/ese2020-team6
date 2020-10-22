@@ -15,9 +15,16 @@ export class PurchaseProductComponent extends ProductInformationBase {
   constructor(
     route: ActivatedRoute,
     productService: ProductService,
+    private router: Router,
     userService: UserService,
   ) {
     super(route, productService, userService);
+  }
+
+  public redirectToLogin(): void {
+    if(this.userService.isLoggedIn==false){
+      this.router.navigate(['/user/login']);
+    }
   }
 
   get isForSale(): boolean {
