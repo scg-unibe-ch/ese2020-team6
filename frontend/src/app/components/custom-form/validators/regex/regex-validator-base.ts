@@ -78,9 +78,9 @@ export const validatorRegex = {
     errorMessage: "Max. length of 30 and min. length of 5 and characters. You can use special characters: '@$!%*#?&'"
   },
   description: {
-    regex: /^[A-Z]([A-Za-z\d@$!%*#?&,. ]){50,}$/,
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?&,.\- ]){50,}$/,
     name: "descriptionValidatdor",
-    errorMessage: "Min. length of 50 characters. Has to start with a capital letter. You can use special characters: '@$!%*#?&.'"
+    errorMessage: "Min. length of 50 characters. Has to start with a capital letter. You can use special characters: '@$!%*#?&.,-'"
   },
   price: {
     regex: /^\d*([.]\d{1,})?$/,
