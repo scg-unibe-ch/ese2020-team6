@@ -96,5 +96,10 @@ export const validatorRegex = {
     regex: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|(1|2)[0-9]|3[0-1])T(0[1-9]|1[0-9]|2[0-3]):(0[0-9]|([1-5])[0-9])$/,
     name: "dateValidator",
     errorMessage: "Date and Time: yyyy-mm-ddThh:minmin"
+  },
+  rejectionMessage: {
+    regex: /^$/,
+    name: "rejectionMessageValidator",
+    errorMessage: ""
   }
 }
