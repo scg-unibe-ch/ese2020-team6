@@ -118,3 +118,32 @@ img {
   padding-left: 2.6em;
   background-color: white;
 }
+
+.accept-form-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accept-form {
+  height: 20%;
+  width: 40%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+  border: 2px solid black;
+}
+
+.accept-form > div {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+}

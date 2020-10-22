@@ -14,12 +14,13 @@ import { AcceptProductRequestModel } from '../../../../../models/request/product
 
 @Component({
   selector: 'app-review-product',
-  templateUrl: './review-product.component.html'
+  templateUrl: './review-product.component.html',
+  styleUrls: ['../product-information.component.scss']
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder {
 
   public showRejectResponseForm: boolean = false;
-  public showAcceptForm: boolean = false;
+  public showAcceptForm: boolean = true;
 
   constructor(
     route: ActivatedRoute,
