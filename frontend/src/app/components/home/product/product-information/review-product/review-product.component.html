@@ -2,16 +2,22 @@
   <button class="button-full-po" type="button" (click)="toggleAccept()">Accept</button>
   <button class="button-full-po" type="button" (click)="toggleReject()">Reject</button>
 </app-product-details>
-<form *ngIf="showRejectResponseForm" class="reject-response-form" #rejectResponseForm="ngForm" (ngSubmit)="reject(rejectResponseForm)">
-  <app-text-area rows="4"
-    placeholder="Reason of Rejection"
-    name="reason"
-    appDescriptionValidator
-    ngModel></app-text-area>
-  <button class="button-full-po">Send Rejection</button>
-</form>
-<div *ngIf="showAcceptForm" class="accept-form-wrapper">
-    <form class="accept-form" #acceptForm="ngForm" (ngSubmit)="accept(acceptForm)">
+
+<div *ngIf="showRejectResponseForm" class="overlay-form-wrapper">
+  <form class="overlay-form" #rejectResponseForm="ngForm" (ngSubmit)="reject(rejectResponseForm)">
+    <app-text-area rows="3"
+      placeholder="Reason of Rejection"
+      name="reason"
+      appDescriptionValidator
+      ngModel></app-text-area>
+    <div>
+      <button class="button-full-po">Send Rejection</button>
+      <button type="button" (click)="toggleReject()" class="button-full-po">Cancel</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="showAcceptForm" class="overlay-form-wrapper">
+    <form class="overlay-form" #acceptForm="ngForm" (ngSubmit)="accept(acceptForm)">
       <p>Are you sure you want to accept this product?</p>
       <div>
         <button class="button-full-po">Accept</button>
