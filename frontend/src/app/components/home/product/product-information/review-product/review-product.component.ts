@@ -19,7 +19,7 @@ import { AcceptProductRequestModel } from '../../../../../models/request/product
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder {
 
-  public showRejectResponseForm: boolean = true;
+  public showRejectResponseForm: boolean = false;
   public showAcceptForm: boolean = false;
 
   constructor(
