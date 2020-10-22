@@ -1,4 +1,16 @@
 <app-product-details [product]="product" [creator]="creator">
-  <button class="button-full-po">Accept</button>
-  <button class="button-full-po">Reject</button>
+  <button class="button-full-po" type="button" (click)="toggleAccept()">Accept</button>
+  <button class="button-full-po" type="button" (click)="toggleReject()">Reject</button>
 </app-product-details>
+<form *ngIf="showRejectResponseForm" #rejectResponseForm="ngForm" (ngSubmit)="reject(rejectResponseForm)">
+  <app-text-area rows="4"
+    placeholder="Reason of Rejection"
+    name="reason"
+    appDescriptionValidator
+    ngModel></app-text-area>
+  <button class="button-full-po">Send Rejection</button>
+</form>
+<form *ngIf="showAcceptForm" #acceptForm="ngForm" (ngSubmit)="accept(acceptForm)">
+  Are you sure you want to accept this product?
+  <button class="button-full-po">Accept</button>
+</form>
