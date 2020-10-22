@@ -18,8 +18,6 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userObservable.subscribe((user: UserModel) => {
       this.user = user;
-      console.log(user);
-
     })
   }
 

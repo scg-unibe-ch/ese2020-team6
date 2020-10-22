@@ -1,12 +1,40 @@
-<h1>{{user.userName}}</h1>
-{{user.userId}}
-{{user.email}}
-{{user.firstName}}
-{{user.lastName}}
-{{user.gender}}
-{{user.houseNumber}}
-{{user.phonenumber}}
-{{user.plz}}
-{{user.street}}
-{{user.wallet}}
-{{user.city}}
+<div class="user">
+  <div class="header-wrapper flex-item">
+    <div class="header">
+      <div class="fullname">
+        <div class="hidden-name">{{user.firstName}}</div>
+        <div class="firstname">{{user.firstName}}</div>
+        <div class="lastname">{{user.lastName}}</div>
+        <div class="userid">#<span>{{user.userId}}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wallet-wrapper-wrapper flex-item">
+    <div class="wallet-wrapper">
+      Balance:
+      <div class="wallet">
+        {{user.wallet}}$
+      </div>
+    </div>
+  </div>
+
+  <div class="details flex-item">
+    <div class="detail">
+      Username
+      <div class="detail-content">{{user.userName}}</div>
+    </div>
+    <div class="detail">
+      Location
+      <div class="detail-content">{{user.plz}} {{user.city}}, {{user.street}} {{user.houseNumber}}</div>
+    </div>
+    <div class="detail">
+      Email
+      <div class="detail-content">{{user.email}}</div>
+    </div>
+    <div class="detail">
+      Phone
+      <div class="detail-content">{{user.phonenumber}}</div>
+    </div>
+  </div>
+</div>
