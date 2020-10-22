@@ -98,8 +98,8 @@ export const validatorRegex = {
     errorMessage: "Date and Time: yyyy-mm-ddThh:minmin"
   },
   rejectionMessage: {
-    regex: /^$/,
+    regex: /^[A-Z]([A-Za-z\d@$!%*#?&,.\- ]){50,}$/,
     name: "rejectionMessageValidator",
-    errorMessage: ""
+    errorMessage: "Min. length of 50 characters. Has to start with a capital letter. You can use special characters: '@$!%*#?&.,-'"
   }
 }
