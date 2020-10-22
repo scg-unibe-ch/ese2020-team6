@@ -1,10 +1,10 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
 
-export interface ProductsAttributes { // maybe rename
-    productId: number; // rename
+export interface ProductsAttributes {
+    productId: number;
     title: string;
     description: string;
-    price: number; // rename
+    price: number;
     category: string;
     location: string;
     productType: string;
@@ -13,17 +13,20 @@ export interface ProductsAttributes { // maybe rename
     subcategory: string;
     expirationDate: number;
     status: string;
-    workingStatus: string;
+    isAccepted: boolean;
     userId: number;
+    rejectionMessage: string;
+    isDeliverable: boolean;
 
 }
 export interface GoodsCreationAttributes extends Optional<ProductsAttributes, 'productId'> { }
 
-export class Products extends Model<ProductsAttributes, GoodsCreationAttributes> implements ProductsAttributes {
-    productId!: number; // rename
+export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
+    implements ProductsAttributes {
+    productId!: number;
     title!: string;
     description!: string;
-    price!: number; // rename
+    price!: number;
     category!: string;
     location!: string;
     productType!: string;
@@ -32,8 +35,10 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     subcategory!: string;
     expirationDate!: number;
     status!: string;
-    workingStatus!: string;
+    isAccepted!: boolean;
     userId!: number;
+    rejectionMessage!: string;
+    isDeliverable!: boolean;
 
     public static initialize(sequelize: Sequelize) {
         Products.init({
@@ -61,9 +66,11 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             location: {
                 type: DataTypes.STRING
             },
+            //item or service
             productType: {
                 type: DataTypes.STRING
             },
+            //sell or rent
             offerType: {
                 type: DataTypes.STRING
             },
@@ -78,16 +85,27 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 type: DataTypes.NUMBER,
                 allowNull: true
             },
+            // available, lent, sold
             status: {
                 type: DataTypes.STRING,
                 allowNull: true
             },
-            workingStatus: {
-                type: DataTypes.STRING,
-                allowNull: true
+            isAccepted: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false
             },
             userId: {
                 type: DataTypes.STRING,
+            },
+            rejectionMessage: {
+                type: DataTypes.STRING,
+                defaultValue : null,
+                allowNull: false,
+            },
+            isDeliverable: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
             }
 
         },

@@ -63,12 +63,5 @@ export class UserService {
         }
       });
     }
-    public getMyProducts(id: number): Promise<Products> {
-      this.datas = Products.findAll({
-        where: {
-            userId: id
-        }
-      });
-      return this.datas;
-    }
+
 }

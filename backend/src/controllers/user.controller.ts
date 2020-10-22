@@ -42,13 +42,4 @@ userController.get('/',
     }
 );
 
-userController.get('/profile/myproducts::id',
-    (req: Request, res: Response) => {
-        const id: number = +req.params.id;
-        userService.getMyProducts(id).then((product: any) => res.send(product)).catch((err: any) => {
-            console.log(err);
-            res.status(500).send(err); });
-    }
-);
-
 export const UserController: Router = userController;
