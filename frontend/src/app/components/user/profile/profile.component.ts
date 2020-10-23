@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
 //Models
 import { UserModel } from '../../../models/user/user.model';
-import { ProfileNavigationElementModel } from '../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/form/profile-navigation-element.model';
 
 import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
 
@@ -17,7 +17,7 @@ import { defaultUserNavigationElements, adminNavigationElements } from './naviga
 export class ProfileComponent {
 
   public navigationElements = defaultUserNavigationElements;
-  public currentContent: ProfileNavigationElementModel = { title: null, path: null};
+  public currentContent: ProfileNavigationElementModel = new NullProfileNavigationElement();
   public userName: string;
   public userId: number;
 

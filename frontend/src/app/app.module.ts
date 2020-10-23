@@ -129,6 +129,7 @@ import { GenderValidatorDirective } from './components/custom-form/validators/se
 import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
+import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
 
 
 @NgModule({
@@ -197,6 +198,7 @@ import { RejectionMessageValidatorDirective } from './components/custom-form/val
     CategoryValidatorDirective,
     SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
+    RejectedProductsComponent,
   ],
   imports: [
     BrowserModule,
