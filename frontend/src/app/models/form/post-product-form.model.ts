@@ -1,29 +1,29 @@
 export interface PostProductFormModel {
   title: string;
   description: string;
-  offerType: string;
-  productType: string;
-  category: string;
-  subcategory: string;
-  location: string;
-  picture: string;
-  expirationDate: string;
   price: number;
-  deliverable: boolean;
+  category: string;
+  location: string;
+  productType: string;
+  offerType: string;
+  picture: string;
+  subcategory: string;
+  expirationDate: number;
   status: string;
+  isDeliverable: string;
 }
 
 export class NullPostProductForm implements PostProductFormModel {
   title: string = null;
   description: string = null;
-  offerType: string = null;
-  productType: string = null;
-  category: string = null;
-  subcategory: string = null;
-  location: string = null;
-  picture: string = null;
-  expirationDate: string = null;
   price: number = null;
-  deliverable: boolean = null;
+  category: string = null;
+  location: string = null;
+  productType: string = null;
+  offerType: string = null;
+  picture: string = null;
+  subcategory: string = null;
+  expirationDate: number = null;
   status: string = null;
+  isDeliverable: string = null;
 }

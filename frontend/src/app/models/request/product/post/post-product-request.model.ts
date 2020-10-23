@@ -2,13 +2,14 @@ export interface PostProductRequestModel {
   title: string;
   description: string;
   price: number;
-  status: string; // <- evt custom type
-  picture: string; // <- custom type
-  offerType: string;
-  productType: string;
   category: string;
   location: string;
+  productType: string;
+  offerType: string;
+  picture: string;
+  subcategory: string;
+  expirationDate: number;
+  status: string;
   userId: number;
-  productId: number;
-
+  isDeliverable: boolean;
 }

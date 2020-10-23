@@ -25,7 +25,7 @@ productController.get('/all', verifyToken,
     }
 );
 
-productController.get('/details/:prouctId',
+productController.get('/details/:productId',
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
         productService.getProductById(productId)
