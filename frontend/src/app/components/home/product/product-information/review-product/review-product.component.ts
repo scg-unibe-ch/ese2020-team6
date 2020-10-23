@@ -7,10 +7,14 @@ import { ProductService } from '../../../../../services/product/product.service'
 import { UserService } from '../../../../../services/user/user.service';
 // Classes
 import { ProductInformationBase } from '../product-information-base';
-// Interfaces
-import { AcceptProductRequestBuilder } from '../../../../../models/request/product/accept/accept-product-request-builder.interface';
 // Models
-import { AcceptProductRequestModel } from '../../../../../models/request/product/accept/accept-product-request.model';
+import { RejectProductFormModel, NullRejectProductForm } from '../../../../../models/form/reject-product-form.model';
+// Request Builders and Request Models
+import {
+  AcceptProductRequestBuilder,
+  AcceptProductRequestModel,
+  RejectProductRequestBuilder,
+  RejectProductRequestModel } from '../../../../../models/request/product/product-request-model-builder.module';
 
 @Component({
   selector: 'app-review-product',
@@ -21,6 +25,8 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
 
   public showRejectResponseForm: boolean = false;
   public showAcceptForm: boolean = false;
+
+  private values: RejectProductFormModel = new NullRejectProductForm();
 
   constructor(
     route: ActivatedRoute,
@@ -38,7 +44,13 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
 
   public accept(form: NgForm): void {
     this.productService.acceptProduct(this).subscribe();
-    this.router.navigate(['/user/profile/reviewproducts'])
+    this.router.navigate(['/user/profile/reviewproducts']);
+  }
+
+  public buildAcceptProductRequest(): AcceptProductRequestModel {
+    return {
+      productId: this.product.productId
+    }
   }
 
   public toggleReject(): void {
@@ -47,12 +59,17 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
   }
 
   public reject(form: NgForm): void {
-    console.log("reject");
+    if (form.valid) {
+      this.values = form.value;
+      this.productService.rejectProduct(this).subscribe();
+      this.router.navigate(['/user/profile/reviewproducts']);
+    }
   }
 
-  public buildAcceptProductRequest(): AcceptProductRequestModel {
+  public buildRejectProductRequest(): RejectProductRequestModel {
     return {
-      productId: this.product.productId
-    };
-  };
+      productId: this.product.productId,
+      rejectionMessage: this.values.reason
+    }
+  }
 }
