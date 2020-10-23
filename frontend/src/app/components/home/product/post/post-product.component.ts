@@ -60,15 +60,18 @@ export class PostProductComponent implements PostProductRequestBuilder {
   }
 
   onSubmit(form: NgForm) {
-    //this.form = form;
-    this.productService.postProduct(this).subscribe((values) => {
-      console.log(values);
-      this.openSnackBar();
-    });
-    this.router.navigate(['/user/profile/myproducts']);
+    if (form.valid) {
+      this.productService.postProduct(this).subscribe((values) => {
+        console.log(values);
+        this.openSnackBar();
+      });
+      this.router.navigate(['/user/profile/myproducts']);
+    }
   }
 
   public buildPostProductRequest(): PostProductRequestModel {
+    if (this.values.isDeliverable === 'Yes') this.values.isDeliverable = true;
+    else this.values.isDeliverable = false;
     const request: PostProductRequestModel = Object.assign(
       this.values,
       {

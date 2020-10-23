@@ -3,9 +3,7 @@ import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
 import { request } from 'http';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
-import { ProductsAttributes } from '../models/products.model';
 import { ProductService } from '../services/product.service';
-import { verifyToken, checkIsAdmin } from '../middlewares/checkAuth';
 import { Products, ProductsAttributes } from '../models/products.model';
 
 const productController: Router = express.Router();

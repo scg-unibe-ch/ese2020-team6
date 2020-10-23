@@ -1,35 +1,35 @@
 export interface ProductModel {
+  productId: number;
   title: string;
   description: string;
-  offerType: string;
-  productType: string;
-  category: string;
-  subcategory: string;
-  location: string;
-  picture: string;
-  status: string;
-  workingStatus: string;
-  expirationDate: string;
-  createdAt: string;
   price: number;
-  productId: number;
-  deliverable: boolean;
+  category: string;
+  location: string;
+  productType: string;
+  offerType: string;
+  picture: string;
+  subcategory: string;
+  expirationDate: number;
+  status: string;
+  userId: number;
+  rejectionMessage: string;
+  isDeliverable: boolean;
 }
 
 export class NullProduct implements ProductModel {
+  productId: number = null;
   title: string = null;
   description: string = null;
-  offerType: string = null;
-  productType: string = null;
-  category: string = null;
-  subcategory: string = null;
-  location: string = null;
-  picture: string = null;
-  status: string = null;
-  workingStatus: string = null;
-  expirationDate: string = null;
-  createdAt: string = null;
   price: number = null;
-  productId: number = null;
-  deliverable: boolean = null;
+  category: string = null;
+  location: string = null;
+  productType: string = null;
+  offerType: string = null;
+  picture: string = null;
+  subcategory: string = null;
+  expirationDate: number = null;
+  status: string = null;
+  userId: number = null;
+  rejectionMessage: string = null;
+  isDeliverable: boolean = null;
 }

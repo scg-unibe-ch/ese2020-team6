@@ -18,7 +18,7 @@
       </div>
       <div class="input-grid">
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
-        <app-select name="deliverable" selectName="Deliverable" [(ngModel)]="values.deliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
+        <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
       </div>
       <div class="input-grid">
         <label>Picture

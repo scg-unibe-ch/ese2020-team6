@@ -25,7 +25,7 @@ export class GetProductService {
   }
 
   public getMyProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + '/products/myproducts/' + userId.toString());
+    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/myproducts/' + userId.toString());
   }
 
   public getProductById(productId: number): Observable<ProductModel> {

@@ -30,9 +30,9 @@ export class ProductDetailsComponent {
   }
 
   public deliverableIndicatorPillColorClass: () => string = () => {
-    let deliverable: boolean = this.product.deliverable;
-    if (deliverable == true || deliverable == false) {
-      if (deliverable) return 'success';
+    let isDeliverable: boolean = this.product.isDeliverable;
+    if (isDeliverable == true || isDeliverable == false) {
+      if (isDeliverable) return 'success';
       else return 'warn';
     } else return '';
   }

@@ -82,20 +82,4 @@ export class ProductService {
         }
       });
     }
-
-    public accept(productId: number): Promise<[number, Products[]]> {
-      return Products.update({ accepted: true, rejectionMessage: null }, {
-        where: {
-          productId: productId
-        }
-      });
-    }
-
-    public reject(productId: number, rejectionMessage: string): Promise<[number, Products[]]> {
-      return Products.update({ accepted: false, rejectionMessage: rejectionMessage}, {
-        where: {
-          productId: productId
-        }
-      });
-    }
 }

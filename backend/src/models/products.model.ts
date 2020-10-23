@@ -95,17 +95,13 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 defaultValue: false,
                 allowNull: false
             },
-            accepted: {
-                type: DataTypes.BOOLEAN,
-                allowNull: true
-            },
             userId: {
                 type: DataTypes.STRING,
             },
             rejectionMessage: {
                 type: DataTypes.STRING,
                 defaultValue : null,
-                allowNull: false,
+                allowNull: true,
             },
             isDeliverable: {
                 type: DataTypes.BOOLEAN,
