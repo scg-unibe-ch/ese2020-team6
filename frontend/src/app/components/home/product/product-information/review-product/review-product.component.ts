@@ -1,7 +1,7 @@
 // Packages
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // Services
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
@@ -24,6 +24,7 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
 
   constructor(
     route: ActivatedRoute,
+    private router: Router,
     productService: ProductService,
     userService: UserService,
   ) {
@@ -37,6 +38,7 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
 
   public accept(form: NgForm): void {
     this.productService.acceptProduct(this).subscribe();
+    this.router.navigate(['/user/profile/reviewproducts'])
   }
 
   public toggleReject(): void {

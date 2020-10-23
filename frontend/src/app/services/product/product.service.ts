@@ -37,8 +37,12 @@ export class ProductService {
     return this.getProductService.getAllProducts();
   }
 
-  public getAllUnapprovedProducts(): Observable<Array<ProductModel>> {
-    return this.getProductService.getAllUnapprovedProducts();
+  public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
+    return this.getProductService.getAllAcceptedProducts();
+  }
+
+  public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
+    return this.getProductService.getAllUnreviewedProducts();
   }
 
   public getMyProducts(userId: number): Observable<Array<ProductModel>> {

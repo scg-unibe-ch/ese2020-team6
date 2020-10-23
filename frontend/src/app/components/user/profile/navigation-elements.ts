@@ -24,7 +24,7 @@ defaultUserNavigationElements.forEach((navigationElement: ProfileNavigationEleme
 
 adminNavigationElements.push(
   {
-    title: 'Approve Products',
-    path: 'approveproducts'
+    title: 'Review Products',
+    path: 'reviewproducts'
   }
 );

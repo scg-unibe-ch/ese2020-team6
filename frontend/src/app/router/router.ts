@@ -61,7 +61,7 @@ export const routes = [
             component: PostProductComponent
           },
           {
-            path: 'approveproducts',
+            path: 'reviewproducts',
             component: ApproveProductsComponent
           }
         ]

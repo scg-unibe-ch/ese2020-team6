@@ -20,7 +20,7 @@ export class HomeComponent {
     private productService: ProductService,
     private userService: UserService
   ) {
-    productService.getAllProducts().subscribe((products: Array<ProductModel>) => this.products = products);
+    productService.getAllAcceptedProducts().subscribe((products: Array<ProductModel>) => this.products = products);
     this.isLoggedIn = userService.isLoggedIn;
   }
 }

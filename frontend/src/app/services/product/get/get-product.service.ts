@@ -20,7 +20,11 @@ export class GetProductService {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/all');
   }
 
-  public getAllUnapprovedProducts(): Observable<Array<ProductModel>> {
+  public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
+    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/accepted');
+  }
+
+  public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/unreviewed');
   }
 
