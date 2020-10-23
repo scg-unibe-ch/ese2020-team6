@@ -1,12 +1,5 @@
 @import '../../../../../variables.scss';
 
-$bright: #c4fff1;
-$darkerbright: #89ffe3;
-$middle: #0eba91;
-$darkmiddle: #0a8265;
-$light: #2f3b52;
-$dark: #242e42;
-
 .user {
   height: 100%;
   width: 100%;
@@ -14,7 +7,7 @@ $dark: #242e42;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: $dark;
+  background: $dark-bg;
 }
 
 .flex-item {
@@ -41,7 +34,7 @@ $dark: #242e42;
   position: absolute;
   height: 0;
   width: 150%;
-  border-bottom: 4px solid $darkmiddle;
+  border-bottom: 4px solid $accent;
   top: 100%;
   left: 30%;
   transform: rotate(-22deg);
@@ -87,7 +80,7 @@ $dark: #242e42;
 }
 
 .wallet {
-  background: $middle;
+  background: $highlight;
   padding: 20px;
   padding-left: 100px;
   padding-right: 100px;
@@ -107,7 +100,7 @@ $dark: #242e42;
   padding: 20px;
   padding-left: 50px;
   padding-right: 50px;
-  background: $light;
+  background: $light-bg;
   color: $bright;
   border-radius: 10px;
   font-size: .7rem;

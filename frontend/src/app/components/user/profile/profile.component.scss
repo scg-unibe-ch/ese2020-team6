@@ -1,3 +1,5 @@
+@import '../../../../variables.scss';
+
 $navigation-width: 250px;
 $title-height: 80px;
 $header-height: 112px;
@@ -14,8 +16,7 @@ $header-default-color: black;
   grid-template-rows: $header-height $title-height auto;
 }
 
-
-.header-wrapper {
+.header-wrapper-wrapper {
   grid-column: 1 / 3;
   grid-row: 1 / 2;
   padding: 30px;
@@ -69,3 +70,77 @@ $header-default-color: black;
   grid-row: 3 / 4;
   padding: 20px;
 }
+
+// new theme ----------------------------------------------------------------
+
+// Please leave this part in
+
+// .profile-wrapper {
+//   min-height: 100%;
+//   width: 100%;
+//   display: grid;
+//   grid-template-columns: $navigation-width auto;
+//   grid-template-rows: $header-height $title-height auto;
+//   background: $dark-bg;
+// }
+//
+//
+// .header-wrapper-wrapper {
+//   grid-column: 1 / 3;
+//   grid-row: 1 / 2;
+//   padding: $spaceing;
+//   display: flex;
+// }
+//
+// .header-wrapper {
+//   padding: 15px;
+//   background: $light-bg;
+//   border-radius: $border-radius;
+// }
+//
+// .header {
+//   width: inherit;
+//   border-bottom: $border-width dashed $accent;
+// }
+//
+// .username {
+//   font-size: 2rem;
+//   font-weight: 100;
+//   color: $bright;
+// }
+//
+// .id {
+//   font-size: .8rem;
+//   margin-left: 20px;
+//   color: $accent;
+// }
+//
+// .id > span {
+//   color: $bright;
+// }
+//
+// .navigation-wrapper {
+//   grid-column: 1 / 2;
+//   grid-row: 2 / 4;
+//   padding: $spaceing;
+// }
+//
+// .title {
+//   grid-column: 2 / 3;
+//   grid-row: 2 / 3;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 1.5rem;
+//   font-weight: bold;
+//   background: $warn;
+//   color: $bright;
+//   border-radius: $border-radius;
+//   margin: $spaceing;
+// }
+//
+// .content-wrapper {
+//   grid-column: 2 / 3;
+//   grid-row: 3 / 4;
+//   padding: $spaceing;
+// }

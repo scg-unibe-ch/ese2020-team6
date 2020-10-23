@@ -1,3 +1,5 @@
+@import '../../../../../variables.scss';
+
 .navigation {
   display: grid;
   grid-template-rows: auto;
@@ -23,3 +25,37 @@
 .navigation-element:hover {
   background: #EADACB;
 }
+
+// new theme ----------------------------------------------------------------
+
+// Please leave this part in
+
+// .navigation {
+//   display: grid;
+//   grid-template-rows: repeat(auto-fit, 50px);
+//   grid-row-gap: 10px;
+//   background: $light-bg;
+//   padding: $spaceing;
+//   border-radius: $border-radius;
+//   height: 100%;
+// }
+//
+// .navigation-element {
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   padding: 10px;
+//   border-radius: $border-radius;
+//   background: $highlight;
+//   transition: all .1s ease-out;
+//   color: $bright;
+// }
+//
+// .navigation-element:focus {
+//   outline: none;
+// }
+//
+// .navigation-element:hover {
+//   background: $light;
+//   color: $dark-bg;
+// }
