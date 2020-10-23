@@ -16,7 +16,6 @@ export function verifyToken(req: Request, res: Response, next: any) {
         }
         // adds the field "tokenPayload" to the request enabling following functions to use data from the token
         req.body.tokenPayload = decoded;
-        console.log(decoded);
         next();
     } catch (err) {
         res.status(403).send({ message: 'Unauthorized' });
@@ -42,8 +41,7 @@ export function verifyIsAdmin(req: Request, res: Response, next: any) {
             } else {
                 res.status(403).send({ message: 'Unauthorized' });
             }
-        }).catch((err: any) => {
-            res.status(403).send(err); });
+        }).catch((err: any) => res.status(403).send(err));
     } else {
         res.status(403).send({ message: 'Unauthorized' });
     }

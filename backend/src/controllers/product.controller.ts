@@ -30,9 +30,7 @@ productController.get('/details/:productId',
         const productId: number = parseInt(req.params.productId, 10);
         productService.getProductById(productId)
         .then((product: any) => res.send(product))
-        .catch((err: any) => {
-            console.log(err);
-            res.status(500).send(err); });
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
@@ -78,7 +76,7 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
 
 productController.put('/update/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
-        const product: ProductsAttributes = req.body.product;
+        const product: ProductsAttributes = req.body;
         productService.updateProduct(product)
         .then((products: any) => res.send(products))
         .catch((err: any) => res.status(500).send(err));

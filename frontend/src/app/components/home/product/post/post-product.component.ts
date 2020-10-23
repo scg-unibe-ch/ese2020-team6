@@ -56,12 +56,12 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       this.productId = parseInt(parameters.productId,10);
       if (!isNaN(this.productId)) {
         this.isUpdate = true;
-        this.updateProduct();
+        this.updateForm();
       }
     });
   }
 
-  private updateProduct(): void {
+  private updateForm(): void {
     this.productService.getProductById(this.productId).subscribe((product: ProductModel) => {
       this.product = product;
       let values: any = Object.assign({}, product);
@@ -102,7 +102,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         productId: this.productId
       }
     );
-    console.log(request);
     return request;
   }
 
