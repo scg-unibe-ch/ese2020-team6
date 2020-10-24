@@ -92,4 +92,32 @@ productController.put('/update/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
+    productController.get('/unreviewd/count', verifyIsAdmin, verifyToken,
+    (req: Request, res: Response) => {
+        productService.getUnreviewdProductsCount()
+        .then((amountOfUnreviewd: number) => res.send(amountOfUnreviewd))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+);
+
+    productController.get('/rejected/count/:userId', verifyToken,
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10);
+        productService.getMyRejectedProductsCount(userId)
+        .then((amountOfRejected: number) => res.send(amountOfRejected))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
+
+    productController.get('/rejected/:userId', verifyToken,
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10);
+        productService.getMyRejectedProducts(userId)
+        .then((products: Array<ProductsAttributes>) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
 export const ProductController: Router = productController;
