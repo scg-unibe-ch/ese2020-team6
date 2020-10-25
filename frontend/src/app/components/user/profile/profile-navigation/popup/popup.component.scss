@@ -1,0 +1,15 @@
+@import '../../../../../../variables.scss';
+
+.popup {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  background: $primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -5px;
+  right: -5px;
+  color: white;
+}

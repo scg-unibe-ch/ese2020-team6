@@ -130,7 +130,10 @@ import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
-
+import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
+import { PopupUnreviewedComponent } from './components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
+import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
+import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 
 @NgModule({
   declarations: [
@@ -199,6 +202,10 @@ import { RejectedProductsComponent } from './components/user/profile/rejected-pr
     SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
     RejectedProductsComponent,
+    PopupUnreviewedComponent,
+    PopupRejectedComponent,
+    PopupDirective,
+    NavigationElementComponent,
   ],
   imports: [
     BrowserModule,

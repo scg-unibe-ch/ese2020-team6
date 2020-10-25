@@ -9,7 +9,7 @@ import { ProfileNavigationElementModel } from '../../../../models/form/profile-n
 export class ProfileNavigationComponent {
 
   @Input()
-  navigationElements;
+  navigationElements: Array<ProfileNavigationElementModel>;
 
   @Output()
   navigationClickEvent = new EventEmitter<ProfileNavigationElementModel>();

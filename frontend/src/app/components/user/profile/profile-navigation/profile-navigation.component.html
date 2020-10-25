@@ -1,8 +1,6 @@
 <div class="navigation">
-  <div *ngFor="let navigationElement of navigationElements"
-    [routerLink]="[navigationElement.path]"
-    (click)="onNavigationElementClick(navigationElement)"
-    class="navigation-element">
-    {{navigationElement.title}}
-  </div>
+  <app-navigation-element *ngFor="let navigationElement of navigationElements"
+    [navigationElement]="navigationElement"
+    (navigationClickEvent)="onNavigationElementClick($event)">
+  </app-navigation-element>
 </div>

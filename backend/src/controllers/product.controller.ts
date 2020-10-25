@@ -92,10 +92,10 @@ productController.put('/update/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-    productController.get('/unreviewd/count', verifyIsAdmin, verifyToken,
+    productController.get('/unreviewd/count', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         productService.getUnreviewdProductsCount()
-        .then((amountOfUnreviewd: number) => res.send(amountOfUnreviewd))
+        .then((amountOfUnreviewd: number) => res.send({amountOfUnreviewd: amountOfUnreviewd}))
         .catch((err: any) => res.status(500).send(err));
     }
 
@@ -105,7 +105,7 @@ productController.put('/update/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
         productService.getMyRejectedProductsCount(userId)
-        .then((amountOfRejected: number) => res.send(amountOfRejected))
+        .then((amountOfRejected: number) => res.send({amountOfRejected: amountOfRejected}))
         .catch((err: any) => res.status(500).send(err));
     }
 

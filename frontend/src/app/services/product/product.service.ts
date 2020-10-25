@@ -57,6 +57,14 @@ export class ProductService {
     return this.getProductService.getProductById(productId);
   }
 
+  public getMyRejectedProductsCount(userId: number): Observable<number> {
+    return this.getProductService.getMyRejectedProductsCount(userId);
+  }
+
+  public getUnreviewedProductsCount(): Observable<number> {
+    return this.getProductService.getUnreviewedProductsCount();
+  }
+
   public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {
     return this.postProductService.postProduct(requestBuilder);
   }
