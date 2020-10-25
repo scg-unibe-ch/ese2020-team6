@@ -8,6 +8,7 @@ import { UserModel } from '../../../models/user/user.model';
 import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/form/profile-navigation-element.model';
 
 import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
+import { theme } from '../../../../theme';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,8 @@ export class ProfileComponent {
   public currentContent: ProfileNavigationElementModel = new NullProfileNavigationElement();
   public userName: string;
   public userId: number;
+
+  public theme: string = theme;
 
   constructor(
     private route: ActivatedRoute,

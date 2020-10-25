@@ -9,6 +9,8 @@ import { ProductModel, NullProduct } from '../../../../../models/product/product
 import { CutUserModel, NullCutUser } from '../../../../../models/user/cut-user.model';
 import { UserModel, NullUser } from '../../../../../models/user/user.model';
 
+import { theme } from '../../../../../../theme';
+
 
 @Component({
   selector: 'app-product-details',
@@ -20,6 +22,8 @@ export class ProductDetailsComponent {
   public product: ProductModel = new NullProduct();
   @Input()
   public creator: CutUserModel = new NullCutUser();
+
+  public theme: string = theme;
 
   public statusIndicatorPillColorClass: () => string = () => {
     let status: string = this.product.status;

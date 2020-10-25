@@ -1,4 +1,4 @@
-<div class="navigation">
+<div class="navigation" [ngClass]="theme">
   <div *ngFor="let navigationElement of navigationElements"
     [routerLink]="[navigationElement.path]"
     (click)="onNavigationElementClick(navigationElement)"

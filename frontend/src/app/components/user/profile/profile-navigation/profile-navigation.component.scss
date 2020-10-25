@@ -1,61 +1,27 @@
 @import '../../../../../variables.scss';
+@import './profile-navigation.component.theme.scss';
 
 .navigation {
   display: grid;
-  grid-template-rows: auto;
+  grid-template-rows: repeat(auto-fit, 50px);
   grid-row-gap: 10px;
+  padding: $spaceing-s;
+  border-radius: $border-radius;
+  height: 100%;
+
+  .navigation-element {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: $spaceing-xs;
+    border-radius: $border-radius;
+    transition: all .1s ease-out;
+  }
+
+  .navigation-element:focus {
+    outline: none;
+  }
 }
 
-.navigation-element {
-  border: 0;
-  cursor: pointer;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #EADACB;
-  transition: all .1s ease-out;
-}
-
-.navigation-element:focus {
-  outline: none;
-  border: 1px solid black;
-}
-
-.navigation-element:hover {
-  background: #EADACB;
-}
-
-// new theme ----------------------------------------------------------------
-
-// Please leave this part in
-
-// .navigation {
-//   display: grid;
-//   grid-template-rows: repeat(auto-fit, 50px);
-//   grid-row-gap: 10px;
-//   background: $light-bg;
-//   padding: $spaceing;
-//   border-radius: $border-radius;
-//   height: 100%;
-// }
-//
-// .navigation-element {
-//   cursor: pointer;
-//   display: flex;
-//   align-items: center;
-//   padding: 10px;
-//   border-radius: $border-radius;
-//   background: $highlight;
-//   transition: all .1s ease-out;
-//   color: $bright;
-// }
-//
-// .navigation-element:focus {
-//   outline: none;
-// }
-//
-// .navigation-element:hover {
-//   background: $light;
-//   color: $dark-bg;
-// }
+@include profile-navigation-theme(dark, $dark-shady, $dark-highlight, $dark-bright, $dark-light, $dark-dark);
+@include profile-navigation-theme(bright, $bright-shady, $bright-dark, $bright-bright, $bright-highlight, $bright-dark);

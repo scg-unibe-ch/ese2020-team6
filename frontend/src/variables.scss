@@ -4,13 +4,26 @@ $fainted: #FBF1EA;
 $warn: #c55051;
 $success: #73BC58;
 
-// new theme
-$bright: #c4fff1;
-$light: #89ffe3;
-$highlight: #0eba91;
-$accent: #0a8265;
-$light-bg: #2f3b52;
-$dark-bg: #242e42;
+// theme dark
+$dark-bright: #c4fff1;
+$dark-light: #89ffe3;
+$dark-highlight: #0eba91;
+$dark-accent: #0a8265;
+$dark-shady: #2f3b52;
+$dark-dark: #242e42;
 
 $border-radius: 10px;
-$spaceing: 15px;
+$spaceing-xs: 10px;
+$spaceing-s: 15px;
+$spaceing-m: 20px;
+$spaceing-l: 30px;
+$spaceing-xl: 50px;
+
+
+// theme bright
+$bright-bright: #fffbf5;
+$bright-light: #98daca;
+$bright-highlight: #F78888;
+$bright-accent: #e78c4b;
+$bright-shady: #7aa9d1;
+$bright-dark: #4a5d68;
