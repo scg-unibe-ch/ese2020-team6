@@ -1,0 +1,15 @@
+@import '../../../../../../variables.scss';
+
+.rejection-message {
+  margin: 0 50px 50px 50px;
+
+  .title {
+    background: $warn;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .message {
+    margin-top: 10px;
+  }
+}

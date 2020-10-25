@@ -68,7 +68,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
 
 productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
-        const rejectionMessage: string = req.params.rejectionMessage;
+        const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
         productService.rejectProduct(productId, rejectionMessage)
         .then((product: ProductsAttributes) => res.send(product))

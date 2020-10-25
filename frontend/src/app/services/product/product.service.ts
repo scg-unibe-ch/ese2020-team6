@@ -41,6 +41,10 @@ export class ProductService {
     return this.getProductService.getAllAcceptedProducts();
   }
 
+  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
+    return this.getProductService.getMyRejectedProducts(userId);
+  }
+
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.getProductService.getAllUnreviewedProducts();
   }

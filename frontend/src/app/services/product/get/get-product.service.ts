@@ -24,6 +24,10 @@ export class GetProductService {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/accepted');
   }
 
+  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
+    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/rejected/' + userId.toString());
+  }
+
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/unreviewed');
   }
