@@ -1,12 +1,9 @@
-// Packages
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// Response Models
 import {
   UpdateProductResponseModel,
   DeleteProductResponseModel } from '../../../models/response/product/product-response-model.module';
-// Request Builders and Request Models
 import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel } from '../../../models/request/product/product-request-model-builder.module';

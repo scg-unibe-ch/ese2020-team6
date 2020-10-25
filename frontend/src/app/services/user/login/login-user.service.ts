@@ -3,11 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-//Interfaces
 import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
-//Models
 import { LoginUserResponseModel } from '../../../models/response/user/login/login-user-response.model';
-
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

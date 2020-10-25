@@ -1,23 +1,15 @@
-//Packages
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { share } from 'rxjs/operators';
-//Services
 import { LoginUserService } from './login/login-user.service';
 import { LogoutUserService } from './logout/logout-user.service';
 import { RegisterUserService } from './register/register-user.service';
 import { GetUserService } from './get/get-user.service';
-//Interfaces
 import { LoginUserRequestBuilder } from '../../models/request/user/login/login-user-request-builder.interface';
 import { RegisterUserRequestBuilder } from '../../models/request/user/register/register-user-request-builder.interface';
-//Models
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
 import { RegisterUserResponseModel } from '../../models/response/user/register/register-user-response.model';
 import { UserModel } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
-
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +23,6 @@ export class UserService {
     private logoutUserService: LogoutUserService,
     private registerUserService: RegisterUserService,
     private getUserService: GetUserService,
-    private httpClient: HttpClient
   ) {
     this.getUserFromLocalStorage();
   }

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Routes } from '@angular/router';
-import { ProductInformationComponent } from 'src/app/components/home/product/product-information/product-information.component';
+import { ActivatedRoute } from '@angular/router';
 import { ProfileNavigationElementModel } from 'src/app/models/form/profile-navigation-element.model';
 import { UserModel } from 'src/app/models/user/user.model';
 import { ProductModel } from 'src/app/models/product/product.model';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { adminNavigationElements, defaultUserNavigationElements } from '../navigation-elements';
 
 @Component({
   selector: 'app-my-products',

@@ -1,10 +1,7 @@
-// Packages
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// Models
 import { ProductModel } from '../../../models/product/product.model';
-
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

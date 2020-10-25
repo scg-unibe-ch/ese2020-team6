@@ -1,12 +1,9 @@
-//Packages
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-//Models
 import { UserModel } from '../../../models/user/user.model';
 import { CutUserModel } from '../../../models/user/cut-user.model';
-
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
