@@ -1,24 +1,19 @@
-// Packages
-import { FormGroup, NgForm } from '@angular/forms';
-import { Component, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
-// Services
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
-// Request Builders and Request Models
 import {
   PostProductRequestBuilder,
   PostProductRequestModel,
   UpdateProductRequestBuilder,
   UpdateProductRequestModel } from '../../../../models/request/product/product-request-model-builder.module';
-// Models
-import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductFormModel, NullPostProductForm } from '../../../../models/form/post-product-form.model';
-import { ProfileNavigationElementModel } from '../../../../models/form/profile-navigation-element.model';
 
 @Component({
   selector: 'app-post-product',
@@ -27,8 +22,6 @@ import { ProfileNavigationElementModel } from '../../../../models/form/profile-n
 })
 export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   @ViewChild('postProductForm') form: NgForm;
-  image: any;
-  url: any;
   public values: PostProductFormModel = new NullPostProductForm();
   public product: ProductModel = new NullProduct();
   private userId: number;
@@ -130,12 +123,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     });
   }
 
-  public onFileChanged(event) {
-    const file = event.target.files[0];
-  }
 
   public showPreview(form: NgForm, tpl: TemplateRef<any>) {
-    let values = form.value;
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });

@@ -7,7 +7,7 @@ export class RegexValidatorBase implements Validator {
   errorMessage: string;
 
   constructor(
-    private regexValidator: RegexValidator
+    regexValidator: RegexValidator
   ){
     this.regExp = regexValidator.regex;
     this.regExValidatorName = regexValidator.name.toString();
@@ -27,11 +27,6 @@ export class RegexValidatorBase implements Validator {
 
 
 export const validatorRegex = {
-  gender: {
-    regex: /^Female|Male|Other$/,
-    name: "genderValidator",
-    errorMessage: "Choose between Female, Male or Other!"
-  },
   noun: {
     regex: /^[A-Z][a-z]*$/,
     name: "nounValidator",

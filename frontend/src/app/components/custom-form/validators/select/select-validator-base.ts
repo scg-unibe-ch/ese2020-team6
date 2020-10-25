@@ -21,7 +21,7 @@ export class SelectValidatorBase implements Validator {
   private getRegexFromOptions(): RegExp {
     let regExString: string = '^';
     let isFirstOption: boolean = true;
-    this.select.options.forEach((option: string, index: number) => {
+    this.select.options.forEach((option: string) => {
       if (isFirstOption) isFirstOption = !isFirstOption;
       else regExString += '|';
       regExString += option;

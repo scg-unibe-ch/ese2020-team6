@@ -23,7 +23,7 @@
       <div class="input-grid">
         <label>Picture
           <input class="picture" name="picture" ngModel
-          type="file" (change)="onFileChanged($event)" size="50" accept="png, jpg">
+          type="file" size="50" accept="png, jpg">
         </label>
         <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
       </div>

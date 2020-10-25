@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { UserService } from '../../services/user/user.service';
 import { ProductModel } from '../../models/product/product.model';
@@ -16,9 +14,8 @@ export class HomeComponent {
   public isLoggedIn: boolean = false;
 
   constructor(
-    private router: Router,
-    private productService: ProductService,
-    private userService: UserService
+    productService: ProductService,
+    userService: UserService
   ) {
     productService.getAllAcceptedProducts().subscribe((products: Array<ProductModel>) => this.products = products);
     this.isLoggedIn = userService.isLoggedIn;

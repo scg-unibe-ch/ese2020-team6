@@ -1,8 +1,5 @@
-//Packages
 import { Component } from '@angular/core';
-//Services
 import { UserService } from '../../../services/user/user.service';
-//Models
 import { UserModel } from '../../../models/user/user.model';
 
 
@@ -19,7 +16,7 @@ export class MenuBarComponent {
   public isLoggedIn: boolean = false;
 
   constructor(
-    private userService: UserService
+    userService: UserService
   ) {
     if(userService.isLoggedIn) {
         userService.userObservable.subscribe((user: UserModel) => {
