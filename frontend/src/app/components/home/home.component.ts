@@ -11,7 +11,7 @@ import { ProductModel } from '../../models/product/product.model';
 export class HomeComponent {
 
   public products: Array<ProductModel> = new Array();
-  public isLoggedIn: boolean = false;
+  public isLoggedIn = false;
 
   constructor(
     productService: ProductService,

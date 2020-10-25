@@ -9,7 +9,7 @@ import { ProductModel } from '../../../../../../models/product/product.model';
 export class ProductViewGridComponent {
 
   @Input()
-  path: string = "";
+  path: '';
 
   @Input()
   products: Array<ProductModel>;

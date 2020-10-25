@@ -29,7 +29,7 @@
       </div>
       <div class="input-grid">
         <div class="action-wrapper">
-          <button (click)="showPreview(postProductForm, preview)" type="button" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+          <button (click)="showPreview(postProductForm, preview)" type="button">
             Preview
           </button>
         </div>
@@ -44,7 +44,7 @@
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
               <h2>Your product</h2>
-            <app-product-information [product]="getProductFromFrom()" [isPreview]="true"></app-product-information>
+            <app-product-information [product]="productData" [isPreview]="true"></app-product-information>
         </div>
       </div>
     </ng-template>

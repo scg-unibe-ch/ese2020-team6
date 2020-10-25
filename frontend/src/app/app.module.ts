@@ -74,7 +74,6 @@ import { PurchaseProductComponent } from './components/home/product/product-info
 import { EditProductComponent } from './components/home/product/product-information/edit-product/edit-product.component';
 import { ReviewProductComponent } from './components/home/product/product-information/review-product/review-product.component';
 import { ProductDetailsComponent } from './components/home/product/product-information/product-details/product-details.component';
-import { ProductPreviewComponent } from './components/home/product/product-information/product-preview/product-preview.component';
 
 
 // Custom Form
@@ -184,7 +183,6 @@ import { RejectedProductsComponent } from './components/user/profile/rejected-pr
     EditProductComponent,
     ReviewProductComponent,
     ProductDetailsComponent,
-    ProductPreviewComponent,
     TitleValidatorDirective,
     DescriptionValidatorDirective,
     PriceValidatorDirective,
