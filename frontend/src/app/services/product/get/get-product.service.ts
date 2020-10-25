@@ -1,11 +1,9 @@
-// Packages
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 // Models
 import { ProductModel } from '../../../models/product/product.model';
-
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

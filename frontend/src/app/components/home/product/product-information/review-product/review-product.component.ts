@@ -1,19 +1,13 @@
-// Packages
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-// Services
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
-// Classes
 import { ProductInformationBase } from '../product-information-base';
-// Models
 import { RejectProductFormModel, NullRejectProductForm } from '../../../../../models/form/reject-product-form.model';
-// Request Builders and Request Models
 import {
   AcceptProductRequestBuilder,
   AcceptProductRequestModel,
-  RejectProductRequestBuilder,
   RejectProductRequestModel } from '../../../../../models/request/product/product-request-model-builder.module';
 
 @Component({

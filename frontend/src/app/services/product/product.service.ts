@@ -1,12 +1,9 @@
-// Packages
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-// Services
 import { PostProductService } from './post/post-product.service';
 import { GetProductService } from './get/get-product.service';
 import { ReviewProductService } from './review/review-product.service';
 import { EditProductService } from './edit/edit-product.service';
-// Models
 import { ProductModel } from '../../models/product/product.model';
 import {
   AcceptProductResponseModel,
@@ -14,7 +11,6 @@ import {
   UpdateProductResponseModel,
   PostProductResponseModel,
   DeleteProductResponseModel } from '../../models/response/product/product-response-model.module';
-// Interfaces
 import {
   PostProductRequestBuilder,
   UpdateProductRequestBuilder,

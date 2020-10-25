@@ -1,8 +1,4 @@
-// Packages
-import { Component, Input } from '@angular/core';
-// Models
-import { ProductModel } from '../../../../../../models/product/product.model';
-// Components
+import { Component} from '@angular/core';
 import { ProductCardComponent } from '../product-card.component';
 
 @Component({
