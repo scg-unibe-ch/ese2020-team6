@@ -19,6 +19,7 @@ export class UserService {
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
+        try {
         return User.create(user).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
     }
 
