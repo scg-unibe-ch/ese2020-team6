@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { theme } from '../../../../../theme';
 
 @Component({
   selector: 'app-user-details',
@@ -10,6 +11,8 @@ import { UserModel, NullUser } from '../../../../models/user/user.model';
 export class UserDetailsComponent implements OnInit {
 
   public user: UserModel = new NullUser();
+
+  public theme: string = theme;
 
   constructor(
     private userService: UserService

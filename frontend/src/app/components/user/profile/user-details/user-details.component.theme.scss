@@ -1,115 +1,40 @@
-@import '../../../../../variables.scss';
+@mixin user-detail-theme($theme-name) {
+  .#{$theme-name} {
 
-.user {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  background: $dark-dark;
-}
+    $theme: map-get($themes, $theme-name);
 
-.flex-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    $color: map-get($theme, bright);
+    $name-bg: map-get($theme, shady);
+    $wallet-bg: map-get($theme, highlight);
+    $accent-color: map-get($theme, accent);
+    $detail-bg: map-get($theme, shady);
 
-.header-wrapper {
-  height: 50%;
-  width: 100%;
-}
+    color: $color;
 
-.fullname {
-  width: 100%;
-  height: 100%;
-  font-size: 5em;
-  line-height: 100%;
-  position: relative;
-}
+    .header-wrapper {
+      .name {
+        background: $name-bg;
+      }
 
-.fullname::before {
-  content: "";
-  position: absolute;
-  height: 0;
-  width: 150%;
-  border-bottom: 4px solid $dark-accent;
-  top: 100%;
-  left: 30%;
-  transform: rotate(-22deg);
-}
+      .separator{
+        &::before {
+          border-color: $accent-color;
+        }
+      }
+    }
 
-.hidden-name {
-  visibility: hidden;
-}
+    .wallet-wrapper-wrapper {
+      .wallet-wrapper {
+        .wallet {
+          background: $wallet-bg;
+        }
+      }
+    }
 
-.firstname {
-  position: absolute;
-  left: 40%;
-  top: -50%;
-  color: $dark-bright;
-}
-
-.lastname {
-  position: absolute;
-  top: 50%;
-  left: -40%;
-  color: $dark-bright
-}
-
-.userid {
-  color: $dark-bright;
-  position: absolute;
-  left: 120%;
-  top: 80%;
-  font-size: .2em;
-}
-
-.userid > span {
-  font-size: 1.5em;
-}
-
-.wallet-wrapper-wrapper {
-  height: 20%;
-}
-
-.wallet-wrapper {
-  color: $dark-bright;
-  font-size: .7em;
-}
-
-.wallet {
-  background: $dark-highlight;
-  padding: 20px;
-  padding-left: 100px;
-  padding-right: 100px;
-  border-radius: 10px;
-  color: $dark-bright;
-  font-size: 2em;
-}
-
-.details {
-  height: 30%;
-  width: 100%;
-  justify-content: space-around;
-  font-size: 1rem;
-}
-
-.details > div {
-  padding: 20px;
-  padding-left: 50px;
-  padding-right: 50px;
-  background: $dark-shady;
-  color: $dark-bright;
-  border-radius: 10px;
-  font-size: .7rem;
-}
-
-.detail-content {
-  font-size: 1.2rem;
-}
-
-@mixin user-details-theme($theme-name) {
-  
+    .details {
+      .detail {
+        background: $detail-bg;
+      }
+    }
+  }
 }

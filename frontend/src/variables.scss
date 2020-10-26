@@ -1,8 +1,8 @@
 $primary: #4F8AC9;
 $faded: #EBD4C5;
 $fainted: #FBF1EA;
-$warn: #c55051;
 $success: #73BC58;
+$warn: #c55051;
 
 // theme dark
 $dark-bright: #c4fff1;
@@ -11,6 +11,7 @@ $dark-highlight: #0eba91;
 $dark-accent: #0a8265;
 $dark-shady: #2f3b52;
 $dark-dark: #242e42;
+$dark-warn: #c55051;
 
 $border-radius: 10px;
 $spaceing-xs: 10px;
@@ -27,6 +28,7 @@ $bright-highlight: #F57070; //pink
 $bright-light: #000000; //dark blue
 $bright-shady: #7aa9d1; //light blue
 $bright-accent: #4a5d68; //gray
+$bright-warn: #ef4545;
 
 // 7243FF sick
 // 7F98F5 sick
@@ -38,7 +40,8 @@ $themes: (
     "highlight": $dark-highlight,
     "accent": $dark-accent,
     "shady": $dark-shady,
-    "dark": $dark-dark
+    "dark": $dark-dark,
+    "warn": $dark-warn,
   ),
   "bright" : (
     "bright": $bright-bright,
@@ -46,7 +49,8 @@ $themes: (
     "highlight": $bright-highlight,
     "accent": $bright-accent,
     "shady": $bright-shady,
-    "dark": $bright-dark
+    "dark": $bright-dark,
+    "warn": $bright-warn
   )
 );
 
