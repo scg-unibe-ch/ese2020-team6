@@ -1,22 +1,22 @@
 <div class="product-card" [routerLink]="routerLink" [ngClass]="theme">
-  <div class="picture">
+  <div class="picture flex-align-center">
     <img src="/assets/testImage1.jpeg" alt=""> <!--placeholder image-->
   </div>
-  <div class="title bottom-left-card">
+  <div class="title flex-align-center">
     <div>{{product.title ? product.title : 'No Title available!'}}</div>
   </div>
-  <div class="price">
+  <div class="price flex-align-center">
     <div>Price: {{product.price ? product.price + priceLabel : 'No Pricing available!'}}</div>
   </div>
-  <div class="description">
+  <div class="description flex-align-center">
     <div>{{product.description ? product.description : 'No Description available!'}}</div>
   </div>
-  <div class="go-to-product">
+  <div class="go-to-product flex-align-center">
     <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
       <path d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
     </svg>
   </div>
-  <div class="details">
+  <div class="details flex-align-center">
     <app-product-pill [pillValue]="product.offerType"></app-product-pill>
     <app-product-pill [pillValue]="product.productType"></app-product-pill>
     <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass"></app-product-pill>

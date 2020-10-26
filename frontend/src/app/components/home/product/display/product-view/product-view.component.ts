@@ -14,7 +14,7 @@ export class ProductViewComponent {
   @Input()
   products: Array<ProductModel>;
 
-  private displayList = false;
+  private displayList = true;
 
   public switchView(): void {
     this.displayList = !this.displayList;

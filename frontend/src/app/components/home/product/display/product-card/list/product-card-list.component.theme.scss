@@ -1,4 +1,4 @@
-@mixin product-card-grid-theme($theme-name) {
+@mixin product-card-list-theme($theme-name) {
 
   $theme: map-get($themes, $theme-name);
 
