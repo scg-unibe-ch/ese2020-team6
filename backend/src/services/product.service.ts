@@ -2,6 +2,8 @@
 import { Products, ProductsAttributes } from '../models/products.model';
 import { User } from '../models/user.model';
 
+const { Op } = require('sequelize');
+
 export class ProductService {
 
     public createProduct(product: ProductsAttributes): Promise<ProductsAttributes> {
@@ -52,6 +54,35 @@ export class ProductService {
 
     public getAllUnreviewedProducts(): Promise<Array<Products>> {
       return Products.findAll({
+        where: {
+          isAccepted: false,
+          rejectionMessage: null
+        }
+      });
+    }
+
+    public getMyRejectedProducts(userId: number): Promise<Array<Products>> {
+      return Products.findAll({
+        where: {
+          userId: userId,
+          isAccepted: false,
+          rejectionMessage: {[Op.ne]: null}  // check if correct
+        }
+      });
+    }
+
+    public getMyRejectedProductsCount(userId: number): Promise <Number> {
+      return Products.count({
+        where: {
+          userId: userId,
+          isAccepted: false,
+          rejectionMessage: {[Op.ne]: null}   // check if correct
+        }
+      });
+    }
+
+    public getUnreviewdProductsCount(): Promise <Number> {
+      return Products.count({
         where: {
           isAccepted: false,
           rejectionMessage: null

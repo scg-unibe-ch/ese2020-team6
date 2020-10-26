@@ -1,6 +1,6 @@
-import {Overlay, OverlayConfig, OverlayModule} from '@angular/cdk/overlay';
+import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
@@ -9,6 +9,7 @@ import { ProductInformationBase } from '../product-information-base';
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent extends ProductInformationBase {
 
@@ -32,7 +33,7 @@ export class EditProductComponent extends ProductInformationBase {
     this.overlayRef.dispose();
   }
 
-  public openWithTemplate(tpl: TemplateRef<any>) {
+  public openWithTemplate(tpl: TemplateRef<any>): void {
     const configs = new OverlayConfig({
      hasBackdrop: true,
      });
@@ -45,7 +46,7 @@ export class EditProductComponent extends ProductInformationBase {
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
   }
 
-  public doNothing(tplClose: TemplateRef<any>) {
+  public doNothing(tplClose: TemplateRef<any>): void {
     this.overlayRef.dispose();
   }
 }

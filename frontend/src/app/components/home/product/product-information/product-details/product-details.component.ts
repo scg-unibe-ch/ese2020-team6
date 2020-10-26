@@ -1,13 +1,6 @@
-import {Overlay, OverlayConfig, OverlayModule} from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../../../../services/product/product.service';
-import { UserService } from '../../../../../services/user/user.service';
-// Models
+import { Component, Input} from '@angular/core';
 import { ProductModel, NullProduct } from '../../../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../../../models/user/cut-user.model';
-import { UserModel, NullUser } from '../../../../../models/user/user.model';
 
 import { theme } from '../../../../../../theme';
 
@@ -26,23 +19,23 @@ export class ProductDetailsComponent {
   public theme: string = theme;
 
   public statusIndicatorPillColorClass: () => string = () => {
-    let status: string = this.product.status;
+    const status: string = this.product.status;
     if (status) {
-      if (status === 'Available') return 'success';
-      else if (status === 'Sold' || status === 'Lent') return 'warn';
-    } else return '';
+      if (status === 'Available') { return 'success'; }
+      else if (status === 'Sold' || status === 'Lent') { return 'warn'; }
+    } else { return ''; }
   }
 
   public deliverableIndicatorPillColorClass: () => string = () => {
-    let isDeliverable: boolean = this.product.isDeliverable;
-    if (isDeliverable == true || isDeliverable == false) {
-      if (isDeliverable) return 'success';
-      else return 'warn';
-    } else return '';
+    const isDeliverable: boolean = this.product.isDeliverable;
+    if (isDeliverable === true || isDeliverable === false) {
+      if (isDeliverable) { return 'success'; }
+      else { return 'warn'; }
+    } else { return ''; }
   }
 
   get priceLabel(): string {
-    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
-    else return '$';
+    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') { return '$/h'; }
+    else { return '$'; }
   }
 }

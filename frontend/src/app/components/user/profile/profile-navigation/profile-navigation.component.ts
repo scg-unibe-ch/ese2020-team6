@@ -10,7 +10,7 @@ import { theme } from '../../../../../theme';
 export class ProfileNavigationComponent {
 
   @Input()
-  navigationElements;
+  navigationElements: Array<ProfileNavigationElementModel>;
 
   @Output()
   navigationClickEvent = new EventEmitter<ProfileNavigationElementModel>();

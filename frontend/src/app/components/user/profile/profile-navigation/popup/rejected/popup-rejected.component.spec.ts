@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductPreviewComponent } from './product-preview.component';
+import { PopupRejectedComponent } from './popup-rejected.component';
 
-describe('ProductPreviewComponent', () => {
-  let component: ProductPreviewComponent;
-  let fixture: ComponentFixture<ProductPreviewComponent>;
+describe('PopupRejectedComponent', () => {
+  let component: PopupRejectedComponent;
+  let fixture: ComponentFixture<PopupRejectedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductPreviewComponent ]
+      declarations: [ PopupRejectedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductPreviewComponent);
+    fixture = TestBed.createComponent(PopupRejectedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

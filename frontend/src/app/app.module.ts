@@ -74,7 +74,6 @@ import { PurchaseProductComponent } from './components/home/product/product-info
 import { EditProductComponent } from './components/home/product/product-information/edit-product/edit-product.component';
 import { ReviewProductComponent } from './components/home/product/product-information/review-product/review-product.component';
 import { ProductDetailsComponent } from './components/home/product/product-information/product-details/product-details.component';
-import { ProductPreviewComponent } from './components/home/product/product-information/product-preview/product-preview.component';
 
 
 // Custom Form
@@ -130,7 +129,10 @@ import { routes } from './router/router';
 import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
-
+import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
+import { PopupUnreviewedComponent } from './components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
+import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
+import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 
 @NgModule({
   declarations: [
@@ -184,7 +186,6 @@ import { RejectedProductsComponent } from './components/user/profile/rejected-pr
     EditProductComponent,
     ReviewProductComponent,
     ProductDetailsComponent,
-    ProductPreviewComponent,
     TitleValidatorDirective,
     DescriptionValidatorDirective,
     PriceValidatorDirective,
@@ -199,6 +200,10 @@ import { RejectedProductsComponent } from './components/user/profile/rejected-pr
     SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
     RejectedProductsComponent,
+    PopupUnreviewedComponent,
+    PopupRejectedComponent,
+    PopupDirective,
+    NavigationElementComponent,
   ],
   imports: [
     BrowserModule,

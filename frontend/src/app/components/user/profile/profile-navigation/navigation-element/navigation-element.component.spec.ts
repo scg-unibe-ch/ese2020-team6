@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodoItemComponent } from './todo-item.component';
+import { NavigationElementComponent } from './navigation-element.component';
 
-describe('TodoItemComponent', () => {
-  let component: TodoItemComponent;
-  let fixture: ComponentFixture<TodoItemComponent>;
+describe('NavigationElementComponent', () => {
+  let component: NavigationElementComponent;
+  let fixture: ComponentFixture<NavigationElementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoItemComponent ]
+      declarations: [ NavigationElementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TodoItemComponent);
+    fixture = TestBed.createComponent(NavigationElementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,4 @@
-// Packages
 import { Component, Input } from '@angular/core';
-// Models
 import { ProductModel } from '../../../../../models/product/product.model';
 
 @Component({
@@ -11,12 +9,12 @@ import { ProductModel } from '../../../../../models/product/product.model';
 export class ProductViewComponent {
 
   @Input()
-  path: string = "";
+  path = '';
 
   @Input()
   products: Array<ProductModel>;
 
-  private displayList: boolean = true;
+  private displayList = true;
 
   public switchView(): void {
     this.displayList = !this.displayList;

@@ -1,24 +1,19 @@
-// Packages
-import { FormGroup, NgForm } from '@angular/forms';
-import { Component, TemplateRef, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
-// Services
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
-// Request Builders and Request Models
 import {
   PostProductRequestBuilder,
   PostProductRequestModel,
   UpdateProductRequestBuilder,
   UpdateProductRequestModel } from '../../../../models/request/product/product-request-model-builder.module';
-// Models
-import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductFormModel, NullPostProductForm } from '../../../../models/form/post-product-form.model';
-import { ProfileNavigationElementModel } from '../../../../models/form/profile-navigation-element.model';
 
 @Component({
   selector: 'app-post-product',
@@ -27,13 +22,12 @@ import { ProfileNavigationElementModel } from '../../../../models/form/profile-n
 })
 export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   @ViewChild('postProductForm') form: NgForm;
-  image: any;
-  url: any;
   public values: PostProductFormModel = new NullPostProductForm();
   public product: ProductModel = new NullProduct();
   private userId: number;
   private productId: number;
-  private isUpdate: boolean = false;
+  private isUpdate = false;
+  productData: any;
 
   constructor(
     private productService: ProductService,
@@ -53,7 +47,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     }
 
     this.route.params.subscribe(parameters => {
-      this.productId = parseInt(parameters.productId,10);
+      this.productId = parseInt(parameters.productId, 10);
       if (!isNaN(this.productId)) {
         this.isUpdate = true;
         this.updateForm();
@@ -64,7 +58,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   private updateForm(): void {
     this.productService.getProductById(this.productId).subscribe((product: ProductModel) => {
       this.product = product;
-      let values: any = Object.assign({}, product);
+      const values: any = Object.assign({}, product);
       values.isDeliverable = product.isDeliverable ? 'Yes' : 'No';
       this.values = Object.assign({}, values);
     });
@@ -72,14 +66,14 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
 
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
           console.log(values);
-
-        })
+          this.openSnackBar();
+        });
       } else {
         this.productService.postProduct(this).subscribe((values) => {
           this.openSnackBar();
@@ -90,7 +84,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
   private setupProduct(): void {
-    let product: any = this.values;
+    const product: any = this.values;
     product.isDeliverable = this.values.isDeliverable === 'Yes' ? true : false;
     this.product = Object.assign({}, product);
   }
@@ -114,28 +108,15 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     return request;
   }
 
-  public getProductFromFrom(): ProductModel {
-    this.setupProduct();
-    const product: ProductModel = Object.assign(this.product, {
-        userId: this.userId
-      }
-    );
-    return product;
-  }
-
-  public openSnackBar() {
+  public openSnackBar(): void {
     this.snackBar.open('Your product is created', '', {
       duration: 2000,
       panelClass: ['snackbar']
     });
   }
 
-  public onFileChanged(event) {
-    const file = event.target.files[0];
-  }
-
-  public showPreview(form: NgForm, tpl: TemplateRef<any>) {
-    let values = form.value;
+  public showPreview(form: NgForm, tpl: TemplateRef<any>): void {
+    this.productData = form.value;
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });

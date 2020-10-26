@@ -1,5 +1,4 @@
-import { NgModel, AbstractControl, Validator } from '@angular/forms';
-import { OnInit } from '@angular/core';
+import { NgModel, Validator } from '@angular/forms';
 import { ValueAccessorBase } from './value-accessor-base';
 import { validate, ValidatorArray, AsyncValidatorArray, ValidationResult } from './validate';
 import { Observable, of } from 'rxjs';

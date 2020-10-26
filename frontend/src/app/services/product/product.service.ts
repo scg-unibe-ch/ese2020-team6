@@ -1,12 +1,9 @@
-// Packages
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-// Services
 import { PostProductService } from './post/post-product.service';
 import { GetProductService } from './get/get-product.service';
 import { ReviewProductService } from './review/review-product.service';
 import { EditProductService } from './edit/edit-product.service';
-// Models
 import { ProductModel } from '../../models/product/product.model';
 import {
   AcceptProductResponseModel,
@@ -14,7 +11,6 @@ import {
   UpdateProductResponseModel,
   PostProductResponseModel,
   DeleteProductResponseModel } from '../../models/response/product/product-response-model.module';
-// Interfaces
 import {
   PostProductRequestBuilder,
   UpdateProductRequestBuilder,
@@ -41,6 +37,10 @@ export class ProductService {
     return this.getProductService.getAllAcceptedProducts();
   }
 
+  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
+    return this.getProductService.getMyRejectedProducts(userId);
+  }
+
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.getProductService.getAllUnreviewedProducts();
   }
@@ -51,6 +51,14 @@ export class ProductService {
 
   public getProductById(productId: number): Observable<ProductModel> {
     return this.getProductService.getProductById(productId);
+  }
+
+  public getMyRejectedProductsCount(userId: number): Observable<number> {
+    return this.getProductService.getMyRejectedProductsCount(userId);
+  }
+
+  public getUnreviewedProductsCount(): Observable<number> {
+    return this.getProductService.getUnreviewedProductsCount();
   }
 
   public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {

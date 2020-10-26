@@ -1,5 +1,5 @@
 <ng-template [ngIf]="isPreview" [ngIfElse]="isNotPreview">
-  <app-product-preview [product]="product" [creator]="creator"></app-product-preview>
+  <app-product-details [product]="product" [creator]="creator"></app-product-details>
 </ng-template>
 <ng-template #isNotPreview>
   <router-outlet></router-outlet>
