@@ -21,9 +21,33 @@ $spaceing-xl: 50px;
 
 
 // theme bright
-$bright-bright: #fffbf5;
-$bright-light: #98daca;
-$bright-highlight: #F78888;
-$bright-accent: #e78c4b;
-$bright-shady: #7aa9d1;
-$bright-dark: #4a5d68;
+$bright-bright: #fffbf5; //white
+$bright-dark: #80FFF7; //very light green
+$bright-highlight: #F57070; //pink
+$bright-light: #000000; //dark blue
+$bright-shady: #7aa9d1; //light blue
+$bright-accent: #4a5d68; //gray
+
+// 7243FF sick
+// 7F98F5 sick
+
+$themes: (
+  "dark" : (
+    "bright": $dark-bright,
+    "light": $dark-light,
+    "highlight": $dark-highlight,
+    "accent": $dark-accent,
+    "shady": $dark-shady,
+    "dark": $dark-dark
+  ),
+  "bright" : (
+    "bright": $bright-bright,
+    "light": $bright-light,
+    "highlight": $bright-highlight,
+    "accent": $bright-accent,
+    "shady": $bright-shady,
+    "dark": $bright-dark
+  )
+);
+
+$theme-names: map-keys($themes);

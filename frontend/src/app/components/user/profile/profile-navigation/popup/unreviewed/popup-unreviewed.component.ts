@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { PopupComponent } from '../../../../../../models/user/profile/navigation/popup/popup.interface';
 import { ProductService } from '../../../../../../services/product/product.service';
+import { theme } from '../../../../../../../theme';
 
 @Component({
   selector: 'app-popup-unreviewed',
@@ -8,6 +9,8 @@ import { ProductService } from '../../../../../../services/product/product.servi
   styleUrls: ['../popup.component.scss']
 })
 export class PopupUnreviewedComponent implements PopupComponent, OnInit {
+
+  public theme: string = theme;
 
   public popupNumber: number;
   public popupDisplay: boolean = false;

@@ -2,6 +2,7 @@ import { Component, OnInit , Input, Output, EventEmitter, ViewChild, ComponentFa
 import { ProfileNavigationElementModel } from '../../../../../models/form/profile-navigation-element.model';
 import { PopupDirective } from '../popup/popup.directive';
 import { PopupComponent } from '../../../../../models/user/profile/navigation/popup/popup.interface';
+import { theme } from '../../../../../../theme';
 
 @Component({
   selector: 'app-navigation-element',
@@ -18,6 +19,8 @@ export class NavigationElementComponent implements OnInit {
 
   @ViewChild(PopupDirective, {static: true})
   popup: PopupDirective;
+
+  public theme: string = theme;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver

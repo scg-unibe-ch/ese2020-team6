@@ -3,6 +3,7 @@ import { PopupComponent } from '../../../../../../models/user/profile/navigation
 import { UserModel } from '../../../../../../models/user/user.model';
 import { ProductService } from '../../../../../../services/product/product.service';
 import { UserService } from '../../../../../../services/user/user.service';
+import { theme } from '../../../../../../../theme';
 
 @Component({
   selector: 'app-popup-rejected',
@@ -10,6 +11,8 @@ import { UserService } from '../../../../../../services/user/user.service';
   styleUrls: ['../popup.component.scss']
 })
 export class PopupRejectedComponent implements PopupComponent, OnInit{
+
+  public theme: string = theme;
 
   public popupNumber: number;
   public popupDisplay: boolean = false;

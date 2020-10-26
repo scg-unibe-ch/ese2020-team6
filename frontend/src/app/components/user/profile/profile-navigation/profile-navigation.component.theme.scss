@@ -1,17 +1,10 @@
-@import '../../../../../variables.scss';
-
-@mixin profile-navigation-theme($theme-name, $nav-bg, $btn-bg, $btn-color, $btn-hover-bg, $btn-hover-color) {
+@mixin profile-navigation-theme($theme-name) {
   .#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $nav-bg: map-get($theme, shady);
+
     background: $nav-bg;
-
-    .navigation-element {
-      background: $btn-bg;
-      color: $btn-color;
-    }
-
-    .navigation-element:hover {
-      background: $btn-hover-bg;
-      color: $btn-hover-color;
-    }
   }
 }

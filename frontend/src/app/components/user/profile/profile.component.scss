@@ -65,6 +65,6 @@ $header-height: 112px;
   padding: $spaceing-s;
 }
 
-
-@include profile-theme(dark, $dark-dark, $dark-shady, $dark-bright, $dark-accent, $warn, $dark-bright);
-@include profile-theme(bright, $bright-light, $bright-shady, $bright-bright, $bright-dark, $bright-highlight, $bright-bright);
+@each $theme-name in $theme-names {
+  @include profile-theme($theme-name);
+}

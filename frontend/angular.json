@@ -29,7 +29,8 @@
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
-							"src/styles.scss"
+							"src/styles.scss",
+							"src/variables.scss"
 						],
 						"scripts": []
 					},
@@ -94,7 +95,8 @@
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
-							"src/styles.scss"
+							"src/styles.scss",
+							"src/variables.scss"
 						],
 						"scripts": []
 					}
