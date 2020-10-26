@@ -1,5 +1,4 @@
 @import '../../../../../../../variables.scss';
-@import './product-card-list.component.theme.scss';
 @import '../product-card.component.scss';
 
 $title-height: 100px;
@@ -38,7 +37,3 @@ $picture-dim: 300px;
   2, 3,
   column
 );
-
-@each $theme-name in $theme-names {
-  @include product-card-list-theme($theme-name);
-}

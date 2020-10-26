@@ -1,13 +1,10 @@
-@mixin product-card-list-theme($theme-name) {
+@mixin product-card-theme($theme-name) {
 
   $theme: map-get($themes, $theme-name);
 
   $card-bg: map-get($theme, shady);
   $card-text-color: map-get($theme, bright);
-  $checkmark-unchecked: map-get($theme, accent);
   $svg-color: map-get($theme, highlight);
-  $checkmark-color: map-get($theme, bright);
-  $checkmark-hover: map-get($theme, light);
 
   .#{$theme-name} {
 

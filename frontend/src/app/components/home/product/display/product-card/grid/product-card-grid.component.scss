@@ -1,5 +1,4 @@
 @import '../../../../../../../variables.scss';
-@import './product-card-grid.component.theme.scss';
 @import '../product-card.component.scss';
 
 $picture-dim: 300px;
@@ -25,7 +24,3 @@ $svg-width: 100px;
   4, 5,
   row
 );
-
-@each $theme-name in $theme-names {
-  @include product-card-grid-theme($theme-name);
-}

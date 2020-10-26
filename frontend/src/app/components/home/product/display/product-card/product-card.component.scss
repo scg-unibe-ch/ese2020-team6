@@ -1,3 +1,9 @@
+@import './product-card.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include product-card-theme($theme-name);
+}
+
 @mixin product-card(
   $grid-temp-col,
   $grid-temp-row,
