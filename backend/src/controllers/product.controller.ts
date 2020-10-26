@@ -27,12 +27,21 @@ const fileFilter = (req: Request, file: any, cd: any) => {
         cd(new Error('wrong format for Picture'), false);
     }
 };
+<<<<<<< Updated upstream
 
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter
 });
 
+=======
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
+
+>>>>>>> Stashed changes
 productController.post('/post', upload.single('productImage'),
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
