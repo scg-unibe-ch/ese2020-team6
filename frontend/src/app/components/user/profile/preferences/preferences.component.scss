@@ -1,0 +1,83 @@
+@import '../../../../../variables.scss';
+@import './preferences.component.theme.scss';
+
+.preferences {
+  width: 100%;
+  height: 100%;
+
+  .checkbox {
+    display: flex;
+    align-items: center;
+    border-radius: $border-radius;
+    padding: $spaceing-m;
+    font-size: 2em;
+    line-height: 1em;
+
+    .checkmark-wrapper {
+
+      $checkmark-dimensions: $spaceing-m;
+
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      position: relative;
+      height: $checkmark-dimensions;
+      width: $checkmark-dimensions;
+      display: flex;
+      align-items: center;
+      margin-left: $spaceing-s;
+
+
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+
+        &:checked {
+          ~ {
+            .checkmark {
+              &::after {
+                display: block;
+              }
+            }
+          }
+        }
+
+      }
+
+      .checkmark {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        border-radius: calc(#{$checkmark-dimensions} / 5);
+
+        &::after {
+
+          $mark-long: 60%;
+          $mark-short: 30%;
+
+          content: "";
+          position: absolute;
+          display: none;
+          left: calc(50% - #{$mark-short} / 2);
+          top: calc(45% - #{$mark-long} / 2);
+          width: $mark-short;
+          height: $mark-long;
+          border: solid;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include preferences-theme($theme-name);
+}

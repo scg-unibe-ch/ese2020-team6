@@ -97,6 +97,6 @@ img {
   display: grid;
   grid-gap: $spaceing-s;
 }
-
-@include product-details-theme(dark, $dark-dark, $dark-shady, $dark-bright, $dark-accent);
-@include product-details-theme(bright, transparent, transparent, black, black);
+@each $theme-name in $theme-names {
+  @include product-details-theme($theme-name);
+}

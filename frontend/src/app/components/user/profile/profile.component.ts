@@ -4,26 +4,27 @@ import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
 import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/form/profile-navigation-element.model';
 import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
-import { theme } from '../../../../theme';
+import { ThemeService } from '../../../services/theme/theme.service';
+import { Themable } from '../../../models/theme/themable';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent {
+export class ProfileComponent extends Themable {
 
   public navigationElements = defaultUserNavigationElements;
   public currentContent: ProfileNavigationElementModel = new NullProfileNavigationElement();
   public userName: string;
   public userId: number;
 
-  public theme: string = theme;
-
   constructor(
     private router: Router,
-    userService: UserService
+    userService: UserService,
+    themeService: ThemeService
   ) {
+    super(themeService);
 
     if (userService.isLoggedIn) {
       userService.userObservable.subscribe((user: UserModel) => {

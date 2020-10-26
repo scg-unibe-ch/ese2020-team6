@@ -3,24 +3,26 @@ import { PopupComponent } from '../../../../../../models/user/profile/navigation
 import { UserModel } from '../../../../../../models/user/user.model';
 import { ProductService } from '../../../../../../services/product/product.service';
 import { UserService } from '../../../../../../services/user/user.service';
-import { theme } from '../../../../../../../theme';
+import { ThemeService } from '../../../../../../services/theme/theme.service';
+import { Themable } from '../../../../../../models/theme/themable';
 
 @Component({
   selector: 'app-popup-rejected',
   templateUrl: '../popup.component.html',
   styleUrls: ['../popup.component.scss']
 })
-export class PopupRejectedComponent implements PopupComponent, OnInit{
-
-  public theme: string = theme;
+export class PopupRejectedComponent extends Themable implements PopupComponent, OnInit{
 
   public popupNumber: number;
   public popupDisplay: boolean = false;
 
   constructor(
     private productService: ProductService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   public ngOnInit(): void {
     this.userService.userObservable.subscribe((user: UserModel) => {

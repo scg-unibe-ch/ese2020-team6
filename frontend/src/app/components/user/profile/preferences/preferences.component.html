@@ -1,0 +1,11 @@
+<div class="preferences" [ngClass]="theme">
+  <div class="choose-theme">
+    <label class="checkbox">
+      Dark Mode
+      <div class="checkmark-wrapper">
+        <input type="checkbox" (change)="switchTheme()" [checked]="isChecked">
+        <div class="checkmark"></div>
+      </div>
+    </label>
+  </div>
+</div>

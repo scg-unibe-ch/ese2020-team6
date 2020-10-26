@@ -6,6 +6,7 @@ import { MyProductsComponent } from '../../../components/user/profile/my-product
 import { RejectedProductsComponent } from '../../../components/user/profile/rejected-products/rejected-products.component';
 import { PopupUnreviewedComponent } from '../../../components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
 import { PopupRejectedComponent } from '../../../components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
+import { PreferencesComponent } from '../../../components/user/profile/preferences/preferences.component';
 
 
 export const defaultProfileComponent: number = 0;
@@ -16,6 +17,12 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     path: 'details',
     component: UserDetailsComponent,
     popupComponent: null
+  },
+  {
+    title: 'Preferences',
+    path: 'preferences',
+    component: PreferencesComponent,
+    popupComponent: PopupRejectedComponent
   },
   {
     title: 'My Products',
