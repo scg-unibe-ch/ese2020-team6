@@ -1,17 +1,25 @@
 import { Component , Input } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
+import { Themable } from '../../../../../models/theme/themable';
+import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-product-card',
   template: ``
 })
-export class ProductCardComponent {
+export class ProductCardComponent extends Themable {
 
   @Input()
   product: ProductModel;
 
   @Input()
   path: '';
+
+  constructor(
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   statusIndicatorPillColorClass: () => string = () => {
     const status: string = this.product.status;

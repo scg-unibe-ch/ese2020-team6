@@ -1,14 +1,14 @@
 @mixin navigation-element-theme($theme-name) {
     $theme: map-get($themes, $theme-name);
 
-    $btn-bg: map-get($theme, highlight);
-    $btn-color: map-get($theme, bright);
     $btn-hover-bg: map-get($theme, light);
     $btn-hover-color: map-get($theme, dark);
+    $btn-default-bg: map-get($theme, highlight);
+    $btn-default-color: map-get($theme, bright);
 
     .#{$theme-name} {
-      background: $btn-bg;
-      color: $btn-color;
+      background: $btn-default-bg;
+      color: $btn-default-color;
     }
 
     .#{$theme-name}:hover {
