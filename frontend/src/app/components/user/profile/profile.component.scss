@@ -11,6 +11,7 @@ $header-height: 112px;
   display: grid;
   grid-template-columns: $navigation-width auto;
   grid-template-rows: $header-height $title-height auto;
+  transition: background .1s ease-in-out;
 }
 
 

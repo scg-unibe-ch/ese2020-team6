@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class LogoutUserService {
 
   public logout(): void {
-    localStorage.clear();
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userToken');
   }
 }
