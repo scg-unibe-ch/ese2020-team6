@@ -3,7 +3,7 @@
     <button (click)="toggleDropDown()" class="dropdown-toggle button-full-po">{{userName}}</button>
     <div [ngClass]="{'collapse': !showDropdown, 'expand': showDropdown, 'land': newReload}" class="dropdown">
       <div class="dropdown-wrapper">
-        <button class="button-empty" [routerLink]="['/user/profile']">Profile</button>
+        <button class="button-empty" [routerLink]="['/user/profile']">My Profile</button>
         <hr>
         <app-logout></app-logout>
       </div>
