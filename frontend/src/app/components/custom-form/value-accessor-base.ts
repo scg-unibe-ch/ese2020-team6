@@ -10,7 +10,7 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
   private _dirty: boolean = false;
   private _focused: boolean = false;
 
-  private innerValue: T;
+  protected innerValue: T;
 
 
   private onChange: (value: T) => void = (value: T) => {};
@@ -27,11 +27,8 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
     return this.innerValue;
   }
 
-
   set value(value: T) {
     this.writeValue(value);
-    this.dirty = true;
-    this.onChange(value);
   }
 
 
@@ -47,8 +44,10 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
 
 
   writeValue(value: T) {
-    if (this.innerValue !== value) {
+    if (this.innerValue != value && this.innerValue !== value) {
       this.innerValue = value;
+      this.dirty = true;
+      this.onChange(value);
     }
   }
 
