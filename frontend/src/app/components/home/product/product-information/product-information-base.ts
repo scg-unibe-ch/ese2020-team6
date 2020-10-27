@@ -4,8 +4,10 @@ import { UserService } from '../../../../services/user/user.service';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../../models/user/cut-user.model';
 import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { Themable } from '../../../../models/theme/themable';
+import { ThemeService } from '../../../../services/theme/theme.service';
 
-export class ProductInformationBase {
+export class ProductInformationBase extends Themable {
 
   public product: ProductModel = new NullProduct();
   public creator: CutUserModel = new NullCutUser();
@@ -15,7 +17,10 @@ export class ProductInformationBase {
     protected route: ActivatedRoute,
     protected productService: ProductService,
     protected userService: UserService,
+    themeService: ThemeService
   ) {
+    super(themeService);
+
     this.route.parent.params.subscribe((params: {productId: string}) => {
       this.getProduct(parseInt(params.productId, 10));
     });

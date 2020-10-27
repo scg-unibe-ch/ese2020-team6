@@ -1,7 +1,16 @@
 <app-product-details [product]="product" [creator]="creator">
   <button (click)="redirectToLogin()" *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
   <ng-template #isForRent>
-      <button class="button-full-po">Lend</button>
-      <button (click)="redirectToLogin()" class="button-full-po">Lend</button>
+      <button [ngClass]="'button-' + theme" (click)="togglePurchase()">Lend</button>
   </ng-template>
 </app-product-details>
+<div *ngIf="showPurchaseForm" class="overlay-wrapper" [ngClass]="theme">
+    <div class="overlay-content">
+      <form class="overlay-form" #purchaseForm="ngForm" (ngSubmit)="purchase()">
+        <div>
+          <button [ngClass]="'button-' + theme">Purchase</button>
+          <button type="button" (click)="togglePurchase()" [ngClass]="'button-empty-' + theme">Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+@mixin overlay-theme($theme-name) {
+
+  $overlay-color: get-theme($theme-name, bright);
+  $overlay-bg: get-theme($theme-name, accent);
+  $overlay-form-bg: get-theme($theme-name, shady);
+
+  .overlay-wrapper.#{$theme-name} {
+    color: $overlay-color;
+    background: rgba(0,0,0,0.5);
+
+    .overlay-content {
+      background: $overlay-form-bg;
+      .overlay-form {
+      }
+    }
+  }
+}
