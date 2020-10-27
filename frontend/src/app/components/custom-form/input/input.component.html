@@ -1,5 +1,5 @@
 <div class="input-wrapper">
-  <input [type]="type" [ngClass]="{'invalid' : (invalid | async) && !input.pristine}" required="" [(ngModel)]="value" [name]="placeholder" ngModel #input="ngModel"/>
+  <input [type]="type" required="" (blur)="touch()" [(ngModel)]="value" [name]="placeholder" ngModel #input="ngModel"/>
   <label>
     {{placeholder}}
   </label>

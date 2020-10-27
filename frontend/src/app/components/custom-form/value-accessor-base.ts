@@ -5,8 +5,8 @@ export class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;
 
 
-  private changed = new Array<(value: T) => void>();
-  private touched = new Array<() => void>();
+  private onChange: (value: T) => void = (value: T) => {};
+  private onTouched: () => void = () => {};
 
 
   get value(): T {
@@ -15,29 +15,29 @@ export class ValueAccessorBase<T> implements ControlValueAccessor {
 
 
   set value(value: T) {
-    if (this.innerValue !== value) {
-      this.innerValue = value;
-      this.changed.forEach(f => f(value));
-    }
+    this.writeValue(value);
+    this.onChange(value);
   }
 
 
   touch() {
-    this.touched.forEach(f => f());
+    this.onTouched();
   }
 
 
   writeValue(value: T) {
-    this.innerValue = value;
+    if (this.innerValue !== value) {
+      this.innerValue = value;
+    }
   }
 
 
-  registerOnChange(fn: (value: T) => void) {
-    this.changed.push(fn);
+  registerOnChange(fn: (value: T) => void): void {
+    this.onChange = fn;
   }
 
 
-  registerOnTouched(fn: () => void) {
-    this.touched.push(fn);
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 }
