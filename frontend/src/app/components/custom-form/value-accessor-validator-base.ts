@@ -14,7 +14,7 @@ export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implemen
     super();
   }
 
-  validate(): Observable<ValidationResult> {
+  public validate(): Observable<ValidationResult> {
     return validate(this.validators, this.asyncValidators)(this.model.control);
   }
 

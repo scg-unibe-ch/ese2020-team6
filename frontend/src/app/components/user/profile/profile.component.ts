@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
-import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
 
 @Component({
@@ -19,7 +19,7 @@ export class ProfileComponent {
 
   constructor(
     private router: Router,
-    userService: UserService
+    public userService: UserService
   ) {
 
     if (userService.isLoggedIn) {
