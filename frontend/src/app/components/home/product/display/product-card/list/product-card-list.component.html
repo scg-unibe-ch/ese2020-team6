@@ -1,6 +1,6 @@
 <div class="product-card" [routerLink]="routerLink" [ngClass]="theme">
   <div class="picture flex-align-center">
-    <img src="/assets/testImage1.jpeg" alt=""> <!--placeholder image-->
+    <img src={{product.picture}} alt=""> <!--placeholder image-->
   </div>
   <div class="title flex-align-center">
     <div>{{product.title ? product.title : 'No Title available!'}}</div>
