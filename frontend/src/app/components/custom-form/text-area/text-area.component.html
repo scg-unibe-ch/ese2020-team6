@@ -1,4 +1,4 @@
-<div class="input-wrapper">
+<div class="input-wrapper" [ngClass]="theme">
   <textarea [rows]="rows" [ngClass]="{'invalid' : (invalid | async) && !textarea.pristine}" required="" [(ngModel)]="value" [name]="placeholder" ngModel #textarea="ngModel"></textarea>
   <label>
     {{placeholder}}

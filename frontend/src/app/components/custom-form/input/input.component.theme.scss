@@ -1,0 +1,40 @@
+@mixin custom-input-theme($theme-name) {
+  .input-wrapper.#{$theme-name} {
+
+    $border-default-color: get-theme($theme-name, bright);
+    $border-valid-color: get-theme($theme-name, highlight);
+    $text-color: get-theme($theme-name, bright);
+    $error-warn: get-theme($theme-name, warn);
+
+    input {
+      border-color: $border-default-color;
+      color: $text-color;
+
+      &:focus {
+        border-color: $error-warn;
+      }
+
+      &:focus, &:valid {
+        + {
+          label {
+            color: $text-color;
+          }
+        }
+      }
+    }
+
+    label {
+      color: rgba($text-color, 0.5);
+    }
+
+    .error-message {
+      color: $error-warn;
+    }
+
+    &.valid {
+      input {
+        border-color: $border-valid-color;
+      }
+    }
+  }
+}

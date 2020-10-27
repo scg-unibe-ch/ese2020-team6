@@ -1,9 +1,9 @@
-<div class="input-wrapper">
-  <input [type]="type" required="" (blur)="touch()" [(ngModel)]="value" [name]="placeholder" ngModel #input="ngModel"/>
+<div class="input-wrapper" [ngClass]="classes">
+  <input [type]="type" required="" (blur)="touch()" (focus)="focus()" [(ngModel)]="value" [name]="placeholder" ngModel #input="ngModel"/>
   <label>
     {{placeholder}}
   </label>
-  <div *ngIf="(invalid | async) && !input.pristine" class="error-message">
-    {{messages | async}}
+  <div *ngIf="focused && invalid" class="error-message">
+    {{messages}}
   </div>
 </div>

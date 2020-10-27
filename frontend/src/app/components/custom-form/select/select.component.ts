@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR} from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base';
+import { ThemeService } from '../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-select',
@@ -24,8 +25,10 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   optionsHidden: Boolean = true;
   current: String;
 
-  constructor() {
-    super();
+  constructor(
+    themeService: ThemeService
+  ) {
+    super(themeService);
   }
 
   ngOnInit(): void {
