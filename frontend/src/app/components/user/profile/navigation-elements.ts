@@ -1,4 +1,4 @@
-import { ProfileNavigationElementModel } from '../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel } from '../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { PostProductComponent } from '../../../components/home/product/post/post-product.component';
 import { ApproveProductsComponent } from '../../../components/user/profile/approve-products/approve-products.component';
 import { UserDetailsComponent } from '../../../components/user/profile/user-details/user-details.component';

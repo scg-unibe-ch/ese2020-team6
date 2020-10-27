@@ -13,48 +13,48 @@ import { ValueAccessorBase } from '../value-accessor-base';
 export class SelectComponent extends ValueAccessorBase<String> implements OnInit {
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @Input()
-  selectName: String;
+  public selectName: String;
 
   @Input()
-  options: Array<String> = new Array<String>();
+  public options: Array<String> = new Array<String>();
 
-  optionsHidden: Boolean = true;
-  current: String;
+  public optionsHidden: Boolean = true;
+  public current: String;
 
   constructor() {
     super();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.current = this.selectName;
   }
 
-  onShowOptions() {
+  public onShowOptions() {
     this.optionsHidden = !this.optionsHidden;
   }
 
-  onSelect(option: string) {
+  public onSelect(option: string) {
     this.value = option;
     this.current = option;
 
     this.onShowOptions();
   }
 
-  writeValue(value: string) {
+  public writeValue(value: string) {
     if (value) {
       this.value = value;
       this.current = value;
     }
   }
 
-  getPlaceholderClass() {
+  public getPlaceholderClass() {
     return this.value === this.selectName ? 'placeholder-notSelected' : '';
   }
 
-  getSVGClass() {
+  public getSVGClass() {
     return this.optionsHidden ? 'down' : 'up';
   }
 
