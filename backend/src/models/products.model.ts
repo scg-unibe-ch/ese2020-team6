@@ -49,11 +49,11 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             },
             title: {
                 type: DataTypes.STRING,
-                allowNull: true
+                allowNull: false
             },
             description: {
                 type: DataTypes.STRING,
-                allowNull: true
+                allowNull: false
             },
             price: {
                 type: DataTypes.INTEGER,
@@ -61,21 +61,25 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             },
             category: {
                 type: DataTypes.STRING,
-                allowNull: true
+                allowNull: false
             },
             location: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: true
             },
             // item or service
             productType: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             // sell or rent
             offerType: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: false
             },
             picture: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: true
             },
             subcategory: {
                 type: DataTypes.STRING,
@@ -88,7 +92,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
             // available, lent, sold
             status: {
                 type: DataTypes.STRING,
-                allowNull: true
+                allowNull: false
             },
             isAccepted: {
                 type: DataTypes.BOOLEAN,
@@ -111,7 +115,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
         },
             {
                 sequelize,
-                tableName: 'product'
+                tableName: 'products'
             }
         );
     }

@@ -1,17 +1,9 @@
 <div class="menu-bar-wrapper">
   <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
-<<<<<<< HEAD
     <button (click)="toggleDropDown()" class="dropdown-toggle" [ngClass]="'button-' + theme">{{userName}}</button>
     <div [ngClass]="getDropdownClasses()" class="dropdown-wrapper">
       <div class="dropdown">
-        <button [ngClass]="'button-' + theme" [routerLink]="['/user/profile']">Profile</button>
-=======
-    <button (click)="toggleDropDown()" class="dropdown-toggle button-full-po">{{userName}}</button>
-    <div [ngClass]="{'collapse': !showDropdown, 'expand': showDropdown, 'land': newReload}" class="dropdown">
-      <div class="dropdown-wrapper">
-        <button class="button-empty" [routerLink]="['/user/profile']">My Profile</button>
-        <hr>
->>>>>>> origin/4-refactor-naming
+        <button [ngClass]="'button-' + theme" [routerLink]="['/user/profile']">My Profile</button>
         <app-logout></app-logout>
       </div>
     </div>
