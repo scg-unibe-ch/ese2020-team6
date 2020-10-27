@@ -11,10 +11,10 @@ import { ValueAccessorValidatorBase } from '../../value-accessor-validator-base'
   ]
 })
 export class NumberInputComponent extends ValueAccessorValidatorBase<Number> {
-  type: string = "number";
+  public type: string = "number";
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
   model: NgModel;

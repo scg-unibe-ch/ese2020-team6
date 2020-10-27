@@ -1,6 +1,6 @@
 <div class="product-card" [routerLink]="routerLink">
   <div class="picture">
-    <img src="/assets/testImage1.jpeg" alt=""> <!--placeholder image-->
+    <img src={{product.picture}} alt=""> <!--placeholder image-->
   </div>
   <div class="title bottom-left-card">
     <div>{{product.title ? product.title : 'No Title available!'}}</div>

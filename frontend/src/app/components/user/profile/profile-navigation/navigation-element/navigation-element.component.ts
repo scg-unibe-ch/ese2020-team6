@@ -1,5 +1,5 @@
 import { Component, OnInit , Input, Output, EventEmitter, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { ProfileNavigationElementModel } from '../../../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel } from '../../../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { PopupDirective } from '../popup/popup.directive';
 import { PopupComponent } from '../../../../../models/user/profile/navigation/popup/popup.interface';
 
