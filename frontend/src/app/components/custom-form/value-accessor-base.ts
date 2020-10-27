@@ -10,11 +10,11 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
   private _dirty: boolean = false;
   private _focused: boolean = false;
 
-  protected innerValue: T;
+  private innerValue: T;
 
 
-  private onChange: (value: T) => void = (value: T) => {};
-  private onTouched: () => void = () => {};
+  protected onChange: (value: T) => void = (value: T) => {};
+  protected onTouched: () => void = () => {};
 
   constructor(
     themeService: ThemeService

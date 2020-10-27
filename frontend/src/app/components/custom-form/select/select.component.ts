@@ -39,6 +39,14 @@ export class SelectComponent extends ValueAccessorBase<String> {
     this.onToggleDropdown();
   }
 
+  writeValue(value: string) {
+    super.writeValue(value);
+    if (value) {
+      this.dirty = true;
+      this.onChange(value);
+    }
+  }
+
   get SVGClass(): string {
     return this.optionsHidden ? 'down' : 'up';
   }
