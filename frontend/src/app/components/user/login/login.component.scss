@@ -1,32 +1,47 @@
-.login-wrapper-wrapper {
+@import '../../../../variables.scss';
+@import './login.component.theme.scss';
+
+.login-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .login {
+    width: 30%;
+    padding: $spaceing-xl;
+    border-radius: $border-radius;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spaceing-xl;
+
+      .title {
+        font-size: 1.7em;
+        line-height: 1em;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      .warning {
+        font-size: 1em;
+        line-height: 1em;
+        margin: 0;
+        text-transform: uppercase;
+      }
+    }
+
+    .action-wrapper {
+      margin-top: $spaceing-xl;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: $spaceing-l;
+    }
+  }
 }
 
-.login-wrapper {
-  width: 30%;
-  padding: 40px;
-  border: 2px solid #2f2f36;
-}
-
-h3 {
-  font-size: 24px;
-  text-transform: uppercase;
-  margin-bottom: 40px;
-}
-
-h4 {
-  font-size: 24px;
-  color: red;
-  margin-top: 20px;
-}
-
-.action-wrapper {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-column-gap: 40px;
+@each $theme-name in $theme-names {
+  @include login-theme($theme-name);
 }

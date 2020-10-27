@@ -1,4 +1,4 @@
-<div class="login-wrapper-wrapper">
+<div class="login-wrapper-wrapper" [ngClass]="theme">
   <div class="login-wrapper">
     <h3>Create Account</h3>
     <form #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>

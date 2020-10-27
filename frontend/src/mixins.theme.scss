@@ -2,4 +2,5 @@
 
 @each $theme-name in $theme-names {
   @include button-theme($theme-name);
+  @include button-empty-theme($theme-name);
 }
