@@ -1,0 +1,40 @@
+@mixin title-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $title-bg: map-get($theme, dark);
+  $line-color: map-get($theme, warn);
+  $text-color: map-get($theme, bright);
+  $plus-color: map-get($theme, highlight);
+
+  .title-wrapper.#{$theme-name} {
+
+    background: $title-bg;
+    color: $text-color;
+
+    .title {
+      &::before {
+        background: $line-color;
+      }
+    }
+
+    .go-to-post {
+      .plus {
+        path {
+          fill: $plus-color;
+        }
+      }
+    }
+  }
+}
+
+@mixin content-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $content-bg: map-get($theme, dark);
+
+  .content-wrapper.#{$theme-name} {
+    background: $content-bg;
+  }
+}

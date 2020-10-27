@@ -1,4 +1,4 @@
-<div class="title-wrapper">
+<div class="title-wrapper" [ngClass]="theme">
   <div class="title">
     <h1>TEAM6</h1>
     <h3>Shoppingplatform</h3>
@@ -12,6 +12,6 @@
 
 <app-menu-bar></app-menu-bar>
 
-<div class="content-wrapper">
+<div class="content-wrapper" [ngClass]="theme">
   <app-product-view [products]="products"></app-product-view>
 </div>
