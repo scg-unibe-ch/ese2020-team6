@@ -1,6 +1,6 @@
-<div>
+<div class="pill-wrapper" [ngClass]="theme">
   <div *ngIf="hasTitle" class="title" [ngClass]="defaultPillColorClass">{{title}}:</div>
   <div class="pill" [ngClass]="[defaultPillColorClass, indicatorPillColorClass]" [ngStyle]="{'font-size': size + 'em', 'height': (size * 30) + 'px'}">
-    <div>{{pillValue}}</div>
+    {{pillValue}}
   </div>
 </div>

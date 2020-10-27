@@ -1,29 +1,31 @@
 @import '../../../../../../../variables.scss';
+@import './product-pill.component.theme.scss';
 
-.title {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.pill-wrapper {
   font-size: 12px;
-  background: none;
-  margin-bottom: 5px;
+
+  .title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: none;
+    margin-bottom: 5px;
+  }
+
+  .pill {
+    padding: $spaceing-xs;
+    height: $spaceing-l;
+    border-radius: $spaceing-l;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .default {
+    width: $spaceing-xl;
+  }
 }
 
-.title.fainted {
-  color: $faded;
-}
-
-.pill {
-  padding: 10px;
-  height: 30px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  font-size: 12px;;
-}
-
-.default {
-  width: 50px;
+@each $theme-name in $theme-names {
+  @include product-pill-theme($theme-name);
 }

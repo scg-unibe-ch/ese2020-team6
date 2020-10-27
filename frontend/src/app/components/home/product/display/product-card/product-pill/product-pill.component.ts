@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { Themable } from '../../../../../../models/theme/themable';
+import { ThemeService } from '../../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-product-pill',
   templateUrl: './product-pill.component.html',
   styleUrls: ['./product-pill.component.scss']
 })
-export class ProductPillComponent {
+export class ProductPillComponent extends Themable {
 
   @Input()
   pillValue: string;
@@ -18,6 +20,12 @@ export class ProductPillComponent {
 
   @Input()
   size: number;
+
+  constructor(
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   get hasTitle(): boolean {
     return this.title ? true : false;

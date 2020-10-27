@@ -29,6 +29,8 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
 
   set value(value: T) {
     this.writeValue(value);
+    this.dirty = true;
+    this.onChange(value);
   }
 
 
@@ -46,8 +48,6 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
   writeValue(value: T) {
     if (this.innerValue != value && this.innerValue !== value) {
       this.innerValue = value;
-      this.dirty = true;
-      this.onChange(value);
     }
   }
 
