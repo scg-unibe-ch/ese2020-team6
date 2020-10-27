@@ -1,7 +1,5 @@
 
-// import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
-// import { request } from 'http';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductsAttributes } from '../models/products.model';
