@@ -1,5 +1,4 @@
-import { ProductController } from './product.controller';
-
+// import { ProductController } from './product.controller';
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { verifyToken, checkForAuth } from '../middlewares/checkAuth';

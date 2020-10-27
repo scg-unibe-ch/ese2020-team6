@@ -1,10 +1,10 @@
 
-import { RSA_NO_PADDING } from 'constants';
+// import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
+// import { request } from 'http';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
-import { Products, ProductsAttributes } from '../models/products.model';
+import { ProductsAttributes } from '../models/products.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
@@ -18,7 +18,7 @@ productController.post('/post',
     }
 );
 
-productController.get('/all', verifyToken,
+productController.get('/all', verifyToken,  // bruchts dä verfify???
     (req: Request, res: Response) => {
         productService.getAllProducts()
         .then((products: Array<ProductsAttributes>) => res.send(products))
@@ -75,7 +75,7 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
         .catch((err: any) => res.status(500).send(err));
     });
 
-productController.put('/update/:productId', verifyToken, verifyIsAdmin,
+productController.put('/update/:productId', verifyToken, // verifyIsAdmin,
     (req: Request, res: Response) => {
         const updateProduct: ProductsAttributes = req.body;
         productService.updateProduct(updateProduct)
@@ -111,7 +111,7 @@ productController.put('/update/:productId', verifyToken, verifyIsAdmin,
 
     );
 
-    productController.get('/rejected/:userId', verifyToken,
+    productController.get('/rejected/:userId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
         productService.getMyRejectedProducts(userId)
