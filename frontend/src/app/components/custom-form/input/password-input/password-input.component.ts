@@ -11,13 +11,13 @@ import { ValueAccessorValidatorBase } from '../../value-accessor-validator-base'
   ]
 })
 export class PasswordInputComponent extends ValueAccessorValidatorBase<String> {
-  type: string = "password";
+  public type: string = "password";
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
-  model: NgModel;
+  public model: NgModel;
 
   constructor(
     @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,

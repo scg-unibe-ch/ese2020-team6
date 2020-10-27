@@ -19,7 +19,7 @@ export class ProfileComponent {
 
   constructor(
     private router: Router,
-    userService: UserService
+    public userService: UserService
   ) {
 
     if (userService.isLoggedIn) {
