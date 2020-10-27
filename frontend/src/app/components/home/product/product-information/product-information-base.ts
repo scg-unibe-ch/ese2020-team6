@@ -28,7 +28,7 @@ export class ProductInformationBase {
     });
   }
 
-  private getCreator(creatorId: number) {
+  private getCreator(creatorId: number): void {
     this.userService.getUserById(creatorId).subscribe((cutUser: CutUserModel) => {
       this.creator = cutUser;
       if (this.userService.isLoggedIn) {
@@ -37,7 +37,7 @@ export class ProductInformationBase {
     });
   }
 
-  private getCurrentUser() {
+  private getCurrentUser(): void {
       this.userService.userObservable.subscribe((currentUser: UserModel) => {
         this.currentUser = currentUser;
       });

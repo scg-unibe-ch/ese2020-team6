@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+// Models
 import { ProductModel } from '../../../models/product/product.model';
 import { environment } from '../../../../environments/environment';
 
@@ -21,6 +23,10 @@ export class GetProductService {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/accepted');
   }
 
+  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
+    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/rejected/' + userId.toString());
+  }
+
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/unreviewed');
   }
@@ -31,5 +37,13 @@ export class GetProductService {
 
   public getProductById(productId: number): Observable<ProductModel> {
     return this.httpClient.get<ProductModel>(environment.endpointURL + 'product/details/' + productId.toString());
+  }
+
+  public getMyRejectedProductsCount(userId: number): Observable<number> {
+    return this.httpClient.get<{amountOfRejected: number}>(environment.endpointURL + 'product/rejected/count/' + userId.toString()).pipe(pluck('amountOfRejected'));
+  }
+
+  public getUnreviewedProductsCount(): Observable<number> {
+    return this.httpClient.get<{amountOfUnreviewd: number}>(environment.endpointURL + 'product/unreviewd/count').pipe(pluck('amountOfUnreviewd'));
   }
 }

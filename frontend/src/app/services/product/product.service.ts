@@ -37,6 +37,10 @@ export class ProductService {
     return this.getProductService.getAllAcceptedProducts();
   }
 
+  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
+    return this.getProductService.getMyRejectedProducts(userId);
+  }
+
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
     return this.getProductService.getAllUnreviewedProducts();
   }
@@ -47,6 +51,14 @@ export class ProductService {
 
   public getProductById(productId: number): Observable<ProductModel> {
     return this.getProductService.getProductById(productId);
+  }
+
+  public getMyRejectedProductsCount(userId: number): Observable<number> {
+    return this.getProductService.getMyRejectedProductsCount(userId);
+  }
+
+  public getUnreviewedProductsCount(): Observable<number> {
+    return this.getProductService.getUnreviewedProductsCount();
   }
 
   public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {

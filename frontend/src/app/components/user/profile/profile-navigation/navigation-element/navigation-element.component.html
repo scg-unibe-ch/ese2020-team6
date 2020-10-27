@@ -1,0 +1,6 @@
+<div [routerLink]="[navigationElement.path]"
+  (click)="onNavigationElementClick(navigationElement)"
+  class="navigation-element">
+  {{navigationElement.title}}
+  <ng-template popup></ng-template>
+</div>

@@ -9,7 +9,7 @@ import { CutUserModel, NullCutUser } from '../../../../models/user/cut-user.mode
   styleUrls: ['./product-information.component.scss']
 })
 export class ProductInformationComponent {
-  @Input() isPreview: boolean = false;
+  @Input() isPreview = false;
   @Input() product: ProductModel = new NullProduct();
   @Input() creator: CutUserModel = new NullCutUser();
 }

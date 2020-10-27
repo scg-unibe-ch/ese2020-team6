@@ -4,6 +4,9 @@ import { ApproveProductsComponent } from '../../../components/user/profile/appro
 import { UserDetailsComponent } from '../../../components/user/profile/user-details/user-details.component';
 import { MyProductsComponent } from '../../../components/user/profile/my-products/my-products.component';
 import { RejectedProductsComponent } from '../../../components/user/profile/rejected-products/rejected-products.component';
+import { PopupUnreviewedComponent } from '../../../components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
+import { PopupRejectedComponent } from '../../../components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
+
 
 export const defaultProfileComponent: number = 0;
 
@@ -11,22 +14,26 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
   {
     title: 'User Details',
     path: 'details',
-    component: UserDetailsComponent
+    component: UserDetailsComponent,
+    popupComponent: null
   },
   {
     title: 'My Products',
     path: 'myproducts',
-    component: MyProductsComponent
+    component: MyProductsComponent,
+    popupComponent: null
   },
   {
     title: 'Create New Product',
     path: 'createnewproduct',
-    component: PostProductComponent
+    component: PostProductComponent,
+    popupComponent: null
   },
   {
     title: 'Rejected Products',
     path: 'rejected',
-    component: RejectedProductsComponent
+    component: RejectedProductsComponent,
+    popupComponent: PopupRejectedComponent
   }
 ];
 
@@ -40,6 +47,7 @@ adminNavigationElements.push(
   {
     title: 'Review Products',
     path: 'reviewproducts',
-    component: ApproveProductsComponent
+    component: ApproveProductsComponent,
+    popupComponent: PopupUnreviewedComponent
   }
 );

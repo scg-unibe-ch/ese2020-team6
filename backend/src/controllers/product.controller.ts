@@ -68,7 +68,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
 
 productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
-        const rejectionMessage: string = req.params.rejectionMessage;
+        const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
         productService.rejectProduct(productId, rejectionMessage)
         .then((product: ProductsAttributes) => res.send(product))
@@ -92,4 +92,32 @@ productController.put('/update/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
+    productController.get('/unreviewd/count', verifyToken, verifyIsAdmin,
+    (req: Request, res: Response) => {
+        productService.getUnreviewdProductsCount()
+        .then((amountOfUnreviewd: number) => res.send({amountOfUnreviewd: amountOfUnreviewd}))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+);
+
+    productController.get('/rejected/count/:userId', verifyToken,
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10);
+        productService.getMyRejectedProductsCount(userId)
+        .then((amountOfRejected: number) => res.send({amountOfRejected: amountOfRejected}))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
+
+    productController.get('/rejected/:userId', verifyToken,
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10);
+        productService.getMyRejectedProducts(userId)
+        .then((products: Array<ProductsAttributes>) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
 export const ProductController: Router = productController;

@@ -26,7 +26,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   public product: ProductModel = new NullProduct();
   private userId: number;
   private productId: number;
-  private isUpdate: boolean = false;
+  private isUpdate = false;
+  productData: any;
 
   constructor(
     private productService: ProductService,
@@ -46,7 +47,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     }
 
     this.route.params.subscribe(parameters => {
-      this.productId = parseInt(parameters.productId,10);
+      this.productId = parseInt(parameters.productId, 10);
       if (!isNaN(this.productId)) {
         this.isUpdate = true;
         this.updateForm();
@@ -57,7 +58,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   private updateForm(): void {
     this.productService.getProductById(this.productId).subscribe((product: ProductModel) => {
       this.product = product;
-      let values: any = Object.assign({}, product);
+      const values: any = Object.assign({}, product);
       values.isDeliverable = product.isDeliverable ? 'Yes' : 'No';
       this.values = Object.assign({}, values);
     });
@@ -65,14 +66,14 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
 
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
           console.log(values);
-
-        })
+          this.openSnackBar();
+        });
       } else {
         this.productService.postProduct(this).subscribe((values) => {
           this.openSnackBar();
@@ -83,7 +84,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
   private setupProduct(): void {
-    let product: any = this.values;
+    const product: any = this.values;
     product.isDeliverable = this.values.isDeliverable === 'Yes' ? true : false;
     this.product = Object.assign({}, product);
   }
@@ -107,24 +108,15 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     return request;
   }
 
-  public getProductFromFrom(): ProductModel {
-    this.setupProduct();
-    const product: ProductModel = Object.assign(this.product, {
-        userId: this.userId
-      }
-    );
-    return product;
-  }
-
-  public openSnackBar() {
+  public openSnackBar(): void {
     this.snackBar.open('Your product is created', '', {
       duration: 2000,
       panelClass: ['snackbar']
     });
   }
 
-
-  public showPreview(form: NgForm, tpl: TemplateRef<any>) {
+  public showPreview(form: NgForm, tpl: TemplateRef<any>): void {
+    this.productData = form.value;
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });

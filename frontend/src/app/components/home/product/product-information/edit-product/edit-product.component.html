@@ -15,3 +15,11 @@
   <ng-template #tplClose>
   </ng-template>
 </app-product-details>
+<div *ngIf="product.rejectionMessage" class="rejection-message">
+  <span class="title">
+      Rejection Message:
+  </span>
+  <div class="message">
+    {{product.rejectionMessage}}
+  </div>
+</div>
