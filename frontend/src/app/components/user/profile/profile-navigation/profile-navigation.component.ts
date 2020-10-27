@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProfileNavigationElementModel } from '../../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel } from '../../../../models/user/profile/navigation-element/profile-navigation-element.model';
 
 @Component({
   selector: 'app-profile-navigation',
@@ -9,7 +9,7 @@ import { ProfileNavigationElementModel } from '../../../../models/form/profile-n
 export class ProfileNavigationComponent {
 
   @Input()
-  navigationElements: Array<ProfileNavigationElementModel>;
+  public navigationElements: Array<ProfileNavigationElementModel>;
 
   @Output()
   navigationClickEvent = new EventEmitter<ProfileNavigationElementModel>();
