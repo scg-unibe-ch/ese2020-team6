@@ -32,7 +32,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-productController.post('/post', upload.single('productImage'),
+productController.post('/post', upload.single('productImage'), verifyToken,
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
         productService.createProduct(postProduct)
@@ -89,7 +89,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
         .catch((err: any) => res.status(500).send(err));
 });
 
-productController.put('/reject/:productId', verifyToken,
+productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
