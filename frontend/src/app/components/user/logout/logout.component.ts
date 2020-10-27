@@ -21,6 +21,5 @@ export class LogoutComponent extends Themable {
 
   public onSubmit(): void {
     this.userService.logout();
-    this.router.navigate(['user/login']);
   }
 }

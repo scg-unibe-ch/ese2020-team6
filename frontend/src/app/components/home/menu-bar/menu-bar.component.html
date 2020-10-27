@@ -1,4 +1,4 @@
-<div class="menu-bar-wrapper">
+<div class="menu-bar-wrapper" [ngClass]="{'block': block}">
   <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
     <button (click)="toggleDropDown()" class="dropdown-toggle" [ngClass]="'button-' + theme">{{userName}}</button>
     <div [ngClass]="getDropdownClasses()" class="dropdown-wrapper">

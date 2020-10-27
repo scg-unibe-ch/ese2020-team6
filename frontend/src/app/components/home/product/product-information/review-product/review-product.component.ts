@@ -18,7 +18,7 @@ import { ThemeService } from '../../../../../services/theme/theme.service';
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder {
 
-  public showRejectResponseForm: boolean = true;
+  public showRejectResponseForm: boolean = false;
   public showAcceptForm: boolean = false;
 
   private values: RejectProductFormModel = new NullRejectProductForm();

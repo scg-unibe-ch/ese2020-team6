@@ -9,6 +9,11 @@
   justify-content: flex-end;
   width: 100%;
   padding: $spaceing-m;
+  z-index: 1;
+
+  &.block {
+    position: relative;
+  }
 
   .logged-in {
     position: relative;

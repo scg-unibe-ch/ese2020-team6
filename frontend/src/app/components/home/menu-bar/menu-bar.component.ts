@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
 import { Themable } from '../../../models/theme/themable';
@@ -16,6 +16,9 @@ export class MenuBarComponent extends Themable {
 
   public userName: string;
   public isLoggedIn: boolean = false;
+
+  @Input()
+  block: boolean = false;
 
   constructor(
     userService: UserService,

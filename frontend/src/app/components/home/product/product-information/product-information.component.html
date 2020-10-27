@@ -2,8 +2,6 @@
   <app-product-details [product]="product" [creator]="creator"></app-product-details>
 </ng-template>
 <ng-template #isNotPreview>
-  <app-menu-bar ></app-menu-bar>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+  <app-menu-bar [block]="true"></app-menu-bar>
+  <router-outlet></router-outlet>
 </ng-template>

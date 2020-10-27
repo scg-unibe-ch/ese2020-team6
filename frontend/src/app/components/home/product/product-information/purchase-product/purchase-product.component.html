@@ -1,5 +1,5 @@
 <app-product-details [product]="product" [creator]="creator">
-  <button (click)="redirectToLogin()" *ngIf="isForSale; else isForRent" class="button-full-po">Buy</button>
+  <button (click)="togglePurchase()" *ngIf="isForSale; else isForRent" [ngClass]="'button-' + theme" >Buy</button>
   <ng-template #isForRent>
       <button [ngClass]="'button-' + theme" (click)="togglePurchase()">Lend</button>
   </ng-template>
