@@ -2,8 +2,6 @@ import { UserAttributes, User } from '../models/user.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import { Products } from '../models/products.model';
-// import { any } from 'sequelize/types/lib/operators';
 
 export class UserService {
   datas: any;
