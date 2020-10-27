@@ -34,30 +34,30 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
   }
 
 
-  touch() {
+  public touch() {
     this.touched = true;
     this.focused = false;
     this.onTouched();
   }
 
-  focus() {
+  public focus() {
     this.focused = true;
   }
 
 
-  writeValue(value: T) {
+  public writeValue(value: T) {
     if (this.innerValue != value && this.innerValue !== value) {
       this.innerValue = value;
     }
   }
 
 
-  registerOnChange(fn: (value: T) => void): void {
+  public registerOnChange(fn: (value: T) => void): void {
     this.onChange = fn;
   }
 
 
-  registerOnTouched(fn: () => void): void {
+  public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

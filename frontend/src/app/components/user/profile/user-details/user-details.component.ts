@@ -20,7 +20,7 @@ export class UserDetailsComponent extends Themable implements OnInit {
     super(themeService);
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.userService.userObservable.subscribe((user: UserModel) => {
       this.user = user;
     })

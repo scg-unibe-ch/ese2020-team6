@@ -1,5 +1,5 @@
 import { AbstractControl, Validator, ValidationErrors } from '@angular/forms';
-import { RegexValidator } from '../../../../models/regex-validator.model';
+import { RegexValidatorModel } from '../../../../models/custom-form/regex-validator.model';
 
 export class RegexValidatorBase implements Validator {
   regExp: RegExp;
@@ -8,7 +8,7 @@ export class RegexValidatorBase implements Validator {
   private onChange: () => void = () => {};
 
   constructor(
-    regexValidator: RegexValidator
+    regexValidator: RegexValidatorModel
   ){
     this.regExp = regexValidator.regex;
     this.regExValidatorName = regexValidator.name.toString();

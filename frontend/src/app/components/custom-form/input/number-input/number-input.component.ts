@@ -12,10 +12,10 @@ import { ThemeService } from '../../../../services/theme/theme.service';
   ]
 })
 export class NumberInputComponent extends ValueAccessorValidatorBase<Number> {
-  type: string = "number";
+  public type: string = "number";
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
   model: NgModel;

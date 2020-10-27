@@ -13,13 +13,13 @@ import { ThemeService } from '../../../services/theme/theme.service';
 })
 export class TextAreaComponent  extends ValueAccessorValidatorBase<String> {
   @Input()
-  rows: number;
+  public rows: number;
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
-  model: NgModel;
+  public model: NgModel;
 
   constructor(
     themeService: ThemeService,

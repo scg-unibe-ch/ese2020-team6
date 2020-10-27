@@ -14,13 +14,13 @@ import { ThemeService } from '../../../services/theme/theme.service';
 export class SelectComponent extends ValueAccessorBase<String> {
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @Input()
-  selectName: String;
+  public selectName: String;
 
   @Input()
-  options: Array<String> = new Array<String>();
+  public options: Array<String> = new Array<String>();
 
   public optionsHidden: Boolean = true;
 
@@ -30,16 +30,16 @@ export class SelectComponent extends ValueAccessorBase<String> {
     super(themeService);
   }
 
-  onToggleDropdown() {
+  public onToggleDropdown() {
     this.optionsHidden = !this.optionsHidden;
   }
 
-  onSelect(option: string) {
+  public onSelect(option: string) {
     this.value = option;
     this.onToggleDropdown();
   }
 
-  writeValue(value: string) {
+  public writeValue(value: string) {
     super.writeValue(value);
     if (value) {
       this.dirty = true;

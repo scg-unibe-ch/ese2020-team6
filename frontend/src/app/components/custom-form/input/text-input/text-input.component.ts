@@ -12,13 +12,13 @@ import { ThemeService } from '../../../../services/theme/theme.service';
   ]
 })
 export class TextInputComponent  extends ValueAccessorValidatorBase<String> {
-  type: string = "text";
+  public type: string = "text";
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
-  model: NgModel;
+  public model: NgModel;
 
   constructor(
     themeService: ThemeService,

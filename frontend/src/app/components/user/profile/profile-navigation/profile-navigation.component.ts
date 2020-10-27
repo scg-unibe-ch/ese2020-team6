@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProfileNavigationElementModel } from '../../../../models/form/profile-navigation-element.model';
+import { ProfileNavigationElementModel } from '../../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { ThemeService } from '../../../../services/theme/theme.service';
 import { Themable } from '../../../../models/theme/themable';
 
@@ -11,7 +11,7 @@ import { Themable } from '../../../../models/theme/themable';
 export class ProfileNavigationComponent extends Themable{
 
   @Input()
-  navigationElements: Array<ProfileNavigationElementModel>;
+  public navigationElements: Array<ProfileNavigationElementModel>;
 
   @Output()
   navigationClickEvent = new EventEmitter<ProfileNavigationElementModel>();

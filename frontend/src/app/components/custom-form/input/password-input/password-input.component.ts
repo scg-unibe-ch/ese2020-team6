@@ -12,13 +12,13 @@ import { ThemeService } from '../../../../services/theme/theme.service';
   ]
 })
 export class PasswordInputComponent extends ValueAccessorValidatorBase<String> {
-  type: string = "password";
+  public type: string = "password";
 
   @Input()
-  placeholder: String;
+  public placeholder: String;
 
   @ViewChild(NgModel)
-  model: NgModel;
+  public model: NgModel;
 
   constructor(
     themeService: ThemeService,
