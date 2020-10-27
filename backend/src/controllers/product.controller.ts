@@ -1,15 +1,39 @@
 
 import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
+import { IncomingMessage, request } from 'http';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { Products, ProductsAttributes } from '../models/products.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req: Request, file: any, cd: any) {
+        cd(null, '../../../frontend/src');
+    },
+    filename: function(req: Request, file: any, cd: any) {
+        cd(null, new Date().toISOString() + file.filename);
+    }
+});
 
-productController.post('/post',
+const fileFilter = (req: Request, file: any, cd: any) => {
+    if (file.mimetype === 'image/jpg' ||
+         file.mimetype === 'image/png' ||
+         file.mimetype === 'image/pdf') {
+            cd(null, true);
+    } else {
+        cd(new Error('wrong format for Picture'), false);
+    }
+};
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
+
+productController.post('/post', upload.single('productImage'),
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
         productService.createProduct(postProduct)
@@ -59,14 +83,14 @@ productController.get('/accepted', verifyToken, verifyIsAdmin,
     });
 
 productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
-(req: Request, res: Response) => {
-    const productId: number = parseInt(req.params.productId, 10);
-    productService.acceptProduct(productId)
-    .then((product: ProductsAttributes) => res.send(product))
-    .catch((err: any) => res.status(500).send(err));
+    (req: Request, res: Response) => {
+        const productId: number = parseInt(req.params.productId, 10);
+        productService.acceptProduct(productId)
+        .then((product: ProductsAttributes) => res.send(product))
+        .catch((err: any) => res.status(500).send(err));
 });
 
-productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
+productController.put('/reject/:productId', verifyToken,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
@@ -75,7 +99,7 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
         .catch((err: any) => res.status(500).send(err));
     });
 
-productController.put('/update/:productId', verifyToken, verifyIsAdmin,
+productController.put('/update/:productId', verifyToken,
     (req: Request, res: Response) => {
         const updateProduct: ProductsAttributes = req.body;
         productService.updateProduct(updateProduct)
