@@ -70,13 +70,21 @@ export class PostProductComponent extends Themable implements PostProductRequest
   }
 
 
+  selectFile(event): void {
+    let reader = new FileReader();
+    reader.onload = (event: any) =>{
+      let result: string = event.target.result;
+      this.product.picture = result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
-          console.log(values);
           this.openSnackBar();
         });
       } else {
@@ -90,8 +98,10 @@ export class PostProductComponent extends Themable implements PostProductRequest
 
   private setupProduct(): void {
     const product: any = this.values;
+    const picture: string = this.product.picture;
     product.isDeliverable = this.values.isDeliverable === 'Yes' ? true : false;
     this.product = Object.assign({}, product);
+    this.product.picture = picture;
   }
 
   public buildUpdateProductRequest(): UpdateProductRequestModel {

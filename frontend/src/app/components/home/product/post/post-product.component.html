@@ -25,7 +25,7 @@
       <div class="input-grid temp-spaceing">
         <label class="picture">
           Picture
-          <input name="picture" ngModel type="file" size="50" accept="png, jpg">
+          <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
         </label>
         <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
       </div>

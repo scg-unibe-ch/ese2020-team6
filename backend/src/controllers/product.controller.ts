@@ -11,7 +11,7 @@ const productService = new ProductService();
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req: Request, file: any, cd: any) {
-        cd(null, '../../../frontend/src');
+        cd(null, '../public/images');
     },
     filename: function(req: Request, file: any, cd: any) {
         cd(null, new Date().toISOString() + file.filename);
@@ -26,6 +26,8 @@ const fileFilter = (req: Request, file: any, cd: any) => {
     } else {
         cd(new Error('wrong format for Picture'), false);
     }
+    console.log(req);
+
 };
 
 const upload = multer({
@@ -33,7 +35,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-productController.post('/post', upload.single('productImage'),
+productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
         productService.createProduct(postProduct)
@@ -42,7 +44,7 @@ productController.post('/post', upload.single('productImage'),
     }
 );
 
-productController.get('/all', verifyToken,  // bruchts dä verfify???
+productController.get('/all', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         productService.getAllProducts()
         .then((products: Array<ProductsAttributes>) => res.send(products))
@@ -90,7 +92,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
         .catch((err: any) => res.status(500).send(err));
 });
 
-productController.put('/reject/:productId', verifyToken,
+productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
@@ -99,8 +101,12 @@ productController.put('/reject/:productId', verifyToken,
         .catch((err: any) => res.status(500).send(err));
     });
 
+interface MulterRequest extends Request {
+  file: any;
+}
+
 productController.put('/update/:productId', verifyToken,
-    (req: Request, res: Response) => {
+    (req: MulterRequest, res: Response) => {
         const updateProduct: ProductsAttributes = req.body;
         productService.updateProduct(updateProduct)
         .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))
@@ -135,7 +141,7 @@ productController.put('/update/:productId', verifyToken,
 
     );
 
-    productController.get('/rejected/:userId', verifyToken, verifyIsAdmin,
+    productController.get('/rejected/:userId', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
         productService.getMyRejectedProducts(userId)

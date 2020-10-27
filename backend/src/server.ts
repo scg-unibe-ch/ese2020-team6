@@ -54,7 +54,7 @@ export class Server {
 
         return express()
             .use(cors())
-            .use(express.json())                    // parses an incoming json to an object
+            .use(express.json({ limit: '10mb' }))                    // parses an incoming json to an object
             .use(morgan('tiny'))                    // logs incoming requests
      //       .use('/todoitem', TodoItemController)   // any request on this path is forwarded to the TodoItemController
      //       .use('/todolist', TodoListController)
