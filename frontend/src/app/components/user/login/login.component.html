@@ -1,14 +1,16 @@
-<div class="login-wrapper-wrapper">
-  <div class="login-wrapper">
-    <h3>Sign In</h3>
+<div class="login-wrapper" [ngClass]="theme">
+  <div class="login">
+    <div class="header">
+      <h3 class="title">Sign In</h3>
+      <div class="warning">{{loginErrorMessage}}</div>
+    </div>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
       <div class="action-wrapper">
-        <button type="button" class="button-empty" [routerLink]="['/user/register']">Create Account</button>
-        <button class="button-full-po" [disabled]="!loginForm.valid">Next</button>
+        <button type="button" [ngClass]="'button-empty-' + theme" [routerLink]="['/user/register']">Create Account</button>
+        <button [ngClass]="'button-' + theme" [disabled]="!loginForm.valid">Sign In</button>
       </div>
     </form>
-    <h4> {{loginErrorMessage}}</h4>
   </div>
 </div>

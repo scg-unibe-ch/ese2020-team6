@@ -1,12 +1,28 @@
+@import '../../../../../../variables.scss';
+@import './product-view.component.theme.scss';
+
 .product-view {
   width: 100%;
+
+  .control {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .view {
+    width: 100%;
+  }
 }
 
-.control {
+.no-products {
   width: 100%;
-  margin-bottom: 20px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.view {
-  width: 100%;
+
+@each $theme-name in $theme-names {
+  @include no-products-theme($theme-name);
 }

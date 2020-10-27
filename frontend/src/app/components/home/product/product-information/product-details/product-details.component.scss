@@ -1,25 +1,24 @@
 @import '../../../../../../variables.scss';
-
-
-$margin: 50px;
+@import './product-details.component.theme.scss';
 
 .content-wrapper {
-  padding: $margin;
+  padding: $spaceing-xl;
   width: 100%;
 }
 
 .section-margin {
   width: 100%;
   margin: 0;
-  margin-bottom: $margin;
+  margin-bottom: $spaceing-xl;
 }
 
 .upper-section {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-column-gap: $margin;
+  grid-column-gap: $spaceing-xl;
   grid-row-gap: 20px;
+  border-radius: $border-radius;
 }
 
 .picture {
@@ -29,7 +28,7 @@ $margin: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  padding: $spaceing-s;
 }
 
 img {
@@ -66,7 +65,7 @@ img {
   height: 100%;
   left: -10px;
   position: absolute;
-  border-left: 2px solid black;
+  border-left: 2px solid;
 }
 
 .category {
@@ -75,7 +74,7 @@ img {
 
 .subcategory {
   position: absolute;
-  left: $margin;
+  left: $spaceing-xl;
 }
 
 .details {
@@ -88,18 +87,15 @@ img {
   width: 100%;
   display: grid;
   grid-template-columns: 8fr 1fr;
-  grid-column-gap: $margin;
+  grid-column-gap: $spaceing-xl;
+  padding: $spaceing-s;
+  border-radius: $border-radius;
 }
 
 .options {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  display: grid;
+  grid-gap: $spaceing-s;
 }
-
-.options > button {
-  width:  100%;
-  margin-top: 5px;
-  margin-bottom: 5px;
+@each $theme-name in $theme-names {
+  @include product-details-theme($theme-name);
 }
-

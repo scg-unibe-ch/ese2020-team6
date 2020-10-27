@@ -7,6 +7,8 @@ import { LoginUserResponseModel } from '../../../models/response/user/login/logi
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { UserService } from '../../../services/user/user.service';
 import { validatorRegex } from '../../custom-form/validators/regex/regex-validator-base';
+import { Themable } from '../../../models/theme/themable';
+import { ThemeService } from '../../../services/theme/theme.service';
 
 
 
@@ -15,7 +17,7 @@ import { validatorRegex } from '../../custom-form/validators/regex/regex-validat
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements LoginUserRequestBuilder {
+export class LoginComponent extends Themable implements LoginUserRequestBuilder{
 
   private form: NgForm;
   private values: LoginUserFormModel;
@@ -24,8 +26,11 @@ export class LoginComponent implements LoginUserRequestBuilder {
 
   constructor(
     private router: Router,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {

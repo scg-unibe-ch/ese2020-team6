@@ -1,0 +1,48 @@
+@mixin preferences-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $preferences-bg: map-get($theme, shady);
+  $text-color: map-get($theme, bright);
+  $checkmark-unchecked: map-get($theme, accent);
+  $checkmark-checked: map-get($theme, highlight);
+  $checkmark-color: map-get($theme, bright);
+  $checkmark-hover: map-get($theme, light);
+
+  .#{$theme-name} {
+
+    .checkbox {
+      color: $text-color;
+      background: $preferences-bg;
+
+
+      .checkmark-wrapper {
+        input {
+          &:checked {
+            ~ {
+              .checkmark {
+                background-color: $checkmark-checked;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          > {
+            .checkmark {
+              background-color: $checkmark-hover;
+            }
+          }
+        }
+
+        .checkmark {
+          background-color: $checkmark-unchecked;
+
+          &::after {
+            border-color: $checkmark-color;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,9 @@
 @import '../../../../variables.scss';
+@import './profile.component.theme.scss';
 
 $navigation-width: 250px;
 $title-height: 80px;
 $header-height: 112px;
-
-$border-width: 2px;
-$header-default-color: black;
-
 
 .profile-wrapper {
   min-height: 100%;
@@ -14,42 +11,41 @@ $header-default-color: black;
   display: grid;
   grid-template-columns: $navigation-width auto;
   grid-template-rows: $header-height $title-height auto;
+  transition: background .1s ease-in-out;
 }
+
 
 .header-wrapper-wrapper {
   grid-column: 1 / 3;
   grid-row: 1 / 2;
-  padding: 30px;
-  border-bottom: $border-width solid black;
+  padding: $spaceing-s;
   display: flex;
+}
+
+.header-wrapper {
+  padding: 15px;
+  border-radius: $border-radius;
 }
 
 .header {
   width: inherit;
-  border-bottom: $border-width dashed $header-default-color;
+  border-bottom: 2px dashed;
 }
 
 .username {
   font-size: 2rem;
   font-weight: 100;
-  color: $header-default-color;
 }
 
 .id {
   font-size: .8rem;
   margin-left: 20px;
-  color: #bfa39d;
-}
-
-.id > span {
-  color: $header-default-color;
 }
 
 .navigation-wrapper {
   grid-column: 1 / 2;
   grid-row: 2 / 4;
-  padding: 20px;
-  border-right: $border-width solid black;
+  padding: $spaceing-s;
 }
 
 .title {
@@ -60,87 +56,16 @@ $header-default-color: black;
   align-items: center;
   font-size: 1.5rem;
   font-weight: bold;
-  background: rgba(197, 80, 81, 1);
-  color: white;
-  border-bottom: $border-width solid black;
+  border-radius: $border-radius;
+  margin: $spaceing-s;
 }
 
 .content-wrapper {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
-  padding: 20px;
+  padding: $spaceing-s;
 }
 
-// new theme ----------------------------------------------------------------
-
-// Please leave this part in
-
-// .profile-wrapper {
-//   min-height: 100%;
-//   width: 100%;
-//   display: grid;
-//   grid-template-columns: $navigation-width auto;
-//   grid-template-rows: $header-height $title-height auto;
-//   background: $dark-bg;
-// }
-//
-//
-// .header-wrapper-wrapper {
-//   grid-column: 1 / 3;
-//   grid-row: 1 / 2;
-//   padding: $spaceing;
-//   display: flex;
-// }
-//
-// .header-wrapper {
-//   padding: 15px;
-//   background: $light-bg;
-//   border-radius: $border-radius;
-// }
-//
-// .header {
-//   width: inherit;
-//   border-bottom: $border-width dashed $accent;
-// }
-//
-// .username {
-//   font-size: 2rem;
-//   font-weight: 100;
-//   color: $bright;
-// }
-//
-// .id {
-//   font-size: .8rem;
-//   margin-left: 20px;
-//   color: $accent;
-// }
-//
-// .id > span {
-//   color: $bright;
-// }
-//
-// .navigation-wrapper {
-//   grid-column: 1 / 2;
-//   grid-row: 2 / 4;
-//   padding: $spaceing;
-// }
-//
-// .title {
-//   grid-column: 2 / 3;
-//   grid-row: 2 / 3;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   background: $warn;
-//   color: $bright;
-//   border-radius: $border-radius;
-//   margin: $spaceing;
-// }
-//
-// .content-wrapper {
-//   grid-column: 2 / 3;
-//   grid-row: 3 / 4;
-//   padding: $spaceing;
-// }
+@each $theme-name in $theme-names {
+  @include profile-theme($theme-name);
+}

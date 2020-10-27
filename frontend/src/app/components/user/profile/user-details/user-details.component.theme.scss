@@ -1,0 +1,40 @@
+@mixin user-detail-theme($theme-name) {
+  .#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $color: map-get($theme, bright);
+    $name-bg: map-get($theme, shady);
+    $wallet-bg: map-get($theme, highlight);
+    $accent-color: map-get($theme, accent);
+    $detail-bg: map-get($theme, shady);
+
+    color: $color;
+
+    .header-wrapper {
+      .name {
+        background: $name-bg;
+      }
+
+      .separator{
+        &::before {
+          border-color: $accent-color;
+        }
+      }
+    }
+
+    .wallet-wrapper-wrapper {
+      .wallet-wrapper {
+        .wallet {
+          background: $wallet-bg;
+        }
+      }
+    }
+
+    .details {
+      .detail {
+        background: $detail-bg;
+      }
+    }
+  }
+}

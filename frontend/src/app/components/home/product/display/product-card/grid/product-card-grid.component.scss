@@ -1,86 +1,26 @@
 @import '../../../../../../../variables.scss';
+@import '../product-card.component.scss';
 
 $picture-dim: 300px;
-$price-width: 200px;
 $svg-width: 100px;
 
-.product-card {
-  border: 2px solid black;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: auto $svg-width;
-  grid-template-rows: $picture-dim auto auto auto;
-  grid-gap: 20px;
-  cursor: pointer;
-  font-size: 20px;
-}
+@include product-card(
+  auto $svg-width,
+  auto auto auto auto,
 
-.product-card:hover > .go-to-product > svg {
-  transform: translate(10px);
-}
+  1, 3,
+  1, 2,
 
-.picture {
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  1, 3,
+  2, 3,
 
-.picture > img {
-  max-height: $picture-dim;
-  max-width: $picture-dim;
-}
+  1, 2,
+  3, 4,
 
-.title {
-  grid-column: 1 / 3;
-  grid-row: 2 / 3;
-  display: flex;
-  align-items: center;
-}
+  2, 3,
+  3, 4,
 
-.title > div {
-  font-size: 1em;
-}
-
-.price {
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-  display: flex;
-  align-items: center;
-}
-
-.price > div {
-  font-size: 0.6em;
-}
-
-.go-to-product {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-svg {
-  width: 50%;
-  transition: all .3s ease-in-out;
-}
-
-svg > path {
-  stroke: $primary;
-  stroke-width: 4%;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: $primary;
-  transform: rotate(-90deg);
-}
-
-.details {
-  grid-column: 1 / 3;
-  grid-row: 4 / 5;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  align-items: center;
-}
+  1, 3,
+  4, 5,
+  row
+);

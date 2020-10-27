@@ -1,6 +1,5 @@
 
 import { Products, ProductsAttributes } from '../models/products.model';
-import { User } from '../models/user.model';
 
 const { Op } = require('sequelize');
 
@@ -66,7 +65,7 @@ export class ProductService {
         where: {
           userId: userId,
           isAccepted: false,
-          rejectionMessage: {[Op.ne]: null}  // check if correct
+          rejectionMessage: {[Op.ne]: null}
         }
       });
     }
@@ -76,7 +75,7 @@ export class ProductService {
         where: {
           userId: userId,
           isAccepted: false,
-          rejectionMessage: {[Op.ne]: null}   // check if correct
+          rejectionMessage: {[Op.ne]: null}
         }
       });
     }

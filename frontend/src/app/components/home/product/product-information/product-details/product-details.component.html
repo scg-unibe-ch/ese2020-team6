@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" [ngClass]="theme">
   <div class="upper-section section-margin">
     <div class="picture">
       <img src={{product.picture}} alt="">
@@ -10,7 +10,7 @@
       <div>
         Created By {{creator.userName}}
         <br/>
-        Contact Creator at {{creator.email}}
+        Contact Seller at {{creator.email}}
       </div>
     </div>
     <div class="price">

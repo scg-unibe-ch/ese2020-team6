@@ -21,6 +21,14 @@ export const routes = [
     component: HomeComponent
   },
   {
+    path: 'login',
+    redirectTo: 'user/login'
+  },
+  {
+    path: 'register',
+    redirectTo: 'user/register'
+  },
+  {
     path: 'user',
     redirectTo: 'user/profile'
   },

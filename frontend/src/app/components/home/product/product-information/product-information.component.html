@@ -2,5 +2,6 @@
   <app-product-details [product]="product" [creator]="creator"></app-product-details>
 </ng-template>
 <ng-template #isNotPreview>
+  <app-menu-bar [block]="true"></app-menu-bar>
   <router-outlet></router-outlet>
 </ng-template>

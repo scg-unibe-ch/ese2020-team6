@@ -31,6 +31,9 @@ export class UserService {
     let userId = localStorage.getItem('userId');
     if (userId) {
       this.userObservable = this.getUserService.getUserByIdSecured(parseInt(userId));
+      this.userObservable.subscribe(()=>{}, (err: any) => {
+        this.logout();
+      })
     }
   }
 

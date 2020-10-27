@@ -1,10 +1,11 @@
-import { AbstractControl, Validator } from '@angular/forms';
+import { AbstractControl, Validator, ValidationErrors } from '@angular/forms';
 import { RegexValidatorModel } from '../../../../models/custom-form/regex-validator.model';
 
 export class RegexValidatorBase implements Validator {
   regExp: RegExp;
   regExValidatorName: string;
   errorMessage: string;
+  private onChange: () => void = () => {};
 
   constructor(
     regexValidator: RegexValidatorModel
@@ -14,7 +15,7 @@ export class RegexValidatorBase implements Validator {
     this.errorMessage = regexValidator.errorMessage;
   }
 
-  validate(control: AbstractControl): {[key: string]: any} | null {
+  validate(control: AbstractControl): ValidationErrors | null {
     if (control.value != null) {
       if (this.regExp.test(control.value))
       {
@@ -22,6 +23,10 @@ export class RegexValidatorBase implements Validator {
       }
     }
     return {errorMessage: {name: this.regExValidatorName, message: this.errorMessage}};
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onChange = fn;
   }
 }
 

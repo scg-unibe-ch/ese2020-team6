@@ -1,0 +1,38 @@
+@mixin product-pill-theme($theme-name) {
+
+  $success-bg: get-theme($theme-name, highlight);
+  $warn-bg: get-theme($theme-name, warn);
+  $faded-bg: get-theme($theme-name, shady);
+  $fainted-bg: get-theme($theme-name, shady);
+  $fainted-text-color: get-theme($theme-name, shady);
+
+  .pill-wrapper.#{$theme-name} {
+    .title {
+      &.fainted {
+        color: $fainted-text-color;
+      }
+    }
+
+    .pill {
+      &.fainted {
+        background: darken($faded-bg, 2.5%);
+      }
+
+      &.faded {
+        background: darken($faded-bg, 2.5%);
+      }
+
+      &.fainted {
+
+      }
+
+      &.success {
+        background: $success-bg;
+      }
+
+      &.warn {
+        background: $warn-bg;
+      }
+    }
+  }
+}

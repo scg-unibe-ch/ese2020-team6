@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR} from '@angular/forms';
 import { ValueAccessorBase } from '../value-accessor-base';
+import { ThemeService } from '../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-select',
@@ -10,7 +11,7 @@ import { ValueAccessorBase } from '../value-accessor-base';
     {provide: NG_VALUE_ACCESSOR, useExisting: SelectComponent, multi: true}
   ]
 })
-export class SelectComponent extends ValueAccessorBase<String> implements OnInit {
+export class SelectComponent extends ValueAccessorBase<String> {
 
   @Input()
   public placeholder: String;
@@ -22,39 +23,31 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   public options: Array<String> = new Array<String>();
 
   public optionsHidden: Boolean = true;
-  public current: String;
 
-  constructor() {
-    super();
+  constructor(
+    themeService: ThemeService
+  ) {
+    super(themeService);
   }
 
-  public ngOnInit(): void {
-    this.current = this.selectName;
-  }
-
-  public onShowOptions() {
+  public onToggleDropdown() {
     this.optionsHidden = !this.optionsHidden;
   }
 
   public onSelect(option: string) {
     this.value = option;
-    this.current = option;
-
-    this.onShowOptions();
+    this.onToggleDropdown();
   }
 
   public writeValue(value: string) {
+    super.writeValue(value);
     if (value) {
-      this.value = value;
-      this.current = value;
+      this.dirty = true;
+      this.onChange(value);
     }
   }
 
-  public getPlaceholderClass() {
-    return this.value === this.selectName ? 'placeholder-notSelected' : '';
-  }
-
-  public getSVGClass() {
+  get SVGClass(): string {
     return this.optionsHidden ? 'down' : 'up';
   }
 

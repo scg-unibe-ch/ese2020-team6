@@ -1,16 +1,61 @@
+@import './functions.theme.scss';
+
 $primary: #4F8AC9;
 $faded: #EBD4C5;
 $fainted: #FBF1EA;
-$warn: #c55051;
 $success: #73BC58;
+$warn: #c55051;
 
-// new theme
-$bright: #c4fff1;
-$light: #89ffe3;
-$highlight: #0eba91;
-$accent: #0a8265;
-$light-bg: #2f3b52;
-$dark-bg: #242e42;
+// theme dark
+$dark-bright: #E0FFF7;
+$dark-light: #89ffe3;
+$dark-highlight: #0eba91;
+$dark-accent: #0a8265;
+$dark-shady: #2f3b52;
+$dark-dark: #242e42;
+$dark-warn: #c55051;
 
 $border-radius: 10px;
-$spaceing: 15px;
+$spaceing-xs: 10px;
+$spaceing-s: 15px;
+$spaceing-m: 20px;
+$spaceing-l: 30px;
+$spaceing-xl: 50px;
+
+
+// theme bright
+$bright-bright: #1D3557;
+$bright-light: #30566E;
+$bright-highlight: #97B9D3;
+$bright-shady: #C8E8E9;
+$bright-dark: #FFFFFF;
+
+
+$bright-accent: #A284C2;
+$bright-warn: #FF3859;
+
+// 7243FF sick
+// 7F98F5 sick
+
+$themes: (
+  "dark" : (
+    "bright": $dark-bright,
+    "light": $dark-light,
+    "highlight": $dark-highlight,
+    "accent": $dark-accent,
+    "shady": $dark-shady,
+    "dark": $dark-dark,
+    "warn": $dark-warn,
+  ),
+  "bright" : (
+    "bright": $bright-bright,
+    "light": $bright-light,
+    "highlight": $bright-highlight,
+    "accent": $bright-accent,
+    "shady": $bright-shady,
+    "dark": $bright-dark,
+    "warn": $bright-warn
+  )
+);
+
+$theme-names: map-keys($themes);

@@ -3,26 +3,34 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { ProductInformationBase } from '../product-information-base';
+import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-purchase-product',
-  templateUrl: './purchase-product.component.html'
+  templateUrl: './purchase-product.component.html',
+  styleUrls: ['../product-information.component.scss']
 })
 export class PurchaseProductComponent extends ProductInformationBase {
+
+  public showPurchaseForm: boolean = false;
 
   constructor(
     route: ActivatedRoute,
     productService: ProductService,
     private router: Router,
     userService: UserService,
+    themeService: ThemeService
   ) {
-    super(route, productService, userService);
+    super(route, productService, userService, themeService);
   }
 
-  public redirectToLogin(): void {
-    if(this.userService.isLoggedIn==false){
-      this.router.navigate(['/user/login']);
-    }
+  public togglePurchase(): void {
+    this.showPurchaseForm = !this.showPurchaseForm;
+  }
+
+  public purchase(): void {
+    if(!this.userService.isLoggedIn) this.router.navigate(['/user/login']);
+    else alert('You Purchased the Product!');
   }
 
   get isForSale(): boolean {

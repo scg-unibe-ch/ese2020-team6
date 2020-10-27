@@ -1,27 +1,31 @@
 <app-product-details [product]="product" [creator]="creator">
-  <button class="button-full-po" type="button" (click)="toggleAccept()">Accept</button>
-  <button class="button-full-po" type="button" (click)="toggleReject()">Reject</button>
+  <button [ngClass]="'button-' + theme" type="button" (click)="toggleAccept()">Accept</button>
+  <button [ngClass]="'button-warn-' + theme" type="button" (click)="toggleReject()">Reject</button>
 </app-product-details>
 
-<div *ngIf="showRejectResponseForm" class="overlay-form-wrapper">
-  <form class="overlay-form" #rejectResponseForm="ngForm" (ngSubmit)="reject(rejectResponseForm)">
-    <app-text-area rows="3"
-      placeholder="Reason of Rejection"
-      name="reason"
-      appRejectionMessageValidator
-      ngModel></app-text-area>
-    <div>
-      <button class="button-full-po" [disabled]="!rejectResponseForm.valid">Send Rejection</button>
-      <button type="button" (click)="toggleReject()" class="button-full-po">Cancel</button>
-    </div>
-  </form>
-</div>
-<div *ngIf="showAcceptForm" class="overlay-form-wrapper">
-    <form class="overlay-form" #acceptForm="ngForm" (ngSubmit)="accept(acceptForm)">
-      <p>Are you sure you want to accept this product?</p>
+<div *ngIf="showRejectResponseForm" class="overlay-wrapper" [ngClass]="theme">
+  <div class="overlay-content">
+    <form class="overlay-form" #rejectResponseForm="ngForm" (ngSubmit)="reject(rejectResponseForm)">
+      <app-text-area rows="3"
+        placeholder="Reason of Rejection"
+        name="reason"
+        appRejectionMessageValidator
+        ngModel></app-text-area>
       <div>
-        <button class="button-full-po">Accept</button>
-        <button type="button" (click)="toggleAccept()" class="button-full-po">Cancel</button>
+        <button [ngClass]="'button-warn-' + theme" [disabled]="!rejectResponseForm.valid">Send Rejection</button>
+        <button [ngClass]="'button-empty-' + theme" type="button" (click)="toggleReject()">Cancel</button>
       </div>
     </form>
+  </div>
+</div>
+<div *ngIf="showAcceptForm" class="overlay-wrapper" [ngClass]="theme">
+    <div class="overlay-content">
+      <form class="overlay-form" #acceptForm="ngForm" (ngSubmit)="accept()">
+        <p>Are you sure you want to accept this product?</p>
+        <div>
+          <button [ngClass]="'button-' + theme">Accept</button>
+          <button type="button" (click)="toggleAccept()" [ngClass]="'button-empty-' + theme">Cancel</button>
+        </div>
+      </form>
+    </div>
 </div>

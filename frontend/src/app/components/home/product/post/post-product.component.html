@@ -1,6 +1,8 @@
-<div class="post-wrapper-wrapper">
-  <div class="post-wrapper">
-    <h3>Create</h3>
+<div class="post-wrapper" [ngClass]="theme">
+  <div class="post">
+    <div class="header">
+      <h3 class="title">Create</h3>
+    </div>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
         <app-select name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
@@ -20,22 +22,16 @@
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
       </div>
-      <div class="input-grid">
-        <label>Picture
-          <input class="picture" name="picture" ngModel
-          type="file" size="50" accept="png, jpg">
+      <div class="input-grid temp-spaceing">
+        <label class="picture">
+          Picture
+          <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
         </label>
         <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
       </div>
-      <div class="input-grid">
-        <div class="action-wrapper">
-          <button (click)="showPreview(postProductForm, preview)" type="button">
-            Preview
-          </button>
-        </div>
-        <div class="action-wrapper">
-            <button type="submit" name="button">Create</button>
-        </div>
+      <div class="action-wrapper">
+        <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
+        <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
       </div>
     </form>
 

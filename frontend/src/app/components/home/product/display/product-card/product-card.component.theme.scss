@@ -1,0 +1,23 @@
+@mixin product-card-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $card-bg: map-get($theme, shady);
+  $card-text-color: map-get($theme, bright);
+  $svg-color: map-get($theme, highlight);
+
+  .#{$theme-name} {
+
+    background: $card-bg;
+    color: $card-text-color;
+
+    .go-to-product {
+      svg {
+        path {
+          stroke: $svg-color;
+          fill: $svg-color;
+        }
+      }
+    }
+  }
+}

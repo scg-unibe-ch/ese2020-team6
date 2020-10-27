@@ -133,6 +133,8 @@ import { PopupRejectedComponent } from './components/user/profile/profile-naviga
 import { PopupUnreviewedComponent } from './components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
 import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
+import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
+import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 
 @NgModule({
   declarations: [
@@ -204,6 +206,8 @@ import { NavigationElementComponent } from './components/user/profile/profile-na
     PopupRejectedComponent,
     PopupDirective,
     NavigationElementComponent,
+    PreferencesComponent,
+    ValidationComponent,
   ],
   imports: [
     BrowserModule,

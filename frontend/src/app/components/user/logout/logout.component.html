@@ -1,3 +1,3 @@
 <div class="logout">
-  <button class="button-full-po" (click)="onSubmit()">Logout</button>
+  <button [ngClass]="'button-' + theme" (click)="onSubmit()">Logout</button>
 </div>

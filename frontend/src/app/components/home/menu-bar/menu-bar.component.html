@@ -1,15 +1,14 @@
-<div class="login-bar-wrapper">
+<div class="menu-bar-wrapper" [ngClass]="{'block': block}">
   <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
-    <button (click)="toggleDropDown()" class="dropdown-toggle button-full-po">{{userName}}</button>
-    <div [ngClass]="{'collapse': !showDropdown, 'expand': showDropdown, 'land': newReload}" class="dropdown">
-      <div class="dropdown-wrapper">
-        <button class="button-empty" [routerLink]="['/user/profile']">Profile</button>
-        <hr>
+    <button (click)="toggleDropDown()" class="dropdown-toggle" [ngClass]="'button-' + theme">{{userName}}</button>
+    <div [ngClass]="getDropdownClasses()" class="dropdown-wrapper">
+      <div class="dropdown">
+        <button [ngClass]="'button-' + theme" [routerLink]="['/user/profile']">My Profile</button>
         <app-logout></app-logout>
       </div>
     </div>
   </div>
   <ng-template #notLoggedIn>
-      <app-user-icon class="not-logged-in" [routerLink]="['/user/login']" height="60%" width="60%"></app-user-icon>
+      <app-user-icon class="not-logged-in" [ngClass]="theme" [routerLink]="['/user/login']" height="60%" width="60%"></app-user-icon>
   </ng-template>
 </div>

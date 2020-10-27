@@ -1,19 +1,15 @@
 @import '../../../../../variables.scss';
+@import './profile-navigation.component.theme.scss';
 
 .navigation {
   display: grid;
-  grid-template-rows: auto;
-  grid-row-gap: 10px;
+  grid-template-rows: repeat(auto-fit, 50px);
+  grid-row-gap: $spaceing-xs;
+  padding: $spaceing-s;
+  border-radius: $border-radius;
+  height: 100%;
 }
 
-// new theme ----------------------------------------------------------------
-
-// .navigation {
-//   display: grid;
-//   grid-template-rows: repeat(auto-fit, 50px);
-//   grid-row-gap: 10px;
-//   background: $light-bg;
-//   padding: $spaceing;
-//   border-radius: $border-radius;
-//   height: 100%;
-// }
+@each $theme-name in $theme-names {
+  @include profile-navigation-theme($theme-name);
+}

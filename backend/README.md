@@ -51,10 +51,11 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 ### `/todoitem`
 - POST
-
 	<details>
 		<summary>Request</summary>
-
+		
+		Code: 200
+		Body:
 	```json
 		{
 			"name": "string",
@@ -64,14 +65,11 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 	```
 
 	</details>
-
-
 	<details>
 		<summary>Response</summary>
 
 		Code: 200
 		Body:
-
 	```json
 	{
 		"todoItemId": "number",
@@ -79,6 +77,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		"done": "boolean",
 		"todoListId":"number"
 	}
+
 	```
 </details>
 
@@ -86,24 +85,22 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 	<details>
 		<summary>Request</summary>
-
+		Code: 200
+		Body:
 	```json
 		{
 			"name": "string",
 			"done": "boolean",
 			"todoListId":"number"
 		}
+
 	```
-
 	</details>
-
-
 	<details>
 		<summary>Response</summary>
 
 		Code: 200
 		Body:
-
 	```json
 	{
 		"todoItemId": "number",
@@ -111,6 +108,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		"done": "boolean",
 		"todoListId":"number"
 	}
+
 	```
 </details>
 
@@ -259,19 +257,24 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-	[
 		{
 			"userId":"string",
 			"userName":"string",
 			"password":"stirng(hashed)"
 		},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
 		{
 			"userId":"string",
 			"userName":"string",
 			"password":"stirng(hashed)"
 		},
-		...
-	]
 
 	```
 	</details>
@@ -288,12 +291,19 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		"title": "string",
   		"description": "string",
   		"price": "number",
-  		"status": "string", 
+		"category": "string", 
+		"location": "string",
   		"picture": "string", 
 		"offerType": "string",
 		"ProductType": "string",
   		"category": "string",
-  		"location": "string"
+		"subcategory": "string", 
+		"expirationDate": "number", 
+		"status": "string", 
+		"isAccepted": "boolean", 
+		"userId": "number", 
+		"rejectionMessage": "string", 
+		"isDeliverable": "boolean"
 	}
 
 	```
@@ -308,15 +318,396 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		"title": "string",
   		"description": "string",
   		"price": "number",
-  		"status": "string", 
+		"category": "string", 
+		"location": "string",
   		"picture": "string", 
 		"offerType": "string",
 		"ProductType": "string",
   		"category": "string",
-  		"location": "string"
+		"subcategory": "string", 
+		"expirationDate": "number", 
+		"status": "string", 
+		"isAccepted": "boolean", 
+		"userId": "number", 
+		"rejectionMessage": "string", 
+		"isDeliverable": "boolean"
 	}
 
 	```
+	</details>
+
+- GET `/product/all`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+	```
+	</details>
+
+- GET `/products/details/:productId`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"productdId": "number"
+		},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+	```
+	</details>
+
+- DELETE `/products/delete/:productId`<br>
+	Response: Status: 200
+
+- GET `/products/unreviewed`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+		```
+	</details>
+
+- GET `/products/accepted`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{},
+		```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+		```
+	</details>
+
+- PUT `/accept/:prdocutId`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+		"productId":"number"
+	}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+	```
+	</details>
+
+- PUT `/update/:prdocutId`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+		"productId":"number"
+	}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+	{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+	```
+	</details>
+
+- GET `/myproducts/:userId`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number"
+		},
+		```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+		```
+	</details>
+
+- GET `/unreviewed/count`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{},
+		```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"NumberOfUnreviewed": "number"
+		},
+
+		```
+	</details>
+
+- GET `/rejected/count/:userId`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number"
+		},
+		```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"NumberOfRejected": "number"
+		},
+
+		```
+	</details>
+
+- GET `/rejected/:userId`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number"
+		},
+		```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"user": {
+					"title": "string",
+  					"description": "string",
+  					"price": "number",
+					"category": "string", 
+					"location": "string",
+  					"picture": "string", 
+					"offerType": "string",
+					"ProductType": "string",
+  					"category": "string",
+					"subcategory": "string", 
+					"expirationDate": "number", 
+					"status": "string", 
+					"isAccepted": "boolean", 
+					"userId": "number", 
+					"rejectionMessage": "string", 
+					"isDeliverable": "boolean"
+		},
+
+		```
 	</details>
 
 ### `/secured`

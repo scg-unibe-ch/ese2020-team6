@@ -1,0 +1,10 @@
+@mixin popup-theme($theme-name) {
+    $theme: map-get($themes, $theme-name);
+    $popup-bg: map-get($theme, accent);
+    $popup-color: map-get($theme, bright);
+
+    .#{$theme-name} {
+      background: $popup-bg;
+      color: $popup-color;
+    }
+}

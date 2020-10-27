@@ -1,11 +1,10 @@
-<div class="user">
+<div class="user" [ngClass]="theme">
   <div class="header-wrapper flex-item">
     <div class="header">
-      <div class="fullname">
-        <div class="hidden-name">{{user.firstName}}</div>
-        <div class="firstname">{{user.firstName}}</div>
-        <div class="lastname">{{user.lastName}}</div>
-        <div class="userid">#<span>{{user.userId}}</span></div>
+      <div class="name">
+        <div class="fullname">{{user.firstName}} {{user.lastName}}</div>
+        <div class="separator"></div>
+        <div class="userid"><span class="hashtag">#</span><span class="id">{{user.userId}}</span></div>
       </div>
     </div>
   </div>

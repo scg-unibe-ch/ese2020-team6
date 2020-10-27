@@ -1,6 +1,6 @@
-<div class="product-view">
+<div class="product-view" *ngIf="hasProducts; else hasNoProducts">
   <div class="control">
-    <button class="button-full-po" (click)="switchView()">Switch View</button>
+    <button [ngClass]="'button-' + theme" (click)="switchView()">Switch View</button>
   </div>
   <div class="view">
     <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products" [path]="path"></app-product-view-list>
@@ -9,3 +9,8 @@
     </ng-template>
   </div>
 </div>
+<ng-template #hasNoProducts>
+  <div class="no-products" [ngClass]="theme">
+    Nothing to see here.
+  </div>
+</ng-template>

@@ -14,13 +14,15 @@ import {
 import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductFormModel, NullPostProductForm } from '../../../../models/form/post-product-form.model';
+import { Themable } from '../../../../models/theme/themable';
+import { ThemeService } from '../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-post-product',
   templateUrl: './post-product.component.html',
   styleUrls: ['./post-product.component.scss']
 })
-export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
+export class PostProductComponent extends Themable implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   @ViewChild('postProductForm') form: NgForm;
   public values: PostProductFormModel = new NullPostProductForm();
   public product: ProductModel = new NullProduct();
@@ -36,8 +38,11 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private viewContainerRef: ViewContainerRef,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   public ngOnInit(): void {
     if (this.userService.isLoggedIn) {
@@ -65,13 +70,21 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
 
+  selectFile(event): void {
+    let reader = new FileReader();
+    reader.onload = (event: any) =>{
+      let result: string = event.target.result;
+      this.product.picture = result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
-          console.log(values);
           this.openSnackBar();
         });
       } else {
@@ -85,8 +98,10 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
   private setupProduct(): void {
     const product: any = this.values;
+    const picture: string = this.product.picture;
     product.isDeliverable = this.values.isDeliverable === 'Yes' ? true : false;
     this.product = Object.assign({}, product);
+    this.product.picture = picture;
   }
 
   public buildUpdateProductRequest(): UpdateProductRequestModel {

@@ -1,0 +1,120 @@
+@import './product-card.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include product-card-theme($theme-name);
+}
+
+@mixin product-card(
+  $grid-temp-col,
+  $grid-temp-row,
+
+  $picutre-grid-col-s, $picutre-grid-col-e,
+  $picture-grid-row-s, $picture-grid-row-e,
+
+  $title-grid-col-s, $title-grid-col-e,
+  $title-grid-row-s, $title-grid-row-e,
+
+  $price-grid-col-s, $price-grid-col-e,
+  $price-grid-row-s, $price-grid-row-e,
+
+  $gotoproduct-grid-col-s, $gotoproduct-grid-col-e,
+  $gotoproduct-grid-row-s, $gotoproduct-grid-row-e,
+
+  $details-grid-col-s, $details-grid-col-e,
+  $detail-grid-row-s, $detail-grid-row-e,
+  $details-flex-dir
+) {
+
+  $picture-dim: 300px;
+  .product-card {
+    border-radius: $border-radius;
+    padding: $spaceing-m;
+    display: grid;
+    grid-template-columns: $grid-temp-col;
+    grid-template-rows: $grid-temp-row;
+    grid-gap: $spaceing-m;
+    cursor: pointer;
+    font-size: 2em;
+
+    &:hover {
+      .go-to-product {
+        svg {
+          transform: translate(10px);
+        }
+      }
+    }
+
+
+    .picture {
+      grid-column-start: $picutre-grid-col-s;
+      grid-column-end: $picutre-grid-col-e;
+      grid-row-start: $picture-grid-row-s;
+      grid-row-end: $picture-grid-row-e;
+      justify-content: center;
+
+      img {
+        border-radius: $border-radius;
+        max-height: $picture-dim;
+        max-width: $picture-dim;
+        transition: all .1s ease-in-out;
+      }
+    }
+
+
+    .title {
+      grid-column-start: $title-grid-col-s;
+      grid-column-end: $title-grid-col-e;
+      grid-row-start: $title-grid-row-s;
+      grid-row-end: $title-grid-row-e;
+    }
+
+
+    .price {
+      grid-column-start: $price-grid-col-s;
+      grid-column-end: $price-grid-col-e;
+      grid-row-start: $price-grid-row-s;
+      grid-row-end: $price-grid-row-e;
+
+      div {
+        font-size: .6em;
+      }
+    }
+
+
+    .go-to-product {
+      grid-column-start: $gotoproduct-grid-col-s;
+      grid-column-end: $gotoproduct-grid-col-e;
+      grid-row-start: $gotoproduct-grid-row-s;
+      grid-row-end: $gotoproduct-grid-row-e;
+      justify-content: center;
+
+      svg {
+        width: 50%;
+        transition: all .3s ease-in-out;
+
+        path {
+          stroke-width: 4%;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          transform: rotate(-90deg);
+        }
+      }
+    }
+
+
+    .details {
+      grid-column-start: $details-grid-col-s;
+      grid-column-end: $details-grid-col-e;
+      grid-row-start: $detail-grid-row-s;
+      grid-row-end: $detail-grid-row-e;
+      justify-content: space-around;
+      flex-direction: $details-flex-dir;
+    }
+  }
+
+
+  .flex-align-center {
+    display: flex;
+    align-items: center;
+  }
+}

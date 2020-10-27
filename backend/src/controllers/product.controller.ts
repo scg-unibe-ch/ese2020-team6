@@ -1,17 +1,15 @@
 
-import { RSA_NO_PADDING } from 'constants';
 import express, { Router, Request, Response } from 'express';
-import { IncomingMessage, request } from 'http';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
-import { Products, ProductsAttributes } from '../models/products.model';
+import { ProductsAttributes } from '../models/products.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req: Request, file: any, cd: any) {
-        cd(null, '../../../frontend/src');
+        cd(null, '../public/images');
     },
     filename: function(req: Request, file: any, cd: any) {
         cd(null, new Date().toISOString() + file.filename);
@@ -26,13 +24,15 @@ const fileFilter = (req: Request, file: any, cd: any) => {
     } else {
         cd(new Error('wrong format for Picture'), false);
     }
+    console.log(req);
+
 };
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter
 });
 
-productController.post('/post', upload.single('productImage'), verifyToken,
+productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
         productService.createProduct(postProduct)
@@ -41,7 +41,7 @@ productController.post('/post', upload.single('productImage'), verifyToken,
     }
 );
 
-productController.get('/all', verifyToken,
+productController.get('/all', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         productService.getAllProducts()
         .then((products: Array<ProductsAttributes>) => res.send(products))
@@ -98,8 +98,12 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
         .catch((err: any) => res.status(500).send(err));
     });
 
+interface MulterRequest extends Request {
+  file: any;
+}
+
 productController.put('/update/:productId', verifyToken,
-    (req: Request, res: Response) => {
+    (req: MulterRequest, res: Response) => {
         const updateProduct: ProductsAttributes = req.body;
         productService.updateProduct(updateProduct)
         .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))

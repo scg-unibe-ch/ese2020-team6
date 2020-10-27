@@ -1,7 +1,13 @@
+@import '../../../../variables.scss';
+@import './user-icon.component.theme.scss';
+
 .user-icon path {
-    stroke: white;
     stroke-width: 5%;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
+}
+
+@each $theme-name in $theme-names {
+  @include user-icon-theme($theme-name);
 }

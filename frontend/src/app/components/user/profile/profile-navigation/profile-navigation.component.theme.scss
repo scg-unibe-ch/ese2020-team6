@@ -1,0 +1,10 @@
+@mixin profile-navigation-theme($theme-name) {
+  .#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $nav-bg: map-get($theme, shady);
+
+    background: $nav-bg;
+  }
+}

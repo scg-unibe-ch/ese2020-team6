@@ -1,0 +1,25 @@
+@mixin login-theme($theme-name) {
+
+  .login-wrapper.#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $login-wrapper-bg: map-get($theme, dark);
+    $login-bg: map-get($theme, shady);
+    $text-color: map-get($theme, bright);
+    $warning-text-color: map-get($theme, warn);
+
+    background: $login-wrapper-bg;
+
+    .login {
+      background: $login-bg;
+      color: $text-color;
+
+      .header {
+        .warning {
+          color: $warning-text-color;
+        }
+      }
+    }
+  }
+}

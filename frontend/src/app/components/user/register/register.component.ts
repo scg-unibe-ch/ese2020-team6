@@ -9,13 +9,15 @@ import { RegisterUserRequestModel } from '../../../models/request/user/register/
 import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
 import { UserService } from '../../../services/user/user.service';
+import { Themable } from '../../../models/theme/themable';
+import { ThemeService } from '../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
+export class RegisterComponent extends Themable implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
 
   private form: NgForm;
   private values: RegisterUserFormModel;
@@ -23,8 +25,11 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
 
   constructor(
     private router: Router,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {

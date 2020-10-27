@@ -1,0 +1,11 @@
+@mixin user-icon-theme($theme-name) {
+  $theme: map-get($themes, $theme-name);
+  
+  $icon-color: map-get($theme, bright);
+
+  .user-icon.#{$theme-name} {
+    path {
+      stroke: $icon-color;
+    }
+  }
+}

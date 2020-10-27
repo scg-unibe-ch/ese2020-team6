@@ -2,8 +2,6 @@ import { UserAttributes, User } from '../models/user.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Products } from '../models/products.model';
-import { any } from 'sequelize/types/lib/operators';
 
 export class UserService {
   datas: any;
@@ -18,10 +16,8 @@ export class UserService {
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
-        user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
-        try {
-              return User.create(user).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
-        } catch (uniqueContraintError) {}
+        user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
+        return User.create(user).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {

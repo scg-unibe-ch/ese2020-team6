@@ -1,0 +1,41 @@
+@mixin profile-theme($theme-name) {
+  .#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $profile-bg: map-get($theme, dark);
+    $header-bg: map-get($theme, shady);
+    $header-color: map-get($theme, bright);
+    $accent-color: map-get($theme, accent);
+    $title-bg: map-get($theme, warn);
+    $title-color: map-get($theme, bright);
+
+
+    background: $profile-bg;
+
+    .header-wrapper {
+      background: $header-bg;
+    }
+
+    .header {
+      border-color: $accent-color
+    }
+
+    .username {
+      color: $header-color;
+    }
+
+    .id {
+      color: $accent-color;
+    }
+
+    .id > span {
+      color: $header-color;
+    }
+
+    .title {
+      background: $title-bg;
+      color: $title-color;
+    }
+  }
+}
