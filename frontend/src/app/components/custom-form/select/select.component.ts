@@ -22,8 +22,9 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
   @Input()
   options: Array<String> = new Array<String>();
 
-  optionsHidden: Boolean = true;
-  current: String;
+  public optionsHidden: Boolean = true;
+  public current: String;
+  private isDefault: boolean;
 
   constructor(
     themeService: ThemeService
@@ -33,31 +34,22 @@ export class SelectComponent extends ValueAccessorBase<String> implements OnInit
 
   ngOnInit(): void {
     this.current = this.selectName;
+    this.isDefault = true;
   }
 
-  onShowOptions() {
+  onToggleDropdown() {
     this.optionsHidden = !this.optionsHidden;
   }
 
   onSelect(option: string) {
     this.value = option;
     this.current = option;
-
-    this.onShowOptions();
+    this.isDefault = false;
+    this.touch();
+    this.onToggleDropdown();
   }
 
-  writeValue(value: string) {
-    if (value) {
-      this.value = value;
-      this.current = value;
-    }
-  }
-
-  getPlaceholderClass() {
-    return this.value === this.selectName ? 'placeholder-notSelected' : '';
-  }
-
-  getSVGClass() {
+  get SVGClass(): string {
     return this.optionsHidden ? 'down' : 'up';
   }
 

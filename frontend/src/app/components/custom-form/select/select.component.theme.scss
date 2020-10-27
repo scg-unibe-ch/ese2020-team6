@@ -1,0 +1,63 @@
+@mixin custom-select-theme($theme-name) {
+  .select-wrapper.#{$theme-name} {
+
+    $border-default-color: get-theme($theme-name, bright);
+    $border-valid-color: get-theme($theme-name, highlight);
+    $svg-default-color: get-theme($theme-name, accent);
+    $svg-hover-color: get-theme($theme-name, highlight);
+    $svg-active-color: get-theme($theme-name, bright);
+    $text-color: get-theme($theme-name, bright);
+    $options-bg: get-theme($theme-name, highlight);
+
+    &.pristine {
+      .placeholder {
+        color: rgba($text-color, 0.5);
+      }
+    }
+
+    &.dirty {
+      .placeholder {
+        color: $text-color;
+        border-color: $border-valid-color;
+      }
+    }
+
+    .placeholder {
+      border-color: $border-default-color;
+
+      &:hover {
+        svg {
+          path {
+            stroke: $svg-hover-color;
+            fill: $svg-hover-color;
+          }
+        }
+      }
+
+      &:active {
+        svg {
+          path {
+            stroke: $svg-active-color;
+            fill: $svg-active-color;
+          }
+        }
+      }
+
+      svg {
+        path {
+          stroke: $svg-default-color;
+          fill: $svg-default-color;
+        }
+      }
+    }
+
+    .options {
+      background: $options-bg;
+      color: $text-color;
+
+      .option {
+        border-color: $border-default-color;
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
-<div class="login-wrapper-wrapper" [ngClass]="theme">
-  <div class="login-wrapper">
-    <h3>Create Account</h3>
+<div class="register-wrapper" [ngClass]="theme">
+  <div class="register">
+    <div class="header">
+      <h3 class="title">Create Account</h3>
+      <div class="warning">{{registerErrorMessage}}</div>
+    </div>
     <form #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
       <div class="input-grid">
         <app-select name="gender" placeholder="Gender" selectName="Gender" [options]="['Female', 'Male', 'Other']" ngModel #gender="ngModel" appGenderValidator></app-select>
@@ -27,9 +30,8 @@
         <app-text-input placeholder="House Number" name="houseNumber" ngModel #houseNumber="ngModel" appHouseNumberValidator></app-text-input>
       </div>
       <div class="action-wrapper">
-        <button class="button-full-po" [disabled]="!createAccountForm.valid">Next</button>
+        <button [ngClass]="'button-' + theme" [disabled]="!createAccountForm.valid">Create Account</button>
       </div>
     </form>
   </div>
-  <!-- <app-error-messages [form]="createAccountForm"></app-error-messages> -->
 </div>
