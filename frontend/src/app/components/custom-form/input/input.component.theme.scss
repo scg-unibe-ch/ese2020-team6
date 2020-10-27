@@ -6,7 +6,7 @@
     $text-color: get-theme($theme-name, bright);
     $error-warn: get-theme($theme-name, warn);
 
-    input {
+    input, textarea {
       border-color: $border-default-color;
       color: $text-color;
 
@@ -32,7 +32,7 @@
     }
 
     &.valid {
-      input {
+      input, textarea {
         border-color: $border-valid-color;
       }
     }

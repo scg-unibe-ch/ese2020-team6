@@ -25,7 +25,7 @@
       font-size: 5em;
       line-height: 100%;
       display: grid;
-      grid-template-columns: auto 50px auto;
+      grid-template-columns: auto $spaceing-xl auto;
       grid-column-gap: $spaceing-xs;
       padding: $spaceing-m;
       border-radius: $border-radius;
