@@ -22,7 +22,7 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     title: 'Preferences',
     path: 'preferences',
     component: PreferencesComponent,
-    popupComponent: PopupRejectedComponent
+    popupComponent: null
   },
   {
     title: 'My Products',

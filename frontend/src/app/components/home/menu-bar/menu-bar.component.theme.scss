@@ -1,0 +1,14 @@
+@mixin menu-bar-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $bg: map-get($theme, shady);
+
+  .dropdown-wrapper.#{$theme-name} {
+    background: $bg;
+  }
+
+  .not-logged-in.#{$theme-name} {
+    background: $bg;
+  }
+}
