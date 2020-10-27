@@ -27,21 +27,11 @@ const fileFilter = (req: Request, file: any, cd: any) => {
         cd(new Error('wrong format for Picture'), false);
     }
 };
-<<<<<<< Updated upstream
-
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter
 });
 
-=======
-
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
->>>>>>> Stashed changes
 productController.post('/post', upload.single('productImage'),
     (req: Request, res: Response) => {
         const postProduct: ProductsAttributes = req.body;
@@ -84,7 +74,7 @@ productController.get('/unreviewed', verifyToken, verifyIsAdmin,
     .catch((err: any) => res.status(500).send(err));
 });
 
-productController.get('/accepted', verifyToken, verifyIsAdmin,
+productController.get('/accepted',
     (req: Request, res: Response) => {
         productService.getAllAcceptedProducts()
         .then((products: Array<ProductsAttributes>) => res.send(products))
