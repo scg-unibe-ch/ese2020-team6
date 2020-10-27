@@ -32,4 +32,9 @@ export class ProductViewComponent extends Themable {
     return this.displayList;
   }
 
+  get hasProducts(): boolean {
+    if (this.products) return this.products.length != 0;
+    else return false;
+  }
+
 }

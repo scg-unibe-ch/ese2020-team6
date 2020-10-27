@@ -1,4 +1,4 @@
-<div class="product-view">
+<div class="product-view" *ngIf="hasProducts; else hasNoProducts">
   <div class="control">
     <button [ngClass]="'button-' + theme" (click)="switchView()">Switch View</button>
   </div>
@@ -9,3 +9,8 @@
     </ng-template>
   </div>
 </div>
+<ng-template #hasNoProducts>
+  <div class="no-products" [ngClass]="theme">
+    Nothing to see here.
+  </div>
+</ng-template>
