@@ -462,7 +462,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 				"isDeliverable": "boolean"
 		},
 
-		```
+	```
 	</details>
 
 - GET `/products/accepted`
@@ -503,7 +503,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 				"isDeliverable": "boolean"
 		},
 
-		```
+	```
 	</details>
 
 - PUT `/accept/:prdocutId`
@@ -513,9 +513,9 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-	{
-		"productId":"number"
-	}
+		{
+			"productId":"number"
+		}
 
 	```
 	</details>
@@ -525,7 +525,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-	{
+		{
 			"product": {
 					"title": "string",
   					"description": "string",
@@ -555,9 +555,9 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-	{
-		"productId":"number"
-	}
+		{
+			"productId":"number"
+		}
 
 	```
 	</details>
@@ -567,7 +567,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-	{
+		{
 			"product": {
 					"title": "string",
   					"description": "string",
@@ -600,7 +600,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		{
 			"userId": "number"
 		},
-		```
+	```
 	</details>
 	<details>
 		<summary>Response</summary>
@@ -628,7 +628,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 					"isDeliverable": "boolean"
 		},
 
-		```
+	```
 	</details>
 
 - GET `/unreviewed/count`
@@ -639,7 +639,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{},
-		```
+	```
 	</details>
 	<details>
 		<summary>Response</summary>
@@ -651,7 +651,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 			"NumberOfUnreviewed": "number"
 		},
 
-		```
+	```
 	</details>
 
 - GET `/rejected/count/:userId`
@@ -664,7 +664,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		{
 			"userId": "number"
 		},
-		```
+	```
 	</details>
 	<details>
 		<summary>Response</summary>
@@ -676,7 +676,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 			"NumberOfRejected": "number"
 		},
 
-		```
+	```
 	</details>
 
 - GET `/rejected/:userId`
@@ -689,7 +689,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		{
 			"userId": "number"
 		},
-		```
+	```
 	</details>
 	<details>
 		<summary>Response</summary>
@@ -717,7 +717,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 					"isDeliverable": "boolean"
 		},
 
-		```
+	```
 	</details>
 
 ### `/secured`
@@ -735,9 +735,9 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200 | 403
 		Body:
 	```json
-	{
-		"message":"string"
-	}
+		{
+			"message":"string"
+		}
 
 	```
 	</details>
@@ -749,7 +749,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 		Code: 200
 		Body:
-	```text
+		```text
 	<h1>Welcome to the ESE-2020 Course</h1><span style=\"font-size:100px;\">&#127881;</span>
-	```
+		```
 	</details>
