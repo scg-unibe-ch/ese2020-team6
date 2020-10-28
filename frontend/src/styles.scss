@@ -9,81 +9,8 @@ html, body {
   overflow-x: hidden;
 }
 
-.button-full-po {
-  border: 0;
-  background: #d9b9b2;
-  transition: all .1s ease-out;
-  color: white;
-}
-
-.button-full-po:hover {
-    background: #ccaea7;
-}
-
-.button-full-po:active {
-    background: #bfa39d;
-}
-
-.button-full-po:disabled {
-  background: rgba(217,185,178, 0.5);
-  cursor: default;
-}
-
-.button-full-primary {
-  border: 0;
-  background: #007bff;
-  transition: all .1s ease-out;
-  color: white;
-}
-
-.button-full-primary:hover {
-    background: #007bff;
-}
-
-.button-full-primary:active {
-    background: #007bff;
-}
-
-.button-empty {
-  border: 0;
-  padding: 13px 0;
-  position: relative;
-}
-
-.button-empty::before {
-  content: "";
-  display: block;
-  height: 100%;
-  width: calc(100% + 20px);
-  position: absolute;
-  top: 0;
-  left: -10px;
-  z-index: -2;
-  transition: all .1s ease-out;
-}
-
-.button-empty:active::before {
-  background: rgba(223, 171, 160, .2);
-}
-
 // leave in
 .mat-typography {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   line-height: 1.5 !important;
 }
-<<<<<<< HEAD
-
-.fainted{
-  background: $fainted;
-}
-
-.success {
-  background: $success;
-}
-
-.warn {
-  background: $warn;
-}
-
-=======
->>>>>>> bf63484dd9f8e5f561ded1356d8310763a65eff3
