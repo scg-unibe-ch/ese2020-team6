@@ -19,6 +19,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .home {
+      button {
+        min-width: 200px;
+      }
+    }
   }
 
   .right {
