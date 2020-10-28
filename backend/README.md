@@ -85,6 +85,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 	<details>
 		<summary>Request</summary>
+
 		Code: 200
 		Body:
 	```json
@@ -96,6 +97,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 	```
 	</details>
+
 	<details>
 		<summary>Response</summary>
 
@@ -315,6 +317,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 	{
+		"productId" : "number",
 		"title": "string",
   		"description": "string",
   		"price": "number",
@@ -353,7 +356,8 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
+			"product": {
+					"productId": "number",
 					"title": "string",
   					"description": "string",
   					"price": "number",
@@ -394,7 +398,9 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
+			"product": {
+
+					"productId": "number",
 					"title": "string",
   					"description": "string",
   					"price": "number",
@@ -435,23 +441,25 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
-					"title": "string",
-  					"description": "string",
-  					"price": "number",
-					"category": "string", 
-					"location": "string",
-  					"picture": "string", 
-					"offerType": "string",
-					"ProductType": "string",
-  					"category": "string",
-					"subcategory": "string", 
-					"expirationDate": "number", 
-					"status": "string", 
-					"isAccepted": "boolean", 
-					"userId": "number", 
-					"rejectionMessage": "string", 
-					"isDeliverable": "boolean"
+			"product": {
+				
+				"productId": "nubmer",
+				"title": "string",
+  				"description": "string",
+  				"price": "number",
+				"category": "string", 
+				"location": "string",
+  				"picture": "string", 
+				"offerType": "string",
+				"ProductType": "string",
+  				"category": "string",
+				"subcategory": "string", 
+				"expirationDate": "number", 
+				"status": "string", 
+				"isAccepted": "boolean", 
+				"userId": "number", 
+				"rejectionMessage": "string", 
+				"isDeliverable": "boolean"
 		},
 
 		```
@@ -465,7 +473,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{},
-		```
+	```
 	</details>
 	<details>
 		<summary>Response</summary>
@@ -474,23 +482,25 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
-					"title": "string",
-  					"description": "string",
-  					"price": "number",
-					"category": "string", 
-					"location": "string",
-  					"picture": "string", 
-					"offerType": "string",
-					"ProductType": "string",
-  					"category": "string",
-					"subcategory": "string", 
-					"expirationDate": "number", 
-					"status": "string", 
-					"isAccepted": "boolean", 
-					"userId": "number", 
-					"rejectionMessage": "string", 
-					"isDeliverable": "boolean"
+			"product": {
+				
+				"productId": "nubmer",
+				"title": "string",
+  				"description": "string",
+  				"price": "number",
+				"category": "string", 
+				"location": "string",
+  				"picture": "string", 
+				"offerType": "string",
+				"ProductType": "string",
+  				"category": "string",
+				"subcategory": "string", 
+				"expirationDate": "number", 
+				"status": "string", 
+				"isAccepted": "boolean", 
+				"userId": "number", 
+				"rejectionMessage": "string", 
+				"isDeliverable": "boolean"
 		},
 
 		```
@@ -516,7 +526,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 	{
-			"user": {
+			"product": {
 					"title": "string",
   					"description": "string",
   					"price": "number",
@@ -558,7 +568,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 	{
-			"user": {
+			"product": {
 					"title": "string",
   					"description": "string",
   					"price": "number",
@@ -599,7 +609,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
+			"product": {
 					"title": "string",
   					"description": "string",
   					"price": "number",
@@ -688,7 +698,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Body:
 	```json
 		{
-			"user": {
+			"product": {
 					"title": "string",
   					"description": "string",
   					"price": "number",
