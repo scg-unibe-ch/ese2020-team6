@@ -4,7 +4,7 @@
 To use the app, you need an admin user and a default user. 
 How to register these users?  
 
-- In the app: register two users. One for default and one who will be admin
+- In the app: register two users. One for default and one who will be admin. For the one who will be admin, use 'Admin' as lastname.
 - In the terminal if you are in the ese-project: 
 ```
 $ cd backend
@@ -16,4 +16,5 @@ sqlite> select * from users;  // to see what your admin user's last name is
 sqlite> update users set isAdmin = true where users.lastName = 'put admin user's last name here';
 sqlite> .q
 ```
+Now you can login with one admin user and one default user.
 ![Logo](https://github.com/scg-unibe-ch/ese2020-team6/blob/master/Logo.png)
