@@ -20,6 +20,9 @@ export class MenuBarComponent extends Themable {
   @Input()
   block: boolean = false;
 
+  @Input()
+  isHome: boolean = false;
+
   constructor(
     userService: UserService,
     themeService: ThemeService
