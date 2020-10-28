@@ -49,4 +49,11 @@ export class MenuBarComponent extends Themable {
     classes.push(this.theme);
     return classes;
   }
+
+  public getClasses(): Array<string> {
+    let classes: Array<string> = new Array<string>();
+    classes.push(this.block ? 'block' : 'fix');
+    classes.push(this.theme);
+    return classes;
+  }
 }

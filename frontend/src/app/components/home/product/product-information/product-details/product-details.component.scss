@@ -4,6 +4,7 @@
 .content-wrapper {
   padding: $spaceing-xl;
   width: 100%;
+  min-height: calc(100% - 2 * #{$spaceing-m} - 2 * #{$spaceing-xs} - 1.5em);
 }
 
 .section-margin {

@@ -2,9 +2,9 @@
 
   $bg: get-theme($theme-name, shady);
   $block-icon-bg: get-theme($theme-name, highlight);
-  $block-dropdown-bg: get-theme($theme-name, bright);
+  $block-dropdown-bg: get-theme($theme-name, highlight);
 
-  .block {
+  .block.#{$theme-name} {
     background: $bg;
 
     .dropdown-wrapper {
@@ -16,11 +16,13 @@
     }
   }
 
-  .dropdown-wrapper.#{$theme-name} {
-    background: $bg;
-  }
+  .fix.#{$theme-name} {
+    .dropdown-wrapper {
+      background: $bg;
+    }
 
-  .not-logged-in.#{$theme-name} {
-    background: $bg;
+    .not-logged-in {
+      background: $bg;
+    }
   }
 }

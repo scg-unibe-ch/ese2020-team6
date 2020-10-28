@@ -1,4 +1,4 @@
-<div class="menu-bar-wrapper" [ngClass]="{'block': block}">
+<div class="menu-bar-wrapper" [ngClass]="getClasses()">
   <div class="left">
     <div class="home" *ngIf="!isHome">
       <button [ngClass]="'button-' + theme" [routerLink]="['']">Home</button>
