@@ -730,7 +730,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 	</details>
 
 	<details>
-		<summary>Response</summary>
+		<summary>Response</summary>git a
 
 		Code: 200 | 403
 		Body:
@@ -746,10 +746,6 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 - GET
 	<details>
 		<summary>Response</summary>
-
-		Code: 200
-		Body:
-		```text
+	
 	<h1>Welcome to the ESE-2020 Course</h1><span style=\"font-size:100px;\">&#127881;</span>
-		```
 	</details>
