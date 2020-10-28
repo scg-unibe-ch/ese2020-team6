@@ -35,8 +35,7 @@ export class EditProductComponent extends ProductInformationBase {
   }
 
   public delete(): void {
-    this.productService.deleteProduct(this.product.productId).subscribe(
-      product => console.log(product));
+    this.productService.deleteProduct(this.product.productId).subscribe();
     this.router.navigate(['/user/profile/myproducts']);
     this.overlayRef.dispose();
   }

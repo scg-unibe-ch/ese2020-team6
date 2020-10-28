@@ -1,16 +1,5 @@
-export interface UpdateProductRequestModel {
+import { PostProductRequestModel } from '../post/post-product-request.model';
+
+export interface UpdateProductRequestModel extends PostProductRequestModel {
   productId: number;
-  title: string;
-  description: string;
-  price: number;
-  category: string;
-  location: string;
-  productType: string;
-  offerType: string;
-  picture: string;
-  subcategory: string;
-  expirationDate: number;
-  status: string;
-  userId: number;
-  isDeliverable: boolean;
 }

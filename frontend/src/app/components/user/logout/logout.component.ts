@@ -19,7 +19,7 @@ export class LogoutComponent extends Themable {
     super(themeService);
   }
 
-  public onSubmit(): void {
+  public onSubmit(): void { 
     this.userService.logout();
   }
 }

@@ -7,6 +7,7 @@ import { ProductInformationBase } from '../product-information-base';
 import { RejectProductFormModel, NullRejectProductForm } from '../../../../../models/form/reject-product-form.model';
 import {
   AcceptProductRequestBuilder,
+  RejectProductRequestBuilder,
   AcceptProductRequestModel,
   RejectProductRequestModel } from '../../../../../models/request/product/product-request-model-builder.module';
 import { ThemeService } from '../../../../../services/theme/theme.service';
@@ -16,7 +17,7 @@ import { ThemeService } from '../../../../../services/theme/theme.service';
   templateUrl: './review-product.component.html',
   styleUrls: ['../product-information.component.scss']
 })
-export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder {
+export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder, RejectProductRequestBuilder {
 
   public showRejectResponseForm: boolean = false;
   public showAcceptForm: boolean = false;
