@@ -8,7 +8,7 @@ export class RegexValidatorBase implements Validator {
   private onChange: () => void = () => {};
 
   constructor(
-    regexValidator: RegexValidatorModel
+    protected regexValidator: RegexValidatorModel
   ){
     this.regExp = regexValidator.regex;
     this.regExValidatorName = regexValidator.name.toString();
@@ -29,6 +29,19 @@ export class RegexValidatorBase implements Validator {
     this.onChange = fn;
   }
 }
+
+class ValueContains {
+  oneNumber: { regExp: RegExp, error: string } = {
+    regExp: /(?=\d)/,
+    error: 'You have to use at least one Number.'
+  };
+  oneCapLetter: { regExp: RegExp, error: string } = {
+    regExp: /(?=[A-Z])/,
+    error: 'You have to use at least one capital letter.'
+  };
+}
+
+const valueContains: ValueContains = new ValueContains();
 
 
 export const validatorRegex = {
@@ -65,6 +78,10 @@ export const validatorRegex = {
   password: {
     regex: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[@$!%*#?&])[A-Za-z_äÄöÖüÜ\d@$!%*#?&]{7,}$/,
     name: "passwordValidator",
+    contains: [
+      valueContains.oneNumber,
+      valueContains.oneCapLetter
+    ],
     errorMessage: "Min. 7 characters, at least 1 capital letter, 1 lowercase letter, 1 number and 1 special character: @$!%*#?&"
   },
   usernameOrEmail: {
@@ -95,7 +112,7 @@ export const validatorRegex = {
   date: {
     regex: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|(1|2)[0-9]|3[0-1])T(0[1-9]|1[0-9]|2[0-3]):(0[0-9]|([1-5])[0-9])$/,
     name: "dateValidator",
-    errorMessage: "Date and Time: yyyy-mm-ddThh:minmin"
+    errorMessage: "Please choose a date."
   },
   rejectionMessage: {
     regex: /^[A-ZÄÖÜ]([A-Za-z_äÄöÖüÜ\d@$!%*#?&,.\- ]){50,}$/,

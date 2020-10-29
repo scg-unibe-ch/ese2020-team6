@@ -102,7 +102,7 @@ import { PlzValidatorDirective } from './components/custom-form/validators/regex
 import { UsernameValidatorDirective } from './components/custom-form/validators/regex/username/username-validator.directive';
 import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/regex/username-or-email/username-or-email-validator.directive';
 import { EmailValidatorDirective } from './components/custom-form/validators/regex/email/email-validator.directive';
-import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
+import { PasswordValidatorDirective } from './components/custom-form/validators/password/password-validator.directive';
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
 import { StatusValidatorDirective } from './components/custom-form/validators/select/status/status-validator.directive';
@@ -113,7 +113,7 @@ import { TitleValidatorDirective } from './components/custom-form/validators/reg
 import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
-import { DateValidatorDirective } from './components/custom-form/validators/regex/date/date-validator.directive';
+import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
 //    Cross Field
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/regex/cross-field/password-match-validator.directive';
 //    Select
