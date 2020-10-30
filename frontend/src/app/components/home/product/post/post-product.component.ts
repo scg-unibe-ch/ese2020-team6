@@ -30,6 +30,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
   private productId: number;
   private isUpdate = false;
   productData: any;
+  picture: any;
 
   constructor(
     private productService: ProductService,
@@ -71,11 +72,12 @@ export class PostProductComponent extends Themable implements PostProductRequest
 
 
   selectFile(event): void {
-    let reader = new FileReader();
-    reader.onload = (event: any) =>{
-      let result: string = event.target.result;
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const result: string = event.target.result;
       this.product.picture = result;
-    }
+      this.picture = result;
+    };
     reader.readAsDataURL(event.target.files[0]);
   }
 

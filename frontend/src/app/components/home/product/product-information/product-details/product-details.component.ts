@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
 import { ProductModel, NullProduct } from '../../../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../../../models/user/cut-user.model';
 import { ThemeService } from '../../../../../services/theme/theme.service';
@@ -14,6 +14,10 @@ export class ProductDetailsComponent extends Themable {
   public product: ProductModel = new NullProduct();
   @Input()
   public creator: CutUserModel = new NullCutUser();
+  @Input()
+  public isPreview: boolean;
+  @Input()
+  public picture: any;
 
   constructor(
     themeService: ThemeService
@@ -40,5 +44,13 @@ export class ProductDetailsComponent extends Themable {
   get priceLabel(): string {
     if (this.product.productType === 'Service' || this.product.offerType === 'Rent') { return '$/h'; }
     else { return '$'; }
+  }
+
+  formatExpirationDate(): any {
+    console.log(this.isPreview, 'preeeeviiiiieeeewww??????')
+    let expirationDate: string;
+    expirationDate = String(this.product.expirationDate);
+    expirationDate = expirationDate.substring(0, 10);
+    return expirationDate;
   }
 }
