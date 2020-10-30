@@ -102,7 +102,7 @@ import { PlzValidatorDirective } from './components/custom-form/validators/regex
 import { UsernameValidatorDirective } from './components/custom-form/validators/regex/username/username-validator.directive';
 import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/regex/username-or-email/username-or-email-validator.directive';
 import { EmailValidatorDirective } from './components/custom-form/validators/regex/email/email-validator.directive';
-import { PasswordValidatorDirective } from './components/custom-form/validators/password/password-validator.directive';
+import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
 import { StatusValidatorDirective } from './components/custom-form/validators/select/status/status-validator.directive';
