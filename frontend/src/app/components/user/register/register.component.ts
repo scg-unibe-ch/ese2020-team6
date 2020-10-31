@@ -60,7 +60,7 @@ export class RegisterComponent extends Themable implements LoginUserRequestBuild
   }
 
   private registerError(err: any): void {
-    setTimeout(() => this.registerErrorMessage = err.error.message, 250);
+    this.registerErrorMessage = err.error.message;
   }
 
   private loginSuccess(): void {

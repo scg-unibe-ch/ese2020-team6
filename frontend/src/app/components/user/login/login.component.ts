@@ -63,6 +63,6 @@ export class LoginComponent extends Themable implements LoginUserRequestBuilder{
   }
 
   private loginError(err: any): void {
-    setTimeout(() => this.loginErrorMessage = err.error.message, 250);
+    this.loginErrorMessage = err.error.message;
   }
 }
