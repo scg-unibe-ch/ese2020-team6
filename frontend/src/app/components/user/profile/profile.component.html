@@ -2,8 +2,9 @@
   <div class="header-wrapper-wrapper">
     <div class="header-wrapper">
       <div class="header">
-        <span [routerLink]="['/']" class="username">{{userName}}</span>
-        <span class="id">user-id <span>#{{userId}}</span></span>
+          <span [routerLink]="['/']">
+            <img class="image" src="../../../../assets/Logo.png">
+          </span>
       </div>
     </div>
   </div>
@@ -12,6 +13,10 @@
     {{ currentContent.title }}
   </div>
   <div class="content-wrapper">
+    <div class="header">
+      <span class="username">{{userName}}</span>
+      <span class="id">user-id <span>#{{userId}}</span></span>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

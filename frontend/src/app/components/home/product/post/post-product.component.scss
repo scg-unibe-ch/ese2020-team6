@@ -108,3 +108,16 @@ h1 {
 @each $theme-name in $theme-names {
   @include post-theme($theme-name);
 }
+
+.image {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 5em;
+  width: 5em;
+}
+
+.imageText {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #0eba91;
+}

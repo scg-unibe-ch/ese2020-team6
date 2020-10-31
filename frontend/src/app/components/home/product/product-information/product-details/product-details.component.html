@@ -1,8 +1,11 @@
 <div class="content-wrapper" [ngClass]="theme">
   <div class="upper-section section-margin">
-    <div class="picture">
+    <div class="picture" *ngIf="!isPreview, else prev">
       <img src={{product.picture}} alt="">
     </div>
+    <ng-template class="picture" #prev>
+      <img src={{picture}} alt="">
+    </ng-template>
     <div class="title">
       <div>{{product.title}}</div>
     </div>
@@ -24,7 +27,7 @@
     </div>
     <div class="expiration-date">
       Expiration Date:
-      <div>{{product.expirationDate}}</div>
+      <div>{{formatExpirationDate()}}</div>
     </div>
     <div class="category">
       Category:
