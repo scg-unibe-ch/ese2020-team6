@@ -47,7 +47,6 @@ export class ProductDetailsComponent extends Themable {
   }
 
   formatExpirationDate(): any {
-    console.log(this.isPreview, 'preeeeviiiiieeeewww??????')
     let expirationDate: string;
     expirationDate = String(this.product.expirationDate);
     expirationDate = expirationDate.substring(0, 10);
