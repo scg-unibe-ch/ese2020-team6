@@ -28,7 +28,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
   public product: ProductModel = new NullProduct();
   private userId: number;
   private productId: number;
-  private isUpdate = false;
+  isUpdate = false;
   productData: any;
   picture: any;
 
