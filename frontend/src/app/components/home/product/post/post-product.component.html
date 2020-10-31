@@ -28,6 +28,10 @@
       <div class="input-grid temp-spaceing">
         <label class="picture">
           Picture
+          <div *ngIf="isUpdate">
+            <img class="image" src={{picture}}>
+            <div class="imageText">Do you want to Update the Image:</div>
+          </div>
           <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
         </label>
         <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>

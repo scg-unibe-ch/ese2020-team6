@@ -67,6 +67,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
       const values: any = Object.assign({}, product);
       values.isDeliverable = product.isDeliverable ? 'Yes' : 'No';
       this.values = Object.assign({}, values);
+      this.picture = product.picture;
     });
   }
 
