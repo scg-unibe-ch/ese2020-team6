@@ -115,7 +115,7 @@ import { PriceValidatorDirective } from './components/custom-form/validators/reg
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
 import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
 //    Cross Field
-import { PasswordMatchValidatorDirective } from './components/custom-form/validators/regex/cross-field/password-match-validator.directive';
+import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 //    Select
 import { GenderValidatorDirective } from './components/custom-form/validators/select/gender/gender-validator.directive';
 

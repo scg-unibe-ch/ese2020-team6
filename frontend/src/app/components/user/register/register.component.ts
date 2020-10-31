@@ -31,6 +31,13 @@ export class RegisterComponent extends Themable implements LoginUserRequestBuild
     super(themeService);
   }
 
+  public validateCrossFieldPassword(form: NgForm) {
+    let validationResults = form.control.validator(form.control);
+    if (validationResults) {
+      this.registerErrorMessage = form.control.validator(form.control).crossFieldPassword.errorMessages[0];
+    } else this.registerErrorMessage = null;
+  }
+
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       this.form = form;
