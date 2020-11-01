@@ -22,6 +22,17 @@
       Location:
       <div>{{product.location}}</div>
     </div>
+
+    <div>
+      <ng-content></ng-content> 
+      <div class="map-container">
+        <div class="map-frame">
+        <div id="map"></div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="expiration-date">
       Expiration Date:
       <div>{{product.expirationDate}}</div>
