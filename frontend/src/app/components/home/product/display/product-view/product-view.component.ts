@@ -44,11 +44,6 @@ export class ProductViewComponent extends Themable {
     else { return false; }
   }
 
-  private toggleDropDown(): void {
-    this.showDropdown = !this.showDropdown;
-    this.newReload = false;
-  }
-
   public searchProduct(tpl): void {
     const configs = new OverlayConfig({
     hasBackdrop: true,

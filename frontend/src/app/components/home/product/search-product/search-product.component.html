@@ -1,22 +1,22 @@
 <div>
-    <form #searchProduct="ngForm" (ngSubmit)="onSubmit(searchProduct)">
+    <form #searchProduct="ngForm" (ngSubmit)="onSubmit()">
         <div class="input-grid">
-            <app-select name="category" selectName="Category"
-                [options]="['Houses', 'Pets', 'Nice Stuff']" appCategoryValidator></app-select>
-            <app-select name="subcategory" selectName="Subcategory"
-                [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']" appSubCategoryValidator></app-select>
+            <app-select name="category" selectName="Category" [(ngModel)]="values.category"
+                [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
+            <app-select name="subcategory" selectName="Subcategory" [(ngModel)]="values.subcategory"
+                [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']"></app-select>
         </div>
         <div>
-            <app-text-input placeholder="Maximum Price" name="price">
+            <app-text-input placeholder="Maximum Price" name="price" [(ngModel)]="values.price">
             </app-text-input>
             <app-select name="status" selectName="Status"
-                [options]="['Available', 'Lent', 'Sold']" appStatusValidator></app-select>
+                [options]="['Available', 'Lent', 'Sold']" [(ngModel)]="values.status"></app-select>
         </div>
         <div class="input-grid">
-            <app-text-input placeholder="Location" name="location">
+            <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location">
             </app-text-input>
             <app-select name="isDeliverable" selectName="Deliverable"
-                [options]="['Yes', 'No']" appDeliverableValidator></app-select>
+                [options]="['Yes', 'No']" [(ngModel)]="values.deliverable"></app-select>
         </div>
         <div class="button">
             <button [ngClass]="'button-' + theme" type="submit">Create</button>
