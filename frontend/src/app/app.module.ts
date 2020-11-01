@@ -135,6 +135,7 @@ import { PopupDirective } from './components/user/profile/profile-navigation/pop
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
+import { DateComponent } from './components/custom-form/input/date/date.component';
 
 @NgModule({
   declarations: [
@@ -208,6 +209,7 @@ import { ValidationComponent } from './components/custom-form/input/validation/v
     NavigationElementComponent,
     PreferencesComponent,
     ValidationComponent,
+    DateComponent,
   ],
   imports: [
     BrowserModule,

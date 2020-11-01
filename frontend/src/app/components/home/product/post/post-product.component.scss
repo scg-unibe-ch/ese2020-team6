@@ -39,10 +39,6 @@
       grid-column-gap: $spaceing-xl;
     }
 
-    .temp-spaceing { // remove this class later, when working on custom components
-      margin-top: $spaceing-xl
-    }
-
     .action-wrapper {
       margin-top: $spaceing-xl;
       display: grid;
@@ -54,6 +50,10 @@
 
 // -------------------------- overlay -------------------------- //
 // (not gonna touch that -- kind regards sevi)
+
+.picture {
+  margin-top: $spaceing-l;
+}
 
 .buy-wrapper-wrapper {
   width: 100%;

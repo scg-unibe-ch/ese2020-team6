@@ -24,7 +24,11 @@ export class DateValidatorDirective extends RegexValidatorBase {
       currentDate.setMilliseconds(0);
       var difference = parsedDate.getTime() - currentDate.getTime();
       if (difference <= 0) {
-        return {errorMessage: {name: this.regExValidatorName, message: 'Please Choose a date in the future.'}}
+        return {
+          date: {
+          errorName: "ErrorName",
+          errorMessages: ['Please Choose a date in the future.']
+        }}
       } else return null;
     } else return regexResults;
   }

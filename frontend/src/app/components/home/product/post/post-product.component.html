@@ -27,7 +27,7 @@
           Picture
           <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
         </label>
-        <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
+        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="action-wrapper">
         <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
