@@ -1,0 +1,15 @@
+@import '../../../../../variables.scss';
+@import './search-product-component-theme.scss';
+
+@each $theme-name in $theme-names {
+    @include search-theme($theme-name);
+  }
+
+button {
+    margin-top: 2em;
+    left: 90%;
+}
+
+.search {
+    margin-bottom: 20em;
+}

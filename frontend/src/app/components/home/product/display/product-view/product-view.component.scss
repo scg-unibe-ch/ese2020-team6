@@ -26,3 +26,29 @@
 @each $theme-name in $theme-names {
   @include no-products-theme($theme-name);
 }
+
+.grid {
+  display: grid;
+  margin-bottom: 1em;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: $spaceing-xl;
+}
+
+.search-wrapper-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+
+.search-wrapper {
+  height: 50em;
+  width: 50em;
+  padding: 50px;
+  padding-top: 40px;
+  border: 2px solid #2f2f36;
+  background-color: #A284C2;
+  border-radius: 8px;
+}

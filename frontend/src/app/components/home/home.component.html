@@ -8,6 +8,9 @@
       <path d="M 0 -50 A 50 50 0 0 0 0 50 A 50 50 0 0 0 0 -50 Z M -9 9 L -30 9 A 2 2 0 0 1 -32 7 L -32 -7 A 2 2 0 0 1 -30 -9 L -9 -9 L -9 -30 A 2 2 0 0 1 -7 -32 L 7 -32 A 2 2 0 0 1 9 -30 L 9 -9 L 30 -9 A 2 2 0 0 1 32 -7 L 32 7 A 2 2 0 0 1 30 9 L 9 9 L 9 30 A 2 2 0 0 1 7 32 L -7 32 A 2 2 0 0 1 -9 30 Z"></path>
     </svg>
   </div>
+  <div style="position: absolute; left: 4em; top: 360px; width: 10px; height: 10px" 
+    (click)="show(tpl)">
+  </div>
 </div>
 
 <app-menu-bar [isHome]="true"></app-menu-bar>
@@ -15,3 +18,12 @@
 <div class="content-wrapper" [ngClass]="theme">
   <app-product-view [products]="products"></app-product-view>
 </div>
+
+<ng-template #tpl>
+  <div>
+  <img src="../../../assets/testImage3.png">
+  </div>
+</ng-template>
+
+
+

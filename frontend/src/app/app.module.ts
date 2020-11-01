@@ -136,6 +136,7 @@ import { NavigationElementComponent } from './components/user/profile/profile-na
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
+import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 
 @NgModule({
   declarations: [
@@ -210,6 +211,7 @@ import { DateComponent } from './components/custom-form/input/date/date.componen
     PreferencesComponent,
     ValidationComponent,
     DateComponent,
+    SearchProductComponent,
   ],
   imports: [
     BrowserModule,

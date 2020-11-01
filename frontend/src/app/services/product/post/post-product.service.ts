@@ -15,6 +15,7 @@ export class PostProductService {
   ) { }
 
   public postProduct(requestBuilder: PostProductRequestBuilder): Observable<PostProductResponseModel> {
-    return this.httpClient.post<PostProductResponseModel>(environment.endpointURL + 'product/post', requestBuilder.buildPostProductRequest());
+    return this.httpClient.post<PostProductResponseModel>(
+      environment.endpointURL + 'product/post', requestBuilder.buildPostProductRequest());
   }
 }

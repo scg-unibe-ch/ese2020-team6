@@ -147,4 +147,5 @@ productController.put('/update/:productId', verifyToken,
     }
 
     );
+
 export const ProductController: Router = productController;

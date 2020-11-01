@@ -26,7 +26,7 @@ export class ProductService {
     private postProductService: PostProductService,
     private getProductService: GetProductService,
     private reviewProductService: ReviewProductService,
-    private editProductService: EditProductService
+    private editProductService: EditProductService,
   ) { }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
