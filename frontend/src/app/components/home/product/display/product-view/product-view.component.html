@@ -4,9 +4,9 @@
     <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
   <div class="view">
-    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products" [path]="path"></app-product-view-list>
+    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="filteredProducts" [path]="path"></app-product-view-list>
     <ng-template #isGrid>
-      <app-product-view-grid class="product-display grid" [products]="products" [path]="path"></app-product-view-grid>
+      <app-product-view-grid class="product-display grid" [products]="filteredProducts" [path]="path"></app-product-view-grid>
     </ng-template>
   </div>
 </div>
@@ -18,7 +18,7 @@
 <ng-template #searchProducts>
   <div class="search-wrapper-wrapper">
     <div class="search-wrapper">
-          <app-search-product></app-search-product>
+          <app-search-product (criteriaChange)='updateCriteria($event)'></app-search-product>
     </div>
   </div>
 </ng-template>
