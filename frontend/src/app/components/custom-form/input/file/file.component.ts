@@ -23,9 +23,6 @@ export class FileComponent  extends ValueAccessorBase<String> {
   @Input()
   public accept: string;
 
-  @Input()
-  public size: number;
-
   @ViewChild(NgModel)
   model: NgModel;
 
