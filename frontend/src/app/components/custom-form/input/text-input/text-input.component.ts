@@ -15,6 +15,9 @@ export class TextInputComponent  extends ValueAccessorValidatorBase<String> {
   public type: string = "text";
 
   @Input()
+  public showError: boolean = true;
+
+  @Input()
   public placeholder: String;
 
   @ViewChild(NgModel)
