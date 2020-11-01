@@ -15,7 +15,7 @@ export class NumberInputComponent extends ValueAccessorValidatorBase<Number> {
   public type: string = "number";
 
   @Input()
-  public showError: boolean = true;;
+  public showError: boolean = true;
 
   @Input()
   public placeholder: String;

@@ -137,6 +137,7 @@ import { PreferencesComponent } from './components/user/profile/preferences/pref
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
+import { FileComponent } from './components/custom-form/input/file/file.component';
 
 @NgModule({
   declarations: [
@@ -212,6 +213,7 @@ import { SearchProductComponent } from './components/home/product/search-product
     ValidationComponent,
     DateComponent,
     SearchProductComponent,
+    FileComponent,
   ],
   imports: [
     BrowserModule,

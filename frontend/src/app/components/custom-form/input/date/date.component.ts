@@ -15,7 +15,7 @@ export class DateComponent  extends ValueAccessorValidatorBase<String> {
   public type: string = "datetime-local";
 
   @Input()
-  public showError: boolean = true;;
+  public showError: boolean = true;
 
   @Input()
   public placeholder: string;
