@@ -148,12 +148,4 @@ productController.put('/update/:productId', verifyToken,
 
     );
 
-    // just for testing
-    productController.get('/search', (req, res) => {
-        console.log(req.params, 'is there something???');
-        productService.getProductById(1)
-            .then((product) => res.send(product))
-            .catch((err) => res.status(500).send(err));
-    });
-
 export const ProductController: Router = productController;

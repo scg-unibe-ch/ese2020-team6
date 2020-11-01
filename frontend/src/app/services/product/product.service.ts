@@ -1,4 +1,3 @@
-import { SearchService } from './search/search.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';
@@ -28,7 +27,6 @@ export class ProductService {
     private getProductService: GetProductService,
     private reviewProductService: ReviewProductService,
     private editProductService: EditProductService,
-    private searchSerivce: SearchService
   ) { }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
@@ -81,10 +79,5 @@ export class ProductService {
 
   public rejectProduct(requestBuilder: RejectProductRequestBuilder): Observable<RejectProductResponseModel> {
     return this.reviewProductService.rejectProduct(requestBuilder);
-  }
-
-  public getSearchedProducts(criteria: any): Observable<Array<ProductModel>> {
-    console.log('Hellllllllllooooooooo where are u???????')
-    return this.searchSerivce.getSearchedProducts(criteria);
   }
 }
