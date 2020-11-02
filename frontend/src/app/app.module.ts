@@ -138,6 +138,8 @@ import { ValidationComponent } from './components/custom-form/input/validation/v
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
 
 @NgModule({
   declarations: [
@@ -214,6 +216,8 @@ import { FileComponent } from './components/custom-form/input/file/file.componen
     DateComponent,
     SearchProductComponent,
     FileComponent,
+    CheckoutComponent,
+    BuyItemComponent,
   ],
   imports: [
     BrowserModule,
