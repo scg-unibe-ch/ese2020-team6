@@ -4,7 +4,7 @@
     <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
   <div class="select">
-    <app-select-categories [cats]="catslist" [name]="name"></app-select-categories>
+    <app-select-categories class="select-categories" [cats]="catslist" [name]="name"></app-select-categories>
   </div>
   <div class="view">
     <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="filteredProducts" [path]="path"></app-product-view-list>
