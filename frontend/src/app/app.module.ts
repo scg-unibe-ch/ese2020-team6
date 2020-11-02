@@ -136,6 +136,7 @@ import { NavigationElementComponent } from './components/user/profile/profile-na
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
+import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 
 @NgModule({
   declarations: [
@@ -210,6 +211,7 @@ import { SearchProductComponent } from './components/home/product/search-product
     PreferencesComponent,
     ValidationComponent,
     SearchProductComponent,
+    SelectCategoriesComponent,
   ],
   imports: [
     BrowserModule,

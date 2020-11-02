@@ -1,3 +1,4 @@
+import { SelectCategoriesComponent } from './select-categories/select-categories.component';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
@@ -19,6 +20,9 @@ export class ProductViewComponent extends Themable {
   filteredProducts: Array<ProductModel>;
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
+  select: SelectCategoriesComponent;
+  public catslist: Array<String>=[];
+  public name;
   private displayList = true;
   showDropdown: boolean;
   newReload: boolean;
@@ -55,9 +59,12 @@ export class ProductViewComponent extends Themable {
   }
 
   public updateCriteria(event: SearchModel): void {
+    console.log("Wenn Search angewendet wird");
+    this.selectCategories(event);
     this.overlayRef.detach();
     const criteria = event;
     this.filteredProducts = this.products.filter(product => {
+      console.log(criteria.price+"     "+product.price);
       if (
         (criteria.category !== null && product.category !== criteria.category) ||
         (criteria.subcategory !== null && product.subcategory !== criteria.subcategory) ||
@@ -72,10 +79,22 @@ export class ProductViewComponent extends Themable {
     });
   }
 
+  public selectCategories(criteria: SearchModel): boolean {
+    console.log(criteria.category+"     "+criteria.subcategory);
+    if (criteria.category !== null){
+      this.name=criteria.category;
+      console.log(this.catslist);
+      this.catslist=[...this.catslist, this.name]
+      return true;
+    }
+    return false;
+  }
+
   public searchProduct(tpl): void {
     const configs = new OverlayConfig({
       hasBackdrop: true,
     });
+    console.log("Wenn Search Product gedrückt wird");
     configs.positionStrategy = this.overlay.position()
       .global()
       .centerHorizontally()
