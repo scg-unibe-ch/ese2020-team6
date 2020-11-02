@@ -119,6 +119,7 @@ export const routes = [
   {
     path: 'checkout',
     component: CheckoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'buy-item/:productId',
