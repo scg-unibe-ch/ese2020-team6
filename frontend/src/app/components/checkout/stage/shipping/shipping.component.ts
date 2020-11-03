@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'shipping-stage',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shipping.component.scss']
 })
 export class ShippingComponent implements OnInit {
+
+  @Input('something')
+  something;
 
   constructor() { }
 

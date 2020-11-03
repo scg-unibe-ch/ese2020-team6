@@ -14,8 +14,8 @@ import { CutUserModel, NullCutUser } from '../../models/user/cut-user.model';
 })
 export class CheckoutComponent implements OnInit {
 
-  private product: ProductModel = new NullProduct();
-  private seller: CutUserModel = new NullCutUser();
+  public product: ProductModel = new NullProduct();
+  public seller: CutUserModel = new NullCutUser();
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +35,11 @@ export class CheckoutComponent implements OnInit {
         })
       });
     });
+  }
+
+  get priceLabel(): string {
+    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
+    else return '$';
   }
 
 }

@@ -143,6 +143,7 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
 import { StageComponent } from './components/checkout/stage/stage.component';
 import { ShippingComponent } from './components/checkout/stage/shipping/shipping.component';
 import { StageIndicatorComponent } from './components/checkout/stage-indicator/stage-indicator.component';
+import { StagesDirective } from './components/checkout/stage/stages.directive';
 
 @NgModule({
   declarations: [
@@ -224,6 +225,7 @@ import { StageIndicatorComponent } from './components/checkout/stage-indicator/s
     StageComponent,
     ShippingComponent,
     StageIndicatorComponent,
+    StagesDirective,
   ],
   imports: [
     BrowserModule,
