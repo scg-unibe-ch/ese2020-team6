@@ -140,6 +140,9 @@ import { SearchProductComponent } from './components/home/product/search-product
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
+import { StageComponent } from './components/checkout/stage/stage.component';
+import { ShippingComponent } from './components/checkout/stage/shipping/shipping.component';
+import { StageIndicatorComponent } from './components/checkout/stage-indicator/stage-indicator.component';
 
 @NgModule({
   declarations: [
@@ -218,6 +221,9 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
+    StageComponent,
+    ShippingComponent,
+    StageIndicatorComponent,
   ],
   imports: [
     BrowserModule,

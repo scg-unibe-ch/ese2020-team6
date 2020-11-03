@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShippingComponent } from '../stage/shipping/shipping.component';
 
 @Component({
   selector: 'app-buy-item',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buy-item.component.scss']
 })
 export class BuyItemComponent implements OnInit {
+
+  private stages: number = 3;
+  private currentStage: number = 1;
 
   constructor() { }
 
