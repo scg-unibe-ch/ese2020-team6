@@ -58,17 +58,16 @@ export class ProductViewComponent extends Themable {
     }
   }
   public crossOffItem(cats: Array<ProductModel>){
+    console.log("Neue: "+this.filteredProducts);
     this.filteredProducts=cats;
     console.log("Neue: "+this.filteredProducts);
   }
 
   public updateCriteria(event: SearchModel): void {
     this.overlayRef.detach();
-    let IsInCatList : boolean=false;
     const criteria = event;
     this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-      IsInCatList=false;
       for (let entry of this.catslist) {
         if(entry.category==product.category){
           if (
@@ -83,9 +82,7 @@ export class ProductViewComponent extends Themable {
           }
         }
       }
-      if(IsInCatList==false){
-        return false;
-      }
+      return false;
     });
   }
 

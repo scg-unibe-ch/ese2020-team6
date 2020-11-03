@@ -4,7 +4,7 @@
     <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
   <div class="select">
-    <app-select-categories class="select-categories" [products]="products" [filteredProducts]="filteredProducts" [cats]="catslist" (removeCategoryByClicking)="crossOffItem($event)"></app-select-categories>
+    <app-select-categories class="select-categories" [products]="products" [filteredProducts]="filteredProducts" [cats]="catslist" (deleteRequest)="crossOffItem($event)"></app-select-categories>
   </div>
   <div class="view">
     <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="filteredProducts" [path]="path"></app-product-view-list>

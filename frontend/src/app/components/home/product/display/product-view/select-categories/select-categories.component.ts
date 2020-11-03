@@ -35,25 +35,30 @@ export class SelectCategoriesComponent extends Themable {
   }
   public updateFilterProduct(){
     console.log("Vorher:  "+this.filteredProducts);
-    this.filteredProducts=this.products.filter(product => {
-      for (let entry of this.cats) {
-        console.log("Inder Liste ist:  "+ entry.category);
-        console.log("Product Category:  "+ product.category);
-        if(entry.category==product.category){
-          if (
-            (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
-            (entry.price !== null && product.price > entry.price) ||
-            (entry.status !== null && entry.status !== product.status) ||
-            (entry.location !== null && entry.location !== product.location) ||
-            (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
-          ) {
-          }else{
-            return true;
+    if(this.cats.length!=0){
+      this.filteredProducts=this.products.filter(product => {
+        for (let entry of this.cats) {
+          console.log("Inder Liste ist:  "+ entry.category);
+          console.log("Product Category:  "+ product.category);
+          if(entry.category==product.category){
+            if (
+              (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
+              (entry.price !== null && product.price > entry.price) ||
+              (entry.status !== null && entry.status !== product.status) ||
+              (entry.location !== null && entry.location !== product.location) ||
+              (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
+            ) {
+            }else{
+              return true;
+            }
           }
         }
-      }
-      return false;
+        return false;
 
-    });
+      });
+    }else{
+      this.filteredProducts=this.products;
+    }
+
   }
 }
