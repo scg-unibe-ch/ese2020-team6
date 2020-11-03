@@ -139,11 +139,12 @@ import { DateComponent } from './components/custom-form/input/date/date.componen
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
-import { StageComponent } from './components/checkout/stage/stage.component';
-import { ShippingComponent } from './components/checkout/stage/shipping/shipping.component';
-import { StageIndicatorComponent } from './components/checkout/stage-indicator/stage-indicator.component';
-import { StagesDirective } from './components/checkout/stage/stages.directive';
+import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
+import { StageComponent } from './components/checkout/stagable/stage/stage.component';
+import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
+import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
+import { StagesDirective } from './components/checkout/stagable/stage/stages.directive';
+import { StagableComponent } from './components/checkout/stagable/stagable.component';
 
 @NgModule({
   declarations: [
@@ -226,6 +227,7 @@ import { StagesDirective } from './components/checkout/stage/stages.directive';
     ShippingComponent,
     StageIndicatorComponent,
     StagesDirective,
+    StagableComponent,
   ],
   imports: [
     BrowserModule,

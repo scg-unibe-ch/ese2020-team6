@@ -10,7 +10,7 @@ import { EditProductComponent } from './../components/home/product/product-infor
 import { ReviewProductComponent } from './../components/home/product/product-information/review-product/review-product.component';
 
 import { CheckoutComponent } from './../components/checkout/checkout.component';
-import { BuyItemComponent } from './../components/checkout/buy-item/buy-item.component';
+import { BuyItemComponent } from './../components/checkout/stagable/buy-item/buy-item.component';
 
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';

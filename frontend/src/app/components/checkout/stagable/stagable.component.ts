@@ -1,38 +1,36 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { ShippingComponent } from '../stage/shipping/shipping.component';
+import { Themable } from '../../../models/theme/themable';
+import { ThemeService } from '../../../services/theme/theme.service';
 import { StageModel } from '../../../models/checkout/stage/stage.model'
-import { StagesDirective } from '../stage/stages.directive';
+import { StagesDirective } from './stage/stages.directive';
 
 @Component({
-  selector: 'app-buy-item',
-  templateUrl: './buy-item.component.html',
-  styleUrls: ['./buy-item.component.scss']
+  selector: 'app-stagable',
+  template: ''
 })
-export class BuyItemComponent implements OnInit {
+export class StagableComponent extends Themable implements OnInit {
 
   @ViewChild(StagesDirective, {static: true})
   stagesDirective: StagesDirective;
 
-  public stages: Array<StageModel> = [
-    {
-      title: 'Shipping',
-      component: ShippingComponent,
-      componentRef: null
-    },
-    {
-      title: 'Shipping',
-      component: ShippingComponent,
-      componentRef: null
-    }
-  ]
-
-  public currentStage: StageModel = this.stages[0];
+  private stages: Array<StageModel> = new Array<StageModel>();
+  private currentStage: StageModel = this.stages[0];
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+    private componentFactoryResolver: ComponentFactoryResolver,
+    themeService: ThemeService,
+    stages: Array<StageModel>
+  ) {
+    super(themeService);
 
-  ngOnInit(): void {
+    if (stages.length < 2) throw "You need to have at least two stages!";
+    else {
+      this.stages = stages;
+      this.currentStage = this.stages[0];
+    }
+  }
+
+  public ngOnInit(): void {
     const viewContainerRef = this.stagesDirective.viewContainerRef;
     viewContainerRef.clear();
 
