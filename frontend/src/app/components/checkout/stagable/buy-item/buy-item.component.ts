@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular
 import { ShippingComponent } from '../stage/shipping/shipping.component';
 import { StageModel } from '../../../../models/checkout/stage/stage.model'
 import { StagesDirective } from '../stage/stages.directive';
-import { StagableComponent } from '../stagable.component';
+import { Stagable } from '../stagable';
 import { ThemeService } from '../../../../services/theme/theme.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ThemeService } from '../../../../services/theme/theme.service';
   templateUrl: '../stagable.component.html',
   styleUrls: ['./buy-item.component.scss']
 })
-export class BuyItemComponent extends StagableComponent {
+export class BuyItemComponent extends Stagable implements OnInit {
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
@@ -26,5 +26,17 @@ export class BuyItemComponent extends StagableComponent {
       component: ShippingComponent,
       componentRef: null
     }]);
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.stages[0].componentRef.instance.logger.subscribe((data: any) => {
+      this.logData();
+    });
+
+  }
+
+  public logData(): void {
+    console.log(this.getAllValues(this.dataStorage));
   }
 }

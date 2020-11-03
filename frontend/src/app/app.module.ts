@@ -140,11 +140,9 @@ import { SearchProductComponent } from './components/home/product/search-product
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
-import { StageComponent } from './components/checkout/stagable/stage/stage.component';
 import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
 import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
 import { StagesDirective } from './components/checkout/stagable/stage/stages.directive';
-import { StagableComponent } from './components/checkout/stagable/stagable.component';
 
 @NgModule({
   declarations: [
@@ -223,11 +221,9 @@ import { StagableComponent } from './components/checkout/stagable/stagable.compo
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
-    StageComponent,
     ShippingComponent,
     StageIndicatorComponent,
     StagesDirective,
-    StagableComponent,
   ],
   imports: [
     BrowserModule,
