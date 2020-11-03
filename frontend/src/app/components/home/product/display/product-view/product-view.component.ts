@@ -58,9 +58,8 @@ export class ProductViewComponent extends Themable {
     }
   }
   public crossOffItem(cats: Array<ProductModel>){
-    console.log("Neue: "+this.filteredProducts);
+
     this.filteredProducts=cats;
-    console.log("Neue: "+this.filteredProducts);
   }
 
   public updateCriteria(event: SearchModel): void {

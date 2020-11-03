@@ -29,17 +29,13 @@ export class SelectCategoriesComponent extends Themable {
   public removeCategoryByClicking(index : number,){
     this.cats.splice(index,1);
     this.updateFilterProduct();
-    console.log("Nachher:  "+this.filteredProducts);
     this.deleteRequest.emit(this.filteredProducts);
 
   }
   public updateFilterProduct(){
-    console.log("Vorher:  "+this.filteredProducts);
     if(this.cats.length!=0){
       this.filteredProducts=this.products.filter(product => {
         for (let entry of this.cats) {
-          console.log("Inder Liste ist:  "+ entry.category);
-          console.log("Product Category:  "+ product.category);
           if(entry.category==product.category){
             if (
               (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
