@@ -8,7 +8,7 @@ import { ThemeService } from '../../../../services/theme/theme.service';
 @Component({
   selector: 'app-buy-item',
   templateUrl: '../stagable.component.html',
-  styleUrls: ['./buy-item.component.scss']
+  styleUrls: ['../stagable.component.scss']
 })
 export class BuyItemComponent extends Stagable implements OnInit {
 

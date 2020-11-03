@@ -1,5 +1,13 @@
-<div class="header">
-  {{product.title}} with Product ID #{{product.productId}} for {{product.price}}{{priceLabel}}
+<div class="checkout-wrapper" [ngClass]="theme">
+  <div class="checkout">
+    <div class="header">
+      Product
+      <span class="product-id">#{{product.productId}}</span>
+      for
+      <span>{{product.price}}{{priceLabel}}</span>
+    </div>
+    <div class="stagable">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-
-<router-outlet></router-outlet>

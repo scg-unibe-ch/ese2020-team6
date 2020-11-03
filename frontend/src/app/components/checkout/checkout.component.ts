@@ -5,6 +5,8 @@ import { UserService } from '../../services/user/user.service';
 import { CheckoutRouteParametersModel } from '../../models/checkout/checkout-route-parameters.model';
 import { ProductModel, NullProduct } from '../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../models/user/cut-user.model';
+import { ThemeService } from '../../services/theme/theme.service';
+import { Themable } from '../../models/theme/themable';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { CutUserModel, NullCutUser } from '../../models/user/cut-user.model';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent extends Themable implements OnInit {
 
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();
@@ -20,8 +22,11 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    themeService: ThemeService
+  ) {
+    super(themeService);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((parameters: CheckoutRouteParametersModel) => {
