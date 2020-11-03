@@ -14,8 +14,8 @@ export class Stagable extends Themable implements OnInit {
   @ViewChild(StagesDirective, {static: true})
   stagesDirective: StagesDirective;
 
-  protected stages: Array<StageModel> = new Array<StageModel>();
-  private currentStageIndex: number = 0;
+  public stages: Array<StageModel> = new Array<StageModel>();
+  public currentStageIndex: number = 0;
   private currentStage: StageModel = this.stages[this.currentStageIndex];
 
   protected stagesEmitters: { next: Array<[EventEmitter<void>, number]>, previous: Array<[EventEmitter<void>, number]> } = {

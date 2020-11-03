@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { StageModel } from '../../../../models/checkout/stage/stage.model'
+
 
 @Component({
   selector: 'stage-indicator',
@@ -6,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stage-indicator.component.scss']
 })
 export class StageIndicatorComponent implements OnInit {
+
+  @Input()
+  stages: Array<StageModel> = new Array<StageModel>();
+
+  @Input()
+  currentStageIndex: number;
 
   constructor() { }
 
