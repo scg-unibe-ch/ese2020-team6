@@ -21,8 +21,8 @@ export class ProductViewComponent extends Themable {
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
   select: SelectCategoriesComponent;
-  public catslist: Array<String>=[];
-  public name;
+  public catslist: Array<SearchModel>=[];
+  public CategoryName;
   private displayList = true;
   showDropdown: boolean;
   newReload: boolean;
@@ -57,44 +57,43 @@ export class ProductViewComponent extends Themable {
       return false;
     }
   }
+  public crossOffItem(cats: Array<ProductModel>){
+    this.filteredProducts=cats;
+    console.log("Neue: "+this.filteredProducts);
+  }
 
   public updateCriteria(event: SearchModel): void {
-    console.log("Wenn Search angewendet wird");
-    this.selectCategories(event);
     this.overlayRef.detach();
+    let IsInCatList : boolean=false;
     const criteria = event;
+    this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-      console.log(criteria.price+"     "+product.price);
-      if (
-        (criteria.category !== null && product.category !== criteria.category) ||
-        (criteria.subcategory !== null && product.subcategory !== criteria.subcategory) ||
-        (criteria.price !== null && product.price > criteria.price) ||
-        (criteria.status !== null && product.status !== criteria.status) ||
-        (criteria.location !== null && product.location !== criteria.location) ||
-        (criteria.deliverable !== null && product.isDeliverable !== criteria.deliverable)
-      ) {
+      IsInCatList=false;
+      for (let entry of this.catslist) {
+        if(entry.category==product.category){
+          if (
+            (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
+            (entry.price !== null && product.price > entry.price) ||
+            (entry.status !== null && entry.status !== product.status) ||
+            (entry.location !== null && entry.location !== product.location) ||
+            (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
+          ) {
+          }else{
+            return true;
+          }
+        }
+      }
+      if(IsInCatList==false){
         return false;
       }
-      return true;
     });
   }
 
-  public selectCategories(criteria: SearchModel): boolean {
-    console.log(criteria.category+"     "+criteria.subcategory);
-    if (criteria.category !== null){
-      this.name=criteria.category;
-      console.log(this.catslist);
-      this.catslist=[...this.catslist, this.name]
-      return true;
-    }
-    return false;
-  }
 
   public searchProduct(tpl): void {
     const configs = new OverlayConfig({
       hasBackdrop: true,
     });
-    console.log("Wenn Search Product gedrückt wird");
     configs.positionStrategy = this.overlay.position()
       .global()
       .centerHorizontally()
