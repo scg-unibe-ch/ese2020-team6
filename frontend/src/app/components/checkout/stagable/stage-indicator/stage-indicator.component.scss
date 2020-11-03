@@ -1,0 +1,87 @@
+@import '../../../../../variables.scss';
+@import './stage-indicator.component.theme.scss';
+
+.stage-indicator {
+  height: auto;
+  width: 100%;
+}
+
+$max-length: 4;
+
+@for $lenght from 2 through $max-length {
+  .length-#{$lenght} {
+    $stop-count: $lenght;
+
+    padding: $spaceing-s;
+
+    .titles {
+      display: grid;
+      grid-template-columns: repeat(3 * $stop-count - 2, 1fr);
+      margin-bottom: $spaceing-xs;
+
+      @for $stop from 0 through $stop-count {
+        .text-#{$stop} {
+          grid-column-start: $stop * 3 + 1;
+          grid-column-end: $stop * 3 + 2;
+          grid-row: 1 / 2;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+
+        }
+      }
+    }
+
+    .graph {
+      display: grid;
+      grid-template-columns: repeat(15 * $stop-count - 10, 1fr);
+
+      @for $stop from 0 through $stop-count {
+        .circle-#{$stop} {
+          grid-column-start: $stop * 15 + 3;
+          grid-column-end: $stop * 15 + 4;
+          grid-row: 2 / 3;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+
+          div {
+            width: 50%;
+            padding-top: calc(50% - 4px);
+            border-radius: 50%;
+            border: 2px solid;
+          }
+        }
+      }
+
+      @for $connector from 0 through $stop-count - 1 {
+        .line-#{$connector} {
+          grid-column-start: $connector * 15 + 4;
+          grid-column-end: $connector * 15 + 18;
+          grid-row: 2 / 3;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+
+          div {
+            border-bottom: 2px solid;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include stage-indicator-theme($theme-name);
+}
