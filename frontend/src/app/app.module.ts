@@ -142,8 +142,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
 import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
 import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
-import { StagesDirective } from './components/checkout/stagable/stage/stages.directive';
-import { StageContentComponent } from './components/checkout/stagable/stage/stage-content.component';
+import { PaymentMethodComponent } from './components/checkout/stagable/stage/payment-method/payment-method.component';
+import { StageComponent } from './components/checkout/stagable/stage/stage.component';
+import { StagesDirective } from './components/checkout/stagable/stages.directive';
 
 @NgModule({
   declarations: [
@@ -225,7 +226,8 @@ import { StageContentComponent } from './components/checkout/stagable/stage/stag
     ShippingComponent,
     StageIndicatorComponent,
     StagesDirective,
-    StageContentComponent,
+    PaymentMethodComponent,
+    StageComponent
   ],
   imports: [
     BrowserModule,

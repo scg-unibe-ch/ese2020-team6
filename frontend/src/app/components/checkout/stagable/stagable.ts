@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, EventEmitter, Type } from '@angular/core';
+import { Directive, OnInit, ViewChild, ComponentFactoryResolver, EventEmitter, Type } from '@angular/core';
 import { Themable } from '../../../models/theme/themable';
 import { ThemeService } from '../../../services/theme/theme.service';
 import { StageModel } from '../../../models/checkout/stage/stage.model'
-import { StagesDirective } from './stage/stages.directive';
-import { Stage } from './stage/stage';
+import { StagesDirective } from './stages.directive';
+import { StageNavigationDataEmitter } from './stage/stage-navigation-data-emitter.directive';
 
-@Component({
-  selector: 'app-stagable',
-  template: ''
+@Directive({
+  selector: '[stagable]'
 })
 export class Stagable extends Themable implements OnInit {
 
@@ -45,7 +44,7 @@ export class Stagable extends Themable implements OnInit {
     viewContainerRef.clear();
 
     this.stages.forEach((stage: StageModel, stageIndex: number) => {
-      const stageComponent: Type<Stage<any>> = stage.component;
+      const stageComponent: Type<StageNavigationDataEmitter<any>> = stage.component;
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(stageComponent);
 
       stage.componentRef = viewContainerRef.createComponent(componentFactory);

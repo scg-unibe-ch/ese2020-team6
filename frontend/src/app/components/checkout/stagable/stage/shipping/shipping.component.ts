@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Stage } from '../stage';
+import { StageNavigationDataEmitter } from '../stage-navigation-data-emitter.directive';
 
 @Component({
   selector: 'shipping-stage',
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss']
 })
-export class ShippingComponent extends Stage<string> {
+export class ShippingComponent extends StageNavigationDataEmitter<string> {
 
   public value: string;
 
@@ -17,11 +17,16 @@ export class ShippingComponent extends Stage<string> {
     super();
   }
 
+  public nextStage(): void {
+    super.nextStage();
+  }
+
   protected getData(): string {
     return this.value;
   }
 
   public logData(): void {
+    this.emitData();
     this.logger.emit();
   }
 
