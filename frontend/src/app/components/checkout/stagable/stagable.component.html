@@ -1,6 +1,8 @@
-<div class="stage-indicator">
-  <stage-indicator [stages]="stages" [currentStageIndex]="currentStageIndex"></stage-indicator>
-</div>
-<div class="stages">
-  <ng-template stages></ng-template>
+<div class="stagable">
+  <div class="stage-indicator">
+    <stage-indicator [stages]="stages" [currentStageIndex]="currentStageIndex"></stage-indicator>
+  </div>
+  <div class="stages">
+    <ng-template stagesBox></ng-template>
+  </div>
 </div>

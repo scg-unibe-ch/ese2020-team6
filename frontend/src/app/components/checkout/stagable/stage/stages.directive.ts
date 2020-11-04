@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[stages]'
+  selector: '[stagesBox]'
 })
 export class StagesDirective {
 
