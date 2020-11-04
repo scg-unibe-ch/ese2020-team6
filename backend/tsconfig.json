@@ -2,6 +2,10 @@
 "compilerOptions": {
   "moduleResolution": "node",
   "module": "commonjs",
+  "types": ["node"],
+  "typeRoots": [
+    "../node_modules/@types"
+  ],
   "target": "es6",
   "esModuleInterop": true,
   "noImplicitAny": true,

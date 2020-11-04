@@ -137,9 +137,11 @@ import { PreferencesComponent } from './components/user/profile/preferences/pref
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
+import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
+
 
 @NgModule({
   declarations: [
@@ -215,9 +217,11 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     ValidationComponent,
     DateComponent,
     SearchProductComponent,
+    SelectCategoriesComponent,
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
+
   ],
   imports: [
     BrowserModule,

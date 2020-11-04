@@ -1,3 +1,4 @@
+import { SelectCategoriesComponent } from './select-categories/select-categories.component';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
@@ -19,6 +20,9 @@ export class ProductViewComponent extends Themable {
   filteredProducts: Array<ProductModel>;
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
+  select: SelectCategoriesComponent;
+  public catslist: Array<SearchModel>=[];
+  public CategoryName;
   private displayList = true;
   showDropdown: boolean;
   newReload: boolean;
@@ -53,24 +57,34 @@ export class ProductViewComponent extends Themable {
       return false;
     }
   }
+  public crossOffItem(cats: Array<ProductModel>){
+
+    this.filteredProducts=cats;
+  }
 
   public updateCriteria(event: SearchModel): void {
     this.overlayRef.detach();
     const criteria = event;
+    this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-      if (
-        (criteria.category !== null && product.category !== criteria.category) ||
-        (criteria.subcategory !== null && product.subcategory !== criteria.subcategory) ||
-        (criteria.price !== null && product.price > criteria.price) ||
-        (criteria.status !== null && product.status !== criteria.status) ||
-        (criteria.location !== null && product.location !== criteria.location) ||
-        (criteria.deliverable !== null && product.isDeliverable !== criteria.deliverable)
-      ) {
-        return false;
+      for (let entry of this.catslist) {
+        if(entry.category==product.category){
+          if (
+            (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
+            (entry.price !== null && product.price > entry.price) ||
+            (entry.status !== null && entry.status !== product.status) ||
+            (entry.location !== null && entry.location !== product.location) ||
+            (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
+          ) {
+          }else{
+            return true;
+          }
+        }
       }
-      return true;
+      return false;
     });
   }
+
 
   public searchProduct(tpl): void {
     const configs = new OverlayConfig({
