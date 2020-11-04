@@ -25,12 +25,18 @@
 						"aot": true,
 						"assets": [
 							"src/favicon.ico",
-							"src/assets"
+							"src/assets",
+							{
+					      "glob": "**/*",
+					      "input": "node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
+					      "output": "./assets/"
+					   	}
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
-							"src/variables.scss"
+							"src/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css"
 						],
 						"scripts": []
 					},
@@ -91,12 +97,18 @@
 						"karmaConfig": "karma.conf.js",
 						"assets": [
 							"src/favicon.ico",
-							"src/assets"
+							"src/assets",
+							{
+					      "glob": "**/*",
+					      "input": "node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
+					      "output": "./assets/"
+					   	}
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
-							"src/variables.scss"
+							"src/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css"
 						],
 						"scripts": []
 					}
