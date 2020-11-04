@@ -36,9 +36,13 @@
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
 							"src/variables.scss",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+            	"esri-leaflet-geocoder"
+            ],
 					},
 					"configurations": {
 						"production": {
@@ -108,9 +112,13 @@
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
 							"src/variables.scss",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+            	"esri-leaflet-geocoder"
+            ],
 					}
 				},
 				"lint": {
