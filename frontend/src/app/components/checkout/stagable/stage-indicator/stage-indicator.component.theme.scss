@@ -12,35 +12,45 @@
     .graph {
       .circle-wrapper {
         &.default {
-          div {
-            border-color: $default-color;
+          svg {
+            circle {
+              stroke: $default-color;
+            }
           }
         }
 
         &.visited {
-          div {
-            background: $visited-color;
-            border-color: $visited-color;
+          svg {
+            circle {
+              stroke: $visited-color;
+              fill: $visited-color;
+            }
           }
         }
 
         &.active {
-          div {
-            border-color: $active-color;
+          svg {
+            circle {
+              stroke: $active-color;
+            }
           }
         }
       }
 
       .line-wrapper {
         &.default {
-          div {
-            border-color: $default-color;
+          svg {
+            line {
+              stroke: $default-color;
+            }
           }
         }
 
         &.visited {
-          div {
-            border-color: $visited-color;
+          svg {
+            line {
+              stroke: $visited-color;
+            }
           }
         }
       }
