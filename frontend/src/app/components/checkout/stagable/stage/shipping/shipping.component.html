@@ -1,4 +1,4 @@
-<button type="button" name="button" (click)="previousStage()">Previous</button>
-<button type="button" name="button" (click)="nextStage()">Next</button>
-<button type="button" name="button" (click)="logData()">Log Data</button>
-<input type="text" [(ngModel)]="value"/>
+<stage-content>
+  <button type="button" name="button" (click)="logData()">Log Data</button>
+  <input type="text" [(ngModel)]="value"/>
+</stage-content>

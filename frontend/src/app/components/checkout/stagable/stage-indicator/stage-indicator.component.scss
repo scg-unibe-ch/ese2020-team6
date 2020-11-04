@@ -6,11 +6,9 @@
   width: 100%;
 }
 
-$max-length: 4;
-
-@for $lenght from 2 through $max-length {
-  .length-#{$lenght} {
-    $stop-count: $lenght;
+@for $size from 2 through $stages-max-size {
+  .length-#{$size} {
+    $stop-count: $size;
 
     padding: $spaceing-s;
 

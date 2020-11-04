@@ -143,6 +143,7 @@ import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-it
 import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
 import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
 import { StagesDirective } from './components/checkout/stagable/stage/stages.directive';
+import { StageContentComponent } from './components/checkout/stagable/stage/stage-content.component';
 
 @NgModule({
   declarations: [
@@ -224,6 +225,7 @@ import { StagesDirective } from './components/checkout/stagable/stage/stages.dir
     ShippingComponent,
     StageIndicatorComponent,
     StagesDirective,
+    StageContentComponent,
   ],
   imports: [
     BrowserModule,

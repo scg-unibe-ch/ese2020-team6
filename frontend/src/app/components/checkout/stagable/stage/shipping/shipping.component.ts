@@ -6,7 +6,7 @@ import { Stage } from '../stage';
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss']
 })
-export class ShippingComponent extends Stage<string> implements OnInit {
+export class ShippingComponent extends Stage<string> {
 
   public value: string;
 
@@ -15,9 +15,6 @@ export class ShippingComponent extends Stage<string> implements OnInit {
 
   constructor() {
     super();
-  }
-
-  ngOnInit(): void {
   }
 
   protected getData(): string {

@@ -1,10 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { StageContentComponent } from './stage-content.component';
+import { StageNavigationEmitter } from './stage-navigation-emitter';
 
 @Component({
   selector: 'stage',
   template: ''
 })
-export abstract class Stage<T> implements OnInit {
+export abstract class Stage<T> extends StageNavigationEmitter implements AfterViewInit {
 
   @Output()
   nextStageEmitter: EventEmitter<void> = new EventEmitter<void>();
@@ -15,18 +17,17 @@ export abstract class Stage<T> implements OnInit {
   @Output()
   dataEmitter: EventEmitter<T> = new EventEmitter<T>();
 
-  constructor() { }
+  @ViewChild(StageContentComponent)
+  stageContent: StageContentComponent;
 
-  ngOnInit(): void {
+  public ngAfterViewInit(): void {
+    this.stageContent.nextStageEmitter.subscribe(() => this.nextStage());
+    this.stageContent.previousStageEmitter.subscribe(() => this.previousStage());
   }
 
   public nextStage(): void {
-    this.nextStageEmitter.emit();
+    super.nextStage();
     this.dataEmitter.emit(this.getData());
-  }
-
-  public previousStage(): void {
-    this.previousStageEmitter.emit();
   }
 
   protected abstract getData(): T;
