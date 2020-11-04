@@ -39,8 +39,18 @@
       grid-column-gap: $spaceing-xl;
     }
 
-    .temp-spaceing { // remove this class later, when working on custom components
-      margin-top: $spaceing-xl
+    .picture {
+      display: grid;
+      grid-template-columns: auto auto;
+      width: 100%;
+
+      img {
+        margin: 0;
+        margin-top: calc(#{$spaceing-l} + 1em);
+        max-height: 5em;
+        max-width: 5em;
+        border-radius: $border-radius;
+      }
     }
 
     .action-wrapper {
@@ -107,17 +117,4 @@ h1 {
 
 @each $theme-name in $theme-names {
   @include post-theme($theme-name);
-}
-
-.image {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 5em;
-  width: 5em;
-}
-
-.imageText {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: #0eba91;
 }
