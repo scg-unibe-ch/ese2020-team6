@@ -13,18 +13,10 @@
       &.ng-dirty {
         border-color: $error-warn;
       }
-
-      &:focus, &:valid {
-        + {
-          label {
-            color: $text-color;
-          }
-        }
-      }
     }
 
     label {
-      color: rgba($text-color, 0.5);
+      color: $text-color;
     }
 
     .error-message {

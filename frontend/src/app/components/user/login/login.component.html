@@ -6,7 +6,7 @@
     </div>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
-      <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator></app-password-input>
+      <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator [showError]="false"></app-password-input>
       <div class="action-wrapper">
         <button type="button" [ngClass]="'button-empty-' + theme" [routerLink]="['/user/register']">Create Account</button>
         <button [ngClass]="'button-' + theme" [disabled]="!loginForm.valid">Sign In</button>

@@ -1,0 +1,31 @@
+@mixin custom-input-theme($theme-name) {
+  .input-wrapper.#{$theme-name} {
+
+    $text-color: get-theme($theme-name, bright);
+    $btn-hover-bg: get-theme($theme-name, light);
+    $btn-hover-color: get-theme($theme-name, dark);
+    $btn-default-bg: get-theme($theme-name, highlight);
+    $btn-default-color: get-theme($theme-name, bright);
+
+
+    input, textarea {
+      color: $text-color;
+
+      &::before {
+        background: $btn-default-bg;
+        color: $btn-default-color;
+      }
+
+      &:hover {
+        &::before {
+          background: $btn-hover-bg;
+          color: $btn-hover-color;
+        }
+      }
+    }
+
+    label {
+      color: $text-color;
+    }
+  }
+}
