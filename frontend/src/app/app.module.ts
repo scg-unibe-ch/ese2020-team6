@@ -145,6 +145,9 @@ import { StageIndicatorComponent } from './components/checkout/stagable/stage-in
 import { PaymentMethodComponent } from './components/checkout/stagable/stage/payment-method/payment-method.component';
 import { StageComponent } from './components/checkout/stagable/stage/stage.component';
 import { StagesDirective } from './components/checkout/stagable/stages.directive';
+import { ThemeDirective } from './models/theme/theme.directive';
+import { ButtonDirective } from './models/theme/button/button.directive';
+import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
 
 @NgModule({
   declarations: [
@@ -227,7 +230,10 @@ import { StagesDirective } from './components/checkout/stagable/stages.directive
     StageIndicatorComponent,
     StagesDirective,
     PaymentMethodComponent,
-    StageComponent
+    StageComponent,
+    ThemeDirective,
+    ButtonDirective,
+    ButtonEmptyDirective
   ],
   imports: [
     BrowserModule,
