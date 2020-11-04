@@ -1,0 +1,18 @@
+@import '../../../../../variables.scss';
+
+.stage-content-wrapper {
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(1fr, 4fr));
+
+  .stage-content {
+  }
+
+  .stage-navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

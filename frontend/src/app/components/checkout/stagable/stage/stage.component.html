@@ -1,4 +1,8 @@
 <div class="stage-content-wrapper">
-  <ng-content select="[content]"></ng-content>
-  <ng-content select="[navigation]"></ng-content>
+  <div content class="stage-content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+  <div navigation class="stage-navigation">
+    <ng-content select="[navigation]"></ng-content>
+  </div>
 </div>

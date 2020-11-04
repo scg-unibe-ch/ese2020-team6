@@ -1,10 +1,7 @@
 <stage>
-  <div content class="stage-content">
-    <button type="button" name="button" (click)="logData()">Log Data</button>
-    <input type="text" [(ngModel)]="value"/>
-  </div>
-  <div navigation class="stage-navigation">
-    <button type="button" name="button" (click)="previousStage()">Previous</button>
-    <button type="button" name="button" (click)="nextStage()">Next</button>
-  </div>
+  <button content type="button" name="button" (click)="logData()">Log Data</button>
+  <input content type="text" [(ngModel)]="value"/>
+  
+  <button navigation type="button" name="button" (click)="previousStage()">Previous</button>
+  <button navigation type="button" name="button" (click)="nextStage()">Next</button>
 </stage>

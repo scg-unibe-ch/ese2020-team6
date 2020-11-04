@@ -17,10 +17,6 @@ export class ShippingComponent extends StageNavigationDataEmitter<string> {
     super();
   }
 
-  public nextStage(): void {
-    super.nextStage();
-  }
-
   protected getData(): string {
     return this.value;
   }
