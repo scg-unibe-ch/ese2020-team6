@@ -3,15 +3,15 @@ import { NG_VALIDATORS } from '@angular/forms';
 import { RegexValidatorBase , validatorRegex } from '../regex-validator-base';
 
 @Directive({
-  selector: '[appPasswordValidator]',
+  selector: '[appDateValidator]',
   providers: [{
     provide: NG_VALIDATORS,
-    useExisting: PasswordValidatorDirective,
+    useExisting: DateValidatorDirective,
     multi: true
   }]
 })
-export class PasswordValidatorDirective  extends RegexValidatorBase {
+export class DateValidatorDirective extends RegexValidatorBase {
   constructor() {
-    super(validatorRegex.password);
+    super(validatorRegex.date);
   }
 }

@@ -1,4 +1,5 @@
 export interface RegexValidatorModel {
+  regex: RegExp;
   name: string;
-  constraints: Object;
+  errorMessage: string;
 }

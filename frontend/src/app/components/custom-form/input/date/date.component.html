@@ -1,9 +1,0 @@
-<div class="input-wrapper" [ngClass]="classes">
-  <label>
-    {{placeholder}}
-  </label>
-  <input [type]="type" required="" (blur)="touch()" (focus)="focus()" [(ngModel)]="value" [name]="placeholder" ngModel #input="ngModel" [min]="minDate" [max]="maxDate"/>
-  <div *ngIf="showError && focused && invalid && dirty" class="error-message">
-    {{firstMessage}}
-  </div>
-</div>

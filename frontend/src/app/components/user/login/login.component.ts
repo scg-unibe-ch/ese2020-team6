@@ -7,7 +7,6 @@ import { LoginUserResponseModel } from '../../../models/response/user/login/logi
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { UserService } from '../../../services/user/user.service';
 import { validatorRegex } from '../../custom-form/validators/regex/regex-validator-base';
-import { Constraints } from '../../custom-form/validators/regex/constraint';
 import { Themable } from '../../../models/theme/themable';
 import { ThemeService } from '../../../services/theme/theme.service';
 
@@ -48,12 +47,12 @@ export class LoginComponent extends Themable implements LoginUserRequestBuilder{
 
   public buildLoginUserRequest(): LoginUserRequestModel {
     const usernameOrEmail = this.values.usernameEmail;
-    const emailValidatorConstraints = validatorRegex.email.constraints;
+    const emailValidatorInformation = validatorRegex.email;
 
     return {
       queryValue: this.values.usernameEmail,
       password: this.values.password,
-      isUsername: !Constraints.recursiveTest(emailValidatorConstraints, usernameOrEmail)
+      isUsername: !emailValidatorInformation.regex.test(usernameOrEmail.toString())
     };
   }
 
@@ -63,6 +62,6 @@ export class LoginComponent extends Themable implements LoginUserRequestBuilder{
   }
 
   private loginError(err: any): void {
-    this.loginErrorMessage = err.error.message;
+    setTimeout(() => this.loginErrorMessage = err.error.message, 250);
   }
 }

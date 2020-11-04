@@ -15,9 +15,6 @@ export class PasswordInputComponent extends ValueAccessorValidatorBase<String> {
   public type: string = "password";
 
   @Input()
-  public showError: boolean = true;
-
-  @Input()
   public placeholder: String;
 
   @ViewChild(NgModel)

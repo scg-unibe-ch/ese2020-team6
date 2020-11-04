@@ -9,9 +9,6 @@ import { PurchaseProductComponent } from './../components/home/product/product-i
 import { EditProductComponent } from './../components/home/product/product-information/edit-product/edit-product.component';
 import { ReviewProductComponent } from './../components/home/product/product-information/review-product/review-product.component';
 
-import { CheckoutComponent } from './../components/checkout/checkout.component';
-import { BuyItemComponent } from './../components/checkout/buy-item/buy-item.component';
-
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';
 import { AuthAdminGuard } from './guards/auth-guard/auth-admin.guard';
@@ -113,17 +110,6 @@ export const routes = [
             }
           }
         ]
-      }
-    ]
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'buy-item/:productId',
-        component: BuyItemComponent
       }
     ]
   }

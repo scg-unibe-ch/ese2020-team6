@@ -113,9 +113,9 @@ import { TitleValidatorDirective } from './components/custom-form/validators/reg
 import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
-import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
+import { DateValidatorDirective } from './components/custom-form/validators/regex/date/date-validator.directive';
 //    Cross Field
-import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
+import { PasswordMatchValidatorDirective } from './components/custom-form/validators/regex/cross-field/password-match-validator.directive';
 //    Select
 import { GenderValidatorDirective } from './components/custom-form/validators/select/gender/gender-validator.directive';
 
@@ -135,13 +135,8 @@ import { PopupDirective } from './components/user/profile/profile-navigation/pop
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
-import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
-import { FileComponent } from './components/custom-form/input/file/file.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
-import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
-
 
 @NgModule({
   declarations: [
@@ -215,13 +210,8 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     NavigationElementComponent,
     PreferencesComponent,
     ValidationComponent,
-    DateComponent,
     SearchProductComponent,
     SelectCategoriesComponent,
-    FileComponent,
-    CheckoutComponent,
-    BuyItemComponent,
-
   ],
   imports: [
     BrowserModule,

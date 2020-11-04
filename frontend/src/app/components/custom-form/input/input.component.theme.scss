@@ -10,7 +10,7 @@
       border-color: $border-default-color;
       color: $text-color;
 
-      &.ng-dirty {
+      &:focus {
         border-color: $error-warn;
       }
 

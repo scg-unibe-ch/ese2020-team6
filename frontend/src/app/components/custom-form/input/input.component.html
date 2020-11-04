@@ -3,7 +3,7 @@
   <label>
     {{placeholder}}
   </label>
-  <div *ngIf="showError && focused && invalid && dirty" class="error-message">
-    {{firstMessage}}
+  <div *ngIf="focused && invalid && dirty" class="error-message">
+    {{messages}}
   </div>
 </div>

@@ -1,11 +1,11 @@
 <div class="post-wrapper" [ngClass]="theme">
   <div class="post">
-    <div class="header">
-      <h3 class="title" *ngIf="!isUpdate, else update">Create</h3>
-      <ng-template #update>
-        <h3 class="title">Update</h3>
-      </ng-template>
+    <div class="header" *ngIf="!isUpdate, else update">
+      <h3 class="title">Create</h3>
     </div>
+    <ng-template #update>
+      <h3 class="title">Update</h3>
+    </ng-template>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
         <app-select name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
@@ -25,20 +25,27 @@
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
       </div>
-      <div class="input-grid">
-        <div class="picture">
-          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
-          <img class="image" src={{picture}}>
-        </div>
-        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
+      <div class="input-grid temp-spaceing">
+        <label class="picture">
+          Picture
+          <div *ngIf="isUpdate">
+            <img class="image" src={{picture}}>
+            <div class="imageText">Do you want to Update the Image:</div>
+          </div>
+          <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
+        </label>
+        <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
       </div>
-      <div class="action-wrapper">
+      <div class="action-wrapper" *ngIf="!isUpdate, else updateButton">
         <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
-        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
-        <ng-template #updateButton>
-            <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Update</button>
-        </ng-template>
+        <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
       </div>
+      <ng-template #updateButton> 
+        <div class="action-wrapper">
+          <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
+          <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Update</button>
+        </div>
+      </ng-template>
     </form>
 
     <!-- This template displays the overlay content and is connected to the button -->
