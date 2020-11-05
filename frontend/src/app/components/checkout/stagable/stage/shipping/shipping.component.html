@@ -1,16 +1,9 @@
 <stage>
   <div class="stage-content deliverable" content *ngIf="product.isDeliverable; else notDeliverable">
     <div class="address-selection">
-      <app-radio placeholder="Shippingaddress Selection" [options]="addressSelectionOptions" [(ngModel)]="address"></app-radio>
-    </div>
-    <div *ngIf="address === addressSelectionOptions[0][1]; else other" class="address">
       {{addressText}}
     </div>
-    <ng-template #other>
-      <div class="map">
-        <map (searchResultsEmitter)="logData($event)"></map>
-      </div>
-    </ng-template>
+    <map (searchResultsEmitter)="logData($event)" [showLocation]="addressText"></map>
   </div>
   <ng-template #notDeliverable>
     <p class="stage-content not-deliverable">There is no shipping available for this item.

@@ -7,7 +7,7 @@ import { Map } from './map';
 
 export class Locations extends Map {
 
-  private locations: Array<Leaflet.LatLng> = new Array<Leaflet.LatLng>();
+  private locations: Array<{latlng: Leaflet.LatLng, zoom: number}> = new Array<{latlng: Leaflet.LatLng, zoom: number}>();
   private location;
 
   constructor(
@@ -28,13 +28,13 @@ export class Locations extends Map {
     return this;
   }
 
-  public pushLocations(locations: Array<Leaflet.LatLng>): Locations {
+  public pushLocations(locations: Array<{latlng: Leaflet.LatLng, zoom: number}>): Locations {
     this.locations = this.locations.concat(locations);
     this.showLocations();
     return this;
   }
 
-  public pushLocation(location: Leaflet.LatLng): Locations {
+  public pushLocation(location: {latlng: Leaflet.LatLng, zoom: number}): Locations {
     this.locations.push(location);
     this.showLocations();
     return this;
@@ -47,7 +47,17 @@ export class Locations extends Map {
         return;
       }
       let results = searchResults.results;
-      this.locations.push(results[0].latlng);
+      results.forEach(result => {
+        let latlng: Leaflet.LatLng = result.latlng;
+        let bounds: Leaflet.LatLngBounds = result.bounds;
+        let zoom: number = this._map.getBoundsZoom(bounds);
+
+        this.locations.push({
+          latlng: result.latlng,
+          zoom: zoom
+        });
+      });
+
       this.showLocations();
     });
     return this;
@@ -60,11 +70,14 @@ export class Locations extends Map {
   }
 
   private showLocations(): void {
-    console.log(this.locations);
-
     this.locations.forEach((location) => {
-      this.location.addLayer(Leaflet.marker(location));
-      this._map.setView(location);
+      this.location.addLayer(Leaflet.marker(location.latlng));
+      this._map.setView(location.latlng, location.zoom, {
+        animate: true,
+        pan: {
+          duration: 0.5
+        }
+      });
     });
   }
 }

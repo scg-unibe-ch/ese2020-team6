@@ -47,6 +47,9 @@ export class Map {
 
   private createMap(): Map {
     this._map = Leaflet.map(this.container.nativeElement).setView(this.options.center, this.options.zoom);
+    setTimeout(() => {
+      this._map.invalidateSize(true);
+    }, 0);
     return this;
   }
 

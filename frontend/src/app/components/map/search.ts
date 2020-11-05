@@ -51,7 +51,16 @@ export abstract class Search extends Locations {
   }
 
   private showResults(): void {
-    let locations = this._searchResults.results.map(result => result.latlng);
+    let locations = this._searchResults.results.map(result => {
+      let latlng: Leaflet.LatLng = result.latlng;
+      let bounds: Leaflet.LatLngBounds = result.bounds;
+      let zoom: number = this._map.getBoundsZoom(bounds);
+
+      return {
+        latlng: result.latlng,
+        zoom: zoom
+      };
+    });
     this.clearLocations().pushLocations(locations);
   }
 
