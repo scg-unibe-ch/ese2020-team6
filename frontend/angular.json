@@ -28,7 +28,7 @@
 							"src/assets",
 							{
 					      "glob": "**/*",
-					      "input": "node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
+					      "input": "node_modules/leaflet/dist/images/",
 					      "output": "./assets/"
 					   	}
 						],
@@ -104,7 +104,7 @@
 							"src/assets",
 							{
 					      "glob": "**/*",
-					      "input": "node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
+					      "input": "node_modules/leaflet/dist/images/",
 					      "output": "./assets/"
 					   	}
 						],
