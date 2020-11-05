@@ -34,7 +34,6 @@ export abstract class Search extends Locations {
     this.search = Geocoder.geosearch({
       providers: [this.arcgisOnline, this.gisDay] // will geocode via ArcGIS Online and search the GIS Day feature service.
     }).addTo(this._map)
-
     return this;
   }
 
@@ -53,9 +52,7 @@ export abstract class Search extends Locations {
 
   private showResults(): void {
     let locations = this._searchResults.results.map(result => result.latlng);
-    this.clearLocations();
-    this.pushLocations(locations);
-    this.showLocations();
+    this.clearLocations().pushLocations(locations);
   }
 
   protected abstract onSearchResults(data): void;

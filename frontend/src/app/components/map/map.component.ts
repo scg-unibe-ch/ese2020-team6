@@ -1,4 +1,4 @@
-import { AfterViewInit, Output, Component, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { AfterViewInit, Output, Input, Component, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 
 import { Search } from './search';
 import * as Esri from 'esri-leaflet';
@@ -11,6 +11,9 @@ import * as Leaflet from 'leaflet';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent extends Search implements AfterViewInit {
+
+  @Input()
+  showLocation: string;
 
   @Output()
   searchResultsEmitter: EventEmitter<any> = new EventEmitter<any>();
@@ -34,6 +37,9 @@ export class MapComponent extends Search implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.setContainer(this.mapContainer).build();
+    if (this.showLocation) {
+      this.clearLocations().pushLocationByText(this.showLocation);
+    }
   }
 
   protected onSearchResults(data): void {
