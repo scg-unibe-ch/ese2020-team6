@@ -1,7 +1,10 @@
 <div class="post-wrapper" [ngClass]="theme">
   <div class="post">
     <div class="header">
-      <h3 class="title">Create</h3>
+      <h3 class="title" *ngIf="!isUpdate, else update">Create</h3>
+      <ng-template #update>
+        <h3 class="title">Update</h3>
+      </ng-template>
     </div>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
@@ -22,16 +25,19 @@
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
       </div>
-      <div class="input-grid temp-spaceing">
-        <label class="picture">
-          Picture
-          <input (change)="selectFile($event)" name="picture" type="file" size="50" accept="png, jpg">
-        </label>
-        <input placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" type="datetime-local" appDateValidator>
+      <div class="input-grid">
+        <div class="picture">
+          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
+          <img class="image" src={{picture}}>
+        </div>
+        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="action-wrapper">
         <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
-        <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
+        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
+        <ng-template #updateButton>
+            <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Update</button>
+        </ng-template>
       </div>
     </form>
 
@@ -40,7 +46,7 @@
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
               <h2>Your product</h2>
-            <app-product-information [product]="productData" [isPreview]="true"></app-product-information>
+            <app-product-information [product]="productData" [isPreview]="true" [picture]="picture"></app-product-information>
         </div>
       </div>
     </ng-template>

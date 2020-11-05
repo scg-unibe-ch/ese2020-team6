@@ -1,0 +1,13 @@
+<div class="checkout-wrapper" [ngClass]="theme">
+  <div class="checkout">
+    <div class="header">
+      Product
+      <span class="product-id">#{{product.productId}}</span>
+      for
+      <span>{{product.price}}{{priceLabel}}</span>
+    </div>
+    <div class="stagable-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -9,10 +9,14 @@ import { PurchaseProductComponent } from './../components/home/product/product-i
 import { EditProductComponent } from './../components/home/product/product-information/edit-product/edit-product.component';
 import { ReviewProductComponent } from './../components/home/product/product-information/review-product/review-product.component';
 
+import { CheckoutComponent } from './../components/checkout/checkout.component';
+import { BuyItemComponent } from './../components/checkout/stagable/buy-item/buy-item.component';
+
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';
 import { AuthAdminGuard } from './guards/auth-guard/auth-admin.guard';
 import { CreatorGuard, NotCreatorGuard } from './guards/product/creator.guard';
+import { CheckoutGuard } from './redirect/checkout/checkout.guard';
 import { defaultUserNavigationElements, adminNavigationElements, defaultProfileComponent } from './../components/user/profile/navigation-elements';
 
 export const routes = [
@@ -110,6 +114,17 @@ export const routes = [
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    path: 'checkout/:productId',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard, CheckoutGuard],
+    children: [
+      {
+        path: 'buy-item',
+        component: BuyItemComponent
       }
     ]
   }

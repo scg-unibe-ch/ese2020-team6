@@ -20,6 +20,6 @@
     <app-product-pill [pillValue]="product.offerType"></app-product-pill>
     <app-product-pill [pillValue]="product.productType"></app-product-pill>
     <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass"></app-product-pill>
-    <app-product-pill [pillValue]="product.isDeliverable ? 'Yes' : 'No'" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass"></app-product-pill>
+    <app-product-pill [pillValue]="product.isDeliverable ? 'Deliverable' : 'Not Deliverable'" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass"></app-product-pill>
   </div>
 </div>

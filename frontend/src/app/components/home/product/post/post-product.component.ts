@@ -28,8 +28,9 @@ export class PostProductComponent extends Themable implements PostProductRequest
   public product: ProductModel = new NullProduct();
   private userId: number;
   private productId: number;
-  private isUpdate = false;
+  isUpdate = false;
   productData: any;
+  picture: any;
 
   constructor(
     private productService: ProductService,
@@ -66,16 +67,18 @@ export class PostProductComponent extends Themable implements PostProductRequest
       const values: any = Object.assign({}, product);
       values.isDeliverable = product.isDeliverable ? 'Yes' : 'No';
       this.values = Object.assign({}, values);
+      this.picture = product.picture;
     });
   }
 
 
   selectFile(event): void {
-    let reader = new FileReader();
-    reader.onload = (event: any) =>{
-      let result: string = event.target.result;
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const result: string = event.target.result;
       this.product.picture = result;
-    }
+      this.picture = result;
+    };
     reader.readAsDataURL(event.target.files[0]);
   }
 

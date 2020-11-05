@@ -1,0 +1,99 @@
+@import '../../../../../variables.scss';
+@import './stage-indicator.component.theme.scss';
+
+.stage-indicator {
+  height: auto;
+  width: 100%;
+}
+
+@for $size from 2 through $stages-max-size {
+  .length-#{$size} {
+    $stop-count: $size;
+
+    padding: $spaceing-s;
+
+    .titles {
+      display: grid;
+      grid-template-columns: repeat(3 * $stop-count - 2, 1fr);
+      margin-bottom: $spaceing-xs;
+
+      @for $stop from 0 through $stop-count {
+        .text-#{$stop} {
+          grid-column-start: $stop * 3 + 1;
+          grid-column-end: $stop * 3 + 2;
+          grid-row: 1 / 2;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+
+        }
+      }
+    }
+
+    .graph {
+      $grid-columns: 15 * $stop-count - 10;
+
+      display: grid;
+      grid-template-columns: repeat($grid-columns, 1fr);
+      grid-template-rows: 20px;
+
+      @for $stop from 0 through $stop-count {
+        .circle-#{$stop} {
+          grid-column-start: $stop * 15 + 3;
+          grid-column-end: $stop * 15 + 4;
+          grid-row: 1 / 2;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+
+          svg {
+            width: 50%;
+
+            circle {
+              cx: 0;
+              cy: 0;
+              r: 46;
+              stroke-width: 10;
+              fill: none;
+            }
+          }
+        }
+      }
+
+      @for $connector from 0 through $stop-count - 1 {
+        .line-#{$connector} {
+          grid-column-start: $connector * 15 + 4;
+          grid-column-end: $connector * 15 + 18;
+          grid-row: 1 / 2;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          width: 100%;
+          height: 100%;
+
+          svg {
+            width: 98%;
+            height: 100%;
+
+            line {
+              stroke-width: 3;
+              stroke-linecap: round;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include stage-indicator-theme($theme-name);
+}

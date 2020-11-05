@@ -1,16 +1,24 @@
 <div class="product-view" *ngIf="hasProducts; else hasNoProducts">
-  <div class="control">
+  <div class="grid">
     <button [ngClass]="'button-' + theme" (click)="switchView()">Switch View</button>
+    <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
   <div class="view">
-    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="products" [path]="path"></app-product-view-list>
+    <app-product-view-list class="product-display list" *ngIf="isList; else isGrid" [products]="filteredProducts" [path]="path"></app-product-view-list>
     <ng-template #isGrid>
-      <app-product-view-grid class="product-display grid" [products]="products" [path]="path"></app-product-view-grid>
+      <app-product-view-grid class="product-display grid" [products]="filteredProducts" [path]="path"></app-product-view-grid>
     </ng-template>
   </div>
 </div>
 <ng-template #hasNoProducts>
   <div class="no-products" [ngClass]="theme">
     Nothing to see here.
+  </div>
+</ng-template>
+<ng-template #searchProducts>
+  <div class="search-wrapper-wrapper">
+    <div class="search-wrapper">
+          <app-search-product (criteriaChange)='updateCriteria($event)'></app-search-product>
+    </div>
   </div>
 </ng-template>

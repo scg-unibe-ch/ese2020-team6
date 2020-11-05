@@ -12,4 +12,5 @@ export class ProductInformationComponent {
   @Input() isPreview = false;
   @Input() product: ProductModel = new NullProduct();
   @Input() creator: CutUserModel = new NullCutUser();
+  @Input() picture: any;
 }

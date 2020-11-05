@@ -23,6 +23,11 @@ export class PasswordMatchValidatorDirective implements Validator {
       }
 
     }
-    return {errorMessage: {name: "passwordMatchValidator", message: "The password and its repetition do not match!"}};
+    return {
+      crossFieldPassword: {
+        errorName: "ErrorName",
+        errorMessages: ["Passwords do not match"]
+      }
+    };
   }
 }
