@@ -25,7 +25,6 @@ export class ThemeDirective extends Themable implements OnChanges {
 
   constructor(
     themeService: ThemeService,
-    private elementRef: ElementRef,
     @Optional() @Self() private button: ButtonDirective,
     @Optional() @Self() private buttonEmpty: ButtonEmptyDirective
   ) {
@@ -35,6 +34,7 @@ export class ThemeDirective extends Themable implements OnChanges {
   }
 
   public ngOnChanges(): void {
+    this.applyThemeClass();
     this.applyClassExtentions();
   }
 
