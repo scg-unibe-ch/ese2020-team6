@@ -1,14 +1,12 @@
 import { Directive, OnInit, ViewChild, ComponentFactoryResolver, EventEmitter, Type } from '@angular/core';
-import { Themable } from '../../../models/theme/themable';
-import { ThemeService } from '../../../services/theme/theme.service';
 import { StageModel } from '../../../models/checkout/stage/stage.model'
 import { StagesDirective } from './stages.directive';
-import { StageNavigationDataEmitter } from './stage/stage-navigation-data-emitter.directive';
+import { StageNDEmitter } from './stage/stage-navigation-data-emitter.directive';
 
 @Directive({
   selector: '[stagable]'
 })
-export class Stagable extends Themable implements OnInit {
+export class Stagable implements OnInit {
 
   @ViewChild(StagesDirective, {static: true})
   stagesDirective: StagesDirective;
@@ -27,11 +25,8 @@ export class Stagable extends Themable implements OnInit {
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    themeService: ThemeService,
     stages: Array<StageModel>
   ) {
-    super(themeService);
-
     if (stages.length < 2) throw "You need to have at least two stages!";
     else {
       this.stages = stages;
@@ -44,7 +39,7 @@ export class Stagable extends Themable implements OnInit {
     viewContainerRef.clear();
 
     this.stages.forEach((stage: StageModel, stageIndex: number) => {
-      const stageComponent: Type<StageNavigationDataEmitter<any>> = stage.component;
+      const stageComponent: Type<StageNDEmitter<any>> = stage.component;
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(stageComponent);
 
       stage.componentRef = viewContainerRef.createComponent(componentFactory);

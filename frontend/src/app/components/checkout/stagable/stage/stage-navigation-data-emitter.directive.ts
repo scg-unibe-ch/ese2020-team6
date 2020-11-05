@@ -1,10 +1,10 @@
 import { Directive, Output, EventEmitter} from '@angular/core';
-import { StageNavigationEmitter } from './stage-navigation-emitter.directive';
+import { StageNEmitter } from './stage-navigation-emitter.directive';
 
 @Directive({
   selector: '[stage-navigation-data-emitter]'
 })
-export abstract class StageNavigationDataEmitter<T> extends StageNavigationEmitter {
+export abstract class StageNDEmitter<T> extends StageNEmitter {
 
   @Output()
   dataEmitter: EventEmitter<T> = new EventEmitter<T>();

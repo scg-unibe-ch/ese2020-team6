@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { StageNavigationDataEmitter } from '../stage-navigation-data-emitter.directive';
+import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.directive';
 
 @Component({
   selector: 'shipping-stage',
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss']
 })
-export class ShippingComponent extends StageNavigationDataEmitter<any> {
+export class ShippingComponent extends StageNDEExtention<any> {
 
   public searchResults: any;
 

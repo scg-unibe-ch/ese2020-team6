@@ -1,8 +1,8 @@
 import { Type, ComponentRef } from '@angular/core';
-import { StageNavigationDataEmitter } from '../../../components/checkout/stagable/stage/stage-navigation-data-emitter.directive';
+import { StageNDEExtention } from '../../../components/checkout/stagable/stage/stage-navigation-data-emitter-extention.directive';
 
 export interface StageModel {
   title: string;
-  component: Type<StageNavigationDataEmitter<any>>;
+  component: Type<StageNDEExtention<any>>;
   componentRef: ComponentRef<any>;
 }

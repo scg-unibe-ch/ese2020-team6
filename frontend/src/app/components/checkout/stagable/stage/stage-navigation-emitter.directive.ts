@@ -3,7 +3,7 @@ import { Directive, Output, EventEmitter} from '@angular/core';
 @Directive({
   selector: '[stage-navigation-emitter]'
 })
-export class StageNavigationEmitter {
+export class StageNEmitter {
 
   @Output()
   public nextStageEmitter: EventEmitter<void> = new EventEmitter<void>();
