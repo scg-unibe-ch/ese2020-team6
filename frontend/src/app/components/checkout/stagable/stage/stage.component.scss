@@ -6,6 +6,7 @@
 
   display: grid;
   grid-template-rows: 4fr auto;
+  grid-row-gap: $spaceing-xs;
 
   .stage-content {
   }

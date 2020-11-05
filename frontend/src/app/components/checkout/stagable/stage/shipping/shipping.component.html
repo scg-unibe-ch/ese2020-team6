@@ -1,6 +1,5 @@
 <stage>
-  <button content type="button" name="button" (click)="logData()">Log Data</button>
-  <input content type="text" [(ngModel)]="value"/>
+  <map content (searchResultsEmitter)="logData($event)"></map>
 
   <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty>Previous</button>
   <button navigation type="button" name="button" (click)="nextStage()" theme button>Next</button>
