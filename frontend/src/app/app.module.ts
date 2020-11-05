@@ -148,6 +148,7 @@ import { StagesDirective } from './components/checkout/stagable/stages.directive
 import { ThemeDirective } from './models/theme/theme.directive';
 import { ButtonDirective } from './models/theme/button/button.directive';
 import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -233,6 +234,7 @@ import { ButtonEmptyDirective } from './models/theme/button/button-empty.directi
     StageComponent,
     ThemeDirective,
     ButtonDirective,
+    MapComponent,
     ButtonEmptyDirective
   ],
   imports: [
