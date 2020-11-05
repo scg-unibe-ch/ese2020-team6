@@ -9,6 +9,7 @@ import { UserService } from '../../../services/user/user.service';
 import { CheckoutRouteParametersModel } from '../../../models/checkout/checkout-route-parameters.model';
 import { ProductModel, NullProduct } from '../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../models/user/cut-user.model';
+import { UserModel, NullUser } from '../../../models/user/user.model';
 
 @Directive({
   selector: '[stagable]'
@@ -17,6 +18,7 @@ export class StagableExtention extends Stagable implements OnInit {
 
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();
+  public user: UserModel = new NullUser();
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
@@ -44,6 +46,11 @@ export class StagableExtention extends Stagable implements OnInit {
         })
       });
     });
+
+    this.userService.userObservable.subscribe((user: UserModel) => {
+      this.user = user;
+      this.assignUserInput();
+    })
   }
 
   private assignProductInput(): void {
@@ -55,6 +62,12 @@ export class StagableExtention extends Stagable implements OnInit {
   private assignSellerInput(): void {
     this.stages.forEach((stage: StageModel) => {
       stage.componentRef.instance.seller = this.seller;
+    });
+  }
+
+  private assignUserInput(): void {
+    this.stages.forEach((stage: StageModel) => {
+      stage.componentRef.instance.user = this.user;
     });
   }
 

@@ -149,6 +149,7 @@ import { ThemeDirective } from './models/theme/theme.directive';
 import { ButtonDirective } from './models/theme/button/button.directive';
 import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
 import { MapComponent } from './components/map/map.component';
+import { RadioComponent } from './components/custom-form/input/radio/radio.component';
 
 @NgModule({
   declarations: [
@@ -235,7 +236,8 @@ import { MapComponent } from './components/map/map.component';
     ThemeDirective,
     ButtonDirective,
     MapComponent,
-    ButtonEmptyDirective
+    ButtonEmptyDirective,
+    RadioComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,12 @@ export class ShippingComponent extends StageNDEExtention<any> {
 
   public searchResults: any;
 
+  public addressSelectionOptions: Array<[string, string]> = [
+    ['Home Address', 'home'],
+    ['Other Address', 'other']
+  ];
+  public address: string = this.addressSelectionOptions[0][1];
+
   @Output()
   logger: EventEmitter<void> = new EventEmitter<void>();
 
@@ -21,8 +27,15 @@ export class ShippingComponent extends StageNDEExtention<any> {
     let result;
     this.searchResults.results.forEach(element => {
       result = element;
+      console.log(element);
+
     });
     return result;
+  }
+
+  get addressText(): string {
+    if (this.searchResults) return this.searchResults.results[0].text;
+    return this.user.street + ' ' + this.user.houseNumber + ', ' + this.user.plz + ', ' + this.user.city;
   }
 
   public logData(searchResults: { results: Array<any> }): void {

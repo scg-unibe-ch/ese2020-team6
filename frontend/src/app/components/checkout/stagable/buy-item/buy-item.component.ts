@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { ShippingComponent } from '../stage/shipping/shipping.component';
 import { PaymentMethodComponent } from '../stage/payment-method/payment-method.component';
 import { StageModel } from '../../../../models/checkout/stage/stage.model'
@@ -14,7 +14,7 @@ import { CheckoutRouteParametersModel } from '../../../../models/checkout/checko
   templateUrl: '../stagable.component.html',
   styleUrls: ['../stagable.component.scss']
 })
-export class BuyItemComponent extends StagableExtention implements OnInit {
+export class BuyItemComponent extends StagableExtention {
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
@@ -35,17 +35,5 @@ export class BuyItemComponent extends StagableExtention implements OnInit {
     route,
     productService,
     userService);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.stages[0].componentRef.instance.logger.subscribe((data: any) => {
-      this.logData();
-    });
-
-  }
-
-  public logData(): void {
-    console.log(this.getAllValues(this.dataStorage));
   }
 }

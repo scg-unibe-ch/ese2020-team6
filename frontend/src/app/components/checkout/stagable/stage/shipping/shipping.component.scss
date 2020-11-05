@@ -1,0 +1,23 @@
+@import '../../../../../../variables.scss';
+
+.stage-content {
+  height: 100%;
+  width: 100%;
+
+  &.deliverable {
+    display: grid;
+    grid-auto-rows: 1fr 4fr;
+
+    .address {
+
+    }
+
+    .map {
+      color: black;
+    }
+  }
+
+  &.not-deliverable {
+
+  }
+}
