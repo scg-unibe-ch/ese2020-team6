@@ -17,7 +17,7 @@
         </div>
       </ng-template>
     </div>
-    <map (searchResultsEmitter)="onSearch($event)" [showLocation]="addressText"></map>
+    <map (searchResultsEmitter)="onSearch($event)" [initLocation]="addressText"></map>
   </div>
   <ng-template #notDeliverable>
     <p class="stage-content not-deliverable">There is no shipping available for this item.

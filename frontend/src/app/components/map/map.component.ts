@@ -12,8 +12,13 @@ import * as Leaflet from 'leaflet';
 })
 export class MapComponent extends Search implements AfterViewInit {
 
+  private _initLocation: string;
+
   @Input()
-  showLocation: string;
+  set initLocation(value: any) {
+    this._initLocation = value;
+    this.updateLocation();
+  };
 
   @Output()
   searchResultsEmitter: EventEmitter<any> = new EventEmitter<any>();
@@ -31,14 +36,14 @@ export class MapComponent extends Search implements AfterViewInit {
     )
   }
 
-  public ngOnInit(): void {
-
-  }
-
   public ngAfterViewInit(): void {
     this.setContainer(this.mapContainer).build();
-    if (this.showLocation) {
-      this.clearLocations().pushLocationByText(this.showLocation);
+    this.updateLocation()
+  }
+
+  private updateLocation(): void {
+    if (this._initLocation && this.mapContainer) {
+      this.clearLocations().pushLocationByText(this._initLocation);
     }
   }
 
