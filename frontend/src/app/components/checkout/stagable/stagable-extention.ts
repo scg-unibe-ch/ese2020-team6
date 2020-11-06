@@ -50,7 +50,9 @@ export class StagableExtention extends Stagable implements OnInit {
     this.userService.userObservable.subscribe((user: UserModel) => {
       this.user = user;
       this.assignUserInput();
-    })
+    });
+
+    this.assignIsFirstStageInput();
   }
 
   private assignProductInput(): void {
@@ -68,6 +70,12 @@ export class StagableExtention extends Stagable implements OnInit {
   private assignUserInput(): void {
     this.stages.forEach((stage: StageModel) => {
       stage.componentRef.instance.user = this.user;
+    });
+  }
+
+  private assignIsFirstStageInput(): void {
+    this.stages.forEach((stage: StageModel, index: number) => {
+      stage.componentRef.instance.isFirstStage = index == 0;
     });
   }
 

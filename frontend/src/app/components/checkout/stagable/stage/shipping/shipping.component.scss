@@ -1,4 +1,5 @@
 @import '../../../../../../variables.scss';
+@import './shipping.component.theme.scss';
 
 .stage-content {
   height: 100%;
@@ -9,8 +10,60 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: $spaceing-xs;
 
-    .address {
+    .address-selection {
+      .smaller {
+        font-size: 1em;
+        margin: $spaceing-xs 0 $spaceing-xs 0;
 
+        .approve-home-address {
+          margin-top: $spaceing-m;
+          display: flex;
+          justify-content: space-between;
+
+          $checkmark-dimensions: $spaceing-m;
+
+          &.approved {
+            .checkmark {
+              &::after {
+                display: block;
+              }
+            }
+          }
+
+          .checkmark {
+            position: relative;
+            height: 1.4em;
+            width: 1.4em;
+            border-radius: calc(#{$checkmark-dimensions} / 5);
+
+            &::after {
+
+              $mark-long: 60%;
+              $mark-short: 30%;
+
+              content: "";
+              position: absolute;
+              display: none;
+              left: calc(50% - #{$mark-short} / 2);
+              top: calc(45% - #{$mark-long} / 2);
+              width: $mark-short;
+              height: $mark-long;
+              border: solid;
+              border-width: 0 2px 2px 0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+            }
+          }
+        }
+      }
+      .address {
+        font-size: 1.2em;
+        padding: $spaceing-xs;
+        border-radius: $border-radius;
+        border: 2px solid;
+        margin: $spaceing-xs 0 $spaceing-xs 0;
+      }
     }
 
     .map {
@@ -20,4 +73,8 @@
   &.not-deliverable {
 
   }
+}
+
+@each $theme-name in $theme-names {
+  @include shipping-theme($theme-name)
 }

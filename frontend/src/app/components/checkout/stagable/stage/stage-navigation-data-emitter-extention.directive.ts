@@ -18,4 +18,7 @@ export abstract class StageNDEExtention<T> extends StageNDEmitter<T> {
   @Input()
   user: UserModel = new NullUser();
 
+  @Input()
+  isFirstStage: boolean = true;
+
 }

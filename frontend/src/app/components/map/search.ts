@@ -9,7 +9,11 @@ export abstract class Search extends Locations {
   protected search;
 
 
-  private arcgisOnline = Geocoder.arcgisOnlineProvider();
+  private arcgisOnline = Geocoder.arcgisOnlineProvider({
+    categories: [
+      'Street Address'
+    ]
+  });
   private gisDay = Geocoder.featureLayerProvider({
     url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/GIS_Day_Final/FeatureServer/0',
     searchFields: ['Name', 'Organization'],
@@ -32,7 +36,7 @@ export abstract class Search extends Locations {
 
   private addSearch(): Search {
     this.search = Geocoder.geosearch({
-      providers: [this.arcgisOnline, this.gisDay] // will geocode via ArcGIS Online and search the GIS Day feature service.
+      providers: [this.arcgisOnline] // will geocode via ArcGIS Online and search the GIS Day feature service.
     }).addTo(this._map)
     return this;
   }

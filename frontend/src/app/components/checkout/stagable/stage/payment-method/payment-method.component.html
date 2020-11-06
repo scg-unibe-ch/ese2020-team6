@@ -1,4 +1,4 @@
 <stage>
-  <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty>Previous</button>
+  <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>
   <button navigation type="button" name="button" (click)="finalizeStages()" theme button>Finish</button>
 </stage>

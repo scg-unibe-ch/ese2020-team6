@@ -15,9 +15,8 @@ export class ShippingComponent extends StageNDEExtention<any> {
     ['Other Address', 'other']
   ];
   public address: string = this.addressSelectionOptions[0][1];
-
-  @Output()
-  logger: EventEmitter<void> = new EventEmitter<void>();
+  public isHomeAddress: boolean = true;
+  public isHomeAddressApproved: boolean = false;
 
   constructor() {
     super();
@@ -38,10 +37,26 @@ export class ShippingComponent extends StageNDEExtention<any> {
     return this.user.street + ' ' + this.user.houseNumber + ', ' + this.user.plz + ', ' + this.user.city;
   }
 
-  public logData(searchResults: { results: Array<any> }): void {
+  public onSearch(searchResults: { results: Array<any> }): void {
     this.searchResults = searchResults;
+    this.isHomeAddress = false;
     this.emitData();
-    this.logger.emit();
+  }
+
+  get approveHomeAddressClass(): Array<string> {
+    let classes: Array<string> = new Array<string>();
+    classes.push(this.isHomeAddressApproved ? 'approved' : 'not-approved');
+    return classes;
+  }
+
+  get approveHomeAddressClassExtentions(): Array<string> {
+    let classes: Array<string> = new Array<string>();
+    classes.push(this.isHomeAddressApproved ? 'button' : 'button-warn');
+    return classes;
+  }
+
+  public onApproveAddress(): void {
+    this.isHomeAddressApproved = true;
   }
 
 }
