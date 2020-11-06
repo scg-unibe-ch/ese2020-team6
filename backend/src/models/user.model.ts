@@ -15,6 +15,7 @@ export interface UserAttributes {
     gender: string;
     isAdmin: boolean;
     wallet: number;
+    isDarkmode: boolean;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -34,6 +35,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     gender!: string;
     isAdmin!: boolean;
     wallet!: number;
+    isDarkmode!: boolean;
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -95,9 +97,13 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             wallet: {
                 type: DataTypes.NUMBER,
                 defaultValue: 0
-            }
+            },
+            isDarkmode: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },    
 
-        },
+                },
             {
                 sequelize,
                 tableName: 'users'
