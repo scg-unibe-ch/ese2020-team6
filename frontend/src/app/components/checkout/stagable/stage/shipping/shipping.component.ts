@@ -23,13 +23,7 @@ export class ShippingComponent extends StageNDEExtention<any> {
   }
 
   protected getData(): any {
-    let result;
-    this.searchResults.results.forEach(element => {
-      result = element;
-      console.log(element);
-
-    });
-    return result;
+    return this.addressText;
   }
 
   get addressText(): string {
@@ -40,7 +34,6 @@ export class ShippingComponent extends StageNDEExtention<any> {
   public onSearch(searchResults: { results: Array<any> }): void {
     this.searchResults = searchResults;
     this.isHomeAddress = false;
-    this.emitData();
   }
 
   get approveHomeAddressClass(): Array<string> {
@@ -57,6 +50,17 @@ export class ShippingComponent extends StageNDEExtention<any> {
 
   public onApproveAddress(): void {
     this.isHomeAddressApproved = true;
+  }
+
+  public backToHomeAddress() {
+    this.searchResults = null;
+    this.isHomeAddress = true;
+    this.isHomeAddressApproved = false;
+  }
+
+  public nextStage(): void {
+    super.nextStage();
+    this.emitData();
   }
 
 }
