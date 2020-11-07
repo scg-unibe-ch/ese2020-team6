@@ -1,4 +1,10 @@
 <stage>
+  <div class="stage-content" content theme>
+    <radio-selection placeholder="Payment Method" [options]="[['Wallet', 'wallet'], ['PayPal', 'paypal']]">
+      <img *radioLabel="1" class="paypal-logo" src="https://www.paypalobjects.com/webstatic/de_DE/i/de-pp-logo-200px.png" alt="PayPal Logo"/>
+    </radio-selection>
+  </div>
+
   <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>
   <button navigation type="button" name="button" (click)="finalizeStages()" theme button>Finish</button>
 </stage>

@@ -1,10 +1,11 @@
-import { Component, Input, Optional, Inject, ViewChild } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, TemplateRef } from '@angular/core';
 import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { ValueAccessorBase } from '../../value-accessor-base';
 import { ThemeService } from '../../../../services/theme/theme.service';
+import { RadioLabelDirective } from '../../../custom-form/input/radio/label/radio-label.directive';
 
 @Component({
-  selector: 'app-radio',
+  selector: 'radio-selection',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss'],
   providers: [
@@ -19,6 +20,28 @@ export class RadioComponent extends ValueAccessorBase<any> {
 
   @Input()
   public options: Array<[string, any]> = new Array<[string, any]>();
+
+  public optionsWithTemplate: Array<[string, any, TemplateRef<any>]> = new Array<[string, any, TemplateRef<any>]>();
+
+  @ContentChildren(RadioLabelDirective)
+  set labels(labels: QueryList<RadioLabelDirective>) {
+    this.optionsWithTemplate = this.options.map((option: [string, any], optionId: number) => {
+      const labelTemplate: TemplateRef<any> = this.getTemplateById(labels, optionId);
+
+      return [option[0], option[1], labelTemplate];
+    });
+  }
+
+  private getTemplateById(labels: QueryList<RadioLabelDirective>, optionId: number): TemplateRef<any> {
+    let labelTemplate: TemplateRef<any>;
+    labels.toArray().every((label: RadioLabelDirective) => {
+      if (label.optionId == optionId) {
+        labelTemplate = label.template;
+        return false;
+      } else return true;
+    });
+    return labelTemplate;
+  }
 
   constructor(
     themeService: ThemeService

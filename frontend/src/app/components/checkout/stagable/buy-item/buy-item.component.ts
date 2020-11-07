@@ -22,14 +22,15 @@ export class BuyItemComponent extends StagableExtention {
     productService: ProductService,
     userService: UserService
   ) {
-    super(componentFactoryResolver, [{
-      title: 'Shipping',
-      component: ShippingComponent,
-      componentRef: null
-    },
+    super(componentFactoryResolver, [
     {
       title: 'Payment Method',
       component: PaymentMethodComponent,
+      componentRef: null
+    },
+    {
+      title: 'Shipping',
+      component: ShippingComponent,
       componentRef: null
     }],
     route,
