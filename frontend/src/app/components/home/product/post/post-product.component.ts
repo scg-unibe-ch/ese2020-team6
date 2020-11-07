@@ -36,6 +36,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
   subCategories: Array<CategoryModel>;
   subCat: Array<string>;
   cat: Array<string>;
+  offertype: any;
 
   constructor(
     private productService: ProductService,
@@ -175,6 +176,15 @@ export class PostProductComponent extends Themable implements PostProductRequest
       if (catId === cat.id) {
         this.subCat.push(cat.category);
       }
+    }
+  }
+
+  public createOfferType(): void {
+    if (this.values.productType === 'Item') {
+      this.offertype = ['Sell'];
+    }
+    if (this.values.productType === 'Service') {
+      this.offertype = ['Rent'];
     }
   }
 }

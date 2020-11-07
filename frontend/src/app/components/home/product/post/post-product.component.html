@@ -8,8 +8,8 @@
     </div>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
-        <app-select name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
-        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]="['Sell', 'Rent']" appOfferTypeValidator></app-select>
+        <app-select (click)=createOfferType() name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
+        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]=offertype appOfferTypeValidator></app-select>
       </div>
       <div class="input-grid">
         <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="values.category" [options]=cat appCategoryValidator></app-select>
