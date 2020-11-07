@@ -57,25 +57,17 @@ export const validatorSelect = {
   category: {
     name: 'categoryValidator',
     options: [
-      'Houses',
-      'Pets',
-      'Nice Stuff'
+      'living',
+      'pets'
     ]
   },
   subcategory: {
     name: 'subcategoryValidator',
     options: [
-      'sub_Houses',
-      'sub_Pets',
-      'sub_NiceStuff'
-    ]
-  },
-  status: {
-    name: 'statusValidator',
-    options: [
-      'Available',
-      'Lent',
-      'Sold'
+      'dogs',
+      'cats',
+      'garages',
+      'houses'
     ]
   },
   deliverable: {

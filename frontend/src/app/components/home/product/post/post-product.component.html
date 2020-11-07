@@ -20,22 +20,21 @@
       <app-text-area class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>
       <div class="input-grid">
         <app-text-input placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
-        <app-select name="status" selectName="Status" [(ngModel)]="values.status" [options]="['Available', 'Lent', 'Sold']" appStatusValidator></app-select>
+        <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
       </div>
       <div class="input-grid">
-        <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
+        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="input-grid">
         <div class="picture">
           <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
           <img class="image" src={{picture}}>
         </div>
-        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="action-wrapper">
         <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
-        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
+        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit" [disabled]="!postProductForm.valid">Create</button>
         <ng-template #updateButton>
             <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Update</button>
         </ng-template>

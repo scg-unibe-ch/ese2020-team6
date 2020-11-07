@@ -102,6 +102,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
+      this.values.status = 'Available';
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
           this.openSnackBar();
@@ -181,7 +182,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
 
   public createOfferType(): void {
     if (this.values.productType === 'Item') {
-      this.offertype = ['Sell'];
+      this.offertype = ['Sell', 'Rent'];
     }
     if (this.values.productType === 'Service') {
       this.offertype = ['Rent'];
