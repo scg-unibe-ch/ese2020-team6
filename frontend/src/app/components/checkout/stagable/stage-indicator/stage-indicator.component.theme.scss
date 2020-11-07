@@ -1,0 +1,59 @@
+@mixin stage-indicator-theme($theme-name) {
+
+  $default-color: get-theme($theme-name, dark);
+  $visited-color: get-theme($theme-name, highlight);
+  $active-color: get-theme($theme-name, highlight);
+
+  .stage-indicator.#{$theme-name} {
+    .titles {
+
+    }
+
+    .graph {
+      .circle-wrapper {
+        &.default {
+          svg {
+            circle {
+              stroke: $default-color;
+            }
+          }
+        }
+
+        &.visited {
+          svg {
+            circle {
+              stroke: $visited-color;
+              fill: $visited-color;
+            }
+          }
+        }
+
+        &.active {
+          svg {
+            circle {
+              stroke: $active-color;
+            }
+          }
+        }
+      }
+
+      .line-wrapper {
+        &.default {
+          svg {
+            line {
+              stroke: $default-color;
+            }
+          }
+        }
+
+        &.visited {
+          svg {
+            line {
+              stroke: $visited-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<stage>
+  <div class="stage-content deliverable" content *ngIf="product.isDeliverable; else notDeliverable" theme>
+    <div class="address-selection">
+      <div class="smaller">The Item will be shipped to the following address:</div>
+      <div class="address">{{addressText}}</div>
+      <div class="smaller"><span *ngIf="isHomeAddress">This is your home address.</span> For a different shipping address search on the map for an address.</div>
+      <div class="smaller" *ngIf="isHomeAddress; else notHomeAddress">
+        If you approve, please click the button below:
+        <div class="approve-home-address" [ngClass]="approveHomeAddressClass" theme [classExtentions]="approveHomeAddressClassExtentions" (click)="onApproveAddress()">
+          Approve Home Address
+          <span class="checkmark"></span>
+        </div>
+      </div>
+      <ng-template #notHomeAddress>
+        <div class="">
+          <button (click)="backToHomeAddress()" theme button>Home Address</button>
+        </div>
+      </ng-template>
+    </div>
+    <map-search (searchResultsEmitter)="onSearch($event)" [initLocation]="addressText"></map-search>
+  </div>
+  <ng-template #notDeliverable>
+    <p class="stage-content not-deliverable">There is no shipping available for this item.
+      Please contact the seller on how to handle the shipping.
+      The contact information will be available after payment.</p>
+  </ng-template>
+  <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>{{isFirstStage}}
+  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="isHomeAddress && !isHomeAddressApproved || !isHomeAddress && !searchResults">Next</button>
+</stage>

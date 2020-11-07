@@ -1,0 +1,17 @@
+<div class="stage-indicator" [ngClass]="'length-' + stages.length + ' ' + theme">
+  <div class="titles">
+    <div *ngFor="let stop of stops" [ngClass]="'text-' + stop[1]">{{stop[0]}}</div>
+  </div>
+  <div class="graph">
+    <div class="circle-wrapper" *ngFor="let stop of stops" [ngClass]="'circle-' + stop[1] + ' ' + isVisited(stop[1]) + ' ' + isActive(stop[1])">
+      <svg class="circle" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+        <circle/>
+      </svg>
+    </div>
+    <div class="line-wrapper" *ngFor="let connector of connectors" [ngClass]="'line-' + connector + ' ' + isVisited(connector)">
+      <svg class="line" viewBox="0 0 550 20" preserveAspectRatio="none">
+        <line x1="4" y1="10" x2="546" y2="10"/>
+      </svg>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+@import '../../../variables.scss';
+@import './checkout.component.theme.scss';
+
+.checkout-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .checkout {
+    height: 80%;
+    width: 50%;
+    border-radius: $border-radius;
+    display: grid;
+    grid-auto-rows: 1.66em auto;
+    padding: $spaceing-xl;
+
+
+    .header {
+      font-size: 1.2em;
+      line-height: 1.66em;
+
+      span {
+        font-size: 1.66em;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include checkout-theme($theme-name);
+}

@@ -22,9 +22,9 @@
     </div>
 
     <div class="location">
-      Location:
-      <div>{{product.location}}</div>
+      <map [initLocation]="product.location"></map>
     </div>
+
     <div class="expiration-date">
       Expiration Date:
       <div>{{formatExpirationDate()}}</div>

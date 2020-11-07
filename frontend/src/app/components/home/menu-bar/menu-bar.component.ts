@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
-import { Themable } from '../../../models/theme/themable';
-import { ThemeService } from '../../../services/theme/theme.service';
 
 
 @Component({
@@ -10,7 +8,7 @@ import { ThemeService } from '../../../services/theme/theme.service';
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.scss']
 })
-export class MenuBarComponent extends Themable {
+export class MenuBarComponent {
   private showDropdown: boolean = false;
   private newReload: boolean = true;
 
@@ -24,11 +22,8 @@ export class MenuBarComponent extends Themable {
   isHome: boolean = false;
 
   constructor(
-    userService: UserService,
-    themeService: ThemeService
+    userService: UserService
   ) {
-    super(themeService);
-
     if(userService.isLoggedIn) {
         userService.userObservable.subscribe((user: UserModel) => {
         this.isLoggedIn = true;
@@ -46,14 +41,12 @@ export class MenuBarComponent extends Themable {
     let classes: Array<string> = new Array<string>();
     classes.push(!this.showDropdown ? 'collapse' : 'expand');
     if (this.newReload) classes.push('land');
-    classes.push(this.theme);
     return classes;
   }
 
   public getClasses(): Array<string> {
     let classes: Array<string> = new Array<string>();
     classes.push(this.block ? 'block' : 'fix');
-    classes.push(this.theme);
     return classes;
   }
 }

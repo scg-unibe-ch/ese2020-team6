@@ -1,11 +1,10 @@
-import {ControlValueAccessor, NgModel} from '@angular/forms';
+import {ControlValueAccessor} from '@angular/forms';
 import { Themable } from '../../models/theme/themable';
 import { ThemeService } from '../../services/theme/theme.service';
 
 
 export class ValueAccessorBase<T> extends Themable implements ControlValueAccessor {
-  protected model: NgModel;
-
+  
   private _touched: boolean = false;
   private _dirty: boolean = false;
   private _focused: boolean = false;
