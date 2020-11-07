@@ -22,7 +22,7 @@
         <app-text-input placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
       </div>
-      <div class="input-grid">
+      <div class="input-grid" *ngIf="values.productType == 'Item'">
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
         <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>

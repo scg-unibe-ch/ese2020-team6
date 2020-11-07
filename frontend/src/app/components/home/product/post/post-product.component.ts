@@ -102,6 +102,9 @@ export class PostProductComponent extends Themable implements PostProductRequest
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
+      if (this.values.productType === 'Service') {
+        this.values.isDeliverable = 'Yes';
+      }
       this.values.status = 'Available';
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
