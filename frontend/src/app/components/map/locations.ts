@@ -40,14 +40,18 @@ export class Locations extends Map {
     return this;
   }
 
-  public pushLocationByText(location: string): Locations {
+  public pushLocationByText(location: string, maxResults: number | string): Locations {
     Geocoder.geocode().text(location).run((err, searchResults, response) => {
       if (err) {
         console.log(err);
         return;
       }
+
       let results = searchResults.results;
-      results.forEach(result => {
+      let allResults: boolean = maxResults === 'all';
+
+
+      results.every((result, resultIndex: number) => {
         let latlng: Leaflet.LatLng = result.latlng;
         let bounds: Leaflet.LatLngBounds = result.bounds;
         let zoom: number = this._map.getBoundsZoom(bounds);
@@ -56,6 +60,8 @@ export class Locations extends Map {
           latlng: result.latlng,
           zoom: zoom
         });
+
+        return allResults || resultIndex + 1 != maxResults;
       });
 
       this.showLocations();

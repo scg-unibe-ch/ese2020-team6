@@ -30,7 +30,7 @@ export class MapSearchComponent extends Search implements AfterViewInit {
     super(
       'Topographic',
       {
-        center: [46.947922, 7.440390],
+        center: [46.801111, 8.226667],
         zoom: 6
       }
     )
@@ -43,7 +43,7 @@ export class MapSearchComponent extends Search implements AfterViewInit {
 
   private updateLocation(): void {
     if (this._initLocation && this.mapContainer) {
-      this.clearLocations().pushLocationByText(this._initLocation);
+      this.clearLocations().pushLocationByText(this._initLocation, 1);
     }
   }
 

@@ -32,8 +32,10 @@ export class ShippingComponent extends StageNDEExtention<any> {
   }
 
   public onSearch(searchResults: { results: Array<any> }): void {
-    this.searchResults = searchResults;
-    this.isHomeAddress = false;
+    if (searchResults.results.length > 0) {
+      this.searchResults = searchResults;
+      this.isHomeAddress = false;
+    }
   }
 
   get approveHomeAddressClass(): Array<string> {

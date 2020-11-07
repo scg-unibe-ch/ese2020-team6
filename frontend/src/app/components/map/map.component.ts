@@ -20,9 +20,6 @@ export class MapComponent extends Locations implements AfterViewInit {
     this.updateLocation();
   };
 
-  @Output()
-  searchResultsEmitter: EventEmitter<any> = new EventEmitter<any>();
-
   @ViewChild('map')
   private mapContainer: ElementRef;
 
@@ -43,11 +40,7 @@ export class MapComponent extends Locations implements AfterViewInit {
 
   private updateLocation(): void {
     if (this._initLocation && this.mapContainer) {
-      this.clearLocations().pushLocationByText(this._initLocation);
+      this.clearLocations().pushLocationByText(this._initLocation, 1);
     }
-  }
-
-  protected onSearchResults(data): void {
-    this.searchResultsEmitter.emit(data);
   }
 }
