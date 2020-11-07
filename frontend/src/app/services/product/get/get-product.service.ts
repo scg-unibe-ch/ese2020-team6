@@ -5,6 +5,7 @@ import { pluck } from 'rxjs/operators';
 // Models
 import { ProductModel } from '../../../models/product/product.model';
 import { environment } from '../../../../environments/environment';
+import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,13 @@ export class GetProductService {
 
   public getUnreviewedProductsCount(): Observable<number> {
     return this.httpClient.get<{amountOfUnreviewd: number}>(environment.endpointURL + 'product/unreviewd/count').pipe(pluck('amountOfUnreviewd'));
+  }
+
+  public getCategories(): Observable<Array<CategoryModel>> {
+    return this.httpClient.get<Array<CategoryModel>>(environment.endpointURL + 'product/categories/');
+  }
+
+  public getSubCategories(): Observable<Array<CategoryModel>> {
+    return this.httpClient.get<Array<CategoryModel>>(environment.endpointURL + 'product/subCategories/');
   }
 }

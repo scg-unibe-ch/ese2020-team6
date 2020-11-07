@@ -1,3 +1,4 @@
+import { CategoryModel } from './../../../../models/request/product/category-product-request.model';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,6 +32,10 @@ export class PostProductComponent extends Themable implements PostProductRequest
   isUpdate = false;
   productData: any;
   picture: any;
+  categories: Array<CategoryModel>;
+  subCategories: Array<CategoryModel>;
+  subCat: Array<string>;
+  cat: Array<string>;
 
   constructor(
     private productService: ProductService,
@@ -57,6 +62,16 @@ export class PostProductComponent extends Themable implements PostProductRequest
       if (!isNaN(this.productId)) {
         this.isUpdate = true;
         this.updateForm();
+      }
+    });
+    this.productService.getCategories().subscribe((values) => {
+      this.categories = values;
+    });
+    this.productService.getSubCategories().subscribe((values) => {
+      this.cat = [];
+      this.subCategories = values;
+      for (const cat of this.categories) {
+        this.cat.push(cat.category);
       }
     });
   }
@@ -146,4 +161,21 @@ export class PostProductComponent extends Themable implements PostProductRequest
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
   }
+
+  public createSubCat(): any {
+    let catId: number;
+    this.subCat = [];
+    const choosenCat = this.values.category;
+    for (const cat of this.categories) {
+      if (cat.category === choosenCat) {
+        catId = cat.id;
+      }
+    }
+    for (const cat of this.subCategories) {
+      if (catId === cat.id) {
+        this.subCat.push(cat.category);
+      }
+    }
+  }
 }
+
