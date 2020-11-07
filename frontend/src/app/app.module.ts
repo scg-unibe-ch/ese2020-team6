@@ -137,6 +137,7 @@ import { PreferencesComponent } from './components/user/profile/preferences/pref
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
+import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
@@ -152,6 +153,7 @@ import { ButtonWarnDirective } from './models/theme/button/button-warn.directive
 import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
 import { MapSearchComponent } from './components/map/map-search/map-search.component';
+
 
 @NgModule({
   declarations: [
@@ -227,6 +229,7 @@ import { MapSearchComponent } from './components/map/map-search/map-search.compo
     ValidationComponent,
     DateComponent,
     SearchProductComponent,
+    SelectCategoriesComponent,
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,

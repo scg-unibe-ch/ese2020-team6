@@ -10,8 +10,26 @@
   }
 
   .view {
+    display: flex;
     width: 100%;
   }
+
+  .select {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
+.select-categories{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+
 }
 
 .no-products {
