@@ -1,16 +1,16 @@
 import { AfterViewInit, Output, Input, Component, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 
-import { Locations } from './locations';
+import { Search } from '../search';
 import * as Esri from 'esri-leaflet';
 import * as Geocoder from 'esri-leaflet-geocoder';
 import * as Leaflet from 'leaflet';
 
 @Component({
-  selector: 'map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  selector: 'map-search',
+  templateUrl: '../map.component.html',
+  styleUrls: ['../map.component.scss']
 })
-export class MapComponent extends Locations implements AfterViewInit {
+export class MapSearchComponent extends Search implements AfterViewInit {
 
   private _initLocation: string;
 

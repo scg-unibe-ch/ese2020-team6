@@ -78,6 +78,9 @@ export class Locations extends Map {
           duration: 0.5
         }
       });
+      setTimeout(() => {
+        this._map.invalidateSize(true);
+      }, 0);
     });
   }
 }
