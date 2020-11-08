@@ -23,18 +23,23 @@ export class BuyItemComponent extends StagableExtention {
     userService: UserService
   ) {
     super(componentFactoryResolver, [
-    {
-      title: 'Payment Method',
-      component: PaymentMethodComponent,
-      componentRef: null
-    },
-    {
-      title: 'Shipping',
-      component: ShippingComponent,
-      componentRef: null
-    }],
+      {
+        title: 'Shipping',
+        component: ShippingComponent,
+        componentRef: null
+      },
+      {
+        title: 'Payment Method',
+        component: PaymentMethodComponent,
+        componentRef: null
+      }
+    ],
     route,
     productService,
     userService);
+  }
+
+  protected finalize: (stageIndex: number, data?: any) => void = (stageIndex: number): void => {
+    console.log(this.dataStorage);
   }
 }

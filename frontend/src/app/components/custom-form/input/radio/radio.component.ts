@@ -12,27 +12,27 @@ import { RadioLabelDirective } from '../../../custom-form/input/radio/label/radi
     {provide: NG_VALUE_ACCESSOR, useExisting: RadioComponent, multi: true}
   ]
 })
-export class RadioComponent extends ValueAccessorBase<any> {
+export class RadioComponent<T> extends ValueAccessorBase<T> {
   public type: string = "radio";
 
   @Input()
   public placeholder: string;
 
   @Input()
-  set options(options: Array<[string, any]>) {
+  set options(options: Array<[string, T]>) {
     this.value = options[0][1];
     this._options = options;
   }
-  get options(): Array<[string, any]> {
+  get options(): Array<[string, T]> {
     return this._options;
   }
-  private _options: Array<[string, any]> = new Array<[string, any]>();
+  private _options: Array<[string, T]> = new Array<[string, T]>();
 
-  public optionsWithTemplate: Array<[string, any, TemplateRef<any>]> = new Array<[string, any, TemplateRef<any>]>();
+  public optionsWithTemplate: Array<[string, T, TemplateRef<any>]> = new Array<[string, T, TemplateRef<any>]>();
 
   @ContentChildren(RadioLabelDirective)
   set labels(labels: QueryList<RadioLabelDirective>) {
-    this.optionsWithTemplate = this.options.map((option: [string, any], optionId: number) => {
+    this.optionsWithTemplate = this.options.map((option: [string, T], optionId: number) => {
       const labelTemplate: TemplateRef<any> = this.getTemplateById(labels, optionId);
 
       return [option[0], option[1], labelTemplate];
@@ -56,11 +56,11 @@ export class RadioComponent extends ValueAccessorBase<any> {
     super(themeService);
   }
 
-  public onSelect(option: string) {
+  public onSelect(option: T) {
     this.value = option;
   }
 
-  public writeValue(value: string) {
+  public writeValue(value: T) {
     super.writeValue(value);
     if (value) {
       this.dirty = true;
