@@ -14,7 +14,7 @@ import { UserModel, NullUser } from '../../../models/user/user.model';
 @Directive({
   selector: '[stagable]'
 })
-export class StagableExtention extends Stagable implements OnInit {
+export abstract class StagableExtention extends Stagable implements OnInit {
 
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();

@@ -6,7 +6,7 @@ import { StageNDEmitter } from './stage/stage-navigation-data-emitter.directive'
 @Directive({
   selector: '[stagable]'
 })
-export class Stagable implements OnInit {
+export abstract class Stagable implements OnInit {
 
   @ViewChild(StagesDirective, {static: true})
   stagesDirective: StagesDirective;
@@ -15,9 +15,14 @@ export class Stagable implements OnInit {
   public currentStageIndex: number = 0;
   private currentStage: StageModel = this.stages[this.currentStageIndex];
 
-  protected stagesEmitters: { next: Array<[EventEmitter<void>, number]>, previous: Array<[EventEmitter<void>, number]> } = {
+  protected stagesEmitters: {
+    next: Array<[EventEmitter<void>, number]>,
+    previous: Array<[EventEmitter<void>, number]>,
+    finalize: Array<[EventEmitter<void>, number]>
+  } = {
     next: new Array<[EventEmitter<void>, number]>(),
-    previous: new Array<[EventEmitter<void>, number]>()
+    previous: new Array<[EventEmitter<void>, number]>(),
+    finalize: new Array<[EventEmitter<void>, number]>()
   }
 
   protected dataEmitters: Array<[EventEmitter<any>, number]> = new Array<[EventEmitter<any>, number]>();
@@ -63,6 +68,10 @@ export class Stagable implements OnInit {
       stage.componentRef.instance.previousStageEmitter,
       stageIndex
     ]);
+    this.stagesEmitters.finalize.push([
+      stage.componentRef.instance.finalizeStagesEmitter,
+      stageIndex
+    ]);
   }
 
   private pushDataEmmiters(stage: StageModel, stageIndex: number): void {
@@ -75,6 +84,7 @@ export class Stagable implements OnInit {
   private assignEmitterMethods(): void {
     this.assignNextEmitterMethods();
     this.assignPreviousEmitterMethods();
+    this.assignFinalizeEmitterMethods();
     this.assignDataEmitterMethods();
   }
 
@@ -86,6 +96,11 @@ export class Stagable implements OnInit {
   private assignPreviousEmitterMethods(): void {
     let previousStagesEmitters: Array<[EventEmitter<void>, number]> = this.stagesEmitters.previous;
     this.assignEmitterMethod(this.previousStage, previousStagesEmitters);
+  }
+
+  private assignFinalizeEmitterMethods(): void {
+    let finalizeStagesEmitters: Array<[EventEmitter<void>, number]> = this.stagesEmitters.finalize;
+    this.assignEmitterMethod(this.finalize, finalizeStagesEmitters);
   }
 
   private assignDataEmitterMethods(): void {
@@ -127,6 +142,8 @@ export class Stagable implements OnInit {
       ])
     }
   }
+
+  protected abstract finalize: (stageIndex: number, data?: any) => void;
 
   private updateStage(): void {
     if (this.currentStageIndex + 1 <= this.stages.length && this.currentStageIndex >= 0) {

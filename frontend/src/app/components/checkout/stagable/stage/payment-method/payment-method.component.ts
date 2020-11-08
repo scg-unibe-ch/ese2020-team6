@@ -7,5 +7,18 @@ import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.di
   styleUrls: ['./payment-method.component.scss']
 })
 export class PaymentMethodComponent extends StageNDEExtention<string> {
-  public getData():string {return ''};
+  public options: Array<[string, string]> = [
+    ['Wallet', 'wallet'],
+    ['PayPal', 'paypal']
+  ]
+  public paymentMethod: string;
+
+  public getData(): string {
+    return this.paymentMethod;
+  };
+
+  public finalizeStages(): void {
+    this.emitData();
+    super.finalizeStages();
+  }
 }
