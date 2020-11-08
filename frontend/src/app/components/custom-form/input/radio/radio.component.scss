@@ -1,86 +1,96 @@
 @import '../../../../../variables.scss';
 @import './radio.component.theme.scss';
 
-.radio {
-  display: flex;
-  align-items: center;
-  .checkbox {
-    position: relative;
-    display: flex;
-    align-items: center;
-    font-size: 1em;
-    line-height: 1em;
-    border-radius: $border-radius;
-    padding: $spaceing-xs;
-    margin-right: $spaceing-m;
-    margin-left: $spaceing-m;
+.radio-wrapper {
+  display: grid;
+  grid-template-columns: max-content;
+  grid-template-rows: repeat(2, 2*$spaceing-m);
+  grid-gap: $spaceing-xs;
 
-    $dot-dimensions: $spaceing-xs/2;
+  .radio {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: $spaceing-xs;
 
-    &::before {
-      content: "";
-      height: $dot-dimensions;
-      width: $dot-dimensions;
-      border-radius: 50%;
-      position: absolute;
-      left: -$dot-dimensions/2 - $spaceing-m/2;
-    }
-
-    .checkmark-wrapper {
-
-      $checkmark-dimensions: $spaceing-m;
-
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
+    .checkbox {
       position: relative;
-      height: $checkmark-dimensions;
-      width: $checkmark-dimensions;
       display: flex;
       align-items: center;
-      margin-left: $spaceing-s;
+      font-size: 1em;
+      line-height: 1em;
+      border-radius: $border-radius;
+      padding: $spaceing-xs;
+      margin: 0 0 0 $spaceing-m;
 
+      $dot-dimensions: $spaceing-xs/2;
 
-      input {
+      &::before {
+        content: "";
+        height: $dot-dimensions;
+        width: $dot-dimensions;
+        border-radius: 50%;
         position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
+        left: -$dot-dimensions/2 - $spaceing-m/2;
+      }
 
-        &:checked {
-          ~ {
-            .checkmark {
-              &::after {
-                display: block;
+      .checkmark-wrapper {
+
+        $checkmark-dimensions: $spaceing-m;
+
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        position: relative;
+        height: $checkmark-dimensions;
+        width: $checkmark-dimensions;
+        display: flex;
+        align-items: center;
+        margin-left: $spaceing-s;
+
+
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+
+          &:checked {
+            ~ {
+              .checkmark {
+                &::after {
+                  display: block;
+                }
               }
             }
           }
+
         }
 
-      }
-
-      .checkmark {
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &::after {
-          content: "";
-          display: none;
-          height: 50%;
-          width: 50%;
+        .checkmark {
+          height: 100%;
+          width: 100%;
           border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &::after {
+            content: "";
+            display: none;
+            height: 50%;
+            width: 50%;
+            border-radius: 50%;
+          }
         }
       }
     }
   }
 }
+
+
 
 @each $theme-name in $theme-names {
   @include radio-theme($theme-name);
