@@ -2,11 +2,14 @@
   <label>
     {{placeholder}}
   </label>
-  <div *ngFor="let option of optionsWithTemplate">
-    <label>
+  <div class="radio" theme *ngFor="let option of optionsWithTemplate">
+    <label class="checkbox">
       {{option[0]}}
+      <div class="checkmark-wrapper" >
+        <input [type]="type" (blur)="touch()" (focus)="focus()" (change)="onSelect(option[1])" [name]="placeholder" [checked]="option[1] === value ? 'checked' : ''">
+        <div class="checkmark"></div>
+      </div>
     </label>
     <ng-container [ngTemplateOutlet]="option[2]"></ng-container>
-    <input [type]="type" (blur)="touch()" (focus)="focus()" (change)="onSelect(option[1])" [name]="placeholder" [checked]="option[1] === value ? 'checked' : ''">
   </div>
 </div>

@@ -19,7 +19,14 @@ export class RadioComponent extends ValueAccessorBase<any> {
   public placeholder: string;
 
   @Input()
-  public options: Array<[string, any]> = new Array<[string, any]>();
+  set options(options: Array<[string, any]>) {
+    this.value = options[0][1];
+    this._options = options;
+  }
+  get options(): Array<[string, any]> {
+    return this._options;
+  }
+  private _options: Array<[string, any]> = new Array<[string, any]>();
 
   public optionsWithTemplate: Array<[string, any, TemplateRef<any>]> = new Array<[string, any, TemplateRef<any>]>();
 
