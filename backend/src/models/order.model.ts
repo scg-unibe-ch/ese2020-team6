@@ -7,11 +7,11 @@ export interface Order {
     sellerId: number;
 }
 
-export interface Orders extends Optional<Order,'orderId'> {
+export interface Orders extends Optional<Order, 'orderId'> {
 
 }
 
-export class Order extends Model<Order,Orders>
+export class Order extends Model<Order, Orders>
     implements Order {
         orderId!: number;
         userId!: number;

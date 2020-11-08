@@ -5,8 +5,8 @@ import {Order, Orders} from '../models/order.model';
 const {OP} = require('sequelize');
 
 export class OrderService {
-    
-    public async buyItem(productId:number, paymentMethod: string, shipping: string, buyerId: number){
+
+    public async buyItem(productId: number, paymentMethod: string, shipping: string, buyerId: number) {
 
         const product = await Products.findOne({
             where: {
@@ -20,13 +20,13 @@ export class OrderService {
                 userId: buyerId
             }
         });
-        
-        //user.wallet>=product.price ? do payment : error messager
-        
+
+        // user.wallet>=product.price ? do payment : error messager
+
         if (user.wallet >= product.price) {
-        //subtract from buyer
+        // subtract from buyer
         User.increment( 'wallet', {by: -product.price, where: { userId: 'buyerId'}});
-        //add to seller
+        // add to seller
         User.increment( 'wallet', {by: product.price, where: { userId: 'sellerId'}});
       //  Order.build({productId: productId, userId: buyerId, sellerId: user.userId})
         Products.update({status: 'sold'}, {
@@ -34,8 +34,8 @@ export class OrderService {
                 productId: productId
             }
         });
-        } else{
-            console.log('Error Saldo zu klein')
+        } else {
+            console.log('Error Saldo zu klein');
         }
        // return orderId;
     }

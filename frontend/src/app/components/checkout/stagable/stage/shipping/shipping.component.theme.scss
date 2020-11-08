@@ -1,0 +1,50 @@
+@import '../../../../../../variables.scss';
+
+@mixin shipping-theme($theme-name) {
+
+  $address-border-color: get-theme($theme-name, highlight);
+
+  $checkmark-unchecked: get-theme($theme-name, light);
+  $checkmark-checked: get-theme($theme-name, light);
+  $checkmark-color: get-theme($theme-name, dark);
+
+  .stage-content {
+    height: 100%;
+    width: 100%;
+
+    &.deliverable {
+
+      .address-selection {
+        .smaller {
+          .approve-home-address {
+            &.not-approved {
+              .checkmark {
+                background-color: $checkmark-unchecked;
+              }
+            }
+
+            &.approved {
+              .checkmark {
+                background-color: $checkmark-checked;
+
+                &::after {
+                  border-color: $checkmark-color;
+                }
+              }
+            }
+          }
+        }
+        .address {
+          border-color: rgba($address-border-color, .1);
+        }
+      }
+
+      .map {
+      }
+    }
+
+    &.not-deliverable {
+
+    }
+  }
+}

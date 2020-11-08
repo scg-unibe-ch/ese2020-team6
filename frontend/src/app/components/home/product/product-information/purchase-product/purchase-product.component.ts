@@ -28,11 +28,6 @@ export class PurchaseProductComponent extends ProductInformationBase {
     this.showPurchaseForm = !this.showPurchaseForm;
   }
 
-  public purchase(): void {
-    if(!this.userService.isLoggedIn) this.router.navigate(['/user/login']);
-    else alert('You Purchased the Product!');
-  }
-
   get isForSale(): boolean {
     if (this.product.offerType === 'Rent' || this.product.productType === 'Service') return false;
     else return true;

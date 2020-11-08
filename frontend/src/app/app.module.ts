@@ -140,7 +140,19 @@ import { SearchProductComponent } from './components/home/product/search-product
 import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
+import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
+import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
+import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
+import { PaymentMethodComponent } from './components/checkout/stagable/stage/payment-method/payment-method.component';
+import { StageComponent } from './components/checkout/stagable/stage/stage.component';
+import { StagesDirective } from './components/checkout/stagable/stages.directive';
+import { ThemeDirective } from './models/theme/theme.directive';
+import { ButtonDirective } from './models/theme/button/button.directive';
+import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
+import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
+import { MapComponent } from './components/map/map.component';
+import { RadioComponent } from './components/custom-form/input/radio/radio.component';
+import { MapSearchComponent } from './components/map/map-search/map-search.component';
 
 
 @NgModule({
@@ -221,7 +233,18 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
-
+    ShippingComponent,
+    StageIndicatorComponent,
+    StagesDirective,
+    PaymentMethodComponent,
+    StageComponent,
+    ThemeDirective,
+    ButtonDirective,
+    MapComponent,
+    ButtonEmptyDirective,
+    RadioComponent,
+    ButtonWarnDirective,
+    MapSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -25,14 +25,24 @@
 						"aot": true,
 						"assets": [
 							"src/favicon.ico",
-							"src/assets"
+							"src/assets",
+							{
+					      "glob": "**/*",
+					      "input": "node_modules/leaflet/dist/images/",
+					      "output": "./assets/"
+					   	}
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
-							"src/variables.scss"
+							"src/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+            	"esri-leaflet-geocoder"
+            ],
 					},
 					"configurations": {
 						"production": {
@@ -91,14 +101,24 @@
 						"karmaConfig": "karma.conf.js",
 						"assets": [
 							"src/favicon.ico",
-							"src/assets"
+							"src/assets",
+							{
+					      "glob": "**/*",
+					      "input": "node_modules/leaflet/dist/images/",
+					      "output": "./assets/"
+					   	}
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
 							"src/styles.scss",
-							"src/variables.scss"
+							"src/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+            	"esri-leaflet-geocoder"
+            ],
 					}
 				},
 				"lint": {

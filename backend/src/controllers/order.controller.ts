@@ -18,7 +18,7 @@ orderController.put('/product/item/buy', verifyToken,
         const shipping: string = req.params.shipping;
         orderService.buyItem(productId, paymentMethod, shipping, userId)
 
-        .then(() => res.send()) //output ergänzen
-        
+        .then(() => res.send()) // output ergänzen
+
         .catch((err: any) => res.status(500).send(err));
 });

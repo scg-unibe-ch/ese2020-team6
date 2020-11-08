@@ -1,0 +1,11 @@
+<div class="input-wrapper" [ngClass]="classes">
+  <label>
+    {{placeholder}}
+  </label>
+  <div *ngFor="let option of options">
+    <label>
+      {{option[0]}}
+    </label>
+    <input [type]="type" (blur)="touch()" (focus)="focus()" (change)="onSelect(option[1])" [name]="placeholder" [checked]="option[1] === value ? 'checked' : ''">
+  </div>
+</div>
