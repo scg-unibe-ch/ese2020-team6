@@ -1,0 +1,47 @@
+@import '../../../../../../variables.scss';
+@import './duration.component.theme.scss';
+
+.stage-content {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: $spaceing-xs;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+    .total {
+      .total-price {
+        font-size: 1.2em;
+        padding: $spaceing-xs;
+        border-radius: $border-radius;
+        border: 2px solid;
+        margin: $spaceing-xs 0 $spaceing-xs 0;
+      }
+    }
+
+    .bigger {
+      font-size: 1.2em;
+      margin: $spaceing-xs 0 $spaceing-xs 0;
+    }
+
+    .smaller {
+      font-size: .8em;
+      margin: $spaceing-xs 0 $spaceing-xs 0;
+    }
+
+    .hint {
+      margin: auto 0 $spaceing-xs 0;
+    }
+  }
+}
+
+
+
+@each $theme-name in $theme-names {
+  @include duration-theme($theme-name)
+}

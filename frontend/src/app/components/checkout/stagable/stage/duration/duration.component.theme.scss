@@ -1,0 +1,14 @@
+@mixin duration-theme($theme-name) {
+
+  $total-border-color: get-theme($theme-name, highlight);
+
+  .stage-content {
+    div {
+      .total {
+        .total-price {
+          border-color: rgba($total-border-color, .5);
+        }
+      }
+    }
+  }
+}
