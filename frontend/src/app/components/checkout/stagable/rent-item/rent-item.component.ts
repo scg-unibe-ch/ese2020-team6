@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver } from '@angular/core';
 import { ShippingComponent } from '../stage/shipping/shipping.component';
+import { DurationComponent } from '../stage/duration/duration.component';
 import { PaymentMethodComponent } from '../stage/payment-method/payment-method.component';
 import { StagableExtention } from '../stagable-extention';
 import { ActivatedRoute } from '@angular/router';
@@ -25,6 +26,11 @@ export class RentItemComponent extends StagableExtention {
         {
           title: 'Shipping',
           component: ShippingComponent,
+          componentRef: null
+        },
+        {
+          title: 'Duration of Rental',
+          component: DurationComponent,
           componentRef: null
         },
         {
