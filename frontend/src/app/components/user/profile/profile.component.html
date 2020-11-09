@@ -1,11 +1,13 @@
 <div class="profile-wrapper" [ngClass]="theme">
-  <div class="header-wrapper-wrapper">
+  <div class="top">
     <div class="header-wrapper">
       <div class="header">
-          <span [routerLink]="['/']">
-            <img class="image" src="../../../../assets/Logo.png">
-          </span>
+        <span class="username">{{userName}}</span>
+        <span class="id">user-id <span>#{{userId}}</span></span>
       </div>
+    </div>
+    <div class="home-wrapper">
+      <button class="home" theme button [routerLink]="['']">Home</button>
     </div>
   </div>
   <app-profile-navigation class="navigation-wrapper" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
@@ -13,10 +15,6 @@
     {{ currentContent.title }}
   </div>
   <div class="content-wrapper">
-    <div class="header">
-      <span class="username">{{userName}}</span>
-      <span class="id">user-id <span>#{{userId}}</span></span>
-    </div>
     <router-outlet></router-outlet>
   </div>
 </div>
