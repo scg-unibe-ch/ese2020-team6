@@ -170,6 +170,10 @@ export abstract class Stagable implements OnInit {
     return array.map((valueTupel: [any, number]) => valueTupel[0]);
   }
 
+  protected getAllDataValues(): Array<any> {
+    return this.getAllValues(this.dataStorage);
+  }
+
   protected getDataValueByStageIndex(stageIndex: number): any {
     return this.getValueByStageIndex(this.dataStorage, stageIndex);
   }

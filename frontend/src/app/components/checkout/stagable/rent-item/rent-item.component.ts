@@ -46,6 +46,6 @@ export class RentItemComponent extends StagableExtention {
   }
 
   protected finalize: (stageIndex: number, data?: any) => void = (stageIndex: number): void => {
-    console.log(stageIndex);
+    console.log(this.dataStorage);
   }
 }

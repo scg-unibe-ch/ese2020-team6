@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.directive';
+import { NumberInputComponent } from '../../../../custom-form/input/number-input/number-input.component';
 
 @Component({
   selector: 'duration-stage',
@@ -8,8 +10,10 @@ import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.di
 })
 export class DurationComponent extends StageNDEExtention<number> {
 
+  public duration: number;
+
   public getData(): number {
-    return null;
+    return this.duration;
   };
-  
+
 }

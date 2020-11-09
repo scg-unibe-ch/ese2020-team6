@@ -1,9 +1,9 @@
 <stage>
   <div content class="duration-wrapper">
     <p>For how many hours would you like to rent this {{product.productType}}?</p>
-    <app-number-input placeholder="Hours" hoursValidator></app-number-input>
+    <app-number-input placeholder="Hours" #durationInput hoursValidator [(ngModel)]="duration"></app-number-input>
   </div>
 
   <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>{{isFirstStage}}
-  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="">Next</button>
+  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="durationInput.invalid">Next</button>
 </stage>
