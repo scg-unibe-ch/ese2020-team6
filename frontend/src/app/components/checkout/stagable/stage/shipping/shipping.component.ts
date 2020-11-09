@@ -59,10 +59,4 @@ export class ShippingComponent extends StageNDEExtention<any> {
     this.isHomeAddress = true;
     this.isHomeAddressApproved = false;
   }
-
-  public nextStage(): void {
-    super.nextStage();
-    this.emitData();
-  }
-
 }
