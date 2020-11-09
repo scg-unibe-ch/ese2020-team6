@@ -167,5 +167,11 @@ export const validatorRegex = {
       constraints.anyCharacter,
       constraints.minLength(50)
     ]}
+  },
+  hours: {
+    name: "hoursValidator",
+    constraints: { and : [
+      constraints.numbers
+    ]}
   }
 }

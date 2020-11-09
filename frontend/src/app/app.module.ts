@@ -134,7 +134,6 @@ import { PopupUnreviewedComponent } from './components/user/profile/profile-navi
 import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
-import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
@@ -156,6 +155,7 @@ import { MapSearchComponent } from './components/map/map-search/map-search.compo
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
 import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
+import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
 
 
 @NgModule({
@@ -229,7 +229,6 @@ import { DurationComponent } from './components/checkout/stagable/stage/duration
     PopupDirective,
     NavigationElementComponent,
     PreferencesComponent,
-    ValidationComponent,
     DateComponent,
     SearchProductComponent,
     SelectCategoriesComponent,
@@ -250,7 +249,8 @@ import { DurationComponent } from './components/checkout/stagable/stage/duration
     MapSearchComponent,
     RadioLabelDirective,
     RentItemComponent,
-    DurationComponent
+    DurationComponent,
+    HoursValidatorDirective
   ],
   imports: [
     BrowserModule,

@@ -11,9 +11,5 @@ export class DurationComponent extends StageNDEExtention<number> {
   public getData(): number {
     return null;
   };
-
-  public finalizeStages(): void {
-    this.emitData();
-    super.finalizeStages();
-  }
+  
 }
