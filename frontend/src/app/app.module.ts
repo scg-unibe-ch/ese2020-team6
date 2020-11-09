@@ -156,6 +156,7 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
 import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
 import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
+import { PurchaseServiceComponent } from './components/checkout/stagable/purchase-service/purchase-service.component';
 
 
 @NgModule({
@@ -250,7 +251,8 @@ import { HoursValidatorDirective } from './components/custom-form/validators/reg
     RadioLabelDirective,
     RentItemComponent,
     DurationComponent,
-    HoursValidatorDirective
+    HoursValidatorDirective,
+    PurchaseServiceComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import { ReviewProductComponent } from './../components/home/product/product-inf
 import { CheckoutComponent } from './../components/checkout/checkout.component';
 import { BuyItemComponent } from './../components/checkout/stagable/buy-item/buy-item.component';
 import { RentItemComponent } from './../components/checkout/stagable/rent-item/rent-item.component';
+import { PurchaseServiceComponent } from './../components/checkout/stagable/purchase-service/purchase-service.component';
 
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';
@@ -130,6 +131,10 @@ export const routes = [
       {
         path: 'rent-item',
         component: RentItemComponent
+      },
+      {
+        path: 'purchase-service',
+        component: PurchaseServiceComponent
       }
     ]
   }

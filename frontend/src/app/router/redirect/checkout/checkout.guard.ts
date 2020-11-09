@@ -31,7 +31,7 @@ export class CheckoutGuard implements CanActivate {
               this.router.navigate([getResolvedURL(next), 'rent-item']); break;
           }; break;
         case 'Service':
-          //this.router.navigate([getResolvedURL(next), 'purchase-service']);
+          this.router.navigate([getResolvedURL(next), 'purchase-service']);
           break;
       }
     });
