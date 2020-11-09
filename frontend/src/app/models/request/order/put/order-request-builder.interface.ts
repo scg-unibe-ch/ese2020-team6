@@ -33,7 +33,6 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
     return this._endpointURLExtention;
   }
 
-  private _request: S;
   protected abstract buildOrderRequest(): S;
   get request(): S {
     return this.buildOrderRequest();

@@ -154,6 +154,7 @@ import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
 import { MapSearchComponent } from './components/map/map-search/map-search.component';
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
+import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 
 
 @NgModule({
@@ -246,7 +247,8 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
     RadioComponent,
     ButtonWarnDirective,
     MapSearchComponent,
-    RadioLabelDirective
+    RadioLabelDirective,
+    RentItemComponent
   ],
   imports: [
     BrowserModule,

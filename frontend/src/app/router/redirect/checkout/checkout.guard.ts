@@ -28,8 +28,7 @@ export class CheckoutGuard implements CanActivate {
             case 'Sell':
               this.router.navigate([getResolvedURL(next), 'buy-item']); break;
             case 'Rent':
-              //this.router.navigate([getResolvedURL(next), 'rent-item']);
-              break;
+              this.router.navigate([getResolvedURL(next), 'rent-item']); break;
           }; break;
         case 'Service':
           //this.router.navigate([getResolvedURL(next), 'purchase-service']);
