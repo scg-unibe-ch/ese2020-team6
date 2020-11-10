@@ -102,7 +102,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             colorTheme: {
                 type: DataTypes.JSON,
                 defaultValue: 'bright'
-            },    
+            },
 
                 },
             {

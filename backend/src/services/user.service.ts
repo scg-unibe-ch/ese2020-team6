@@ -93,14 +93,14 @@ export class UserService {
       });
     }
     public setPreference(theme:theme){
-      
+
       User.update({colorTheme: theme}, {
         where: {
           colorTheme: theme
         }
       });
-      
-    /*  
+
+    /*
       switch(theme){
 
         case 'darkMode': {
@@ -111,7 +111,7 @@ export class UserService {
           });
           break;
         }
-      
+
         default: {
           User.update({colorScheme: 'standard'}, {
             where: {
@@ -120,6 +120,6 @@ export class UserService {
           });
           break;
           }*/
-      } 
+      }
 
 }
