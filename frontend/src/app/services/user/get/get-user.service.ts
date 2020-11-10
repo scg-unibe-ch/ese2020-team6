@@ -5,13 +5,13 @@ import { share } from 'rxjs/operators';
 import { UserModel } from '../../../models/user/user.model';
 import { CutUserModel } from '../../../models/user/cut-user.model';
 import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
-import { GetFromBackend } from '../../get-from-backend';
+import { GetService } from '../../get-service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetUserService extends GetFromBackend {
+export class GetUserService extends GetService {
 
   constructor(
     httpClient: HttpClient,

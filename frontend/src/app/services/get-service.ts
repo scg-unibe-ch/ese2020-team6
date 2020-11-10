@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { EndpointURLSegment } from '../models/endpoint/endpoint-url-segment';
 import { EndpointUrlBuilder } from './endpoint-url-builder';
 
-export class GetFromBackend extends EndpointURLSegment {
+export class GetService extends EndpointURLSegment {
 
   private endpoiontURLBuilder: EndpointUrlBuilder;
 

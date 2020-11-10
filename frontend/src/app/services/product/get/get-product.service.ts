@@ -4,12 +4,12 @@ import { Observable, pipe } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
 import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
-import { GetFromBackend } from '../../get-from-backend';
+import { GetService } from '../../get-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetProductService extends GetFromBackend {
+export class GetProductService extends GetService {
 
   constructor(
     httpClient: HttpClient,
