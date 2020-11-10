@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { PreferenceModel } from '../../../models/user/preference/preference.model';
+import { PreferenceModel, NullPreference } from '../../../models/user/preference/preference.model';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -18,10 +18,7 @@ export class PreferenceService {
     return this.httpClient.get<PreferenceModel>(environment.endpointURL + 'user/preference/get').pipe(share())
   }
 
-  public setPreferences(): Observable<PreferenceModel> {
-    let preferences: PreferenceModel = {
-      theme: "dark"
-    }
+  public setPreferences(preferences: PreferenceModel): Observable<PreferenceModel> {
     return this.httpClient.put<PreferenceModel>(environment.endpointURL + 'user/preference/set', preferences).pipe(share())
   }
 }

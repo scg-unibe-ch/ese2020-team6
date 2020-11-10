@@ -11,6 +11,7 @@ import { LoginUserResponseModel } from '../../models/response/user/login/login-u
 import { RegisterUserResponseModel } from '../../models/response/user/register/register-user-response.model';
 import { UserModel } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
+import { PreferenceModel } from '../../models/user/preference/preference.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ import { CutUserModel } from '../../models/user/cut-user.model';
 export class UserService {
 
   public userObservable: Observable<UserModel>;
+  public preferencesObservable: Observable<PreferenceModel>;
 
   constructor(
     private loginUserService: LoginUserService,
@@ -33,7 +35,9 @@ export class UserService {
     let userId = localStorage.getItem('userId');
     if (userId) {
       this.userObservable = this.getUserService.getUserByIdSecured(parseInt(userId));
-      this.userObservable.subscribe(()=>{}, (err: any) => {
+      this.userObservable.subscribe(() => {
+        this.preferencesObservable = this.preferenceService.getPreferences();
+      }, (err: any) => {
         this.logout();
       })
     }

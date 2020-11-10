@@ -5,6 +5,7 @@ import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
 import { Sequelize } from 'sequelize';
 import { User } from './models/user.model';
+import { Preference } from './models/preference.model';
 
 import cors from 'cors';
 import { Products } from './models/products.model';
@@ -21,6 +22,10 @@ export class Server {
 
         User.initialize(this.sequelize);
         Products.initialize(this.sequelize);
+        Preference.initialize(this.sequelize);
+        Preference.createAssociations();
+        User.createAssociations();
+        User.addHooks();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port

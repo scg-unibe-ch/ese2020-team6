@@ -92,34 +92,4 @@ export class UserService {
         }
       });
     }
-    public setPreference(theme:theme){
-
-      User.update({colorTheme: theme}, {
-        where: {
-          colorTheme: theme
-        }
-      });
-
-    /*
-      switch(theme){
-
-        case 'darkMode': {
-          User.update({colorScheme: 'darkMode'}, {
-            where: {
-              colorScheme: theme
-            }
-          });
-          break;
-        }
-
-        default: {
-          User.update({colorScheme: 'standard'}, {
-            where: {
-              colorScheme: theme
-            }
-          });
-          break;
-          }*/
-      }
-
 }

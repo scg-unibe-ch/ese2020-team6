@@ -1,5 +1,5 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
-import { Json } from 'sequelize/types/lib/utils';
+import { Preference } from './preference.model';
 
 export interface UserAttributes {
     userId: number;
@@ -16,7 +16,6 @@ export interface UserAttributes {
     gender: string;
     isAdmin: boolean;
     wallet: number;
-    colorTheme: JSON;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -36,7 +35,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     gender!: string;
     isAdmin!: boolean;
     wallet!: number;
-    colorTheme!: JSON;
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -98,17 +96,24 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             wallet: {
                 type: DataTypes.NUMBER,
                 defaultValue: 0
-            },
-            colorTheme: {
-                type: DataTypes.JSON,
-                defaultValue: 'bright'
-            },
-
-                },
-            {
-                sequelize,
-                tableName: 'users'
-            },
+            }
+          },
+          {
+              sequelize,
+              tableName: 'users'
+          }
         );
+    }
+
+    public static createAssociations() {
+      User.hasOne(Preference, {
+        foreignKey: 'userId'
+      });
+    }
+
+    public static addHooks() {
+      User.addHook('afterCreate', (user: User, options) => {
+        Preference.create({userId: user.userId});
+      });
     }
 }
