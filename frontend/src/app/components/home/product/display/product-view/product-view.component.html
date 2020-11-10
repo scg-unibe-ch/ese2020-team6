@@ -19,8 +19,8 @@
   </div>
 </ng-template>
 <ng-template #searchProducts>
-  <div class="search-wrapper-wrapper">
-    <div class="search-wrapper">
+  <div class="search-wrapper-wrapper"  [ngClass]="theme">
+    <div class="search-wrapper" >
           <app-search-product (criteriaChange)='updateCriteria($event)'></app-search-product>
     </div>
   </div>

@@ -1,18 +1,17 @@
 @mixin search-theme($theme-name) {
 
     .search-wrapper.#{$theme-name} {
-  
+
       $theme: map-get($themes, $theme-name);
-  
+
       $search-bg: map-get($theme, dark);
       $text-color: map-get($theme, bright);
-  
+
       background: $search-bg;
-  
+
       .search {
         background: $search-bg;
         color: $text-color;
       }
     }
   }
-  
