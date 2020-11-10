@@ -1,4 +1,5 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
+import { Json } from 'sequelize/types/lib/utils';
 
 export interface UserAttributes {
     userId: number;
@@ -15,7 +16,7 @@ export interface UserAttributes {
     gender: string;
     isAdmin: boolean;
     wallet: number;
-    colorScheme: string;
+    colorTheme: JSON;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -35,7 +36,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     gender!: string;
     isAdmin!: boolean;
     wallet!: number;
-    colorScheme!: string;
+    colorTheme!: JSON;
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -98,9 +99,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 type: DataTypes.NUMBER,
                 defaultValue: 0
             },
-            colorScheme: {
-                type: DataTypes.STRING,
-                defaultValue: 'standard'
+            colorTheme: {
+                type: DataTypes.JSON,
+                defaultValue: 'bright'
             },    
 
                 },
