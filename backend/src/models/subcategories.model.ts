@@ -4,7 +4,7 @@ export interface SubcategoriesAttributes {
     subcategoryId: number;
     categoryId: number;
     subcategory: string;
-    
+
 }
 
 export interface GoodsProductSubcategoires extends Optional<SubcategoriesAttributes, 'subcategory'> { }
@@ -23,7 +23,7 @@ export class Subcategories extends Model<SubcategoriesAttributes, GoodsProductSu
                  unique: true,
                  allowNull: false
              },
-             categoryId:{
+             categoryId: {
                  type: DataTypes.NUMBER,
                  unique: false,
                  allowNull: false
