@@ -101,7 +101,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             colorScheme: {
                 type: DataTypes.STRING,
                 defaultValue: 'standard'
-            },    
+            },
 
                 },
             {

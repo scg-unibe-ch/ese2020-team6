@@ -4,6 +4,7 @@ import { LoginUserService } from './login/login-user.service';
 import { LogoutUserService } from './logout/logout-user.service';
 import { RegisterUserService } from './register/register-user.service';
 import { GetUserService } from './get/get-user.service';
+import { PreferenceService } from './preference/preference.service';
 import { LoginUserRequestBuilder } from '../../models/request/user/login/login-user-request-builder.interface';
 import { RegisterUserRequestBuilder } from '../../models/request/user/register/register-user-request-builder.interface';
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
@@ -23,6 +24,7 @@ export class UserService {
     private logoutUserService: LogoutUserService,
     private registerUserService: RegisterUserService,
     private getUserService: GetUserService,
+    private preferenceService: PreferenceService
   ) {
     this.getUserFromLocalStorage();
   }

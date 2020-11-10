@@ -92,8 +92,8 @@ export class UserService {
         }
       });
     }
-    public saveColorScheme(theme:theme){
-      
+    public saveColorScheme(theme: theme) {
+
     }
 
 }
