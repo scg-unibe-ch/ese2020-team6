@@ -60,8 +60,8 @@
   width: 50em;
   padding: 50px;
   padding-top: 40px;
-  border: 2px solid #343442;
-  border-radius: 8px;
+  border: 3px solid #343442;
+  border-radius: 3px;
 }
 
 @each $theme-name in $theme-names {
