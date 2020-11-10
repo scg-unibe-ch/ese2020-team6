@@ -92,5 +92,8 @@ export class UserService {
         }
       });
     }
+    public saveColorScheme(theme:theme){
+      
+    }
 
 }
