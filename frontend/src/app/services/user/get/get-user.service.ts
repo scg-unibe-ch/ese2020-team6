@@ -4,22 +4,26 @@ import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { UserModel } from '../../../models/user/user.model';
 import { CutUserModel } from '../../../models/user/cut-user.model';
-import { environment } from '../../../../environments/environment';
+import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
+import { GetFromBackend } from '../../get-from-backend';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetUserService {
+export class GetUserService extends GetFromBackend {
 
   constructor(
-    private httpClient: HttpClient
-  ) { }
+    httpClient: HttpClient,
+  ) {
+    super('user/', httpClient);
+  }
 
   public getUserByIdSecured(userId: number): Observable<UserModel> {
-    return this.httpClient.get<UserModel>(environment.endpointURL + 'user/userid:' + userId.toString()).pipe(share())
+    return this.get<UserModel>('userid:' + userId.toString()).pipe(share())
   }
 
   public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {
-    return this.httpClient.get<CutUserModel>(environment.endpointURL + 'user/userid:' + userId.toString()).pipe(share())
+    return this.get<CutUserModel>('userid:' + userId.toString()).pipe(share())
   }
 }
