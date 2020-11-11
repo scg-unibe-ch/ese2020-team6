@@ -36,7 +36,7 @@ export class ItemsRent extends Model<ItemsRentAttributes, ItemsRent>
             },
                 {
                     sequelize,
-                    tableName: 'buyitems'
+                    tableName: 'itemsrent'
                 }
             );
         }

@@ -30,7 +30,7 @@ export class ItemsSold extends Model<ItemsSoldAttributes, SoldItems>
             },
                 {
                     sequelize,
-                    tableName: 'buyitems'
+                    tableName: 'itemssold'
                 }
             );
         }

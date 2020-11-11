@@ -22,7 +22,7 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
                     allowNull: false,
                     unique: true
                 },
-                
+
                 hours: {
                     type: DataTypes.NUMBER,
                     allowNull: false
@@ -31,7 +31,7 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
             },
                 {
                     sequelize,
-                    tableName: 'buyitems'
+                    tableName: 'servicesrent'
                 }
             );
         }
