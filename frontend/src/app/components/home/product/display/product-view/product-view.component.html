@@ -1,5 +1,5 @@
 <div class="product-view" *ngIf="hasProducts; else hasNoProducts">
-  <div class="grid">
+  <div class="control">
     <button [ngClass]="'button-' + theme" (click)="switchView()">Switch View</button>
     <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
