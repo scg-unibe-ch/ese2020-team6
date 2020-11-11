@@ -39,7 +39,7 @@ export class SelectCategoriesComponent extends Themable {
           if(entry.category==product.category){
             if (
               (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
-              (entry.price !== null && product.price > entry.price) ||
+              (entry.priceMin !== null && product.price > entry.priceMin) ||
               (entry.status !== null && entry.status !== product.status) ||
               (entry.location !== null && entry.location !== product.location) ||
               (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)

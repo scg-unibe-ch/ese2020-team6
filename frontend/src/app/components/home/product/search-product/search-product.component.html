@@ -1,40 +1,54 @@
 <div>
-    <form (ngSubmit)="onSubmit()">
-        <fieldset class="input-grid" >
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" [value]="true" [(ngModel)]="criteria.deliverable">
-              Deliverable
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" [value]="false" [(ngModel)]="criteria.deliverable">
-              Not Deliverable
-            </label>
-          </div>
-        </fieldset>
+  <form (ngSubmit)="onSubmit()">
+    <div class="input-grid">
+      <fieldset class="input-grid" >
+        <h2>Deliverable: </h2>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" [value]="true" [(ngModel)]="criteria.deliverable">
+            Deliverable
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" [value]="false" [(ngModel)]="criteria.deliverable">
+            Not Deliverable
+          </label>
+        </div>
+      </fieldset>
+    </div>
 
-        <div class="input-grid">
-            <app-select name="category" selectName="Category" [(ngModel)]="criteria.category"
-                [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
-            <app-select name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategory"
-                [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']"></app-select>
-        </div>
-        <div>
-            <app-text-input placeholder="Maximum Price" name="price" [(ngModel)]="criteria.price">
-            </app-text-input>
-            <app-select name="status" selectName="Status"
-                [options]="['Available', 'Lent', 'Sold']" [(ngModel)]="criteria.status"></app-select>
-        </div>
-        <div class="input-grid">
-            <app-text-input placeholder="Location" name="location" [(ngModel)]="criteria.location">
-            </app-text-input>
-        </div>
-        <div class="button">
-            <button [ngClass]="'button-' + theme" type="submit">Search</button>
-        </div>
-        Filter by price interval: <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>€ 1000</b>
-    </form>
+    <div class="input-grid">
+        <app-select name="category" selectName="Category" [(ngModel)]="criteria.category"
+            [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
+        <app-select name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategory"
+            [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']"></app-select>
+        <app-select name="type" selectName="Type" [(ngModel)]="criteria.type"
+            [options]="['Item', 'Service']"></app-select>
+    </div>
+    <!-- <app-select name="status" selectName="Status"
+        [options]="['Available', 'Lent', 'Sold']" [(ngModel)]="criteria.status"></app-select> -->
+    <!-- *ngFor="let product of productArray; -->
+    <div class="input-grid">
+        <app-text-input placeholder="Location" name="location" [(ngModel)]="criteria.location">
+        </app-text-input>
+    </div>
+    <div class="input-grid">
+      <h3>Price Range: </h3>
+      <div class='wrap' role='group' aria-labelledby='multi-lbl'>
+        <input id='a' type='range' min='0' value='5000'max='5000' name="priceMax" [(ngModel)]="criteria.priceMax"/>
+        <input id='b' type='range' min='0' value='0'   max='5000' name="priceMin" [(ngModel)]="criteria.priceMin"/>
+      </div>
+      <div>
+        <app-text-input placeholder="Maximum Price" name="priceMax" [(ngModel)]="criteria.priceMax">
+        </app-text-input>
+        <app-text-input placeholder="Minimum Price" name="priceMin" [(ngModel)]="criteria.priceMin">
+        </app-text-input>
+      </div>
+    </div>
+    <div class="button">
+      <button [ngClass]="'button-' + theme" type="submit">Search</button>
+    </div>
+  </form>
 </div>
 

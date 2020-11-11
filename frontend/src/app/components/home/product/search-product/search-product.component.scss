@@ -5,11 +5,66 @@
     @include search-theme($theme-name);
   }
 
+
 button {
     margin-top: 2em;
     left: 90%;
 }
+h2{
+  font-size: 1em;
+}
 
 .search {
     margin-bottom: 20em;
+}
+
+.input-grid{
+  margin-bottom: 1em;
+  align-self: auto;
+  text-justify: auto;
+}
+
+.wrap {
+  display: grid;
+  margin: 0.3em auto;
+  width: 20em;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(0deg, rgb(99, 199, 202) 2em, transparent 0);
+}
+.sr-only {
+  position: absolute;
+  clip-path: inset(100%);
+}
+
+@mixin track() {
+  background: none;
+  height: 100%;
+  width: 100%;
+}
+
+@mixin thumb() {
+  background: currentcolor;
+  border: none;
+  border-radius: 0;
+  pointer-events: auto;
+  width: 2em; height: 2em;
+}
+
+
+input[type='range'] {
+  &::-webkit-slider-runnable-track,
+  &::-webkit-slider-thumb, & { -webkit-appearance: none; }
+  grid-column: 1;
+  grid-row: 1;
+  background: none;
+  color: rgb(38, 47, 128);
+  font: inherit;
+  margin: 0;
+  pointer-events: none;
+  &::-webkit-slider-runnable-track { @include track; }
+  &::-moz-range-track { @include track; }
+  &::-webkit-slider-thumb { @include thumb; }
+  &::-moz-range-thumb { @include thumb; }
 }

@@ -70,7 +70,7 @@ export class ProductViewComponent extends Themable {
           if (
             (criteria.category !== null && criteria.category !== product.category) ||
             (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
-            (criteria.price !== null && product.price > criteria.price) ||
+            (criteria.priceMin !== null && product.price > criteria.priceMin) ||
             (criteria.status !== null && criteria.status !== product.status) ||
             (criteria.location !== null && criteria.location !== product.location) ||
             (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable)
@@ -79,7 +79,7 @@ export class ProductViewComponent extends Themable {
             return true;
           }
       return false;
-      
+
     });
   }
 

@@ -2,7 +2,9 @@ export class SearchModel {
     category: string = null;
     subcategory: string = null;
     location: string = null;
-    price: number = null;
+    type: string = null;
+    priceMin: number = 0;
+    priceMax: number = 5000;
     deliverable: boolean = null;
     status: string = null;
 }
