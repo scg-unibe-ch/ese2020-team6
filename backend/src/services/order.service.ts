@@ -56,7 +56,25 @@ export class OrderService {
             }
         });
     }
+
+    public getMyOrders(userId: number): Promise<Array<OrdersAttributes>> {
+        return Orders.findAll({
+            where: {
+                userId: userId
+            }
+        });
+    }
+
+    public getMyProductOrders(userId: number): Promise<Array<OrdersAttributes>> {
+        return Orders.findAll({
+            where: {
+                sellerId: userId
+            }
+        });
+    }
 }
+
+    
 /*
 try {
 

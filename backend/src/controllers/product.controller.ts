@@ -72,14 +72,16 @@ productController.get('/unreviewed', verifyToken, verifyIsAdmin,
         productService.getAllUnreviewedProducts()
     .then((products: Array<ProductsAttributes>) => res.send(products))
     .catch((err: any) => res.status(500).send(err));
-});
+    }
+);
 
 productController.get('/accepted',
     (req: Request, res: Response) => {
         productService.getAllAcceptedProducts()
         .then((products: Array<ProductsAttributes>) => res.send(products))
         .catch((err: any) => res.status(500).send(err));
-    });
+    }
+);
 
 productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
@@ -87,7 +89,8 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
         productService.acceptProduct(productId)
         .then((product: ProductsAttributes) => res.send(product))
         .catch((err: any) => res.status(500).send(err));
-});
+    }
+);
 
 productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
@@ -96,7 +99,8 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
         productService.rejectProduct(productId, rejectionMessage)
         .then((product: ProductsAttributes) => res.send(product))
         .catch((err: any) => res.status(500).send(err));
-    });
+    }
+);
 
 interface MulterRequest extends Request {
   file: any;
@@ -108,7 +112,8 @@ productController.put('/update/:productId', verifyToken,
         productService.updateProduct(updateProduct)
         .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))
         .catch((err: any) => res.status(500).send(err));
-    });
+    }
+);
 
  productController.get('/myproducts/:userId', verifyToken,
     (req: Request, res: Response) => {
@@ -136,7 +141,7 @@ productController.put('/update/:productId', verifyToken,
         .catch((err: any) => res.status(500).send(err));
     }
 
-    );
+);
 
     productController.get('/rejected/:userId', verifyToken,
     (req: Request, res: Response) => {
@@ -146,6 +151,6 @@ productController.put('/update/:productId', verifyToken,
         .catch((err: any) => res.status(500).send(err));
     }
 
-    );
+);
 
 export const ProductController: Router = productController;
