@@ -4,7 +4,6 @@ import { LoginUserService } from './login/login-user.service';
 import { LogoutUserService } from './logout/logout-user.service';
 import { RegisterUserService } from './register/register-user.service';
 import { GetUserService } from './get/get-user.service';
-import { PreferenceService } from './preference/preference.service';
 import { LoginUserRequestBuilder } from '../../models/request/user/login/login-user-request-builder.interface';
 import { RegisterUserRequestBuilder } from '../../models/request/user/register/register-user-request-builder.interface';
 import { LoginUserResponseModel } from '../../models/response/user/login/login-user-response.model';
@@ -19,14 +18,20 @@ import { PreferenceModel } from '../../models/user/preference/preference.model';
 export class UserService {
 
   public userObservable: Observable<UserModel>;
-  public preferencesObservable: Observable<PreferenceModel>;
+
+  private subscribers: Array<{
+    subscriber: (user: UserModel) => void,
+    errSubscriber?: (err: any) => void
+  }> = new Array<{
+    subscriber: (user: UserModel) => void,
+    errSubscriber?: (err: any) => void
+  }>();
 
   constructor(
     private loginUserService: LoginUserService,
     private logoutUserService: LogoutUserService,
     private registerUserService: RegisterUserService,
-    private getUserService: GetUserService,
-    private preferenceService: PreferenceService
+    private getUserService: GetUserService
   ) {
     this.getUserFromLocalStorage();
   }
@@ -35,11 +40,28 @@ export class UserService {
     let userId = localStorage.getItem('userId');
     if (userId) {
       this.userObservable = this.getUserService.getUserByIdSecured(parseInt(userId));
-      this.userObservable.subscribe(() => {
-        this.preferencesObservable = this.preferenceService.getPreferences();
+      this.userObservable.subscribe((user: UserModel) => {
       }, (err: any) => {
         this.logout();
       })
+      this.addSubscriptions();
+    }
+  }
+
+  public onLogin(subscriber: (user: UserModel) => void, errSubscriber?: (err: any) => void): void {
+    this.subscribers.push({
+      subscriber: subscriber,
+      errSubscriber: errSubscriber
+    });
+    this.addSubscriptions();
+  }
+
+  private addSubscriptions(): void {
+    if (this.userObservable) {
+      this.subscribers.forEach((subscriber: {
+        subscriber: (user: UserModel) => void,
+        errSubscriber?: (err: any) => void
+      }) => this.userObservable.subscribe(subscriber.subscriber, subscriber.errSubscriber));
     }
   }
 
