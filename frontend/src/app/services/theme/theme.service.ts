@@ -24,6 +24,7 @@ export class ThemeService {
   ) {
     this.themables = new Array<Themable>();
     this.load();
+    this.preferenceService.onEvent('onUpdate',()=>{});
   }
 
   public addThemable(themable: Themable): void {
@@ -33,9 +34,9 @@ export class ThemeService {
   public switchTheme(): ThemeService {
     this._currentTheme = (this._currentTheme + 1) % this.availableThemeStrings.length;
     this.preference.theme = this.currentTheme;
-    this.preferenceService.setPreferences(this.preference).onUpdate(()=>{});
+    this.preferenceService.update(this.preference);
     this.notifyThemables();
-    this.save();
+    this.saveToLocalStorage();
     return this;
   }
 
@@ -46,27 +47,32 @@ export class ThemeService {
   }
 
   private load(): void {
-    this._currentTheme = this.initialTheme;
-    let locatStorageTheme = localStorage.getItem('theme');
-
-    if (locatStorageTheme) {
-      try {
-        this._currentTheme = parseInt(locatStorageTheme, 10);
-        this.save();
-        return;
-      } catch (error) {};
-    } else {
-      this.preferenceService.onLoad((preference: PreferenceModel) => {
-        this._currentTheme = this.getIndexFromThemeName(preference.theme);
-        this.preference = preference;
-        this.notifyThemables();
-        this.save();
-      });
-      return;
+    try {
+      this.loadFromLocalStorage();
+    } catch (error) {
+      this.loadFromService();
     }
   }
 
-  private save(): void {
+  private loadFromLocalStorage(): void | Error {
+      let locatStorageTheme = localStorage.getItem('theme');
+      let currentThemeTemp: number = parseInt(locatStorageTheme, 10);
+      if (isNaN(currentThemeTemp)) throw new Error("Theme is not set correctly!");
+      this._currentTheme = currentThemeTemp;
+      this.saveToLocalStorage();
+  }
+
+  private loadFromService(): void {
+    this._currentTheme = this.initialTheme;
+    this.preferenceService.onEvent('onLoad', (preference: PreferenceModel) => {
+      this.preference = preference;
+      this._currentTheme = this.getIndexFromThemeName(preference.theme);
+      this.notifyThemables();
+      this.saveToLocalStorage();
+    });
+  }
+
+  private saveToLocalStorage(): void {
     localStorage.setItem('theme', this._currentTheme.toString());
   }
 
