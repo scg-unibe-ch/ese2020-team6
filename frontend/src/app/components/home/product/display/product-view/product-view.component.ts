@@ -67,21 +67,19 @@ export class ProductViewComponent extends Themable {
     const criteria = event;
     this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-      for (let entry of this.catslist) {
-        if(entry.category==product.category){
           if (
-            (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
-            (entry.price !== null && product.price > entry.price) ||
-            (entry.status !== null && entry.status !== product.status) ||
-            (entry.location !== null && entry.location !== product.location) ||
-            (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
+            (criteria.category !== null && criteria.category !== product.category) ||
+            (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
+            (criteria.price !== null && product.price > criteria.price) ||
+            (criteria.status !== null && criteria.status !== product.status) ||
+            (criteria.location !== null && criteria.location !== product.location) ||
+            (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable)
           ) {
           }else{
             return true;
           }
-        }
-      }
       return false;
+      
     });
   }
 

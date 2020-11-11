@@ -1,5 +1,20 @@
 <div>
     <form (ngSubmit)="onSubmit()">
+        <fieldset class="input-grid" >
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" [value]="true" [(ngModel)]="criteria.deliverable">
+              Deliverable
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" [value]="false" [(ngModel)]="criteria.deliverable">
+              Not Deliverable
+            </label>
+          </div>
+        </fieldset>
+
         <div class="input-grid">
             <app-select name="category" selectName="Category" [(ngModel)]="criteria.category"
                 [options]="['Houses', 'Pets', 'Nice Stuff']"></app-select>
@@ -15,12 +30,11 @@
         <div class="input-grid">
             <app-text-input placeholder="Location" name="location" [(ngModel)]="criteria.location">
             </app-text-input>
-            <app-select name="isDeliverable" selectName="Deliverable"
-                [options]="[true, false]" [(ngModel)]="criteria.deliverable"></app-select>
         </div>
         <div class="button">
             <button [ngClass]="'button-' + theme" type="submit">Search</button>
         </div>
+        Filter by price interval: <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>€ 1000</b>
     </form>
 </div>
 
