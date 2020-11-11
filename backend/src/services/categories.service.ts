@@ -94,12 +94,12 @@ export class CategoriesService {
         Subcategories.build({ subcategoryId: 63, categoryId: 10, subcategory: 'Machines'});
         Subcategories.build({ subcategoryId: 64, categoryId: 10, subcategory: 'Others'});
 
-        Subcategories.build({ subcategoryId: 65, categoryId: 11, subcategory: 'FAST Stove'});
-        Subcategories.build({ subcategoryId: 66, categoryId: 11, subcategory: 'HOT Stove'});
-        Subcategories.build({ subcategoryId: 67, categoryId: 11, subcategory: 'NICE Stove'});
-        Subcategories.build({ subcategoryId: 68, categoryId: 11, subcategory: 'BEAUTIFUL Stove'});
-        Subcategories.build({ subcategoryId: 69, categoryId: 11, subcategory: 'SEXY Stove'});
-        Subcategories.build({ subcategoryId: 65, categoryId: 11, subcategory: 'SLENDER Stove'});
+        Subcategories.build({ subcategoryId: 65, categoryId: 11, subcategory: 'REALLY FAST Stove'});
+        Subcategories.build({ subcategoryId: 66, categoryId: 11, subcategory: 'EXTREMELY HOT Stove'});
+        Subcategories.build({ subcategoryId: 67, categoryId: 11, subcategory: 'HEARTWAMRINGLY NICE Stove'});
+        Subcategories.build({ subcategoryId: 68, categoryId: 11, subcategory: 'STUNNINGLY BEAUTIFUL Stove'});
+        Subcategories.build({ subcategoryId: 69, categoryId: 11, subcategory: 'SURPRISINGLY SEXY Stove'});
+        Subcategories.build({ subcategoryId: 65, categoryId: 11, subcategory: 'INCREDIBLY SLENDER Stove'});
     }
 
     public getAllCategories(): Promise<Array<Categories>> {
