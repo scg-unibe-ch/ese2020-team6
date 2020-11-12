@@ -1,3 +1,5 @@
+import { AddressModel, NullAddress } from '../map/address/address.model';
+
 export interface UserModel {
   userId: number;
   firstName: string;
@@ -10,6 +12,7 @@ export interface UserModel {
   gender: string;
   isAdmin: boolean;
   wallet: number;
+  address: AddressModel;
 }
 
 export class NullUser implements UserModel {
@@ -24,4 +27,5 @@ export class NullUser implements UserModel {
   gender: string = null;
   isAdmin: boolean = null;
   wallet: number = null;
+  address: AddressModel = new NullAddress();
 }

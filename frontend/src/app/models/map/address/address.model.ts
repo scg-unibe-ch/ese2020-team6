@@ -24,6 +24,18 @@ export interface SearchAddressModel {
   Country: string;
 }
 
+export class NullAddress implements AddressModel {
+  streetName: string = null;
+  streetType: string = null;
+  addressNumber: string = null;
+  streetAddress: string = null;
+  neighbourhood: string = null;
+  city: string = null;
+  region: string = null;
+  postal: number = null;
+  country: string = null;
+}
+
 
 export class Address implements AddressModel {
   constructor(
@@ -59,6 +71,20 @@ export class Address implements AddressModel {
       address.Region,
       address.Postal,
       address.Country
+    )
+  }
+
+  public static buildFromAddressModel(address: AddressModel): Address {
+    return new Address(
+      address.streetName,
+      address.streetType,
+      address.addressNumber,
+      address.streetAddress,
+      address.neighbourhood,
+      address.city,
+      address.region,
+      address.postal,
+      address.country
     )
   }
 }
