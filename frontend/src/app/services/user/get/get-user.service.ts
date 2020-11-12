@@ -20,10 +20,10 @@ export class GetUserService extends GetService {
   }
 
   public getUserByIdSecured(userId: number): Observable<UserModel> {
-    return this.get<UserModel>('userid:' + userId.toString()).pipe(share())
+    return this.get<UserModel>('userid/' + userId.toString()).pipe(share())
   }
 
   public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {
-    return this.get<CutUserModel>('userid:' + userId.toString()).pipe(share())
+    return this.get<CutUserModel>('userid/' + userId.toString()).pipe(share())
   }
 }

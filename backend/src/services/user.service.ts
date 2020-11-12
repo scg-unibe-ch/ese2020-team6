@@ -19,9 +19,6 @@ export class UserService {
 
     public register(user: UserAttributes, address: AddressAttributes): Promise<User> {
         const saltRounds = 12;
-        // const copy: Object = user as Object;
-        // delete copy.repeatPassword;
-        // user = copy as UserAttributes;
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
 
@@ -104,7 +101,13 @@ export class UserService {
       return User.findOne({
         where: {
           userId: id
-        }
+        },
+        include: [{
+          association: User.Preference
+        },
+        {
+          association: User.Address
+        }]
       });
     }
 
