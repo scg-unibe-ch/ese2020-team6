@@ -39,17 +39,15 @@ export class RegisterComponent extends Themable implements LoginUserRequestBuild
   }
 
   public onSubmit(form: NgForm): void {
-    console.log(form);
-
-    // if (form.valid) {
-    //   this.form = form;
-    //   this.values = form.value;
-    //   this.registerErrorMessage = '';
-    //   this.userService.register(this).subscribe(
-    //     (res: RegisterUserResponseModel) => this.registerSuccess(),
-    //     (err: any) => this.registerError(err)
-    //   );
-    // }
+    if (form.valid) {
+      this.form = form;
+      this.values = form.value;
+      this.registerErrorMessage = '';
+      this.userService.register(this).subscribe(
+        (res: RegisterUserResponseModel) => this.registerSuccess(),
+        (err: any) => this.registerError(err)
+      );
+    }
   }
 
   public buildRegisterUserRequest(): RegisterUserRequestModel {
