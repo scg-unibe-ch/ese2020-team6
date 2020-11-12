@@ -1,4 +1,5 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
+import { Preference } from './preference.model';
 
 export interface UserAttributes {
     userId: number;
@@ -20,6 +21,9 @@ export interface UserAttributes {
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+
+
+    public static Preference: any;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -96,12 +100,18 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 type: DataTypes.NUMBER,
                 defaultValue: 0
             }
-
-        },
-            {
-                sequelize,
-                tableName: 'users'
-            },
+          },
+          {
+              sequelize,
+              tableName: 'users'
+          }
         );
+    }
+
+    public static createAssociations() {
+      User.Preference = User.hasOne(Preference, {
+        foreignKey: 'userId',
+        as: 'preference'
+      });
     }
 }

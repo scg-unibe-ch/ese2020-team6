@@ -10,6 +10,7 @@ import { LoginUserResponseModel } from '../../models/response/user/login/login-u
 import { RegisterUserResponseModel } from '../../models/response/user/register/register-user-response.model';
 import { UserModel } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
+import { PreferenceModel } from '../../models/user/preference/preference.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,19 @@ export class UserService {
 
   public userObservable: Observable<UserModel>;
 
+  private subscribers: Array<{
+    subscriber: (user: UserModel) => void,
+    errSubscriber?: (err: any) => void
+  }> = new Array<{
+    subscriber: (user: UserModel) => void,
+    errSubscriber?: (err: any) => void
+  }>();
+
   constructor(
     private loginUserService: LoginUserService,
     private logoutUserService: LogoutUserService,
     private registerUserService: RegisterUserService,
-    private getUserService: GetUserService,
+    private getUserService: GetUserService
   ) {
     this.getUserFromLocalStorage();
   }
@@ -31,9 +40,28 @@ export class UserService {
     let userId = localStorage.getItem('userId');
     if (userId) {
       this.userObservable = this.getUserService.getUserByIdSecured(parseInt(userId));
-      this.userObservable.subscribe(()=>{}, (err: any) => {
+      this.userObservable.subscribe((user: UserModel) => {
+      }, (err: any) => {
         this.logout();
       })
+      this.addSubscriptions();
+    }
+  }
+
+  public onLogin(subscriber: (user: UserModel) => void, errSubscriber?: (err: any) => void): void {
+    this.subscribers.push({
+      subscriber: subscriber,
+      errSubscriber: errSubscriber
+    });
+    this.addSubscriptions();
+  }
+
+  private addSubscriptions(): void {
+    if (this.userObservable) {
+      this.subscribers.forEach((subscriber: {
+        subscriber: (user: UserModel) => void,
+        errSubscriber?: (err: any) => void
+      }) => this.userObservable.subscribe(subscriber.subscriber, subscriber.errSubscriber));
     }
   }
 
