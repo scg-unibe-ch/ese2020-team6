@@ -1,5 +1,7 @@
 import { UserAttributes, User } from '../models/user.model';
+import { AddressAttributes, Address } from '../models/address.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { AddressService } from './address.service';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const { Op } = require('sequelize');
@@ -15,27 +17,53 @@ export class UserService {
       };
     }
 
-    public register(user: UserAttributes): Promise<User> {
+    public register(user: UserAttributes, address: AddressAttributes): Promise<User> {
         const saltRounds = 12;
-        const userCopy: any = user as any;
-        delete userCopy.repeatPassword;
-        user = userCopy as UserAttributes;
+        // const copy: Object = user as Object;
+        // delete copy.repeatPassword;
+        // user = copy as UserAttributes;
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
 
         const checkIfUserDoesNotExist: Promise<void> = this.userDoesNotExist(user);
+        const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
+
         return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
-          return User.create(
-            Object.assign(user, {
-              preference : {}
-            }),
-            {
-              include: [{
-                association: User.Preference
-              }]
-            }
-          ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+          return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
+            return this.insertUserWithExistingAddress(user, addressId);
+          }).catch(() => { // address does not exist -> insert user and address
+            return this.insertUserAndAddress(user, address);
+          });
         }).catch(err => Promise.reject(err)); // user does already exist -> reject
+    }
+
+    private insertUserAndAddress(user: UserAttributes, address: AddressAttributes): Promise<User> {
+      return User.create(
+        Object.assign(user, {address: address, preference: {}}),
+        {
+          include: [{
+            association: User.Preference
+          },
+          {
+            association: User.Address,
+            include : [ Address.Users ]
+          }]
+        }
+      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+    }
+
+    private insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
+      return User.create(
+        Object.assign(user, {
+          preference : {},
+          addressId: addressId
+        }),
+        {
+          include: [{
+            association: User.Preference
+          }]
+        }
+      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {

@@ -2,14 +2,19 @@ import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { PreferenceController } from './preference.controller';
 import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
-import { User } from '../models/user.model';
+import { UserAttributes, User } from '../models/user.model';
+import { AddressAttributes, Address } from '../models/address.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
 
 userController.post('/register',
     (req: Request, res: Response) => {
-        userService.register(req.body).then((registeredUser: User) => res.send(registeredUser)).catch(err => {
+
+      const user: UserAttributes = req.body as UserAttributes;
+      const address: AddressAttributes = req.body.address as AddressAttributes;
+
+        userService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch(err => {
           if (err.status) {
             res.status(err.status);
           } else {

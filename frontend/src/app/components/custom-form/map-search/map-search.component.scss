@@ -1,0 +1,21 @@
+@import '../../../../variables.scss';
+
+.map-wrapper {
+  display: grid;
+  grid-template-rows:  auto minmax(auto, 100%);
+  grid-gap: $spaceing-xs;
+  height: 100%;
+  width: 100%;
+
+  .map-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .map {
+      border-radius: $border-radius;
+      width: 100%;
+      color: black;
+    }
+  }
+}

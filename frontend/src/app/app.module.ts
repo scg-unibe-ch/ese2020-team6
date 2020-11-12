@@ -114,6 +114,7 @@ import { DescriptionValidatorDirective } from './components/custom-form/validato
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
 import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
+import { MapSearchValidatorDirective } from './components/custom-form/validators/map-search/map-search-validator.directive';
 //    Cross Field
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 //    Select
@@ -152,8 +153,8 @@ import { ButtonEmptyDirective } from './models/theme/button/button-empty.directi
 import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
 import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
-import { MapSearchComponent } from './components/map/map-search/map-search.component';
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
+import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
 
 
 @NgModule({
@@ -187,6 +188,7 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
+    MapSearchValidatorDirective,
     //Crossfield
     PasswordMatchValidatorDirective,
     PostProductComponent,
