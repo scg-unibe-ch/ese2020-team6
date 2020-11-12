@@ -1,20 +1,16 @@
 @mixin search-theme($theme-name) {
+  .input-grid.#{$theme-name} {
+    $theme: map-get($themes, $theme-name);
+    $search-bg: map-get($theme, dark);
+    $text-color: map-get($theme, bright);
 
-    .search-wrapper.#{$theme-name} {
+    background: $search-bg;
 
-      $theme: map-get($themes, $theme-name);
-
-      $search-bg: map-get($theme, dark);
-      $text-color: map-get($theme, bright);
-
-      background: $search-bg;
-
-      .search {
-        background: $search-bg;
-        color: $text-color;
-      }
-      h2 {
-        color: $text-color;
-      }
+    h2 {
+      color: $text-color;
+    }
+    h3 {
+      color: $text-color;
     }
   }
+}

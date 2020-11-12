@@ -15,7 +15,6 @@ export class SearchProductComponent extends Themable implements PipeTransform {
   @Input()
   productArray: Array<ProductModel>
   products: any;
-  search = false;
   public criteria = new SearchModel();
 
 
@@ -28,6 +27,12 @@ export class SearchProductComponent extends Themable implements PipeTransform {
     for (let entry of productArray) {
       console.log(entry); // 1, "string", false
     }
+  }
+
+  isShown: boolean = false ; // hidden by default
+  toggleShow() {
+    this.isShown = true;
+    console.log(this.isShown )
   }
 
   onSubmit(): void {

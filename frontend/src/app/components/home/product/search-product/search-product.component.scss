@@ -13,20 +13,24 @@ button {
 h2{
   font-size: 1em;
 }
+h3{
+  font-size: 1em;
+}
 
-.search {
-    margin-bottom: 20em;
+#radioGrid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 0em;
 }
 
 .input-grid{
   margin-bottom: 1em;
-  align-self: auto;
-  text-justify: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: $spaceing-xl;
 }
-
 .wrap {
   display: grid;
-  margin: 0.3em auto;
+  margin: auto;
   width: 20em;
   overflow: hidden;
   position: relative;
