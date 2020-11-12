@@ -21,6 +21,9 @@ export interface UserAttributes {
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+
+
+    public static Preference: any;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -106,14 +109,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     }
 
     public static createAssociations() {
-      User.hasOne(Preference, {
-        foreignKey: 'userId'
-      });
-    }
-
-    public static addHooks() {
-      User.addHook('afterCreate', (user: User, options) => {
-        Preference.create({userId: user.userId});
+      User.Preference = User.hasOne(Preference, {
+        foreignKey: 'userId',
+        as: 'preference'
       });
     }
 }

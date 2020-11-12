@@ -8,6 +8,9 @@ export interface PreferenceAttributes {
 export interface PreferenceCreationAttributes extends Optional<PreferenceAttributes, 'theme'> { }
 
 export class Preference extends Model<PreferenceAttributes, PreferenceCreationAttributes> implements PreferenceAttributes {
+
+
+    public static User: any;
     userId!: number;
     theme!: string;
 
@@ -30,10 +33,11 @@ export class Preference extends Model<PreferenceAttributes, PreferenceCreationAt
     }
 
     public static createAssociations() {
-      Preference.belongsTo(User, {
+      Preference.User = Preference.belongsTo(User, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        as: 'user'
       });
     }
 }
