@@ -1,3 +1,4 @@
+import { SelectCategoriesComponent } from './components/home/product/search-product/select-categories/select-categories.component';
 // --------------------------------------------------------------------------------- //
 
 
@@ -137,7 +138,6 @@ import { PreferencesComponent } from './components/user/profile/preferences/pref
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
-import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
@@ -156,6 +156,7 @@ import { MapSearchComponent } from './components/map/map-search/map-search.compo
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -232,7 +233,6 @@ import { FilterPipeComponent } from './components/home/product/search-product/fi
     ValidationComponent,
     DateComponent,
     SearchProductComponent,
-    SelectCategoriesComponent,
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
@@ -249,7 +249,8 @@ import { FilterPipeComponent } from './components/home/product/search-product/fi
     ButtonWarnDirective,
     MapSearchComponent,
     RadioLabelDirective,
-    FilterPipeComponent
+    FilterPipeComponent,
+    SelectCategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -271,7 +272,7 @@ import { FilterPipeComponent } from './components/home/product/search-product/fi
     MatSnackBarModule,
     OverlayModule,
     ReactiveFormsModule,
-
+    MatSlideToggleModule,
   ],
   providers: [
     {

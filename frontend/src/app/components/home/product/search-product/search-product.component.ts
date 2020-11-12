@@ -1,5 +1,7 @@
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { SelectCategoriesComponent } from './../search-product/select-categories/select-categories.component';
 import { ProductModel } from 'src/app/models/product/product.model';
-import { Component, EventEmitter, Output, Input, PipeTransform } from '@angular/core';
+import { Component, EventEmitter, Output, Input, PipeTransform} from '@angular/core';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { Themable } from 'src/app/models/theme/themable';
 import { SearchModel } from 'src/app/models/request/search/search.model';
@@ -13,9 +15,12 @@ import { SearchModel } from 'src/app/models/request/search/search.model';
 export class SearchProductComponent extends Themable implements PipeTransform {
   @Output() criteriaChange = new EventEmitter<SearchModel>();
   @Input()
-  productArray: Array<ProductModel>
-  products: any;
+  productArray: Array<ProductModel>;
   public criteria = new SearchModel();
+  optionArray: Array<string>;
+  catArray: Array<string> = ['Houses', 'Pets', 'Nice Stuff'];
+  cat: string;
+  color = 'accent';
 
 
   constructor(
@@ -23,25 +28,31 @@ export class SearchProductComponent extends Themable implements PipeTransform {
   ) {
     super(themeService);
    }
-  transform(productArray, searchTerm: string) {
-    for (let entry of productArray) {
-      console.log(entry); // 1, "string", false
-    }
-  }
 
-  show: boolean = false ; // hidden by default
+
+  show: boolean = false ;
   SubCategoryShow(entry: any) {
+    console.log(entry);
+    this.cat=entry;
     this.show = true;
-    console.log(entry )
   }
 
-  isShown: boolean = false ; // hidden by default
+  isShown: boolean = false ;
   OfferTypeShow(entry: any) {
+    if(entry=="Service"){
+      this.optionArray=['Rent'];
+    }else{
+      this.optionArray=['Sell', 'Rent'];
+    }
     this.isShown = true;
-    console.log(entry )
   }
 
   onSubmit(): void {
     this.criteriaChange.emit(this.criteria);
+  }
+  transform(productArray, searchTerm: string) {
+    for (let entry of productArray) {
+      console.log(entry);
+    }
   }
 }

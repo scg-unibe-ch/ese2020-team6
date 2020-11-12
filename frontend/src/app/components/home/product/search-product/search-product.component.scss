@@ -16,10 +16,24 @@ h2{
 h3{
   font-size: 1em;
 }
+#b2{
+  margin-top: 1.6em;
+  margin-left: 2em;
+}
 
 #radioGrid {
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 0em;
+}
+
+#priceGrid {
+  margin-top: 1cm;
+}
+
+#deliverableGrid{
+  grid-column-gap: 2em;
+  margin-bottom: 0%;
+  margin-top: 1.5em;
 }
 
 .input-grid{
@@ -55,7 +69,6 @@ h3{
   pointer-events: auto;
   width: 2em; height: 2em;
 }
-
 
 input[type='range'] {
   &::-webkit-slider-runnable-track,

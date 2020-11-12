@@ -1,4 +1,3 @@
-import { SelectCategoriesComponent } from './select-categories/select-categories.component';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
@@ -20,7 +19,6 @@ export class ProductViewComponent extends Themable {
   filteredProducts: Array<ProductModel>;
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
-  select: SelectCategoriesComponent;
   public CategoryName;
   private displayList = true;
   showDropdown: boolean;
@@ -58,7 +56,7 @@ export class ProductViewComponent extends Themable {
   }
 
 
-  public isTitleAndDescription(searchTerm: string,title: string,descrip: string): boolean {
+  public isInTitleOrInDescription(searchTerm: string,title: string,descrip: string): boolean {
     if(searchTerm == null){
       return false;
     }
@@ -80,7 +78,7 @@ export class ProductViewComponent extends Themable {
         (criteria.priceMin !== null && product.price < criteria.priceMin) ||
         (criteria.location !== null && criteria.location !== product.location) ||
         (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable) ||
-        (this.isTitleAndDescription(criteria.titleAndDescription,product.title,product.description))
+        (this.isInTitleOrInDescription(criteria.titleAndDescription,product.title,product.description))
       ){
         return false;
       }else{
@@ -98,6 +96,7 @@ export class ProductViewComponent extends Themable {
       .global()
       .centerHorizontally()
       .centerVertically();
+    configs.scrollStrategy;
     this.overlayRef = this.overlay.create(configs);
     this.overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
