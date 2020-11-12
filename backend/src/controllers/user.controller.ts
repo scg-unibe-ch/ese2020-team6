@@ -1,5 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
+import { PreferenceController } from './preference.controller';
 import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
 import { User } from '../models/user.model';
 
@@ -47,5 +48,7 @@ userController.get('/',
         userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
     }
 );
+
+userController.use('/preference', PreferenceController);
 
 export const UserController: Router = userController;

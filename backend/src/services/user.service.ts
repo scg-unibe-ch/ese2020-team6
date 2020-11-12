@@ -22,33 +22,20 @@ export class UserService {
         user = userCopy as UserAttributes;
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
-        return User.findOrCreate({
-          where: {
-            [Op.or]: [
-              {
-                userName: user.userName
-              },
-              {
-                email: user.email
-              }
-            ]
-          },
-          defaults: user
-        }).then((result: [User, boolean]) => {
-          const success: boolean = result[1];
-          const registeredUser: User = result[0];
-          if (success) {
-            return Promise.resolve(registeredUser);
-          } else {
-            if (user.email === registeredUser.email && user.userName === registeredUser.userName) {
-              return Promise.reject({ message: 'Username, Email already in use', status: 409 });
-            } else if (user.userName === registeredUser.userName) {
-              return Promise.reject({ message: 'Username already in use', status: 409 });
-            } else {
-              return Promise.reject({ message: 'Email already in use', status: 409 });
+
+        const checkIfUserDoesNotExist: Promise<void> = this.userDoesNotExist(user);
+        return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
+          return User.create(
+            Object.assign(user, {
+              preference : {}
+            }),
+            {
+              include: [{
+                association: User.Preference
+              }]
             }
-          }
-        }).catch(err => Promise.reject(err));
+          ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+        }).catch(err => Promise.reject(err)); // user does already exist -> reject
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
@@ -93,4 +80,34 @@ export class UserService {
       });
     }
 
+    public getUserByUsernameOrEmail(user: UserAttributes): Promise<User> {
+      return User.findOne({
+        where: {
+          [Op.or]: [
+            {
+              userName: user.userName
+            },
+            {
+              email: user.email
+            }
+          ]
+        }
+      });
+    }
+
+    public userDoesNotExist(user: UserAttributes): Promise<void> {
+      return this.getUserByUsernameOrEmail(user).then((existingUser: User) => {
+        if (existingUser) {
+          if (user.email === existingUser.email && user.userName === existingUser.userName) {
+            return Promise.reject({ message: 'Username, Email already in use', status: 409 });
+          } else if (user.userName === existingUser.userName) {
+            return Promise.reject({ message: 'Username already in use', status: 409 });
+          } else {
+            return Promise.reject({ message: 'Email already in use', status: 409 });
+          }
+        } else {
+          return Promise.resolve();
+        }
+      }).catch(err => Promise.reject(err));
+    }
 }
