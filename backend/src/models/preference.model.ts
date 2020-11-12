@@ -1,4 +1,4 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
 import { User } from './user.model';
 
 export interface PreferenceAttributes {
@@ -10,7 +10,7 @@ export interface PreferenceCreationAttributes extends Optional<PreferenceAttribu
 export class Preference extends Model<PreferenceAttributes, PreferenceCreationAttributes> implements PreferenceAttributes {
 
 
-    public static User: any;
+    public static User: Association;
     userId!: number;
     theme!: string;
 

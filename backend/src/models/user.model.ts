@@ -1,5 +1,6 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
 import { Preference } from './preference.model';
+import { Address, AddressAttributes } from './address.model';
 
 export interface UserAttributes {
     userId: number;
@@ -9,10 +10,7 @@ export interface UserAttributes {
     email: string;
     password: string;
     phonenumber: number;
-    plz: number;
-    city: string;
-    street: string;
-    houseNumber: string;
+    addressId: number;
     gender: string;
     isAdmin: boolean;
     wallet: number;
@@ -23,7 +21,8 @@ export interface UserCreationAttributes extends Optional<UserAttributes, 'userId
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
 
 
-    public static Preference: any;
+    public static Preference: Association;
+    public static Address: Association;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -31,10 +30,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     email!: string;
     password!: string;
     phonenumber!: number;
-    plz!: number;
-    city!: string;
-    street!: string;
-    houseNumber!: string;
+    addressId!: number;
     gender!: string;
     isAdmin!: boolean;
     wallet!: number;
@@ -72,20 +68,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 type: DataTypes.NUMBER,
                 allowNull: false
             },
-            plz: {
+            addressId: {
                 type: DataTypes.NUMBER,
-                allowNull: false
-            },
-            city: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            street: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            houseNumber: {
-                type: DataTypes.STRING,
                 allowNull: false
             },
             gender: {
@@ -112,6 +96,13 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
       User.Preference = User.hasOne(Preference, {
         foreignKey: 'userId',
         as: 'preference'
+      });
+
+      User.Address = User.belongsTo(Address, {
+        foreignKey: 'addressId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        as: 'address'
       });
     }
 }
