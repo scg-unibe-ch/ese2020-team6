@@ -3,7 +3,7 @@ import { SearchModel } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
 import { Themable } from '../../../../../models/theme/themable';
 import { ThemeService } from '../../../../../services/theme/theme.service';
@@ -21,7 +21,6 @@ export class ProductViewComponent extends Themable {
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
   select: SelectCategoriesComponent;
-  public catslist: Array<SearchModel>=[];
   public CategoryName;
   private displayList = true;
   showDropdown: boolean;
@@ -57,29 +56,36 @@ export class ProductViewComponent extends Themable {
       return false;
     }
   }
-  public crossOffItem(cats: Array<ProductModel>){
 
-    this.filteredProducts=cats;
+
+  public isTitleAndDescription(searchTerm: string,title: string,descrip: string): boolean {
+    if(searchTerm == null){
+      return false;
+    }
+    if(title.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1 || descrip.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   public updateCriteria(event: SearchModel): void {
     this.overlayRef.detach();
     const criteria = event;
-    this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-          if (
-            (criteria.category !== null && criteria.category !== product.category) ||
-            (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
-            (criteria.priceMin !== null && product.price > criteria.priceMin) ||
-            (criteria.status !== null && criteria.status !== product.status) ||
-            (criteria.location !== null && criteria.location !== product.location) ||
-            (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable)
-          ) {
-          }else{
-            return true;
-          }
-      return false;
-
+      if (
+        (criteria.category !== null && criteria.category !== product.category) ||
+        (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
+        (criteria.priceMax !== null && product.price > criteria.priceMax) ||
+        (criteria.priceMin !== null && product.price < criteria.priceMin) ||
+        (criteria.location !== null && criteria.location !== product.location) ||
+        (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable) ||
+        (this.isTitleAndDescription(criteria.titleAndDescription,product.title,product.description))
+      ){
+        return false;
+      }else{
+        return true;
+      }
     });
   }
 

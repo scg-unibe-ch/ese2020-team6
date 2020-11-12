@@ -154,6 +154,8 @@ import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
 import { MapSearchComponent } from './components/map/map-search/map-search.component';
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
 
 
 @NgModule({
@@ -246,7 +248,8 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
     RadioComponent,
     ButtonWarnDirective,
     MapSearchComponent,
-    RadioLabelDirective
+    RadioLabelDirective,
+    FilterPipeComponent
   ],
   imports: [
     BrowserModule,
@@ -255,6 +258,7 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
+    Ng2SearchPipeModule,
     //Angular Material
     MatButtonModule,
     MatListModule,
@@ -267,6 +271,7 @@ import { RadioLabelDirective } from './components/custom-form/input/radio/label/
     MatSnackBarModule,
     OverlayModule,
     ReactiveFormsModule,
+
   ],
   providers: [
     {

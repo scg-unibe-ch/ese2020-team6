@@ -29,10 +29,16 @@ export class SearchProductComponent extends Themable implements PipeTransform {
     }
   }
 
+  show: boolean = false ; // hidden by default
+  SubCategoryShow(entry: any) {
+    this.show = true;
+    console.log(entry )
+  }
+
   isShown: boolean = false ; // hidden by default
-  toggleShow() {
+  OfferTypeShow(entry: any) {
     this.isShown = true;
-    console.log(this.isShown )
+    console.log(entry )
   }
 
   onSubmit(): void {
