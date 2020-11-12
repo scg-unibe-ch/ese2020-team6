@@ -39,6 +39,12 @@
       grid-column-gap: $spaceing-xl;
     }
 
+    .home-address {
+      margin-top: $spaceing-l;
+      height: 200px;
+      width: 100%;
+    }
+
     .action-wrapper {
       display: flex;
       justify-content: flex-end;

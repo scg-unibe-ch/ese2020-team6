@@ -114,6 +114,7 @@ import { DescriptionValidatorDirective } from './components/custom-form/validato
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
 import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
+import { MapSearchValidatorDirective } from './components/custom-form/validators/map-search/map-search-validator.directive';
 //    Cross Field
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 //    Select
@@ -187,6 +188,7 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
+    MapSearchValidatorDirective,
     //Crossfield
     PasswordMatchValidatorDirective,
     PostProductComponent,

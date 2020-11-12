@@ -1,7 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NG_VALUE_ACCESSOR} from '@angular/forms';
+import { Component, ElementRef, ViewChild, Optional, Inject, Input } from '@angular/core';
+import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import * as Leaflet from 'leaflet';
-import { ValueAccessorBase } from '../value-accessor-base';
+import { ValueAccessorValidatorBase } from '../value-accessor-validator-base';
 import { ThemeService } from '../../../services/theme/theme.service';
 
 import { MapSearch } from '../../map/map-search';
@@ -17,7 +17,13 @@ import { Location } from '../../../models/map/location/location.model';
     {provide: NG_VALUE_ACCESSOR, useExisting: MapSearchComponent, multi: true}
   ]
 })
-export class MapSearchComponent extends ValueAccessorBase<Address> {
+export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
+
+  @Input()
+  public placeholder: String;
+
+  @ViewChild(NgModel)
+  public model: NgModel;
 
   private map: MapSearch;
   private handleSearchResults: (searchResults: SearchResultsModel<SearchAddressModel>) => void = (searchResults: SearchResultsModel<SearchAddressModel>): void => {
@@ -40,9 +46,13 @@ export class MapSearchComponent extends ValueAccessorBase<Address> {
   }
 
   constructor(
-    themeService: ThemeService
+    themeService: ThemeService,
+    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>
   ) {
-    super(themeService);
+    super(validators, asyncValidators, themeService);
+    console.log(validators);
+
     this.map = new MapSearch('Topographic', new Location(new Leaflet.LatLng(46.947922, 7.440390), 6));
     this.map.addResultSubscriber(this.handleSearchResults);
   }
