@@ -34,13 +34,15 @@ export class MapComponent extends MapLocations implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    this.setContainer(this.mapContainer).build();
+    this.setContainer(this.mapContainer);
+    this.build();
     this.updateLocation()
   }
 
   private updateLocation(): void {
     if (this._initLocation && this.mapContainer) {
-      this.clearLocations().pushLocationByText(this._initLocation, 1);
+      this.clearLocations();
+      this.pushLocationByText(this._initLocation, 1);
     }
   }
 }

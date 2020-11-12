@@ -21,10 +21,9 @@ export class MapLocations extends Map {
     super(basemapLayerString, center);
   }
 
-  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): Leaflet.Map {
+  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): void {
     super.build(basemapLayerString, center, container);
     this.addLocationLayerGroup();
-    return this._map;
   }
 
   private addLocationLayerGroup(): void {
@@ -33,26 +32,22 @@ export class MapLocations extends Map {
     this.locationLayerGroup.addTo(this._map);
   }
 
-  public pushLocations(locations: Array<LocationModel>): MapLocations {
+  public pushLocations(locations: Array<LocationModel>): void {
     this.locations = this.locations.concat(locations);
     this.showLocations();
-    return this;
   }
 
-  public pushLocation(location: LocationModel): MapLocations {
+  public pushLocation(location: LocationModel): void {
     this.locations.push(location);
     this.showLocations();
-    return this;
   }
 
-  public pushLocationByAddress(address: Address, maxResults?: number): MapLocations {
-    console.log(address);
-
+  public pushLocationByAddress(address: Address, maxResults?: number): void {
     this.pushLocationByText(address.toString(), maxResults);
-    return this;
+
   }
 
-  public pushLocationByText(locationText: string, maxResults?: number): MapLocations {
+  public pushLocationByText(locationText: string, maxResults?: number): void {
     Geocoder.geocode().text(locationText).run((err, searchResults: SearchResultsModel<any>) => {
       if (err) {
         console.log(err);
@@ -60,15 +55,13 @@ export class MapLocations extends Map {
       }
       this.pushLocationBySearchResults(searchResults, maxResults);
     });
-    return this;
   }
 
-  public pushLocationBySearchResults(searchResults: SearchResultsModel<any>, maxResults?: number): MapLocations {
+  public pushLocationBySearchResults(searchResults: SearchResultsModel<any>, maxResults?: number): void {
     let locations: Array<LocationModel> = SearchResultsModel.transformResultsToLocations(searchResults, this._map);
     if (!maxResults) maxResults = locations.length;
     this.pushLocations(locations.slice(0, maxResults));
     this.showLocations();
-    return this;
   }
 
   public clearLocations(): MapLocations {

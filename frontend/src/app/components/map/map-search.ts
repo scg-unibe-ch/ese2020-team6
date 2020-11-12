@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 import * as Esri from 'esri-leaflet';
 import * as Geocoder from 'esri-leaflet-geocoder';
 import * as Leaflet from 'leaflet';
@@ -6,10 +7,11 @@ import { SearchResultModel, SearchResultsModel } from '../../models/map/search/s
 import { Address, SearchAddressModel } from '../../models/map/address/address.model';
 import { Location, LocationModel } from '../../models/map/location/location.model';
 
-export abstract class MapSearch extends MapLocations {
+export class MapSearch extends MapLocations {
 
   protected searchResults: SearchResultsModel<SearchAddressModel>;
   protected geoSearch: Geocoder.GeoSearch;
+  private searchResultsSubscribers: Array<(searchResults: SearchResultsModel<SearchAddressModel>) => void> = new Array<(searchResults: SearchResultsModel<SearchAddressModel>) => void>();
 
 
   private arcgisOnline = Geocoder.arcgisOnlineProvider({
@@ -31,11 +33,10 @@ export abstract class MapSearch extends MapLocations {
     super(baseLayer, location);
   }
 
-  public build(): Leaflet.Map {
-    super.build();
+  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): void {
+    super.build(basemapLayerString, center, container);
     this.addGeoSearch()
     this.addSearchListener();
-    return this._map;
   }
 
   private addGeoSearch(): void {
@@ -48,7 +49,6 @@ export abstract class MapSearch extends MapLocations {
     this.geoSearch.on("results", (searchResults: SearchResultsModel<SearchAddressModel>) => {
       this.saveResults(searchResults);
       this.onSearchResults(searchResults);
-      this.showResults();
     });
   }
 
@@ -56,10 +56,19 @@ export abstract class MapSearch extends MapLocations {
     this.searchResults = searchResults;
   }
 
-  private showResults(): void {
-    this.clearLocations().pushLocationBySearchResults(this.searchResults, 1);
+  public showResults(): void {
+    this.clearLocations();
+    this.pushLocationBySearchResults(this.searchResults, 1);
   }
 
-  protected abstract onSearchResults(searchResults: SearchResultsModel<SearchAddressModel>): void;
+  private onSearchResults(searchResults: SearchResultsModel<SearchAddressModel>): void {
+    this.searchResultsSubscribers.forEach((subscriber: (searchResults: SearchResultsModel<SearchAddressModel>) => void) => {
+      subscriber(searchResults);
+    });
+  };
+
+  public addResultSubscriber(subscriber: (searchResults: SearchResultsModel<SearchAddressModel>) => void): void {
+    this.searchResultsSubscribers.push(subscriber);
+  }
 
 }

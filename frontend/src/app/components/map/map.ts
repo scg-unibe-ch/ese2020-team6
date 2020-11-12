@@ -38,20 +38,19 @@ export class Map {
     Leaflet.Marker.prototype.options.icon = iconDefault;
   }
 
-  public setBasemapLayerString(basemapLayerString: string) {
+  public setBasemapLayerString(basemapLayerString: string) : void{
     this.basemapLayerString = basemapLayerString;
   }
 
-  public setCenter(center: LocationModel) {
+  public setCenter(center: LocationModel): void {
     this.center = center;
   }
 
-  public setContainer(container: ElementRef): Map {
+  public setContainer(container: ElementRef): void {
     this.container = container;
-    return this;
   }
 
-  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): Leaflet.Map {
+  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): void {
     if (basemapLayerString) this.setBasemapLayerString(basemapLayerString);
     if (center) this.setCenter(center);
     if (container) this.setContainer(container);
@@ -62,18 +61,16 @@ export class Map {
     else this.setBaseLayer();
     if (!this.center) throw 'No center set!';
     else this.updateView();
-    return this._map;
   }
 
   private createMap(): void {
     this._map = Leaflet.map(this.container.nativeElement);
   }
 
-  private setBaseLayer(): Map {
+  private setBaseLayer(): void {
     if (this.basemapLayer) this.basemapLayer.remove();
     this.basemapLayer = Esri.basemapLayer(this.basemapLayerString);
     this.basemapLayer.addTo(this._map);
-    return this;
   }
 
   protected updateView(options?: Object): void {
