@@ -10,9 +10,15 @@
       <button class="home" theme button [routerLink]="['']">Home</button>
     </div>
   </div>
-  <app-profile-navigation class="navigation-wrapper" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
-  <div class="title">
-    {{ currentContent.title }}
+  <app-profile-navigation class="navigation-wrapper" [ngClass]="navigationClass" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>
+
+  <div class="nav-title">
+    <svg (click)="toggleNaviationSidebar()" class="navigation-icon" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+      <path d="M -46 -46 l 92 0 M -46 -15.5 l 92 0 M -46 15.5 l 92 0 M -46 46 l 92 0"></path>
+    </svg>
+    <div class="title">
+      {{ currentContent.title }}
+    </div>
   </div>
   <div class="content-wrapper">
     <router-outlet></router-outlet>

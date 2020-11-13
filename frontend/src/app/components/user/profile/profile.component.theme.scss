@@ -33,9 +33,11 @@
         }
       }
     }
-    .title {
-      background: $title-bg;
-      color: $title-color;
+    .nav-title {
+      .title {
+        background: $title-bg;
+        color: $title-color;
+      }
     }
   }
 }
