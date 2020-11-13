@@ -15,12 +15,18 @@ import { Location, LocationModel } from '../../models/map/location/location.mode
 })
 export class MapComponent extends MapLocations implements AfterViewInit {
 
-  private _initLocation: string;
-
+  private _initLocationText: string;
   @Input()
-  set initLocation(value: any) {
-    this._initLocation = value;
-    this.updateLocation();
+  set initLocationText(value: string) {
+    this._initLocationText = value;
+    this.updateLocationText();
+  };
+
+  private _initAddress: Address;
+  @Input()
+  set initAddress(value: Address) {
+    this._initAddress = value;
+    this.updateAdress();
   };
 
   @ViewChild('map')
@@ -36,13 +42,24 @@ export class MapComponent extends MapLocations implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.setContainer(this.mapContainer);
     this.build();
-    this.updateLocation()
+    if (this._initLocationText) {
+      this.updateLocationText();
+    } else if (this._initAddress) {
+      this.updateAdress();
+    }
   }
 
-  private updateLocation(): void {
-    if (this._initLocation && this.mapContainer) {
+  private updateLocationText(): void {
+    if (this.mapContainer) {
       this.clearLocations();
-      this.pushLocationByText(this._initLocation, 1);
+      this.pushLocationByText(this._initLocationText, 1);
+    }
+  }
+
+  private updateAdress(): void {
+    if (this.mapContainer) {
+      this.clearLocations();
+      this.pushLocationByAddress(this._initAddress, 1);
     }
   }
 }
