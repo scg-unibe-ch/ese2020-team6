@@ -51,10 +51,10 @@ export class GetProductService extends GetService {
   }
 
   public getCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>(environment.endpointURL + 'product/categories/');
+    return this.get<Array<CategoryModel>>('categories/');
   }
 
   public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>(environment.endpointURL + 'product/subCategories/');
+    return this.get<Array<CategoryModel>>('subCategories/');
   }
 }

@@ -1,15 +1,15 @@
 <div>
-  <form (ngSubmit)="onSubmit()">
+  <form #postProductForm (ngSubmit)="onSubmit()">
     <div class="input-grid" >
       <app-text-input placeholder="Search Term (for Title and Description)" name="titleAndDescription" [(ngModel)]="criteria.titleAndDescription">
       </app-text-input>
     </div>
 
     <div class="input-grid">
-      <app-select name="category" selectName="Category" [(ngModel)]="criteria.category" (ngModelChange)="SubCategoryShow(criteria.category)"
-          [options]="catArray"></app-select>
+      <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="criteria.category" (ngModelChange)="SubCategoryShow(criteria.category)"
+          [options]="cats"></app-select>
       <app-select *ngIf="show" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategory"
-          [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']"></app-select>
+          [options]="subCat"></app-select>
           <div #parent> </div>
     </div>
 
