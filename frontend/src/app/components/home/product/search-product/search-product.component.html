@@ -3,6 +3,8 @@
     <div class="input-grid" >
       <app-text-input placeholder="Search Term (for Title and Description)" name="titleAndDescription" [(ngModel)]="criteria.titleAndDescription">
       </app-text-input>
+      <app-text-input placeholder="Location (City)" name="location" [(ngModel)]="criteria.location">
+      </app-text-input>
     </div>
 
     <div class="input-grid">
@@ -21,10 +23,10 @@
     </div>
 
     <div class="input-grid" >
-        <app-text-input placeholder="Location(City)" name="location" [(ngModel)]="criteria.location">
-        </app-text-input>
-        <div class="input-grid" [ngClass]="theme" id ="deliverableGrid"><h2>Not Deliverable</h2><mat-slide-toggle [(ngModel)]="criteria.deliverable" name="Deliverable" selectName="Product Deliverable"
-          class="example-margin" [color]="color"> <h2 id="b2">Deliverable</h2></mat-slide-toggle>
+        <button id="button2" type="button" [ngClass]="'button-' + theme" (click)="changeVisibility()" >{{this.deliv}}</button>
+        <div class="input-grid" [ngClass]="theme" id ="deliverableGrid">
+          <h2>Not Deliverable</h2><mat-slide-toggle class="toggleSlider"
+          [disabled]="toggleChange" [(ngModel)]="criteria.deliverable" name="Deliverable" selectName="Product Deliverable"> <h2 id="b2"></h2></mat-slide-toggle><h2>Deliverable</h2>
         </div>
     </div>
 

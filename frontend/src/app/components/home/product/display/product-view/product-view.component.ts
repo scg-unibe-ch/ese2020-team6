@@ -76,7 +76,7 @@ export class ProductViewComponent extends Themable {
         (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
         (criteria.priceMax !== null && product.price > criteria.priceMax) ||
         (criteria.priceMin !== null && product.price < criteria.priceMin) ||
-        (criteria.location !== null && criteria.location !== product.location) ||
+        (criteria.location !== null && criteria.location.toLocaleLowerCase() !== product.location.toLocaleLowerCase()) ||
         (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable) ||
         (this.isInTitleOrInDescription(criteria.titleAndDescription,product.title,product.description))
       ){
