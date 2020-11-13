@@ -6,16 +6,16 @@ import { Subcategories, SubcategoriesAttributes } from '../models/subcategories.
 const categoriesController: Router = express.Router();
 const categoriesService = new CategoriesService();
 
-categoriesController.get('/categories', verifyToken,
-(req: Request, res: Response) => {
-    categoriesService.getAllCategories()
-    .then((categoires: Array<Categories>) => res.send(categoires))
-    .catch((err: any) => res.status(500).send(err));
-});
+// categoriesController.get('/categories', verifyToken,
+// (req: Request, res: Response) => {
+//     categoriesService.getAllCategories()
+//     .then((categoires: Array<Categories>) => res.send(categoires))
+//     .catch((err: any) => res.status(500).send(err));
+// });
 
-categoriesController.get('/subcategories', verifyToken,
-(req: Request, res: Response) => {
-    categoriesService.getAllSubcategories()
-    .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
-    .catch((err: any) => res.status(500).send(err));
-});
+// categoriesController.get('/subcategories', verifyToken,
+// (req: Request, res: Response) => {
+//     categoriesService.getAllSubcategories()
+//     .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
+//     .catch((err: any) => res.status(500).send(err));
+// });
