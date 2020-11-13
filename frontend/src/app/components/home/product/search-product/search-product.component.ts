@@ -36,14 +36,14 @@ export class SearchProductComponent extends Themable implements PipeTransform {
 
    public ngOnInit(): void {
     this.productService.getCategories().subscribe((values) => {
-      this.categories = values;
-    });
-    this.productService.getSubCategories().subscribe((values) => {
       this.cats = [];
-      this.subCategories = values;
+      this.categories = values;
       for (const cat of this.categories) {
         this.cats.push(cat.category);
       }
+    });
+    this.productService.getSubCategories().subscribe((values) => {
+      this.subCategories = values;
     });
   }
 

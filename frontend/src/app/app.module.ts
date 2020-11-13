@@ -107,8 +107,6 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
 import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
-import { CategoryValidatorDirective } from './components/custom-form/validators/select/category/category-validator.directive';
-import { SubcategoryValidatorDirective } from './components/custom-form/validators/select/category/subcategory/subcategory-validator.directive';
 import { TitleValidatorDirective } from './components/custom-form/validators/regex/title/title-validator.directive';
 import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
@@ -126,7 +124,6 @@ import { GenderValidatorDirective } from './components/custom-form/validators/se
 
 
 import { routes } from './router/router';
-import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
 import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
@@ -219,8 +216,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ProductTypeValidatorDirective,
     OfferTypeValidatorDirective,
     DeliverableValidatorDirective,
-    CategoryValidatorDirective,
-    SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
     RejectedProductsComponent,
     PopupUnreviewedComponent,
