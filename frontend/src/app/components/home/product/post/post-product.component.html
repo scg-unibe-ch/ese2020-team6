@@ -8,33 +8,33 @@
     </div>
     <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="input-grid">
-        <app-select name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
-        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]="['Sell', 'Rent']" appOfferTypeValidator></app-select>
+        <app-select (click)=createOfferType() name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
+        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]=offertype appOfferTypeValidator></app-select>
       </div>
       <div class="input-grid">
-        <app-select name="category" selectName="Category" [(ngModel)]="values.category" [options]="['Houses', 'Pets', 'Nice Stuff']" appCategoryValidator></app-select>
-        <app-select name="subcategory" selectName="Subcategory" [(ngModel)]="values.subcategory" [options]="['Houses_sub', 'Pets_sub', 'Nice Stuff_sub']" appSubCategoryValidator></app-select>
+        <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="values.category" [options]=cat appCategoryValidator></app-select>
+        <app-select name="subcategory" selectName="Subcategory" 
+        [(ngModel)]="values.subcategory" [options]=subCat  appSubCategoryValidator></app-select>
       </div>
       <app-text-input placeholder="Title" name="title" [(ngModel)]="values.title" appTitleValidator></app-text-input>
       <app-text-area class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>
       <div class="input-grid">
         <app-text-input placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
-        <app-select name="status" selectName="Status" [(ngModel)]="values.status" [options]="['Available', 'Lent', 'Sold']" appStatusValidator></app-select>
-      </div>
-      <div class="input-grid">
         <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
+      </div>
+      <div class="input-grid" *ngIf="values.productType == 'Item'">
         <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
+        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="input-grid">
         <div class="picture">
           <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
           <img class="image" src={{picture}}>
         </div>
-        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
       </div>
       <div class="action-wrapper">
         <button [ngClass]="'button-empty-' + theme" (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
-        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Create</button>
+        <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit" [disabled]="!postProductForm.valid">Create</button>
         <ng-template #updateButton>
             <button [ngClass]="'button-' + theme" type="submit"  [disabled]="!postProductForm.valid">Update</button>
         </ng-template>

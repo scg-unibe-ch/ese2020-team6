@@ -5,7 +5,7 @@ import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
 import { Sequelize } from 'sequelize';
 import { User } from './models/user.model';
-
+import { CategoriesService } from './services/categories.service';
 import cors from 'cors';
 import { Products } from './models/products.model';
 
@@ -64,6 +64,12 @@ export class Server {
             storage: 'db.sqlite',
             logging: false // can be set to true for debugging
         });
+    }
+
+    // set up the values of the Categories and Subcategories Databases
+    private setUpDatabases() {
+        CategoriesService.setUpCategories();
+        CategoriesService.setUpSubcategories();
     }
 }
 

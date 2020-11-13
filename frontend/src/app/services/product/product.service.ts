@@ -1,3 +1,4 @@
+import { CategoryModel } from './../../models/request/product/category-product-request.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';
@@ -79,5 +80,13 @@ export class ProductService {
 
   public rejectProduct(requestBuilder: RejectProductRequestBuilder): Observable<RejectProductResponseModel> {
     return this.reviewProductService.rejectProduct(requestBuilder);
+  }
+
+  public getCategories(): Observable<Array<CategoryModel>> {
+    return this.getProductService.getCategories();
+  }
+
+  public getSubCategories(): Observable<Array<CategoryModel>> {
+    return this.getProductService.getSubCategories();
   }
 }

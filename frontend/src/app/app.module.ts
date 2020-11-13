@@ -106,7 +106,6 @@ import { EmailValidatorDirective } from './components/custom-form/validators/reg
 import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
-import { StatusValidatorDirective } from './components/custom-form/validators/select/status/status-validator.directive';
 import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
 import { CategoryValidatorDirective } from './components/custom-form/validators/select/category/category-validator.directive';
 import { SubcategoryValidatorDirective } from './components/custom-form/validators/select/category/subcategory/subcategory-validator.directive';
@@ -219,7 +218,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     TextAreaComponent,
     ProductTypeValidatorDirective,
     OfferTypeValidatorDirective,
-    StatusValidatorDirective,
     DeliverableValidatorDirective,
     CategoryValidatorDirective,
     SubcategoryValidatorDirective,
