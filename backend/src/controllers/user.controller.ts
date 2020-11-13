@@ -31,7 +31,7 @@ userController.post('/login',
     }
 );
 
-userController.get('/userid::userId', checkForAuth,
+userController.get('/userid/:userId', checkForAuth,
   (req: Request, res: Response, next) => {
     userService.getUserById(parseInt(req.params.userId, 10)).then(user => {
       const tokenPayload = req.body.tokenPayload;
