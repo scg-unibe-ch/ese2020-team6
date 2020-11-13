@@ -1,39 +1,40 @@
 <div class="user" [ngClass]="theme">
-  <div class="header-wrapper flex-item">
-    <div class="header">
+  <div class="left">
+    <div class="name-wrapper">
       <div class="name">
         <div class="fullname">{{user.firstName}} {{user.lastName}}</div>
         <div class="separator"></div>
         <div class="userid"><span class="hashtag">#</span><span class="id">{{user.userId}}</span></div>
       </div>
     </div>
-  </div>
 
-  <div class="wallet-wrapper-wrapper flex-item">
-    <div class="wallet-wrapper">
-      Balance:
-      <div class="wallet">
-        {{user.wallet}}$
+    <div class="wallet-wrapper-wrapper">
+      <div class="waller-wrapper">
+        Balance:
+        <div class="wallet">
+          {{user.wallet}}$
+        </div>
+      </div>
+    </div>
+
+    <div class="details-wrapper">
+      <div class="details">
+        <div class="detail">
+          Username
+          <div class="detail-content">{{user.userName}}</div>
+        </div>
+        <div class="detail">
+          Email
+          <div class="detail-content">{{user.email}}</div>
+        </div>
+        <div class="detail">
+          Phone
+          <div class="detail-content">{{user.phonenumber}}</div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="details flex-item">
-    <div class="detail">
-      Username
-      <div class="detail-content">{{user.userName}}</div>
-    </div>
-    <div class="detail">
-      Location
-      <div class="detail-content">{{user.address}}</div>
-    </div>
-    <div class="detail">
-      Email
-      <div class="detail-content">{{user.email}}</div>
-    </div>
-    <div class="detail">
-      Phone
-      <div class="detail-content">{{user.phonenumber}}</div>
-    </div>
+  <div class="right">
+    <map [initLocation]="user.address.toString()"></map>
   </div>
 </div>
