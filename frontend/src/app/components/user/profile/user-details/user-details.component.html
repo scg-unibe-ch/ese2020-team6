@@ -1,40 +1,36 @@
 <div class="user" [ngClass]="theme">
-  <div class="left">
-    <div class="name-wrapper">
-      <div class="name">
-        <div class="fullname">{{user.firstName}} {{user.lastName}}</div>
-        <div class="separator"></div>
-        <div class="userid"><span class="hashtag">#</span><span class="id">{{user.userId}}</span></div>
-      </div>
+  <div class="name-wrapper">
+    <div class="name">
+      <div class="fullname">{{user.firstName}} {{user.lastName}}</div>
+      <div class="separator"></div>
+      <div class="userid"><span class="hashtag">#</span><span class="id">{{user.userId}}</span></div>
     </div>
+  </div>
 
-    <div class="wallet-wrapper-wrapper">
-      <div class="waller-wrapper">
-        Balance:
-        <div class="wallet">
-          {{user.wallet}}$
-        </div>
-      </div>
-    </div>
-
-    <div class="details-wrapper">
-      <div class="details">
-        <div class="detail">
-          Username
-          <div class="detail-content">{{user.userName}}</div>
-        </div>
-        <div class="detail">
-          Email
-          <div class="detail-content">{{user.email}}</div>
-        </div>
-        <div class="detail">
-          Phone
-          <div class="detail-content">{{user.phonenumber}}</div>
-        </div>
+  <div class="wallet-wrapper-wrapper">
+    <div class="waller-wrapper">
+      Balance:
+      <div class="wallet">
+        {{user.wallet}}$
       </div>
     </div>
   </div>
-  <div class="right">
-    <map [initLocation]="user.address.toString()"></map>
+
+  <div class="details-wrapper">
+    <div class="details">
+      <div class="detail">
+        Username
+        <div class="detail-content">{{user.userName}}</div>
+      </div>
+      <div class="detail">
+        Email
+        <div class="detail-content">{{user.email}}</div>
+      </div>
+      <div class="detail">
+        Phone
+        <div class="detail-content">{{user.phonenumber}}</div>
+      </div>
+    </div>
   </div>
+  <map class="map" [initLocation]="user.address.toString()"></map>
 </div>

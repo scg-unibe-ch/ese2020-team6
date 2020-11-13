@@ -9,32 +9,29 @@
     $detail-bg: get-theme($theme-name, shady);
 
     color: $color;
+    .name-wrapper {
+      background: $bg;
+      .name {
 
-    .left {
-      .name-wrapper {
-        background: $bg;
-        .name {
-
-          .separator{
-              background: $accent-color;
-          }
+        .separator{
+            background: $accent-color;
         }
       }
-      .wallet-wrapper-wrapper {
-        background: $bg;
-        .waller-wrapper {
-          .wallet {
-            background: $wallet-bg;
-          }
+    }
+    .wallet-wrapper-wrapper {
+      background: $bg;
+      .waller-wrapper {
+        .wallet {
+          background: $wallet-bg;
         }
       }
-      .details-wrapper {
-        background: $bg;
-        .details {
-          .detail {
-            .detail-content {
-              background: $content-bg;
-            }
+    }
+    .details-wrapper {
+      background: $bg;
+      .details {
+        .detail {
+          .detail-content {
+            background: $content-bg;
           }
         }
       }
