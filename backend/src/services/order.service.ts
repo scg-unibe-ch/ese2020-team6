@@ -95,7 +95,7 @@ export class OrderService {
             // add to seller
             User.increment( 'wallet', {by: (service.price * hours), where: { userId: 'sellerId'}});
             //  Order.build({productId: productId, userId: buyerId, sellerId: user.userId})
-            Products.update({status: 'rent'}, {
+            Products.update({status: 'available'}, {
                 where: {
                     serviceId: serviceId
                 }
