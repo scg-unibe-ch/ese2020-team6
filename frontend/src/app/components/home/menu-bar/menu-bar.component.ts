@@ -9,43 +9,43 @@ import { UserModel } from '../../../models/user/user.model';
   styleUrls: ['./menu-bar.component.scss']
 })
 export class MenuBarComponent {
-  private showDropdown: boolean = false;
-  private newReload: boolean = true;
+  private showDropdown = false;
+  private newReload = true;
 
   public userName: string;
-  public isLoggedIn: boolean = false;
+  public isLoggedIn = false;
 
   @Input()
-  block: boolean = false;
+  block = false;
 
   @Input()
-  isHome: boolean = false;
+  isHome = false;
 
   constructor(
     userService: UserService
   ) {
-    if(userService.isLoggedIn) {
+    if (userService.isLoggedIn) {
         userService.userObservable.subscribe((user: UserModel) => {
         this.isLoggedIn = true;
         this.userName = user.userName;
-      })
+      });
     }
   }
 
-  private toggleDropDown(): void {
+  toggleDropDown(): void {
     this.showDropdown = !this.showDropdown;
     this.newReload = false;
   }
 
   public getDropdownClasses(): Array<string> {
-    let classes: Array<string> = new Array<string>();
+    const classes: Array<string> = new Array<string>();
     classes.push(!this.showDropdown ? 'collapse' : 'expand');
-    if (this.newReload) classes.push('land');
+    if (this.newReload) { classes.push('land'); }
     return classes;
   }
 
   public getClasses(): Array<string> {
-    let classes: Array<string> = new Array<string>();
+    const classes: Array<string> = new Array<string>();
     classes.push(this.block ? 'block' : 'fix');
     return classes;
   }

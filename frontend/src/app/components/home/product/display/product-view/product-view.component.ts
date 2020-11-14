@@ -4,15 +4,13 @@ import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
-import { Themable } from '../../../../../models/theme/themable';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
   styleUrls: ['./product-view.component.scss']
 })
-export class ProductViewComponent extends Themable {
+export class ProductViewComponent {
   overlayRef: any;
   @Input() path = '';
   @Input() products: Array<ProductModel>;
@@ -31,12 +29,9 @@ export class ProductViewComponent extends Themable {
   }
 
   constructor(
-    themeService: ThemeService,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef
-  ) {
-    super(themeService);
-  }
+  ) {}
 
   public switchView(): void {
     this.displayList = !this.displayList;
@@ -56,11 +51,13 @@ export class ProductViewComponent extends Themable {
   }
 
 
-  public isInTitleOrInDescription(searchTerm: string,title: string,descrip: string): boolean {
-    if(searchTerm == null){
+  public isInTitleOrInDescription(searchTerm: string, title: string, descrip: string): boolean {
+    if (searchTerm == null){
       return false;
     }
-    if(title.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1 || descrip.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1){
+    if (title.toLocaleLowerCase().
+    indexOf(searchTerm.toLocaleLowerCase()) !== -1 ||
+    descrip.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1){
       return false;
     }else{
       return true;

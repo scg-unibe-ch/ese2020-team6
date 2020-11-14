@@ -9,33 +9,28 @@ import { RegisterUserRequestModel } from '../../../models/request/user/register/
 import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
 import { UserService } from '../../../services/user/user.service';
-import { Themable } from '../../../models/theme/themable';
-import { ThemeService } from '../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent extends Themable implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
+export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserRequestBuilder {
 
   private form: NgForm;
   private values: RegisterUserFormModel;
-  public registerErrorMessage: string = '';
+  public registerErrorMessage = '';
 
   constructor(
     private router: Router,
-    private userService: UserService,
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
+    private userService: UserService
+  ) {}
 
-  public validateCrossFieldPassword(form: NgForm) {
-    let validationResults = form.control.validator(form.control);
+  public validateCrossFieldPassword(form: NgForm): void {
+    const validationResults = form.control.validator(form.control);
     if (validationResults) {
       this.registerErrorMessage = form.control.validator(form.control).crossFieldPassword.errorMessages[0];
-    } else this.registerErrorMessage = null;
+    } else { this.registerErrorMessage = null; }
   }
 
   public onSubmit(form: NgForm): void {

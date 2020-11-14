@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { ProductInformationBase } from '../product-information-base';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-purchase-product',
@@ -19,9 +18,8 @@ export class PurchaseProductComponent extends ProductInformationBase {
     productService: ProductService,
     private router: Router,
     userService: UserService,
-    themeService: ThemeService
   ) {
-    super(route, productService, userService, themeService);
+    super(route, productService, userService);
   }
 
   public togglePurchase(): void {

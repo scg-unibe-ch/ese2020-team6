@@ -15,15 +15,13 @@ import {
 import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductFormModel, NullPostProductForm } from '../../../../models/form/post-product-form.model';
-import { Themable } from '../../../../models/theme/themable';
-import { ThemeService } from '../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-post-product',
   templateUrl: './post-product.component.html',
   styleUrls: ['./post-product.component.scss']
 })
-export class PostProductComponent extends Themable implements PostProductRequestBuilder, UpdateProductRequestBuilder {
+export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   @ViewChild('postProductForm') form: NgForm;
   public values: PostProductFormModel = new NullPostProductForm();
   public product: ProductModel = new NullProduct();
@@ -46,9 +44,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private userService: UserService,
-    themeService: ThemeService
   ) {
-    super(themeService);
   }
 
   public ngOnInit(): void {
