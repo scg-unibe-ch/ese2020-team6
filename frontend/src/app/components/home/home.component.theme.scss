@@ -16,6 +16,10 @@
       &::before {
         background: $line-color;
       }
+
+      .sub-header {
+        color: rgba($text-color, .5);
+      }
     }
 
     .go-to-post {

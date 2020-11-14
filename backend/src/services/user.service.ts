@@ -1,5 +1,7 @@
 import { UserAttributes, User } from '../models/user.model';
+import { AddressAttributes, Address } from '../models/address.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { AddressService } from './address.service';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const { Op } = require('sequelize');
@@ -15,40 +17,50 @@ export class UserService {
       };
     }
 
-    public register(user: UserAttributes): Promise<User> {
+    public register(user: UserAttributes, address: AddressAttributes): Promise<User> {
         const saltRounds = 12;
-        const userCopy: any = user as any;
-        delete userCopy.repeatPassword;
-        user = userCopy as UserAttributes;
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
-        return User.findOrCreate({
-          where: {
-            [Op.or]: [
-              {
-                userName: user.userName
-              },
-              {
-                email: user.email
-              }
-            ]
+
+        const checkIfUserDoesNotExist: Promise<void> = this.userDoesNotExist(user);
+        const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
+
+        return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
+          return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
+            return this.insertUserWithExistingAddress(user, addressId);
+          }).catch(() => { // address does not exist -> insert user and address
+            return this.insertUserAndAddress(user, address);
+          });
+        }).catch(err => Promise.reject(err)); // user does already exist -> reject
+    }
+
+    private insertUserAndAddress(user: UserAttributes, address: AddressAttributes): Promise<User> {
+      return User.create(
+        Object.assign(user, {address: address, preference: {}}),
+        {
+          include: [{
+            association: User.Preference
           },
-          defaults: user
-        }).then((result: [User, boolean]) => {
-          const success: boolean = result[1];
-          const registeredUser: User = result[0];
-          if (success) {
-            return Promise.resolve(registeredUser);
-          } else {
-            if (user.email === registeredUser.email && user.userName === registeredUser.userName) {
-              return Promise.reject({ message: 'Username, Email already in use', status: 409 });
-            } else if (user.userName === registeredUser.userName) {
-              return Promise.reject({ message: 'Username already in use', status: 409 });
-            } else {
-              return Promise.reject({ message: 'Email already in use', status: 409 });
-            }
-          }
-        }).catch(err => Promise.reject(err));
+          {
+            association: User.Address,
+            include : [ Address.Users ]
+          }]
+        }
+      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+    }
+
+    private insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
+      return User.create(
+        Object.assign(user, {
+          preference : {},
+          addressId: addressId
+        }),
+        {
+          include: [{
+            association: User.Preference
+          }]
+        }
+      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
@@ -89,8 +101,44 @@ export class UserService {
       return User.findOne({
         where: {
           userId: id
+        },
+        include: [{
+          association: User.Preference
+        },
+        {
+          association: User.Address
+        }]
+      });
+    }
+
+    public getUserByUsernameOrEmail(user: UserAttributes): Promise<User> {
+      return User.findOne({
+        where: {
+          [Op.or]: [
+            {
+              userName: user.userName
+            },
+            {
+              email: user.email
+            }
+          ]
         }
       });
     }
 
+    public userDoesNotExist(user: UserAttributes): Promise<void> {
+      return this.getUserByUsernameOrEmail(user).then((existingUser: User) => {
+        if (existingUser) {
+          if (user.email === existingUser.email && user.userName === existingUser.userName) {
+            return Promise.reject({ message: 'Username, Email already in use', status: 409 });
+          } else if (user.userName === existingUser.userName) {
+            return Promise.reject({ message: 'Username already in use', status: 409 });
+          } else {
+            return Promise.reject({ message: 'Email already in use', status: 409 });
+          }
+        } else {
+          return Promise.resolve();
+        }
+      }).catch(err => Promise.reject(err));
+    }
 }

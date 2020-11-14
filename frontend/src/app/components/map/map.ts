@@ -3,16 +3,25 @@ import { ElementRef } from '@angular/core';
 import * as Esri from 'esri-leaflet';
 import * as Geocoder from 'esri-leaflet-geocoder';
 import * as Leaflet from 'leaflet';
+import { LocationModel } from '../../models/map/location/location.model';
+
 
 export class Map {
 
   protected _map: Leaflet.Map;
+  private basemapLayer: Leaflet.Layer;
+  private basemapLayerString: string;
+  private center: LocationModel;
   protected container: ElementRef;
 
   constructor(
-    private baseLayer: string,
-    private options: { center: Array<number>, zoom: number }
+    basemapLayerString?: string,
+    center?: LocationModel
   ) {
+
+    if (basemapLayerString) this.setBasemapLayerString(basemapLayerString);
+    if (center) this.setCenter(center);
+
     const iconRetinaUrl = 'assets/marker-icon-2x.png';
     const iconUrl = 'assets/marker-icon.png';
     const shadowUrl = 'assets/marker-shadow.png';
@@ -29,33 +38,46 @@ export class Map {
     Leaflet.Marker.prototype.options.icon = iconDefault;
   }
 
-  public setContainer(container: ElementRef): Map {
+  public setBasemapLayerString(basemapLayerString: string) : void{
+    this.basemapLayerString = basemapLayerString;
+  }
+
+  public setCenter(center: LocationModel): void {
+    this.center = center;
+  }
+
+  public setContainer(container: ElementRef): void {
     this.container = container;
-    return this;
   }
 
-  public build(): Leaflet.Map {
+  public build(basemapLayerString?: string, center?: LocationModel, container?: ElementRef): void {
+    if (basemapLayerString) this.setBasemapLayerString(basemapLayerString);
+    if (center) this.setCenter(center);
+    if (container) this.setContainer(container);
+
     if (!this.container) throw 'No container set!';
-    if (!this._map) this.createMap().addBaseLayer();
-    return this._map;
+    else this.createMap();
+    if (!this.basemapLayerString) throw 'No base map layer set!';
+    else this.setBaseLayer();
+    if (!this.center) throw 'No center set!';
+    else this.updateView();
   }
 
-  public setBaseLayerOptions(baseLayer: string, options: { center: Array<number>, zoom: number }): void {
-    this.baseLayer = baseLayer;
-    this.options = options;
+  private createMap(): void {
+    this._map = Leaflet.map(this.container.nativeElement);
   }
 
-  private createMap(): Map {
-    this._map = Leaflet.map(this.container.nativeElement).setView(this.options.center, this.options.zoom);
+  private setBaseLayer(): void {
+    if (this.basemapLayer) this.basemapLayer.remove();
+    this.basemapLayer = Esri.basemapLayer(this.basemapLayerString);
+    this.basemapLayer.addTo(this._map);
+  }
+
+  protected updateView(options?: Object): void {
+    this._map.setView(this.center.latlng, this.center.zoom, options);
     setTimeout(() => {
       this._map.invalidateSize(true);
     }, 0);
-    return this;
-  }
-
-  private addBaseLayer(): Map {
-    Esri.basemapLayer(this.baseLayer).addTo(this._map);
-    return this;
   }
 
   get map(): Leaflet.Map {
