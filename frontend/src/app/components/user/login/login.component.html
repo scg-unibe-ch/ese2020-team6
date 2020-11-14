@@ -4,7 +4,7 @@
       <h3 class="title">Sign In</h3>
       <div class="warning">{{loginErrorMessage}}</div>
     </div>
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator [showError]="false"></app-password-input>
       <div class="action-wrapper">
