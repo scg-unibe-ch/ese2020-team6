@@ -16,7 +16,7 @@ export class Categories extends Model<CategoriesAttributes, GoodsProductCategoir
          Categories.init({
              categoryId: {
                  type: DataTypes.NUMBER,
-                 autoIncrement: true,
+                 primaryKey: true,
                  unique: true,
                  allowNull: false
              },

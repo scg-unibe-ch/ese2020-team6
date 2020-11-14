@@ -1,8 +1,9 @@
 import express, { Router, Request, Response } from 'express';
-import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
+import { verifyToken } from '../middlewares/checkAuth';
 import { CategoriesService } from '../services/categories.service';
-import { Categories, CategoriesAttributes } from '../models/categories.model';
-import { Subcategories, SubcategoriesAttributes } from '../models/subcategories.model';
+import { Categories } from '../models/categories.model';
+import { Subcategories } from '../models/subcategories.model';
+
 const categoriesController: Router = express.Router();
 const categoriesService = new CategoriesService();
 
@@ -19,3 +20,5 @@ categoriesController.get('/subcategories', verifyToken,
     .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
     .catch((err: any) => res.status(500).send(err));
 });
+
+export const CategoriesController: Router = categoriesController;
