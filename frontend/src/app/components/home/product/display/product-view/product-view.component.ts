@@ -74,6 +74,8 @@ export class ProductViewComponent extends Themable {
       if (
         (criteria.category !== null && criteria.category !== product.category) ||
         (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
+        (criteria.type !== null && criteria.type !== product.productType) ||
+        (criteria.offerType !== null && criteria.offerType !== product.offerType) ||
         (criteria.priceMax !== null && product.price > criteria.priceMax) ||
         (criteria.priceMin !== null && product.price < criteria.priceMin) ||
         (criteria.location !== null && criteria.location.toLocaleLowerCase() !== product.location.toLocaleLowerCase()) ||
@@ -82,6 +84,7 @@ export class ProductViewComponent extends Themable {
       ){
         return false;
       }else{
+        console.log(criteria.offerType+"    "+product.offerType);
         return true;
       }
     });

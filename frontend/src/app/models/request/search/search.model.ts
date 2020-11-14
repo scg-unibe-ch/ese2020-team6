@@ -4,7 +4,7 @@ export class SearchModel {
     subcategory: string = null;
     location: string = null;
     type: string = null;
-    OfferType: string=null;
+    offerType: string=null;
     priceMin: number = 0;
     priceMax: number = 3000;
     deliverable: boolean = null;
