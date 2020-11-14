@@ -148,4 +148,51 @@ productController.put('/update/:productId', verifyToken,
 
     );
 
+    // only for testing
+    productController.get('/categories',
+    (req: Request, res: Response) => {
+        const cat1 = {
+            id: 1,
+            category: 'living'
+          };
+          const cat2 = {
+            id: 2,
+            category: 'pets'
+          };
+          const products = [
+            cat1,
+            cat2
+          ];
+        res.send(products);
+    });
+
+    // only for testing
+    productController.get('/subcategories',
+    (req: Request, res: Response) => {
+        const sub1 = {
+            id: 1,
+            category: 'houses'
+          };
+          const sub2 = {
+            id: 1,
+            category: 'garages'
+          };
+          const sub3 = {
+            id: 2,
+            category: 'dogs'
+          };
+          const sub4 = {
+            id: 2,
+            category: 'cats'
+          };
+          const products = [
+            sub1,
+            sub2,
+            sub3,
+            sub4
+          ];
+        res.send(products);
+    });
+
+
 export const ProductController: Router = productController;

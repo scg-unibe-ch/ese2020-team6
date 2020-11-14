@@ -51,28 +51,30 @@
   align-items: center;
 }
 
-
 @each $theme-name in $theme-names {
   @include no-products-theme($theme-name);
 }
 
+.search-wrapper{
+  height: 50em;
+  width: 50em;
+  background-clip: content-box;
+  padding: 50px;
+  padding-top: 40px;
+}
 
+@each $theme-name in $theme-names {
+  @include search-theme($theme-name);
+}
 
-.search-wrapper-wrapper {
+.search-wrapper-wrapper{
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   margin-top: auto;
+  overflow: auto;
 }
 
 
-.search-wrapper {
-  height: 50em;
-  width: 50em;
-  padding: 50px;
-  padding-top: 40px;
-  border: 2px solid #2f2f36;
-  background-color: #A284C2;
-  border-radius: 8px;
-}
+

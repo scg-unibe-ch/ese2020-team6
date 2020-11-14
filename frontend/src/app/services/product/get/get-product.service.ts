@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
-import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
 import { GetService } from '../../get-service';
+import { environment } from '../../../../environments/environment';
+import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,13 @@ export class GetProductService extends GetService {
 
   public getUnreviewedProductsCount(): Observable<number> {
     return this.get<{amountOfUnreviewd: number}>('unreviewd/count').pipe(pluck('amountOfUnreviewd'));
+  }
+
+  public getCategories(): Observable<Array<CategoryModel>> {
+    return this.get<Array<CategoryModel>>('categories/');
+  }
+
+  public getSubCategories(): Observable<Array<CategoryModel>> {
+    return this.get<Array<CategoryModel>>('subCategories/');
   }
 }
