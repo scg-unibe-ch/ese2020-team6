@@ -48,12 +48,6 @@ userController.get('/userid/:userId', checkForAuth,
   }
 );
 
-userController.get('/',
-    (req: Request, res: Response) => {
-        userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
-    }
-);
-
 userController.use('/preference', PreferenceController);
 
 export const UserController: Router = userController;

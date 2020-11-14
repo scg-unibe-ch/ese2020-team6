@@ -1,5 +1,5 @@
 export interface LoginUserRequestModel {
-  queryValue: string,
-  password: string,
-  isUsername: boolean
+  userName: string,
+  email: string,
+  password: string
 }
