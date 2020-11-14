@@ -1,5 +1,3 @@
-import { ThemeService } from './../../../../../services/theme/theme.service';
-import { Themable } from './../../../../../models/theme/themable';
 import { Component, Input, Output, EventEmitter  } from '@angular/core';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { ProductModel } from 'src/app/models/product/product.model';
@@ -9,9 +7,9 @@ import { ProductModel } from 'src/app/models/product/product.model';
   templateUrl: './select-categories.component.html',
   styleUrls: ['./select-categories.component.scss']
 })
-export class SelectCategoriesComponent extends Themable {
+export class SelectCategoriesComponent {
   @Input()
-  name: string = '';
+  name = '';
   @Input()
   cats: Array<SearchModel>;
   @Input()
@@ -21,11 +19,11 @@ export class SelectCategoriesComponent extends Themable {
   @Output() deleteRequest = new EventEmitter<Array<ProductModel>>();
 
 
-  constructor(themeService: ThemeService) {
-    super(themeService);
+  constructor()
+  {
   }
 
-  public removeCategoryByClicking(index : number,){
+  public removeCategoryByClicking(): void{
     this.deleteRequest.emit(this.filteredProducts);
   }
 }
