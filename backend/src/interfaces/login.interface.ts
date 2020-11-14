@@ -7,7 +7,7 @@ export interface LoginResponse {
 }
 
 export interface LoginRequest {
-    queryValue: string;
+    userName: string;
+    email: string;
     password: string;
-    isUsername: boolean;
 }

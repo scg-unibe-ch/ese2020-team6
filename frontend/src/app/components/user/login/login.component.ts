@@ -40,20 +40,21 @@ export class LoginComponent extends Themable implements LoginUserRequestBuilder{
       this.loginErrorMessage = '';
       this.userService.login(this)
       .subscribe(
-        (res: LoginUserResponseModel) => this.loginSuccess(),
+        (res: LoginUserResponseModel) => {
+          this.loginSuccess();
+          console.log(res);
+
+        },
         (err: any) => this.loginError(err)
       );
     }
   }
 
   public buildLoginUserRequest(): LoginUserRequestModel {
-    const usernameOrEmail = this.values.usernameEmail;
-    const emailValidatorConstraints = validatorRegex.email.constraints;
-
     return {
-      queryValue: this.values.usernameEmail,
+      userName: this.values.usernameEmail,
+      email: this.values.usernameEmail,
       password: this.values.password,
-      isUsername: !Constraints.recursiveTest(emailValidatorConstraints, usernameOrEmail)
     };
   }
 

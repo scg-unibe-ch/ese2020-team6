@@ -56,9 +56,9 @@ export class RegisterComponent extends Themable implements LoginUserRequestBuild
 
   public buildLoginUserRequest(): LoginUserRequestModel {
     return {
-      queryValue: this.values.userName,
-      password: this.values.password,
-      isUsername: true
+      userName: this.values.userName,
+      email: '',
+      password: this.values.password
     };
   }
 
