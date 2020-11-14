@@ -22,7 +22,7 @@ export class UserService {
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
 
-        const checkIfUserDoesNotExist: Promise<void> = this.doesUserNotExistByUsernameEmail(user.userName, user.email);
+        const checkIfUserDoesNotExist: Promise<void> = this.userDoesNotExist(user);
         const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
 
         return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
@@ -66,21 +66,41 @@ export class UserService {
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
 
-        return this.doesUserExistByUsernameEmail(loginRequestee.userName, loginRequestee.email).then((existingUser: User) => {
-          // compares the hash with the password from the lognin request
-          if (bcrypt.compareSync(loginRequestee.password, existingUser.password)) {
-              const token: string = jwt.sign({ userName: existingUser.userName, userId: existingUser.userId }, secret, { expiresIn: '2h' });
-              return Promise.resolve({ user: existingUser, token });
-          } else {
-              return Promise.reject({ message: 'Not authorized' });
-          }
-        }).catch(err => Promise.reject(err));
+        let queryKey: string;
+        if (loginRequestee.isUsername) {
+          queryKey = 'userName';
+        } else {
+          queryKey = 'email';
+        }
+
+
+        return User.findOne({
+            where: {
+                [queryKey]: loginRequestee.queryValue
+            }
+        })
+        .then(user => {
+            if (user == null) {
+              return Promise.reject({ message: 'No such user' });
+            }
+            if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the lognin request
+                const token: string = jwt.sign({ userName: user.userName, userId: user.userId }, secret, { expiresIn: '2h' });
+                return Promise.resolve({ user, token });
+            } else {
+                return Promise.reject({ message: 'Not authorized' });
+            }
+        })
+        .catch(err => Promise.reject(err));
     }
 
-    private getUserByEitherAttributes(attributes: Object): Promise<User> {
+    public getAll(): Promise<User[]> {
+        return User.findAll();
+    }
+
+    public getUserById(id: number): Promise<User> {
       return User.findOne({
         where: {
-          [Op.or]: this.buildWhereOperator(attributes)
+          userId: id
         },
         include: [{
           association: User.Preference
@@ -91,94 +111,34 @@ export class UserService {
       });
     }
 
-    private getUserByAllAttributes(attributes: Object): Promise<User> {
+    public getUserByUsernameOrEmail(user: UserAttributes): Promise<User> {
       return User.findOne({
         where: {
-          [Op.and]: this.buildWhereOperator(attributes)
-        },
-        include: [{
-          association: User.Preference
-        },
-        {
-          association: User.Address
-        }]
+          [Op.or]: [
+            {
+              userName: user.userName
+            },
+            {
+              email: user.email
+            }
+          ]
+        }
       });
     }
 
-    private buildWhereOperator(attributes: Object): Array<Object> {
-      return Object.entries(attributes).map(([key, value]) => {
-        return {
-          [key]: value
-        };
-      });
-    }
-
-    public getUserById(userId: number): Promise<User> {
-      return this.getUserByAllAttributes({
-        userId: userId
-      });
-    }
-
-    private getUserByUsernameOrEmail(username: string, email: string): Promise<User> {
-      return this.getUserByEitherAttributes({
-        userName: username,
-        email: email
-      });
-    }
-
-    private doesUserExistById(userId: number): Promise<User> {
-      return this.getUserById(userId).then((existingUser: User) => {
-        return this.handleUserShouldExist(existingUser);
-      }).catch(err => this.handleError(err));
-    }
-
-    private doesUserNotExistById(userId: number): Promise<void> {
-      return this.getUserById(userId).then((existingUser: User) => {
-        return this.handleUserShouldNotExist({userId: userId}, existingUser);
-      }).catch(err => this.handleError(err));
-    }
-
-    private doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
-      return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
-        return this.handleUserShouldExist(existingUser);
-      }).catch(err => this.handleError(err));
-    }
-
-    private doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
-      return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
-        return this.handleUserShouldNotExist({userName: username, email: email}, existingUser);
-      }).catch(err => this.handleError(err));
-    }
-
-    private handleUserShouldExist(user: User): Promise <User> {
-      if (user) {
-        return Promise.resolve(user);
-      } else {
-        return Promise.reject({ message : 'No such User!'});
-      }
-    }
-
-    private handleUserShouldNotExist(attributes: any, existingUser: User): Promise <void> {
-      if (existingUser) {
-        if (attributes.userName && attributes.email) {
-          if (attributes.email === existingUser.email && attributes.userName === existingUser.userName) {
+    public userDoesNotExist(user: UserAttributes): Promise<void> {
+      return this.getUserByUsernameOrEmail(user).then((existingUser: User) => {
+        if (existingUser) {
+          if (user.email === existingUser.email && user.userName === existingUser.userName) {
             return Promise.reject({ message: 'Username, Email already in use', status: 409 });
-          } else if (attributes.userName === existingUser.userName) {
+          } else if (user.userName === existingUser.userName) {
             return Promise.reject({ message: 'Username already in use', status: 409 });
           } else {
             return Promise.reject({ message: 'Email already in use', status: 409 });
           }
-        } else if (attributes.userId === existingUser.userId) {
-          return Promise.reject({ message: 'User already exists!', status: 409 });
         } else {
-          return Promise.reject({ message: 'User already exists!', status: 409 });
+          return Promise.resolve();
         }
-      } else {
-        return Promise.resolve();
-      }
-    }
-
-    private handleError(err: any): Promise <any> {
-      return Promise.reject(err);
+      }).catch(err => Promise.reject(err));
     }
 }
