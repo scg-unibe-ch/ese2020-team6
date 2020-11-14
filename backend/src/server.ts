@@ -28,6 +28,7 @@ export class Server {
         Preference.createAssociations();
         User.createAssociations();
         Address.createAssociations();
+        Products.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port

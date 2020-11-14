@@ -1,4 +1,6 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
+import { Address, AddressAttributes } from './address.model';
+
 
 export interface ProductsAttributes {
     productId: number;
@@ -6,7 +8,7 @@ export interface ProductsAttributes {
     description: string;
     price: number;
     category: string;
-    location: string;
+    addressId: number;
     productType: string;
     offerType: string;
     picture: string;
@@ -21,14 +23,16 @@ export interface ProductsAttributes {
 }
 export interface GoodsCreationAttributes extends Optional<ProductsAttributes, 'productId'> { }
 
-export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
-    implements ProductsAttributes {
+export class Products extends Model<ProductsAttributes, GoodsCreationAttributes> implements ProductsAttributes {
+
+
+    public static Address: Association;
     productId!: number;
     title!: string;
     description!: string;
     price!: number;
     category!: string;
-    location!: string;
+    addressId!: number;
     productType!: string;
     offerType!: string;
     picture!: string;
@@ -63,19 +67,25 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            location: {
-                type: DataTypes.STRING,
-                allowNull: true
+            addressId: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             // item or service
             productType: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Item', 'Service']]
+                }
             },
             // sell or rent
             offerType: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Sell', 'Rent']]
+                }
             },
             picture: {
                 type: DataTypes.STRING,
@@ -86,13 +96,16 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 allowNull: true
             },
             expirationDate: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.STRING,
                 allowNull: true
             },
             // available, lent, sold
             status: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Available', 'Lent', 'Sold']]
+                }
             },
             isAccepted: {
                 type: DataTypes.BOOLEAN,
@@ -100,7 +113,8 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 allowNull: false
             },
             userId: {
-                type: DataTypes.STRING,
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             rejectionMessage: {
                 type: DataTypes.STRING,
@@ -115,8 +129,24 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
         },
             {
                 sequelize,
-                tableName: 'products'
+                tableName: 'products',
+                validate: {
+                  productTypeAndOfferType() {
+                    if (this.productType === 'Service' && this.offerType === 'Sell') {
+                      throw new Error('Service cannot be sold! Cannot insert product type Service with offer type Sell!');
+                    }
+                  }
+                }
             }
         );
+    }
+
+    public static createAssociations() {
+      Products.Address = Products.belongsTo(Address, {
+        foreignKey: 'addressId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        as: 'address'
+      });
     }
 }

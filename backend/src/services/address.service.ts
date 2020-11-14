@@ -18,4 +18,8 @@ export class AddressService {
       }).catch(err => Promise.reject(err));
     }
 
+    public static createAddress(address: AddressAttributes): Promise<Address> {
+      return Address.create(address);
+    }
+
 }

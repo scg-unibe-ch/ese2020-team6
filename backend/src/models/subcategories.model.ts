@@ -23,7 +23,7 @@ export class Subcategories extends Model<SubcategoriesAttributes, GoodsProductSu
                 primaryKey: true
              },
              categoryId: {
-                 type: DataTypes.NUMBER,
+                 type: DataTypes.INTEGER,
                  unique: false,
                  allowNull: false
              },

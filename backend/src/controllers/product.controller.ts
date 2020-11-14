@@ -3,6 +3,7 @@ import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductsAttributes } from '../models/products.model';
+import { AddressAttributes, Address } from '../models/address.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
@@ -34,8 +35,10 @@ const upload = multer({
 
 productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
-        const postProduct: ProductsAttributes = req.body;
-        productService.createProduct(postProduct)
+        const product: ProductsAttributes = req.body as ProductsAttributes;
+        const address: AddressAttributes = req.body.address as AddressAttributes;
+        product.userId = req.body.tokenPayload.userId;
+        productService.createProduct(product, address)
         .then((postedProduct: ProductsAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -61,7 +64,8 @@ productController.get('/details/:productId',
 productController.delete('/delete/:productId', verifyToken,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
-        productService.deleteProduct(productId)
+        const userId: number = req.body.tokenPayload.userId;
+        productService.deleteProduct(productId, userId)
         .then((product: ProductsAttributes) => res.send(product))
         .catch(err => res.status(500).send(err));
     }
@@ -104,10 +108,11 @@ interface MulterRequest extends Request {
 
 productController.put('/update/:productId', verifyToken,
     (req: MulterRequest, res: Response) => {
-        const updateProduct: ProductsAttributes = req.body;
-        productService.updateProduct(updateProduct)
-        .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))
-        .catch((err: any) => res.status(500).send(err));
+      const product: ProductsAttributes = req.body as ProductsAttributes;
+      const address: AddressAttributes = req.body.address as AddressAttributes;
+      productService.updateProduct(product, address)
+      .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))
+      .catch((err: any) => res.status(500).send(err));
     });
 
  productController.get('/myproducts/:userId', verifyToken,
