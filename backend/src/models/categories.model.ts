@@ -15,10 +15,9 @@ export class Categories extends Model<CategoriesAttributes, GoodsProductCategoir
     public static initialize(sequelize: Sequelize) {
          Categories.init({
              categoryId: {
-                 type: DataTypes.NUMBER,
-                 autoIncrement: true,
-                 unique: true,
-                 allowNull: false
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
              },
              category: {
                   type: DataTypes.STRING,

@@ -18,10 +18,9 @@ export class Subcategories extends Model<SubcategoriesAttributes, GoodsProductSu
     public static initialize(sequelize: Sequelize) {
          Subcategories.init({
              subcategoryId: {
-                 type: DataTypes.NUMBER,
-                 autoIncrement: true,
-                 unique: true,
-                 allowNull: false
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
              },
              categoryId: {
                  type: DataTypes.NUMBER,
