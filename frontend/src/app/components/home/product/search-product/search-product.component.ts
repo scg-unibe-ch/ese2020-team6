@@ -1,8 +1,6 @@
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductModel } from 'src/app/models/product/product.model';
 import { Component, EventEmitter, Output, Input, PipeTransform} from '@angular/core';
-import { ThemeService } from 'src/app/services/theme/theme.service';
-import { Themable } from 'src/app/models/theme/themable';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
 import { timeStamp } from 'console';
@@ -14,7 +12,7 @@ import { timeStamp } from 'console';
   templateUrl: './search-product.component.html',
   styleUrls: ['./search-product.component.scss']
 })
-export class SearchProductComponent extends Themable implements PipeTransform {
+export class SearchProductComponent implements PipeTransform {
   @Output() criteriaChange = new EventEmitter<SearchModel>();
   @Input()
   productArray: Array<ProductModel>;
@@ -26,16 +24,15 @@ export class SearchProductComponent extends Themable implements PipeTransform {
   subCategories: Array<CategoryModel>;
   subCat: Array<string>;
   cats: Array<string>;
-  deliv: string="Select Deliverable";
-  toggleChange: boolean=true;
+  deliv = 'Select Deliverable';
+  toggleChange = true;
+  show = false;
+  isShown = false ;
 
 
   constructor(
     private productService: ProductService,
-    themeService: ThemeService
-  ) {
-    super(themeService);
-   }
+  ) {}
 
    public ngOnInit(): void {
     this.productService.getCategories().subscribe((values) => {
@@ -50,31 +47,29 @@ export class SearchProductComponent extends Themable implements PipeTransform {
     });
   }
 
-  show: boolean = false ;
-  SubCategoryShow(entry: any) {
+  SubCategoryShow(entry: any): void {
     console.log(entry);
-    this.cat=entry;
+    this.cat = entry;
     this.show = true;
   }
 
-  changeVisibility(){
-    if(this.deliv=="Select Deliverable"){
-      this.deliv="Undo Deliverable"
-      this.criteria.deliverable=false;
-      this.toggleChange=false;
+  changeVisibility(): void {
+    if (this.deliv === 'Select Deliverable'){
+      this.deliv = 'Undo Deliverable';
+      this.criteria.deliverable = false;
+      this.toggleChange = false;
     }else{
-      this.deliv="Select Deliverable"
-      this.toggleChange=true;
-      this.criteria.deliverable=null;
+      this.deliv ='Select Deliverable';
+      this.toggleChange = true;
+      this.criteria.deliverable = null;
     }
   }
 
-  isShown: boolean = false ;
-  OfferTypeShow(entry: any) {
-    if(entry=="Service"){
-      this.optionArray=['Rent'];
+  OfferTypeShow(entry: any): void {
+    if (entry === 'Service'){
+      this.optionArray = ['Rent'];
     }else{
-      this.optionArray=['Sell', 'Rent'];
+      this.optionArray = ['Sell', 'Rent'];
     }
     this.isShown = true;
   }
@@ -82,8 +77,8 @@ export class SearchProductComponent extends Themable implements PipeTransform {
   onSubmit(): void {
     this.criteriaChange.emit(this.criteria);
   }
-  transform(productArray, searchTerm: string) {
-    for (let entry of productArray) {
+  transform(productArray, searchTerm: string): void {
+    for (const entry of productArray) {
       console.log(entry);
     }
   }

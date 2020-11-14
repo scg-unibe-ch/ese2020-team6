@@ -18,8 +18,8 @@ import {
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder, RejectProductRequestBuilder {
 
-  public showRejectResponseForm: boolean = false;
-  public showAcceptForm: boolean = false;
+  public showRejectResponseForm = false;
+  public showAcceptForm = false;
 
   private values: RejectProductFormModel = new NullRejectProductForm();
 

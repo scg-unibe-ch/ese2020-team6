@@ -23,15 +23,15 @@
     </div>
 
     <div class="input-grid" >
-        <button id="button2" type="button" [ngClass]="'button-' + theme" (click)="changeVisibility()" >{{this.deliv}}</button>
-        <div class="input-grid" [ngClass]="theme" id ="deliverableGrid">
+        <button id="button2" type="button" theme button (click)="changeVisibility()" >{{this.deliv}}</button>
+        <div class="input-grid" theme id ="deliverableGrid">
           <h2>Not Deliverable</h2><mat-slide-toggle class="toggleSlider"
           [disabled]="toggleChange" [(ngModel)]="criteria.deliverable" name="Deliverable" selectName="Product Deliverable"> <h2 id="b2"></h2></mat-slide-toggle><h2>Deliverable</h2>
         </div>
     </div>
 
-    <div class="input-grid" id="priceGrid" [ngClass]="theme">
-      <h2 >Price Range: </h2>
+    <div class="input-grid" id="priceGrid" theme>
+      <h2>Price Range: </h2>
       <div class='wrap' role='group' aria-labelledby='multi-lbl'>
         <input id='a' type='range' min='0' value='3000'max='3000' name="priceMax" [(ngModel)]="criteria.priceMax"/>
         <input id='b' type='range' min='0' value='0'   max='3000' name="priceMin" [(ngModel)]="criteria.priceMin"/>
@@ -42,7 +42,7 @@
       </app-text-input>
     </div>
     <div class="button">
-      <button [ngClass]="'button-' + theme" type="submit">Search</button>
+      <button theme button type="submit">Search</button>
     </div>
   </form>
 </div>

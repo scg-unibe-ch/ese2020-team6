@@ -16,7 +16,7 @@ export class LoginComponent implements LoginUserRequestBuilder{
 
   private form: NgForm;
   private values: LoginUserFormModel;
-  public loginErrorMessage: string = '';
+  public loginErrorMessage = '';
 
 
   constructor(

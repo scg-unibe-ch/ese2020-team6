@@ -27,7 +27,7 @@ export class PurchaseProductComponent extends ProductInformationBase {
   }
 
   get isForSale(): boolean {
-    if (this.product.offerType === 'Rent' || this.product.productType === 'Service') return false;
-    else return true;
+    if (this.product.offerType === 'Rent' || this.product.productType === 'Service') { return false; }
+    else { return true; }
   }
 }
