@@ -38,7 +38,7 @@ orderController.put('/product/item/rent', verifyToken,
         .catch((err: any) => res.status(500).send(err));
 });
 
-orderController.put('/product/service/purchase', verifyToken,
+orderController.put('/product/service/rent', verifyToken,
     (req: Request, res: Response) => {
         const serviceId: number = parseInt(req.params.serviceId, 10);
         const userId: number = parseInt(req.params.userId, 10);
