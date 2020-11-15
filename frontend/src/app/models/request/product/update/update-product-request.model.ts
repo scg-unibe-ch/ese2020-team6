@@ -1,5 +1,3 @@
-import { PostProductRequestModel } from '../post/post-product-request.model';
+import { ProductModel } from '../../../product/product.model';
 
-export interface UpdateProductRequestModel extends PostProductRequestModel {
-  productId: number;
-}
+export interface UpdateProductRequestModel extends Omit<ProductModel, 'userId | rejectionMessage'>{}

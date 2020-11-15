@@ -1,35 +1,37 @@
+import { AddressModel, NullAddress } from '../map/address/address.model';
+
 export interface ProductModel {
   productId: number;
+  userId: number;
+  productType: string;
+  offerType: string;
   title: string;
   description: string;
   price: number;
-  category: string;
-  location: string;
-  productType: string;
-  offerType: string;
+  location: AddressModel;
   picture: string;
+  category: string;
   subcategory: string;
+  isDeliverable: boolean;
   expirationDate: number;
   status: string;
-  userId: number;
   rejectionMessage: string;
-  isDeliverable: boolean;
 }
 
 export class NullProduct implements ProductModel {
   productId: number = null;
+  userId: number = null;
+  productType: string = null;
+  offerType: string = null;
   title: string = null;
   description: string = null;
   price: number = null;
-  category: string = null;
-  location: string = null;
-  productType: string = null;
-  offerType: string = null;
+  location: AddressModel = new NullAddress();
   picture: string = null;
+  category: string = null;
   subcategory: string = null;
+  isDeliverable: boolean = null;
   expirationDate: number = null;
   status: string = null;
-  userId: number = null;
   rejectionMessage: string = null;
-  isDeliverable: boolean = null;
 }

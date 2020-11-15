@@ -7,6 +7,7 @@ import { CutUserModel } from '../../../models/user/cut-user.model';
 import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
 import { GetService } from '../../get-service';
 import { Address } from '../../../models/map/address/address.model';
+import { transformAddress } from '../../../models/map/address/address.operator';
 
 
 @Injectable({
@@ -21,10 +22,7 @@ export class GetUserService extends GetService {
   }
 
   public getUserByIdSecured(userId: number): Observable<UserModel> {
-    return this.get<UserModel>('userid/' + userId.toString()).pipe(share(), map((user: UserModel) => {
-      user.address = Address.buildFromAddressModel(user.address);
-      return user;
-    }));
+    return this.get<UserModel>('userid/' + userId.toString()).pipe(share(), transformAddress);
   }
 
   public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {

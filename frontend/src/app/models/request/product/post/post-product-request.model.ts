@@ -1,15 +1,3 @@
-export interface PostProductRequestModel {
-  title: string;
-  description: string;
-  price: number;
-  category: string;
-  location: string;
-  productType: string;
-  offerType: string;
-  picture: string;
-  subcategory: string;
-  expirationDate: number;
-  status: string;
-  userId: number;
-  isDeliverable: boolean;
-}
+import { ProductModel } from '../../../product/product.model';
+
+export interface PostProductRequestModel extends Omit<ProductModel, 'productId | userId | rejectionMessage'>{}
