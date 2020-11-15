@@ -42,8 +42,6 @@ export class LoginComponent extends Themable implements LoginUserRequestBuilder{
       .subscribe(
         (res: LoginUserResponseModel) => {
           this.loginSuccess();
-          console.log(res);
-
         },
         (err: any) => this.loginError(err)
       );

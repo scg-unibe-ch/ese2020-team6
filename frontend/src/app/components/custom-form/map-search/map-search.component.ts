@@ -51,7 +51,6 @@ export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
     @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>
   ) {
     super(validators, asyncValidators, themeService);
-    console.log(validators);
 
     this.map = new MapSearch('Topographic', new Location(new Leaflet.LatLng(46.947922, 7.440390), 6));
     this.map.addResultSubscriber(this.handleSearchResults);

@@ -27,9 +27,11 @@ export class UserService {
 
         return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
           return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
-            return this.insertUserWithExistingAddress(user, addressId);
+            return this.insertUserWithExistingAddress(user, addressId).then((createdUser: User) => {
+              return this.getUserById(createdUser.userId);
+            }).catch(err => Promise.reject(err));
           }).catch(() => { // address does not exist -> insert user and address
-            return this.insertUserAndAddress(user, address);
+            return this.insertUserAndAddress(user, address).then().catch();
           });
         }).catch(err => Promise.reject(err)); // user does already exist -> reject
     }
@@ -46,7 +48,7 @@ export class UserService {
             include : [ Address.Users ]
           }]
         }
-      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+      );
     }
 
     private insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
@@ -60,7 +62,7 @@ export class UserService {
             association: User.Preference
           }]
         }
-      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+      );
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
