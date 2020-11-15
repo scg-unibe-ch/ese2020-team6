@@ -31,7 +31,7 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
             },
                 {
                     sequelize,
-                    tableName: 'buyService'
+                    tableName: 'rentService'
                 }
             );
         }

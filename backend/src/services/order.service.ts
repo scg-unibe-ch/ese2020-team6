@@ -75,10 +75,10 @@ export class OrderService {
        // return orderId;
     }
 
-    public async purchaseService(serviceId: number, hours: number, paymentMethod: string, shipping: string, buyerId: number) {
+    public async purchaseService(productId: number, hours: number, paymentMethod: string, shipping: string, buyerId: number) {
         const service = await Products.findOne({
             where: {
-                serviceId: serviceId
+                productId: productId
             }
         });
         const sellerId: number = service.userId;
@@ -97,7 +97,7 @@ export class OrderService {
             //  Order.build({productId: productId, userId: buyerId, sellerId: user.userId})
             Products.update({status: 'available'}, {
                 where: {
-                    serviceId: serviceId
+                    productId: productId
                 }
             });
         } else {
