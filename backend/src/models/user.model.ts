@@ -1,4 +1,5 @@
-import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Order } from './order.model';
 
 export interface UserAttributes {
     userId: number;
@@ -20,6 +21,8 @@ export interface UserAttributes {
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+    public static Purchases: Association;
+    public static Sold: Association;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -103,5 +106,17 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 tableName: 'users'
             },
         );
+    }
+
+    public static createAssociations(): void {
+      User.Purchases = User.hasMany(Order, {
+        foreignKey: 'buyerId',
+        as: 'purchases'
+      });
+
+      User.Sold = User.hasMany(Order, {
+        foreignKey: 'sellerId',
+        as: 'sold'
+      });
     }
 }

@@ -1,6 +1,7 @@
-import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Order } from './order.model';
 
-export interface ProductsAttributes {
+export interface ProductAttributes {
     productId: number;
     title: string;
     description: string;
@@ -19,10 +20,10 @@ export interface ProductsAttributes {
     isDeliverable: boolean;
 
 }
-export interface GoodsCreationAttributes extends Optional<ProductsAttributes, 'productId'> { }
+export interface ProductCreationAttributes extends Optional<ProductAttributes, 'productId'> { }
 
-export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
-    implements ProductsAttributes {
+export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
+    public static Orders: Association;
     productId!: number;
     title!: string;
     description!: string;
@@ -41,7 +42,7 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     isDeliverable!: boolean;
 
     public static initialize(sequelize: Sequelize) {
-        Products.init({
+        Product.init({
             productId: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
@@ -118,5 +119,12 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
                 tableName: 'products'
             }
         );
+    }
+
+    public static createAssociations(): void {
+      Product.Orders = Product.hasMany(Order, {
+        foreignKey: 'productId',
+        as: 'orders'
+      });
     }
 }

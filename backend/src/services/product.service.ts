@@ -1,34 +1,34 @@
 
-import { Products, ProductsAttributes } from '../models/products.model';
+import { Product, ProductAttributes } from '../models/product.model';
 
 const { Op } = require('sequelize');
 
 export class ProductService {
 
-    public createProduct(product: ProductsAttributes): Promise<ProductsAttributes> {
-        return Products.create(product).then(
+    public createProduct(product: ProductAttributes): Promise<ProductAttributes> {
+        return Product.create(product).then(
             inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
     }
 
-    public getAllProducts(): Promise<Products[]> {
-        return Products.findAll();
+    public getAllProducts(): Promise<Product[]> {
+        return Product.findAll();
     }
 
-    public getProductById(productId: number): Promise<Products> {
-        return Products.findOne({
+    public getProductById(productId: number): Promise<Product> {
+        return Product.findOne({
           where: {
             productId: productId
           }
         });
     }
 
-    public deleteProduct(productId: number): Promise<Products> {
-        const product: Promise<Products> = Products.findOne({
+    public deleteProduct(productId: number): Promise<Product> {
+        const product: Promise<Product> = Product.findOne({
             where: {
               productId: productId
             }
           });
-        Products.destroy({
+        Product.destroy({
           where: {
             productId: productId
           }
@@ -36,23 +36,23 @@ export class ProductService {
         return product;
     }
 
-    public updateProduct(product: ProductsAttributes): Promise<Products> {
+    public updateProduct(product: ProductAttributes): Promise<Product> {
       product.rejectionMessage = null;
       product.isAccepted = false;
-      Products.update(product, {
+      Product.update(product, {
         where: {
           productId: product.productId
         }
       });
-      return Products.findOne({
+      return Product.findOne({
         where: {
           productId: product.productId
         }
       });
     }
 
-    public getAllUnreviewedProducts(): Promise<Array<Products>> {
-      return Products.findAll({
+    public getAllUnreviewedProducts(): Promise<Array<Product>> {
+      return Product.findAll({
         where: {
           isAccepted: false,
           rejectionMessage: null
@@ -60,8 +60,8 @@ export class ProductService {
       });
     }
 
-    public getMyRejectedProducts(userId: number): Promise<Array<Products>> {
-      return Products.findAll({
+    public getMyRejectedProducts(userId: number): Promise<Array<Product>> {
+      return Product.findAll({
         where: {
           userId: userId,
           isAccepted: false,
@@ -71,7 +71,7 @@ export class ProductService {
     }
 
     public getMyRejectedProductsCount(userId: number): Promise <Number> {
-      return Products.count({
+      return Product.count({
         where: {
           userId: userId,
           isAccepted: false,
@@ -81,7 +81,7 @@ export class ProductService {
     }
 
     public getUnreviewdProductsCount(): Promise <Number> {
-      return Products.count({
+      return Product.count({
         where: {
           isAccepted: false,
           rejectionMessage: null
@@ -89,42 +89,42 @@ export class ProductService {
       });
     }
 
-    public getAllAcceptedProducts(): Promise<Array<Products>> {
-      return Products.findAll({
+    public getAllAcceptedProducts(): Promise<Array<Product>> {
+      return Product.findAll({
         where: {
           isAccepted: true
         }
       });
     }
 
-    public acceptProduct(productId: number): Promise<Products> {
-      Products.update({isAccepted: true, rejectionMessage: null}, {
+    public acceptProduct(productId: number): Promise<Product> {
+      Product.update({isAccepted: true, rejectionMessage: null}, {
         where: {
           productId: productId
         }
       });
-      return Products.findOne({
-        where: {
-          productId: productId
-        }
-      });
-    }
-
-    public rejectProduct(productId: number, rejectionMessage: string): Promise<Products> {
-      Products.update({isAccepted: false, rejectionMessage: rejectionMessage}, {
-        where: {
-          productId: productId
-        }
-      });
-      return Products.findOne({
+      return Product.findOne({
         where: {
           productId: productId
         }
       });
     }
 
-    public getMyProducts(userId: number): Promise<Array<Products>> {
-      return Products.findAll({
+    public rejectProduct(productId: number, rejectionMessage: string): Promise<Product> {
+      Product.update({isAccepted: false, rejectionMessage: rejectionMessage}, {
+        where: {
+          productId: productId
+        }
+      });
+      return Product.findOne({
+        where: {
+          productId: productId
+        }
+      });
+    }
+
+    public getMyProducts(userId: number): Promise<Array<Product>> {
+      return Product.findAll({
         where: {
             userId: userId
         }

@@ -2,11 +2,11 @@
 import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
-import { ProductsAttributes } from '../models/products.model';
+import { ProductAttributes } from '../models/product.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import {OrderService} from '../services/order.service';
-import { OrdersAttributes } from '../models/order.model';
+import { OrderAttributes } from '../models/order.model';
 
 const orderController: Router = express.Router();
 const orderService = new OrderService();
@@ -27,19 +27,19 @@ orderController.get( '/order/buyer/:userId', verifyToken,
  (req: Request, res: Response) => {
      const userId: number = parseInt(req.params.userId, 10);
      orderService.getMyOrders(userId)
-     .then((orders: Array<OrdersAttributes>) => res.send(orders))
+     .then((orders: Array<OrderAttributes>) => res.send(orders))
      .catch((err: any) => res.status(500).send(err));
     }
-); 
+);
 
 orderController.get( '/order/seller/:userId', verifyToken,
  (req: Request, res: Response) => {
      const userId: number = parseInt(req.params.userId, 10);
      orderService.getMyProductOrders(userId)
-     .then((orders: Array<OrdersAttributes>) => res.send(orders))
+     .then((orders: Array<OrderAttributes>) => res.send(orders))
      .catch((err: any) => res.status(500).send(err));
     }
-); 
+);
 
 
-//test
+// test
