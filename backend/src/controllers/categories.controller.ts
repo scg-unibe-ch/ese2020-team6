@@ -14,20 +14,9 @@ const categoriesService = new CategoriesService();
 //     .catch((err: any) => res.status(500).send(err));
 // });
 
-<<<<<<< HEAD:backend/src/controllers/categories.controller.ts
-categoriesController.get('/subcategories', verifyToken,
-(req: Request, res: Response) => {
-    categoriesService.getAllSubcategories()
-    .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
-    .catch((err: any) => res.status(500).send(err));
-});
-
-export const CategoriesController: Router = categoriesController;
-=======
 // categoriesController.get('/subcategories', verifyToken,
 // (req: Request, res: Response) => {
 //     categoriesService.getAllSubcategories()
 //     .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
 //     .catch((err: any) => res.status(500).send(err));
 // });
->>>>>>> 186e7739059bec7fe6c0a96404af00c1b8982979:backend/src/controllers/categories.controllers.ts

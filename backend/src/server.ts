@@ -3,13 +3,13 @@ import express, { Application , Request, Response } from 'express';
 import morgan from 'morgan';
 import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
-import { CategoriesController } from './controllers/categories.controller';
 import { Sequelize } from 'sequelize';
 import { User } from './models/user.model';
 import { CategoriesService } from './services/categories.service';
 import cors from 'cors';
 import { Products } from './models/products.model';
 import { Categories } from './models/categories.model';
+import { Subcategories } from './models/subcategories.model';
 
 export class Server {
     private server: Application;
@@ -24,6 +24,7 @@ export class Server {
         User.initialize(this.sequelize);
         Products.initialize(this.sequelize);
         Categories.initialize(this.sequelize);
+        Subcategories.initialize(this.sequelize);
         this.setUpDatabases();
         // buy/rent/purchase
 
@@ -57,7 +58,6 @@ export class Server {
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/product', ProductController)
-            .use('/categories', CategoriesController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
             // this is the message you get if you open http://localhost:3000/ when the server is running

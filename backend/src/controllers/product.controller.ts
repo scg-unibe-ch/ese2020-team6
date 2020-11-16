@@ -3,9 +3,13 @@ import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductsAttributes } from '../models/products.model';
+import { CategoriesService } from '../services/categories.service';
+import { Categories } from '../models/categories.model';
+import { Subcategories } from '../models/subcategories.model';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
+const categoriesService = new CategoriesService();
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req: Request, file: any, cd: any) {
@@ -148,7 +152,26 @@ productController.put('/update/:productId', verifyToken,
 
     );
 
-    // only for testing
+    productController.get('/categories', verifyToken,
+    (req: Request, res: Response) => {
+     categoriesService.getAllCategories()
+     .then((categoires: Array<Categories>) => res.send(categoires))
+     .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
+
+    productController.get('/subcategories', verifyToken,
+    (req: Request, res: Response) => {
+        categoriesService.getAllSubcategories()
+        .then((subcategoires: Array<Subcategories>) => res.send(subcategoires))
+        .catch((err: any) => res.status(500).send(err));
+    }
+
+    );
+
+    /*
+   // only for testing
     productController.get('/categories',
     (req: Request, res: Response) => {
         const cat1 = {
@@ -193,6 +216,6 @@ productController.put('/update/:productId', verifyToken,
           ];
         res.send(products);
     });
-
+ */
 
 export const ProductController: Router = productController;
