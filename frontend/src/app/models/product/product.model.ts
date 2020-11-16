@@ -8,7 +8,7 @@ export interface ProductModel {
   title: string;
   description: string;
   price: number;
-  location: AddressModel;
+  address: AddressModel;
   picture: string;
   category: string;
   subcategory: string;
@@ -26,7 +26,7 @@ export class NullProduct implements ProductModel {
   title: string = null;
   description: string = null;
   price: number = null;
-  location: AddressModel = new NullAddress();
+  address: AddressModel = new NullAddress();
   picture: string = null;
   category: string = null;
   subcategory: string = null;

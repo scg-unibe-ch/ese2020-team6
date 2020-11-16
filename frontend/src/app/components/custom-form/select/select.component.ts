@@ -43,7 +43,6 @@ export class SelectComponent extends ValueAccessorBase<String> {
     super.writeValue(value);
     if (value) {
       this.dirty = true;
-      this.onChange(value);
     }
   }
 

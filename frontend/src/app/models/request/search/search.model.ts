@@ -1,12 +1,88 @@
-export class SearchModel {
-    titleAndDescription: string = null;
-    category: string = null;
-    subcategory: string = null;
-    location: string = null;
-    type: string = null;
-    OfferType: string=null;
-    priceMin: number = 0;
-    priceMax: number = 3000;
-    deliverable: boolean = null;
-    status: string = null;
+import { AddressModel, NullAddress } from '../../map/address/address.model';
+import { ProductModel } from '../../product/product.model';
+
+export interface SearchModel {
+    titleAndDescription: string;
+    categories: Array<string>;
+    subcategories: Array<string>;
+    location: string;
+    productType: string;
+    offerType: string;
+    priceMin: number;
+    priceMax: number;
+    deliverable: boolean;
+    status: string;
+}
+
+export class Search implements SearchModel {
+    public titleAndDescription: string = '';
+    public categories: Array<string> = new Array<string>();
+    public subcategories: Array<string> = new Array<string>();
+    public location: string = '';
+    public productType: string = '';
+    public offerType: string = '';
+    public priceMin: number = 0;
+    public priceMax: number = 3000;
+    public deliverable: boolean = null;
+    public status: string = '';
+
+    public filter(product: ProductModel): boolean {
+      if (!this.productHasCategory(product)) return false;
+      else if (!this.productHasSubCategory(product)) return false;
+      else if (!this.productIsInPriceRange(product)) return false;
+      else if (!this.productHasDeliverableStatus(product)) return false;
+      else if (!this.productHasProductType(product)) return false;
+      else if (!this.productHasOfferType(product)) return false;
+      else if (!this.productHasStatus(product)) return false;
+      else if (!this.keywordInTitleOrDescription(product)) return false;
+      else if (!this.keywordInAddress(product)) return false;
+      else return true;
+    }
+
+    private productHasCategory(product: ProductModel): boolean {
+      if (this.categories.length > 0) return this.categories.includes(product.category);
+      else return true;
+    }
+
+    private productHasSubCategory(product: ProductModel): boolean {
+      if (this.subcategories.length > 0) return this.subcategories.includes(product.subcategory);
+      else return true;
+    }
+
+    private productIsInPriceRange(product: ProductModel): boolean {
+      return this.priceMin <= product.price && product.price <= this.priceMax;
+    }
+
+    private productHasDeliverableStatus(product: ProductModel): boolean {
+      if (this.deliverable) return this.deliverable == product.isDeliverable;
+      else return true;
+    }
+
+    private productHasProductType(product: ProductModel): boolean {
+      return Search.stringContainsKeyword(product.productType, this.productType);
+    }
+
+    private productHasOfferType(product: ProductModel): boolean {
+      return Search.stringContainsKeyword(product.offerType, this.offerType);
+    }
+
+    private productHasStatus(product: ProductModel): boolean {
+      return Search.stringContainsKeyword(product.status, this.status);
+    }
+
+    private keywordInTitleOrDescription(product: ProductModel): boolean {
+      let keywordInTitle: boolean = Search.stringContainsKeyword(product.title, this.titleAndDescription);
+      let keywordInDescription: boolean = Search.stringContainsKeyword(product.description, this.titleAndDescription);
+      return keywordInTitle || keywordInDescription;
+    }
+
+    private keywordInAddress(product: ProductModel): boolean {
+      return Search.stringContainsKeyword(product.address.toString(), this.location)
+    }
+
+    private static stringContainsKeyword(string: string, keyword: string): boolean {
+      let lowerCaseString: string = string.toLocaleLowerCase();
+      let lowerCaseKeyword: string = keyword.toLocaleLowerCase();
+      return lowerCaseString.indexOf(lowerCaseKeyword) >= 0;
+    }
 }

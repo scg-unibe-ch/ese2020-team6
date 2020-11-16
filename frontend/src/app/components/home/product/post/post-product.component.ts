@@ -192,4 +192,3 @@ export class PostProductComponent extends Themable implements PostProductRequest
     }
   }
 }
-

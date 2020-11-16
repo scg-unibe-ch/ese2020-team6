@@ -17,6 +17,8 @@ import {
   UpdateProductRequestBuilder,
   AcceptProductRequestBuilder,
   RejectProductRequestBuilder } from '../../models/request/product/product-request-builder.module';
+import { Search } from '../../models/request/search/search.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +90,11 @@ export class ProductService {
 
   public getSubCategories(): Observable<Array<CategoryModel>> {
     return this.getProductService.getSubCategories();
+  }
+
+  public static filter(products: Array<ProductModel>, filter: Search): Array<ProductModel> {
+    return products.filter((product: ProductModel) => {
+      return filter.filter(product);
+    });
   }
 }
