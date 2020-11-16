@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { EndpointURLSegment } from '../models/endpoint/endpoint-url-segment';
 import { EndpointUrlBuilder } from './endpoint-url-builder';
 

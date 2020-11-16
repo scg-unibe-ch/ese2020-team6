@@ -3,20 +3,26 @@
 
 .register-wrapper {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: $spaceing-m;
+  overflow-y: scroll;
 
   .register {
-    width: 30%;
+    margin: auto;
     padding: $spaceing-xl;
     border-radius: $border-radius;
+    display: grid;
+    grid-template-rows: min-content auto;
+    grid-gap: $spaceing-m;
+
+    @media screen and (max-width: 300px){
+      padding: $spaceing-m;
+    }
 
     .header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: $spaceing-m;
 
       .title {
         font-size: 1.7em;
@@ -33,17 +39,79 @@
       }
     }
 
-    .input-grid {
+    .register-form {
+      height: 100%;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column-gap: $spaceing-xl;
-    }
+      grid-template-columns: 4fr 3fr;
+      grid-gap: $spaceing-s;
+      @media screen and (max-width: 700px) {
+        grid-template-columns: auto;
+      }
 
-    .action-wrapper {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-      margin-top: $spaceing-xl;
+      .first {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        @media screen and (max-width: 700px) {
+          grid-template-columns: auto;
+        }
+        grid-gap: $spaceing-xs;
+
+        .firstname {
+          @media screen and (min-height: 900px) and (min-width: 500px){
+            grid-column: span 2;
+          }
+        }
+
+        .lastname {
+          @media screen and (min-height: 900px) and (min-width: 500px) {
+            grid-column: span 2;
+          }
+        }
+
+        .username {
+          @media screen and (min-height: 700px) and (min-width: 500px) {
+            grid-column: span 2;
+          }
+        }
+
+        .email {
+          @media screen and (min-height: 700px) and (min-width: 500px) {
+            grid-column: span 2;
+          }
+        }
+
+        .password {
+          @media screen and (min-height: 500px) and (min-width: 500px) {
+            grid-column: span 2;
+          }
+        }
+
+        .repeat-password {
+          @media screen and (min-height: 500px) and (min-width: 500px) {
+            grid-column: span 2;
+          }
+        }
+      }
+
+      .second {
+        display: grid;
+        grid-template-rows: auto min-content;
+        grid-gap: $spaceing-s;
+
+        .home-address {
+          min-height: 200px;
+        }
+
+        .action-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          button {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
     }
   }
 }

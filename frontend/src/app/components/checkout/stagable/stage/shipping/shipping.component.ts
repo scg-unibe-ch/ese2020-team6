@@ -28,7 +28,7 @@ export class ShippingComponent extends StageNDEExtention<any> {
 
   get addressText(): string {
     if (this.searchResults) return this.searchResults.results[0].text;
-    return this.user.street + ' ' + this.user.houseNumber + ', ' + this.user.plz + ', ' + this.user.city;
+    return "Gumisweg 7, 3423, Ersigen, Bern, CHE";
   }
 
   public onSearch(searchResults: { results: Array<any> }): void {

@@ -1,3 +1,4 @@
+import { SelectCategoriesComponent } from './components/home/product/search-product/select-categories/select-categories.component';
 // --------------------------------------------------------------------------------- //
 
 
@@ -105,15 +106,13 @@ import { EmailValidatorDirective } from './components/custom-form/validators/reg
 import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
-import { StatusValidatorDirective } from './components/custom-form/validators/select/status/status-validator.directive';
 import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
-import { CategoryValidatorDirective } from './components/custom-form/validators/select/category/category-validator.directive';
-import { SubcategoryValidatorDirective } from './components/custom-form/validators/select/category/subcategory/subcategory-validator.directive';
 import { TitleValidatorDirective } from './components/custom-form/validators/regex/title/title-validator.directive';
 import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
 import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
 import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
+import { MapSearchValidatorDirective } from './components/custom-form/validators/map-search/map-search-validator.directive';
 //    Cross Field
 import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
 //    Select
@@ -126,7 +125,6 @@ import { GenderValidatorDirective } from './components/custom-form/validators/se
 
 
 import { routes } from './router/router';
-import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
 import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
@@ -136,7 +134,6 @@ import { NavigationElementComponent } from './components/user/profile/profile-na
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
-import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
@@ -151,12 +148,15 @@ import { ButtonEmptyDirective } from './models/theme/button/button-empty.directi
 import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
 import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
-import { MapSearchComponent } from './components/map/map-search/map-search.component';
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
 import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
 import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
 import { PurchaseServiceComponent } from './components/checkout/stagable/purchase-service/purchase-service.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
 
 
 @NgModule({
@@ -190,6 +190,7 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     UsernameValidatorDirective,
     GenderValidatorDirective,
     UsernameOrEmailValidatorDirective,
+    MapSearchValidatorDirective,
     //Crossfield
     PasswordMatchValidatorDirective,
     PostProductComponent,
@@ -219,10 +220,7 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     TextAreaComponent,
     ProductTypeValidatorDirective,
     OfferTypeValidatorDirective,
-    StatusValidatorDirective,
     DeliverableValidatorDirective,
-    CategoryValidatorDirective,
-    SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
     RejectedProductsComponent,
     PopupUnreviewedComponent,
@@ -232,7 +230,6 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     PreferencesComponent,
     DateComponent,
     SearchProductComponent,
-    SelectCategoriesComponent,
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
@@ -252,7 +249,9 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     RentItemComponent,
     DurationComponent,
     HoursValidatorDirective,
-    PurchaseServiceComponent
+    PurchaseServiceComponent,
+    FilterPipeComponent,
+    SelectCategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -261,6 +260,7 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
+    Ng2SearchPipeModule,
     //Angular Material
     MatButtonModule,
     MatListModule,
@@ -273,6 +273,7 @@ import { PurchaseServiceComponent } from './components/checkout/stagable/purchas
     MatSnackBarModule,
     OverlayModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {

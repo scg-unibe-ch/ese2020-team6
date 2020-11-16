@@ -4,34 +4,27 @@
       <h3 class="title">Create Account</h3>
       <div class="warning">{{registerErrorMessage}}</div>
     </div>
-    <form #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
-      <div class="input-grid">
-        <app-select name="gender" placeholder="Gender" selectName="Gender" [options]="['Female', 'Male', 'Other']" ngModel #gender="ngModel" appGenderValidator></app-select>
-      </div>
-      <div class="input-grid">
-        <app-text-input placeholder="First Name" name="firstName" ngModel #firstName="ngModel" appNounValidator></app-text-input>
-        <app-text-input placeholder="Last Name" name="lastName" ngModel #lastName="ngModel" appNounValidator></app-text-input>
-      </div>
-      <div class="input-grid">
-        <app-text-input placeholder="Username" name="userName" ngModel #userName="ngModel" appUsernameValidator></app-text-input>
-        <app-text-input placeholder="Email" name="email" ngModel #email="ngModel" appEmailValidator></app-text-input>
-      </div>
-        <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator (input)="validateCrossFieldPassword(createAccountForm)"></app-password-input>
-        <app-password-input placeholder="Repeat Password" name="repeatPassword" ngModel #repeatPassword="ngModel" appPasswordValidator (input)="validateCrossFieldPassword(createAccountForm)"></app-password-input>
+    <form class="register-form" #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
+
+      <div class="first">
+        <app-select placeholder="Gender" name="gender"  selectName="Gender" [options]="['Female', 'Male', 'Other']" ngModel #gender="ngModel" appGenderValidator></app-select>
         <app-number-input placeholder="Phonenumber" name="phonenumber" ngModel #phonenumber="ngModel" appPhonenumberValidator></app-number-input>
-
-      <div class="input-grid">
-        <app-number-input placeholder="PLZ" name="plz" ngModel #plz="ngModel" appPlzValidator></app-number-input>
-        <app-text-input placeholder="City" name="city" ngModel #city="ngModel" appNounValidator></app-text-input>
+        <app-text-input class="firstname" placeholder="First Name" name="firstName" ngModel #firstName="ngModel" appNounValidator></app-text-input>
+        <app-text-input class="lastname" placeholder="Last Name" name="lastName" ngModel #lastName="ngModel" appNounValidator></app-text-input>
+        <app-text-input class="username" placeholder="Username" name="userName" ngModel #userName="ngModel" appUsernameValidator></app-text-input>
+        <app-text-input class="email" placeholder="Email" name="email" ngModel #email="ngModel" appEmailValidator></app-text-input>
+        <app-password-input class="password" placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator (input)="validateCrossFieldPassword(createAccountForm)"></app-password-input>
+        <app-password-input class="repeat-password" placeholder="Repeat Password" name="repeatPassword" ngModel #repeatPassword="ngModel" appPasswordValidator (input)="validateCrossFieldPassword(createAccountForm)"></app-password-input>
       </div>
 
-      <div class="input-grid">
-        <app-text-input placeholder="Street" name="street" ngModel #street="ngModel" appNounValidator></app-text-input>
-        <app-text-input placeholder="House Number" name="houseNumber" ngModel #houseNumber="ngModel" appHouseNumberValidator></app-text-input>
+      <div class="second">
+        <map-search class="home-address" placeholder="Please search for your home address." name="address" ngModel #address="ngModel" mapSearchValidator></map-search>
+        <div class="action-wrapper">
+          <button [ngClass]="'button-' + theme" [disabled]="!createAccountForm.valid">Create Account</button>
+        </div>
       </div>
-      <div class="action-wrapper">
-        <button [ngClass]="'button-' + theme" [disabled]="!createAccountForm.valid">Create Account</button>
-      </div>
+
+
     </form>
   </div>
 </div>

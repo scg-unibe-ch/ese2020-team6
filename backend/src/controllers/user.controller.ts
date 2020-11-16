@@ -1,14 +1,20 @@
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
+import { PreferenceController } from './preference.controller';
 import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
-import { User } from '../models/user.model';
+import { UserAttributes, User } from '../models/user.model';
+import { AddressAttributes, Address } from '../models/address.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
 
 userController.post('/register',
     (req: Request, res: Response) => {
-        userService.register(req.body).then((registeredUser: User) => res.send(registeredUser)).catch(err => {
+
+      const user: UserAttributes = req.body as UserAttributes;
+      const address: AddressAttributes = req.body.address as AddressAttributes;
+
+        userService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch(err => {
           if (err.status) {
             res.status(err.status);
           } else {
@@ -25,7 +31,7 @@ userController.post('/login',
     }
 );
 
-userController.get('/userid::userId', checkForAuth,
+userController.get('/userid/:userId', checkForAuth,
   (req: Request, res: Response, next) => {
     userService.getUserById(parseInt(req.params.userId, 10)).then(user => {
       const tokenPayload = req.body.tokenPayload;
@@ -42,10 +48,6 @@ userController.get('/userid::userId', checkForAuth,
   }
 );
 
-userController.get('/',
-    (req: Request, res: Response) => {
-        userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
-    }
-);
+userController.use('/preference', PreferenceController);
 
 export const UserController: Router = userController;

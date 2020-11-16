@@ -1,9 +1,8 @@
-import { SelectCategoriesComponent } from './select-categories/select-categories.component';
 import { SearchModel } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
 import { Themable } from '../../../../../models/theme/themable';
 import { ThemeService } from '../../../../../services/theme/theme.service';
@@ -20,8 +19,6 @@ export class ProductViewComponent extends Themable {
   filteredProducts: Array<ProductModel>;
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
-  select: SelectCategoriesComponent;
-  public catslist: Array<SearchModel>=[];
   public CategoryName;
   private displayList = true;
   showDropdown: boolean;
@@ -57,31 +54,36 @@ export class ProductViewComponent extends Themable {
       return false;
     }
   }
-  public crossOffItem(cats: Array<ProductModel>){
 
-    this.filteredProducts=cats;
+
+  public isInTitleOrInDescription(searchTerm: string,title: string,descrip: string): boolean {
+    if(searchTerm == null){
+      return false;
+    }
+    if(title.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1 || descrip.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   public updateCriteria(event: SearchModel): void {
     this.overlayRef.detach();
     const criteria = event;
-    this.catslist=[...this.catslist, criteria];
     this.filteredProducts = this.products.filter(product => {
-      for (let entry of this.catslist) {
-        if(entry.category==product.category){
-          if (
-            (entry.subcategory !== null && entry.subcategory !== product.subcategory) ||
-            (entry.price !== null && product.price > entry.price) ||
-            (entry.status !== null && entry.status !== product.status) ||
-            (entry.location !== null && entry.location !== product.location) ||
-            (entry.deliverable !== null && entry.deliverable !== product.isDeliverable)
-          ) {
-          }else{
-            return true;
-          }
-        }
+      if (
+        (criteria.category !== null && criteria.category !== product.category) ||
+        (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
+        (criteria.priceMax !== null && product.price > criteria.priceMax) ||
+        (criteria.priceMin !== null && product.price < criteria.priceMin) ||
+        (criteria.location !== null && criteria.location.toLocaleLowerCase() !== product.location.toLocaleLowerCase()) ||
+        (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable) ||
+        (this.isInTitleOrInDescription(criteria.titleAndDescription,product.title,product.description))
+      ){
+        return false;
+      }else{
+        return true;
       }
-      return false;
     });
   }
 
@@ -94,6 +96,7 @@ export class ProductViewComponent extends Themable {
       .global()
       .centerHorizontally()
       .centerVertically();
+    configs.scrollStrategy;
     this.overlayRef = this.overlay.create(configs);
     this.overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());

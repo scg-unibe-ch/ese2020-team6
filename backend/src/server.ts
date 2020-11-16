@@ -5,7 +5,9 @@ import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
 import { Sequelize } from 'sequelize';
 import { User } from './models/user.model';
-
+import { CategoriesService } from './services/categories.service';
+import { Preference } from './models/preference.model';
+import { Address } from './models/address.model';
 import cors from 'cors';
 import { Product } from './models/product.model';
 import { Order } from './models/order.model';
@@ -23,9 +25,13 @@ export class Server {
         User.initialize(this.sequelize);
         Product.initialize(this.sequelize);
         Order.initialize(this.sequelize);
+        Preference.initialize(this.sequelize);
+        Address.initialize(this.sequelize);
         User.createAssociations();
         Product.createAssociations();
         Order.createAssociations();
+        Preference.createAssociations();
+        Address.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
@@ -69,6 +75,12 @@ export class Server {
             storage: 'db.sqlite',
             logging: false // can be set to true for debugging
         });
+    }
+
+    // set up the values of the Categories and Subcategories Databases
+    private setUpDatabases() {
+        CategoriesService.setUpCategories();
+        CategoriesService.setUpSubcategories();
     }
 }
 

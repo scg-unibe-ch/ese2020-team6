@@ -19,11 +19,11 @@ export class SelectValidatorBase implements Validator {
   }
 
   private getRegexFromOptions(): RegExp {
-    let regExString: string = '^';
-    let isFirstOption: boolean = true;
+    let regExString = '^';
+    let isFirstOption = true;
     this.select.options.forEach((option: string) => {
-      if (isFirstOption) isFirstOption = !isFirstOption;
-      else regExString += '|';
+      if (isFirstOption) { isFirstOption = !isFirstOption; }
+      else { regExString += '|'; }
       regExString += option;
     });
     regExString += '$';
@@ -54,30 +54,22 @@ export const validatorSelect = {
       'Rent'
     ]
   },
-  category: {
-    name: 'categoryValidator',
-    options: [
-      'Houses',
-      'Pets',
-      'Nice Stuff'
-    ]
-  },
-  subcategory: {
-    name: 'subcategoryValidator',
-    options: [
-      'sub_Houses',
-      'sub_Pets',
-      'sub_NiceStuff'
-    ]
-  },
-  status: {
-    name: 'statusValidator',
-    options: [
-      'Available',
-      'Lent',
-      'Sold'
-    ]
-  },
+  // category: {
+  //   name: 'categoryValidator',
+  //   options: [
+  //     'living',
+  //     'pets'
+  //   ]
+  // },
+  // subcategory: {
+  //   name: 'subcategoryValidator',
+  //   options: [
+  //     'dogs',
+  //     'cats',
+  //     'garages',
+  //     'houses'
+  //   ]
+  // },
   deliverable: {
     name: 'deliverableValidator',
     options: [

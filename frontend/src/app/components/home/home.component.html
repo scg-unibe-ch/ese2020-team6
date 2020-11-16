@@ -1,14 +1,19 @@
 <div class="title-wrapper" [ngClass]="theme">
   <div class="title">
-    <h1>TEAM6</h1>
-    <h3>Shoppingplatform</h3>
+    <div class="header">
+      <div>T</div><div>E</div><div>A</div><div>M</div><div>6</div>
+    </div>
+    <div class="sub-header">
+      <div>S</div><div>H</div><div>O</div><div>P</div><div>P</div><div>I</div><div>N</div><div>G</div>
+      <div>P</div><div>L</div><div>A</div><div>T</div><div>F</div><div>O</div><div>R</div><div>M</div>
+    </div>
   </div>
   <div *ngIf="isLoggedIn" class="go-to-post" [routerLink]="['/product/post']">
     <svg class="plus" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
       <path d="M 0 -50 A 50 50 0 0 0 0 50 A 50 50 0 0 0 0 -50 Z M -9 9 L -30 9 A 2 2 0 0 1 -32 7 L -32 -7 A 2 2 0 0 1 -30 -9 L -9 -9 L -9 -30 A 2 2 0 0 1 -7 -32 L 7 -32 A 2 2 0 0 1 9 -30 L 9 -9 L 30 -9 A 2 2 0 0 1 32 -7 L 32 7 A 2 2 0 0 1 30 9 L 9 9 L 9 30 A 2 2 0 0 1 7 32 L -7 32 A 2 2 0 0 1 -9 30 Z"></path>
     </svg>
   </div>
-  <div style="position: absolute; left: 4em; top: 360px; width: 10px; height: 10px" 
+  <div style="position: absolute; left: 4em; top: 360px; width: 10px; height: 10px"
     (click)="show(tpl)">
   </div>
 </div>
@@ -24,6 +29,3 @@
   <img src="../../../assets/testImage3.png">
   </div>
 </ng-template>
-
-
-

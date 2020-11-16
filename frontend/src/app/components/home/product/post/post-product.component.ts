@@ -1,3 +1,4 @@
+import { CategoryModel } from './../../../../models/request/product/category-product-request.model';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,6 +32,11 @@ export class PostProductComponent extends Themable implements PostProductRequest
   isUpdate = false;
   productData: any;
   picture: any;
+  categories: Array<CategoryModel>;
+  subCategories: Array<CategoryModel>;
+  subCat: Array<string>;
+  cat: Array<string>;
+  offertype: any;
 
   constructor(
     private productService: ProductService,
@@ -59,6 +65,16 @@ export class PostProductComponent extends Themable implements PostProductRequest
         this.updateForm();
       }
     });
+    this.productService.getCategories().subscribe((values) => {
+      this.categories = values;
+      this.cat = [];
+      for (const cat of this.categories) {
+        this.cat.push(cat.category);
+      }
+    });
+    this.productService.getSubCategories().subscribe((values) => {
+      this.subCategories = values;
+    });
   }
 
   private updateForm(): void {
@@ -86,6 +102,10 @@ export class PostProductComponent extends Themable implements PostProductRequest
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.values = form.value;
+      if (this.values.productType === 'Service') {
+        this.values.isDeliverable = 'Yes';
+      }
+      this.values.status = 'Available';
       if (this.isUpdate) {
         this.productService.updateProduct(this).subscribe((values) => {
           this.openSnackBar();
@@ -146,4 +166,30 @@ export class PostProductComponent extends Themable implements PostProductRequest
     overlayRef.attach(new TemplatePortal(tpl, this.viewContainerRef));
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
   }
+
+  public createSubCat(): any {
+    let catId: number;
+    this.subCat = [];
+    const choosenCat = this.values.category;
+    for (const cat of this.categories) {
+      if (cat.category === choosenCat) {
+        catId = cat.id;
+      }
+    }
+    for (const cat of this.subCategories) {
+      if (catId === cat.id) {
+        this.subCat.push(cat.category);
+      }
+    }
+  }
+
+  public createOfferType(): void {
+    if (this.values.productType === 'Item') {
+      this.offertype = ['Sell', 'Rent'];
+    }
+    if (this.values.productType === 'Service') {
+      this.offertype = ['Rent'];
+    }
+  }
 }
+

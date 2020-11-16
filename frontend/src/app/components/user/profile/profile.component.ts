@@ -19,6 +19,8 @@ export class ProfileComponent extends Themable {
   public userName: string;
   public userId: number;
 
+  public showNavigationSidebar: boolean = false;
+
   constructor(
     private router: Router,
     userService: UserService,
@@ -46,5 +48,13 @@ export class ProfileComponent extends Themable {
 
   public setCurrentContent(navigationElement: ProfileNavigationElementModel): void {
     this.currentContent = navigationElement;
+  }
+
+  public toggleNaviationSidebar(): void {
+    this.showNavigationSidebar = !this.showNavigationSidebar;
+  }
+
+  get navigationClass(): string {
+    return 'navigation-sidebar ' + (this.showNavigationSidebar ? 'show' : 'hidden');
   }
 }
