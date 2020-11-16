@@ -12,9 +12,9 @@
         <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]=offertype appOfferTypeValidator></app-select>
       </div>
       <div class="input-grid">
-        <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="values.category" [options]=cat appCategoryValidator></app-select>
+        <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="values.category" [options]=cat></app-select>
         <app-select name="subcategory" selectName="Subcategory" 
-        [(ngModel)]="values.subcategory" [options]=subCat  appSubCategoryValidator></app-select>
+        [(ngModel)]="values.subcategory" [options]=subCat></app-select>
       </div>
       <app-text-input placeholder="Title" name="title" [(ngModel)]="values.title" appTitleValidator></app-text-input>
       <app-text-area class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>

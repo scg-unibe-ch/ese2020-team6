@@ -167,7 +167,7 @@ productController.put('/update/:productId', verifyToken,
     });
 
     // only for testing
-    productController.get('/subCategories',
+    productController.get('/subcategories',
     (req: Request, res: Response) => {
         const sub1 = {
             id: 1,

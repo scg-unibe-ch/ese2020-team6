@@ -1,6 +1,7 @@
 @mixin menu-bar-theme($theme-name) {
 
   $bg: get-theme($theme-name, shady);
+  $bg-fix: get-theme($theme-name, dark);
   $block-icon-bg: get-theme($theme-name, highlight);
   $block-dropdown-bg: get-theme($theme-name, highlight);
 
@@ -17,6 +18,8 @@
   }
 
   .fix.#{$theme-name} {
+    background: $bg-fix;
+
     .dropdown-wrapper {
       background: $bg;
     }

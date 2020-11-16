@@ -1,5 +1,5 @@
 @mixin profile-theme($theme-name) {
-  .#{$theme-name} {
+  .profile-wrapper.#{$theme-name} {
 
     $theme: map-get($themes, $theme-name);
 
@@ -13,26 +13,26 @@
 
     background: $profile-bg;
 
-    .header-wrapper {
-      background: $header-bg;
-    }
+    .top {
+      .header-wrapper {
+        background: $header-bg;
 
-    .header {
-      border-color: $accent-color
-    }
+        .header {
+          border-color: $accent-color;
 
-    .username {
-      color: $header-color;
-    }
+          .username {
+            color: $header-color;
+          }
+          .id {
+            color: $accent-color;
+          }
 
-    .id {
-      color: $accent-color;
+          .id > span {
+            color: $header-color;
+          }
+        }
+      }
     }
-
-    .id > span {
-      color: $header-color;
-    }
-
     .title {
       background: $title-bg;
       color: $title-color;

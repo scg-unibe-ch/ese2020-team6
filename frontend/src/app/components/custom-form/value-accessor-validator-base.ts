@@ -1,4 +1,4 @@
-import { Validator } from '@angular/forms';
+import { Validator, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from './value-accessor-base';
 import { validate, ValidatorArray, AsyncValidatorArray, ValidationResult } from './validate';
 import { Observable, of } from 'rxjs';
@@ -7,6 +7,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 
 export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implements Validator {
 
+  protected model: NgModel;
   private _invalid: boolean = false;
   private _messages: Array<string> = new Array<string>();
   private _firstMessage: string = null;

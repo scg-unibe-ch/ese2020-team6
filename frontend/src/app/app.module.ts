@@ -1,3 +1,4 @@
+import { SelectCategoriesComponent } from './components/home/product/search-product/select-categories/select-categories.component';
 // --------------------------------------------------------------------------------- //
 
 
@@ -106,8 +107,6 @@ import { PasswordValidatorDirective } from './components/custom-form/validators/
 import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
 import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
 import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
-import { CategoryValidatorDirective } from './components/custom-form/validators/select/category/category-validator.directive';
-import { SubcategoryValidatorDirective } from './components/custom-form/validators/select/category/subcategory/subcategory-validator.directive';
 import { TitleValidatorDirective } from './components/custom-form/validators/regex/title/title-validator.directive';
 import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
 import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
@@ -125,7 +124,6 @@ import { GenderValidatorDirective } from './components/custom-form/validators/se
 
 
 import { routes } from './router/router';
-import { defaultUserNavigationElements, defaultProfileComponent } from './components/user/profile/navigation-elements';
 import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
 import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
@@ -136,10 +134,25 @@ import { PreferencesComponent } from './components/user/profile/preferences/pref
 import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
-import { SelectCategoriesComponent } from './components/home/product/display/product-view/select-categories/select-categories.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { BuyItemComponent } from './components/checkout/buy-item/buy-item.component';
+import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
+import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
+import { StageIndicatorComponent } from './components/checkout/stagable/stage-indicator/stage-indicator.component';
+import { PaymentMethodComponent } from './components/checkout/stagable/stage/payment-method/payment-method.component';
+import { StageComponent } from './components/checkout/stagable/stage/stage.component';
+import { StagesDirective } from './components/checkout/stagable/stages.directive';
+import { ThemeDirective } from './models/theme/theme.directive';
+import { ButtonDirective } from './models/theme/button/button.directive';
+import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
+import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
+import { MapComponent } from './components/map/map.component';
+import { RadioComponent } from './components/custom-form/input/radio/radio.component';
+import { MapSearchComponent } from './components/map/map-search/map-search.component';
+import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -203,8 +216,6 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     ProductTypeValidatorDirective,
     OfferTypeValidatorDirective,
     DeliverableValidatorDirective,
-    CategoryValidatorDirective,
-    SubcategoryValidatorDirective,
     RejectionMessageValidatorDirective,
     RejectedProductsComponent,
     PopupUnreviewedComponent,
@@ -215,11 +226,24 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     ValidationComponent,
     DateComponent,
     SearchProductComponent,
-    SelectCategoriesComponent,
     FileComponent,
     CheckoutComponent,
     BuyItemComponent,
-
+    ShippingComponent,
+    StageIndicatorComponent,
+    StagesDirective,
+    PaymentMethodComponent,
+    StageComponent,
+    ThemeDirective,
+    ButtonDirective,
+    MapComponent,
+    ButtonEmptyDirective,
+    RadioComponent,
+    ButtonWarnDirective,
+    MapSearchComponent,
+    RadioLabelDirective,
+    FilterPipeComponent,
+    SelectCategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -228,6 +252,7 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
+    Ng2SearchPipeModule,
     //Angular Material
     MatButtonModule,
     MatListModule,
@@ -240,6 +265,7 @@ import { BuyItemComponent } from './components/checkout/buy-item/buy-item.compon
     MatSnackBarModule,
     OverlayModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {

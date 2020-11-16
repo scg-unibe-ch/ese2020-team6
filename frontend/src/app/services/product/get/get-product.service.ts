@@ -1,58 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-// Models
 import { ProductModel } from '../../../models/product/product.model';
+import { GetService } from '../../get-service';
 import { environment } from '../../../../environments/environment';
 import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetProductService {
+export class GetProductService extends GetService {
 
   constructor(
-    private httpClient: HttpClient,
-  ) { }
+    httpClient: HttpClient,
+  ) {
+    super('product/', httpClient);
+  }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/all');
+    return this.get<Array<ProductModel>>('all');
   }
 
   public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/accepted');
+    return this.get<Array<ProductModel>>('accepted');
   }
 
   public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/rejected/' + userId.toString());
+    return this.get<Array<ProductModel>>('rejected/' + userId.toString());
   }
 
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/unreviewed');
+    return this.get<Array<ProductModel>>('unreviewed');
   }
 
   public getMyProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.httpClient.get<Array<ProductModel>>(environment.endpointURL + 'product/myproducts/' + userId.toString());
+    return this.get<Array<ProductModel>>('myproducts/' + userId.toString());
   }
 
   public getProductById(productId: number): Observable<ProductModel> {
-    return this.httpClient.get<ProductModel>(environment.endpointURL + 'product/details/' + productId.toString());
+    return this.get<ProductModel>('details/' + productId.toString());
   }
 
   public getMyRejectedProductsCount(userId: number): Observable<number> {
-    return this.httpClient.get<{amountOfRejected: number}>(environment.endpointURL + 'product/rejected/count/' + userId.toString()).pipe(pluck('amountOfRejected'));
+    return this.get<{amountOfRejected: number}>('rejected/count/' + userId.toString()).pipe(pluck('amountOfRejected'));
   }
 
   public getUnreviewedProductsCount(): Observable<number> {
-    return this.httpClient.get<{amountOfUnreviewd: number}>(environment.endpointURL + 'product/unreviewd/count').pipe(pluck('amountOfUnreviewd'));
+    return this.get<{amountOfUnreviewd: number}>('unreviewd/count').pipe(pluck('amountOfUnreviewd'));
   }
 
   public getCategories(): Observable<Array<CategoryModel>> {
-    return this.httpClient.get<Array<CategoryModel>>(environment.endpointURL + 'product/categories/');
+    return this.get<Array<CategoryModel>>('categories/');
   }
 
   public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.httpClient.get<Array<CategoryModel>>(environment.endpointURL + 'product/subCategories/');
+    return this.get<Array<CategoryModel>>('subCategories/');
   }
 }

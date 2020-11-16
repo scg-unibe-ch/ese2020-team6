@@ -1,0 +1,50 @@
+@mixin radio-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+
+  $checkbox-bg: get-theme($theme-name, dark);
+  $dot-bg: get-theme($theme-name, bright);
+  $checkmark-unchecked: map-get($theme, highlight);
+  $checkmark-checked: map-get($theme, accent);
+  $checkmark-color: map-get($theme, bright);
+  $checkmark-hover: map-get($theme, light);
+
+
+  .radio.#{$theme-name} {
+    .checkbox {
+      background: $checkbox-bg;
+
+      &::before {
+        background: $dot-bg;
+      }
+
+      .checkmark-wrapper {
+        input {
+          &:checked {
+            ~ {
+              .checkmark {
+                background-color: $checkmark-checked;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          > {
+            .checkmark {
+              background-color: $checkmark-hover;
+            }
+          }
+        }
+
+        .checkmark {
+          background-color: $checkmark-unchecked;
+
+          &::after {
+            background-color: $checkmark-color;
+          }
+        }
+      }
+    }
+  }
+}

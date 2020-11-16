@@ -67,13 +67,13 @@ export class PostProductComponent extends Themable implements PostProductRequest
     });
     this.productService.getCategories().subscribe((values) => {
       this.categories = values;
-    });
-    this.productService.getSubCategories().subscribe((values) => {
       this.cat = [];
-      this.subCategories = values;
       for (const cat of this.categories) {
         this.cat.push(cat.category);
       }
+    });
+    this.productService.getSubCategories().subscribe((values) => {
+      this.subCategories = values;
     });
   }
 

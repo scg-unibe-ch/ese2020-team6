@@ -16,15 +16,12 @@
   }
 
   .left {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-auto-columns: auto;
+    grid-auto-flow: column;
+    grid-gap: $spaceing-s;
 
-    .home {
-      button {
-        min-width: 200px;
-      }
-    }
+    // button width in styles.scss
   }
 
   .right {

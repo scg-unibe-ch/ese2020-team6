@@ -1,0 +1,13 @@
+@import '../../../../../../variables.scss';
+@import './payment-method.component.theme.scss';
+
+.paypal-logo {
+  padding: $spaceing-xs;
+  height: 100%;
+  border-radius: $border-radius;
+  background: white;
+}
+
+@each $theme-name in $theme-names {
+  @include payment-method-theme($theme-name);
+}

@@ -8,3 +8,12 @@
     color: rgba($text-color, .3);
   }
 }
+@mixin search-theme($theme-name) {
+
+  $theme: map-get($themes, $theme-name);
+  $search-bg: map-get($theme,dark);
+  .search-wrapper-wrapper.#{$theme-name} {
+    background-color: $search-bg;
+  }
+
+}
