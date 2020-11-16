@@ -4,7 +4,7 @@ import { Component, EventEmitter, Output, Input} from '@angular/core';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { Themable } from 'src/app/models/theme/themable';
 import { SearchModel, Search } from 'src/app/models/request/search/search.model';
-import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
+import { CategoryModel, Categories } from 'src/app/models/request/product/category-product-request.model';
 import { timeStamp } from 'console';
 
 
@@ -24,11 +24,9 @@ export class SearchProductComponent extends Themable {
 
   public optionArray: Array<string>;
   private category: string;
-  subCat: Array<string>;
-  private categories: Array<CategoryModel>;
-  private subCategories: Record<any, Array<CategoryModel>> = {};
+  private categories: Categories;
   public categoriesStrings: Array<string> = new Array<string>();
-  public subCategoriesStrings: Array<string> = new Array<string>();
+  public subcategoriesStrings: Array<string> = new Array<string>();
   deliverable: string="Select Deliverable";
   toggleChange: boolean=true;
 
@@ -42,18 +40,14 @@ export class SearchProductComponent extends Themable {
 
   public ngOnInit(): void {
     this.productService.getCategories().subscribe((categories: Array<CategoryModel>) => {
-      this.categories = categories;
-      this.categoriesStrings = Object.assign([], categories).map((category: CategoryModel) => category.category);
-    });
-
-    this.productService.getSubCategories().subscribe((subCategories: Array<CategoryModel>) => {
-      subCategories.forEach((subCategory: CategoryModel) => {
-        if (!this.subCategories[subCategory.id]) {
-          this.subCategories[subCategory.id] = new Array<CategoryModel>();
-        }
-        this.subCategories[subCategory.id].push(subCategory);
+      this.productService.getSubCategories().subscribe((subcategories: Array<CategoryModel>) => {
+        this.categories = new Categories(categories, subcategories);
+        this.categoriesStrings = this.categories.categoriesStrings;
+        this.subcategoriesStrings = new Array<string>();
       });
     });
+
+
   }
 
   changeVisibility(){
@@ -83,30 +77,10 @@ export class SearchProductComponent extends Themable {
   }
 
   public updateSubCategoryStrings(): void {
-    let arrayOfSubcategoryArrays: Array<Array<string>> = this.criteria.categories.map((category: string) => {
-      let categoryIndex: number = this.categoriesStrings.indexOf(category);
-      let categoryId: number = this.categories[categoryIndex].id;
-      let subCategories: Array<CategoryModel> = this.subCategories[categoryId];
-      return this.getAllCategoryStrings(subCategories);
-    });
-
-    this.subCategoriesStrings = this.reduceToOneArray(arrayOfSubcategoryArrays);
-
-  }
-
-  private getAllCategoryStrings(categories: Array<CategoryModel>): Array<string> {
-    return categories.map((category: CategoryModel) => {
-      return category.category
-    });
-  }
-
-  private reduceToOneArray(arrayOfSubcategoryArrays: Array<Array<string>>): Array<string> {
-    return arrayOfSubcategoryArrays.reduce((result: Array<string>, subCategoriesOfCategory: Array<string>) => {
-      return result.concat(subCategoriesOfCategory);
-    }, []);
+    this.subcategoriesStrings = this.categories.getSomeSubcategoriesByName(this.criteria.categories);
   }
 
   get showSubcategoriesSelect(): boolean {
-    return this.subCategoriesStrings.length > 0;
+    return this.subcategoriesStrings.length > 0;
   }
 }

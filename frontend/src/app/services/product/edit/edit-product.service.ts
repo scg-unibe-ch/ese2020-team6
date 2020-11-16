@@ -24,9 +24,8 @@ export class EditProductService {
     return this.httpClient.delete<DeleteProductResponseModel>(environment.endpointURL + 'product/delete/' + productId.toString()).pipe(transformAddress);
   }
 
-  public updateProduct(requestBuilder: UpdateProductRequestBuilder): Observable<UpdateProductResponseModel> {
+  public updateProduct(requestBuilder: UpdateProductRequestBuilder, productId: number): Observable<UpdateProductResponseModel> {
     const requestBody: UpdateProductRequestModel = requestBuilder.buildUpdateProductRequest();
-    const productId: number = requestBody.productId;
     return this.httpClient.put<UpdateProductResponseModel>(environment.endpointURL + 'product/update/' + productId.toString(), requestBody).pipe(transformAddress);
   }
 }

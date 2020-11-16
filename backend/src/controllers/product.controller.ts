@@ -35,9 +35,9 @@ const upload = multer({
 
 productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
+        req.body.userId = req.body.tokenPayload.userId;
         const product: ProductsAttributes = req.body as ProductsAttributes;
         const address: AddressAttributes = req.body.address as AddressAttributes;
-        product.userId = req.body.tokenPayload.userId;
         productService.createProduct(product, address)
         .then((postedProduct: ProductsAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
@@ -108,8 +108,10 @@ interface MulterRequest extends Request {
 
 productController.put('/update/:productId', verifyToken,
     (req: MulterRequest, res: Response) => {
+      req.body.productId = parseInt(req.params.productId, 10);
       const product: ProductsAttributes = req.body as ProductsAttributes;
       const address: AddressAttributes = req.body.address as AddressAttributes;
+
       productService.updateProduct(product, address)
       .then((updatedProduct: ProductsAttributes) => res.send(updatedProduct))
       .catch((err: any) => res.status(500).send(err));

@@ -4,7 +4,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 
 
 export class ValueAccessorBase<T> extends Themable implements ControlValueAccessor {
-  
+
   private _touched: boolean = false;
   private _dirty: boolean = false;
   private _focused: boolean = false;

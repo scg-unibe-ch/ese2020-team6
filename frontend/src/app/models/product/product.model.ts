@@ -35,3 +35,47 @@ export class NullProduct implements ProductModel {
   status: string = null;
   rejectionMessage: string = null;
 }
+
+export class Product implements ProductModel {
+  constructor(
+    public productId: number,
+    public userId: number,
+    public productType: string,
+    public offerType: string,
+    public title: string,
+    public description: string,
+    public price: number,
+    public address: AddressModel,
+    public picture: string,
+    public category: string,
+    public subcategory: string,
+    public isDeliverable: boolean,
+    public expirationDate: number,
+    public status: string,
+    public rejectionMessage: string
+  ) { }
+
+  public toString = () : string => {
+    return this.title;
+  }
+
+  public static buildFromProductModel(product: ProductModel): Product {
+    return new Product (
+      product.productId,
+      product.userId,
+      product.productType,
+      product.offerType,
+      product.title,
+      product.description,
+      product.price,
+      product.address,
+      product.picture,
+      product.category,
+      product.subcategory,
+      product.isDeliverable,
+      product.expirationDate,
+      product.status,
+      product.rejectionMessage
+    )
+  }
+}

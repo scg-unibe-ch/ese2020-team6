@@ -4,6 +4,16 @@ import { AddressService } from './address.service';
 import { AddressAttributes, Address } from '../models/address.model';
 
 export class ProductService {
+
+  public static checkProductAttributes(product: ProductsAttributes): Promise<void> {
+    if (!product || Object.keys(product).length === 0) {
+      return Promise.reject({ message: 'Address missing!' });
+    }
+    if (product.productId) {
+      return Promise.reject({ message: 'Cannot set the product Id of a new product!' });
+    }
+    return Promise.resolve();
+  }
   /*
     Creates a new product with an address.
 
@@ -13,13 +23,21 @@ export class ProductService {
   */
   public createProduct(product: ProductsAttributes, address: AddressAttributes): Promise<Products> {
     const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
+    product.status = 'Available';
+    product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
+    product.isDeliverable = product.productType === 'Service' ? true : product.isDeliverable;
+    return ProductService.checkProductAttributes(product).then(() => {
+      return AddressService.checkAddressAttributes(address).then(() => {
+        return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new product
+          return this.insertProductWithExistingAddress(product, addressId).catch(err => Promise.reject(err));
+        }).catch(() => { // address does not exist -> insert product and address
+          return this.insertProductAndAddress(product, address).catch(err => Promise.reject(err));
+        });
+      }).catch(err => Promise.reject(err));
+    }).catch(err => Promise.reject(err));
 
-    return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new product
-      return this.insertProductWithExistingAddress(product, addressId);
-    }).catch(() => { // address does not exist -> insert product and address
-      return this.insertProductAndAddress(product, address);
-    });
   }
+
 
   /*
     Inserts a product and a new address.
@@ -27,16 +45,12 @@ export class ProductService {
     the product.
   */
   private insertProductAndAddress(product: ProductsAttributes, address: AddressAttributes): Promise<Products> {
-    return Products.create(
-      Object.assign(product, {address: address}),
-      {
-        include: [{
-          association: Products.Address,
-          include : [ Address.Products ]
-        }]
-      }
-    ).then((createdProduct: Products) => Promise.resolve(createdProduct))
-    .catch(err => Promise.reject(err));
+    return Products.create(Object.assign(product, {address: address}), {
+      include: [{
+        association: Products.Address,
+        include : [ Address.Products ]
+      }]
+    });
   }
 
 

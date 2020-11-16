@@ -11,15 +11,15 @@ import { ThemeService } from '../../../../services/theme/theme.service';
     {provide: NG_VALUE_ACCESSOR, useExisting: SelectMultipleComponent, multi: true}
   ]
 })
-export class SelectMultipleComponent extends ValueAccessorBase<Array<String>> {
+export class SelectMultipleComponent extends ValueAccessorBase<Array<string>> {
 
   @Input()
-  public placeholder: String;
+  public placeholder: string;
 
   @Input()
-  public selectName: String;
+  public selectName: string;
 
-  private _options: Array<String> = new Array<String>();
+  private _options: Array<string> = new Array<string>();
   @Input()
   set options(options: Array<string>) {
     this._options = options;
@@ -73,10 +73,16 @@ export class SelectMultipleComponent extends ValueAccessorBase<Array<String>> {
     super.writeValue(value);
     if (value) {
       this.dirty = true;
+      value.forEach((option: string) => {
+        if (!this.selectedOptions.includes(option)) {
+          this.selectedOptions.push(option);
+          this.remove(this.availableOptions, option);
+        }
+      });
     }
   }
 
-  private remove(array: Array<string>, option: string): Array<string> {
+  protected remove(array: Array<string>, option: string): Array<string> {
     let indexOfOption: number = array.indexOf(option);
     if (indexOfOption >= 0) {
       array.splice(indexOfOption, 1);

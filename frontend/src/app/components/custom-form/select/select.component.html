@@ -1,10 +1,10 @@
 <div class="select-wrapper" [ngClass]="classes">
-  <div class="placeholder" (click)="onToggleDropdown()"> {{this.value ? this.value : this.selectName}}
+  <div class="placeholder" (click)="onToggleDropdown()"> {{this.selectedOptions.length > 0 ? this.selectedOptions[0] : this.selectName}}
     <svg [ngClass]="SVGClass" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
       <path d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
     </svg>
   </div>
   <div class="options" [hidden]="optionsHidden">
-    <div class="option" *ngFor="let option of options" (click)="onSelect(option)">{{option}}</div>
+    <div class="option" *ngFor="let option of availableOptions" (click)="onSelect(option)">{{option}}</div>
   </div>
 </div>

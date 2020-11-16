@@ -7,7 +7,16 @@ import jwt from 'jsonwebtoken';
 const { Op } = require('sequelize');
 
 export class UserService {
-  datas: any;
+
+    public static checkUserAttributes(user: UserAttributes): Promise<void> {
+      if (!user || Object.keys(user).length === 0) {
+        return Promise.reject({ message: 'Address missing!' });
+      }
+      if (user.userId) {
+        return Promise.reject({ message: 'Cannot set the user Id of a new user!' });
+      }
+      return Promise.resolve();
+    }
 
     public static cutUserInformation(user: User): {userName: string, email: string, userId: number} {
       return {
@@ -25,15 +34,19 @@ export class UserService {
         const checkIfUserDoesNotExist: Promise<void> = this.doesUserNotExistByUsernameEmail(user.userName, user.email);
         const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
 
-        return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
-          return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
-            return this.insertUserWithExistingAddress(user, addressId).then((createdUser: User) => {
-              return this.getUserById(createdUser.userId);
-            }).catch(err => Promise.reject(err));
-          }).catch(() => { // address does not exist -> insert user and address
-            return this.insertUserAndAddress(user, address).then().catch();
-          });
-        }).catch(err => Promise.reject(err)); // user does already exist -> reject
+        return UserService.checkUserAttributes(user).then(() => {
+          return AddressService.checkAddressAttributes(address).then(() => {
+            return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
+              return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
+                return this.insertUserWithExistingAddress(user, addressId).then((createdUser: User) => {
+                  return this.getUserById(createdUser.userId);
+                }).catch(err => Promise.reject(err));
+              }).catch(() => { // address does not exist -> insert user and address
+                return this.insertUserAndAddress(user, address).then().catch();
+              });
+            }).catch(err => Promise.reject(err)); // user does already exist -> reject
+          }).catch(err => Promise.reject(err));
+        }).catch(err => Promise.reject(err));
     }
 
     private insertUserAndAddress(user: UserAttributes, address: AddressAttributes): Promise<User> {

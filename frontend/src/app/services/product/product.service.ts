@@ -72,8 +72,8 @@ export class ProductService {
     return this.editProductService.deleteProduct(productId);
   }
 
-  public updateProduct(requestBuilder: UpdateProductRequestBuilder): Observable<UpdateProductResponseModel> {
-    return this.editProductService.updateProduct(requestBuilder);
+  public updateProduct(requestBuilder: UpdateProductRequestBuilder, productId: number): Observable<UpdateProductResponseModel> {
+    return this.editProductService.updateProduct(requestBuilder, productId);
   }
 
   public acceptProduct(requestBuilder: AcceptProductRequestBuilder): Observable<AcceptProductResponseModel> {

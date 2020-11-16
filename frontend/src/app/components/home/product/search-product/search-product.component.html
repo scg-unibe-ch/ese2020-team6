@@ -9,7 +9,7 @@
 
     <div class="input-grid">
       <select-multiple name="category" selectName="Category" [(ngModel)]="criteria.categories" (ngModelChange)="updateSubCategoryStrings()" [options]="categoriesStrings"></select-multiple>
-      <select-multiple *ngIf="showSubcategoriesSelect" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategories" [options]="subCategoriesStrings"></select-multiple>
+      <select-multiple *ngIf="showSubcategoriesSelect" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategories" [options]="subcategoriesStrings"></select-multiple>
     </div>
 
     <div class="input-grid">
