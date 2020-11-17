@@ -2,6 +2,7 @@
 @import './order-card.theme.scss';
 
 .order-card {
+  height: 100%;
   display: grid;
   grid-template-rows: min-content auto;
   grid-gap: $spaceing-s;

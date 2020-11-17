@@ -45,6 +45,11 @@ orderController.get( '/order/seller/:userId', verifyToken,
     }
 );
 
+
+
+// Remove the implementations below, if you would like to implement the actual method
+// The returned response should look like below
+
 orderController.get('/buyer', verifyToken,
   (req: Request, res: Response) => {
     userService.getUserById(req.body.tokenPayload.userId).then((buyer) => {
@@ -62,7 +67,9 @@ orderController.get('/buyer', verifyToken,
               productId: product.productId,
               product: product,
               shippingAddress: shippingAddress,
-              orderId: 1
+              orderId: 1,
+              paymentMethod: 'Wallet',
+              hours: 10
             }, {
               buyerId: buyer.userId,
               buyer: buyer,
@@ -71,7 +78,8 @@ orderController.get('/buyer', verifyToken,
               productId: product.productId,
               product: product,
               shippingAddress: shippingAddress,
-              orderId: 1
+              orderId: 1,
+              paymentMethod: 'Wallet',
             }, {
               buyerId: buyer.userId,
               buyer: buyer,
@@ -80,7 +88,18 @@ orderController.get('/buyer', verifyToken,
               productId: product.productId,
               product: product,
               shippingAddress: shippingAddress,
-              orderId: 1
+              orderId: 1,
+              paymentMethod: 'Wallet'
+            }, {
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              orderId: 1,
+              hours: 5,
+              paymentMethod: 'Wallet'
             }, {
               buyerId: buyer.userId,
               buyer: buyer,
@@ -89,16 +108,8 @@ orderController.get('/buyer', verifyToken,
               productId: product.productId,
               product: product,
               shippingAddress: shippingAddress,
-              orderId: 1
-            }, {
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1
+              orderId: 1,
+              paymentMethod: 'Wallet'
             }]);
           });
         }));
