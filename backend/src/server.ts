@@ -50,6 +50,8 @@ export class Server {
         ItemRented.createAssociations();
         ServiceRented.createAssociations();
 
+        Category.createCategories();
+
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
                 console.log(`server listening at http://localhost:${this.port}`);   // indicate that the server has started
@@ -101,11 +103,6 @@ export class Server {
               max: 3
             }
         });
-    }
-
-    // set up the values of the Categories and Subcategories Databases
-    private setUpDatabases() {
-      console.log('hi');
     }
 }
 

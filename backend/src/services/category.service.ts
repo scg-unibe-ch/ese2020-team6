@@ -217,12 +217,10 @@ export class CategoryService {
     }
 
     public getAllCategories(): Promise<Array<Category>> {
-        CategoryService.setUpCategories();
         return Category.findAll({include: [Category.Subcategories]});
     }
 
     public getAllSubcategories(): Promise<Array<Subcategory>> {
-        CategoryService.setUpCategories();
         return Subcategory.findAll();
     }
 }
