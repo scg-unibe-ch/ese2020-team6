@@ -158,6 +158,13 @@ import { FilterPipeComponent } from './components/home/product/search-product/fi
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
 import { SelectMultipleComponent } from './components/custom-form/select/select-multiple/select-multiple.component';
+import { SellerOrdersComponent } from './components/user/profile/seller-orders/seller-orders.component';
+import { BuyerOrdersComponent } from './components/user/profile/buyer-orders/buyer-orders.component';
+import { OrderViewComponent } from './components/order/display/view/order-view.component';
+import { OrderViewListComponent } from './components/order/display/view/list/order-view-list.component';
+import { OrderViewGridComponent } from './components/order/display/view/grid/order-view-grid.component';
+import { OrderCardGridComponent } from './components/order/display/card/grid/order-card-grid.component';
+import { OrderCardListComponent } from './components/order/display/card/list/order-card-list.component';
 
 
 @NgModule({
@@ -254,6 +261,13 @@ import { SelectMultipleComponent } from './components/custom-form/select/select-
     FilterPipeComponent,
     SelectCategoriesComponent,
     SelectMultipleComponent,
+    SellerOrdersComponent,
+    BuyerOrdersComponent,
+    OrderViewComponent,
+    OrderViewListComponent,
+    OrderViewGridComponent,
+    OrderCardGridComponent,
+    OrderCardListComponent,
   ],
   imports: [
     BrowserModule,
