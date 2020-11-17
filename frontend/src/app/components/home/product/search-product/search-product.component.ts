@@ -4,7 +4,7 @@ import { Component, EventEmitter, Output, Input} from '@angular/core';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { Themable } from 'src/app/models/theme/themable';
 import { SearchModel, Search } from 'src/app/models/request/search/search.model';
-import { CategoryModel, Categories } from 'src/app/models/request/product/category-product-request.model';
+import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
 import { timeStamp } from 'console';
 
 
@@ -25,8 +25,8 @@ export class SearchProductComponent extends Themable {
   public optionArray: Array<string>;
   private category: string;
   private categories: Categories;
-  public categoriesStrings: Array<string> = new Array<string>();
-  public subcategoriesStrings: Array<string> = new Array<string>();
+  public categoryStrings: Array<string> = new Array<string>();
+  public subcategoryStrings: Array<string> = new Array<string>();
   deliverable: string="Select Deliverable";
   toggleChange: boolean=true;
 
@@ -39,12 +39,10 @@ export class SearchProductComponent extends Themable {
   }
 
   public ngOnInit(): void {
-    this.productService.getCategories().subscribe((categories: Array<CategoryModel>) => {
-      this.productService.getSubCategories().subscribe((subcategories: Array<CategoryModel>) => {
-        this.categories = new Categories(categories, subcategories);
-        this.categoriesStrings = this.categories.categoriesStrings;
-        this.subcategoriesStrings = new Array<string>();
-      });
+    this.productService.getCategories().subscribe((categories: Categories) => {
+      this.categories = categories;
+      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.subcategoryStrings = new Array<string>();
     });
 
 
@@ -77,10 +75,11 @@ export class SearchProductComponent extends Themable {
   }
 
   public updateSubCategoryStrings(): void {
-    this.subcategoriesStrings = this.categories.getSomeSubcategoriesByName(this.criteria.categories);
+    this.subcategoryStrings = this.categories.getSomeSubcategoriesByCategoryName(this.criteria.categories)
+    .map((subcategory: Subcategory) => subcategory.toString());
   }
 
   get showSubcategoriesSelect(): boolean {
-    return this.subcategoriesStrings.length > 0;
+    return this.subcategoryStrings.length > 0;
   }
 }

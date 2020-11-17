@@ -17,7 +17,7 @@ import { ProductModel, NullProduct, Product } from '../../../../models/product/p
 import { PostProductFormModel, NullPostProductForm, PostProductForm } from '../../../../models/form/post-product-form.model';
 import { Themable } from '../../../../models/theme/themable';
 import { ThemeService } from '../../../../services/theme/theme.service';
-import { CategoryModel, Categories } from '../../../../models/request/product/category-product-request.model';
+import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
 @Component({
   selector: 'app-post-product',
@@ -30,8 +30,8 @@ export class PostProductComponent extends Themable implements PostProductRequest
   public previewData: ProductModel;
   public picture: string;
   private categories: Categories = Categories.NullCategories;
-  public categoriesStrings: Array<string> = new Array<string>();
-  public subcategoriesStrings: Array<string> = new Array<string>();
+  public categoryStrings: Array<string> = new Array<string>();
+  public subcategoryStrings: Array<string> = new Array<string>();
   public originalProductTypeStrings: Array<string> = ['Item', 'Service'];
   public originalOfferTypeStrings: Array<string> = ['Sell', 'Rent'];
   public offerTypeStrings: Array<string> = new Array<string>();
@@ -67,16 +67,14 @@ export class PostProductComponent extends Themable implements PostProductRequest
   }
 
   private getCategories(product?: ProductModel): void {
-    this.productService.getCategories().subscribe((categories: Array<CategoryModel>) => {
-      this.productService.getSubCategories().subscribe((subcategories: Array<CategoryModel>) => {
-        this.categories = new Categories(categories, subcategories);
-        this.categoriesStrings = this.categories.categoriesStrings;
-        this.subcategoriesStrings = new Array<string>();
-        if (product) {
-          this.updateSubCategoryStrings(product.category);
-          this.form.setValue(PostProductForm.buildFromProductModel(product));
-        }
-      });
+    this.productService.getCategories().subscribe((categories: Categories) => {
+      this.categories = categories;
+      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.subcategoryStrings = new Array<string>();
+      if (product) {
+        this.updateSubCategoryStrings(product.category);
+        this.form.setValue(PostProductForm.buildFromProductModel(product));
+      }
     });
   }
 
@@ -154,7 +152,8 @@ export class PostProductComponent extends Themable implements PostProductRequest
   }
 
   public updateSubCategoryStrings(category: string): void {
-    this.subcategoriesStrings = this.categories.getSubcategoriesByName(category);
+    this.subcategoryStrings = this.categories.getSubcategoriesByCategoryName(category)
+    .map((subcategory: Subcategory) => subcategory.toString());
   }
 
   public udateOfferTypeStrings(productType: string): void {

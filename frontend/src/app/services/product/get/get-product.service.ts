@@ -5,8 +5,9 @@ import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
 import { environment } from '../../../../environments/environment';
-import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
 import { transformAddress } from '../../../models/map/address/address.operator';
+import { transformCategory } from '../../../models/category/category.operator';
+import { Categories, CategoryModel } from '../../../models/category/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,11 +52,7 @@ export class GetProductService extends GetService {
     return this.get<{amountOfUnreviewd: number}>('unreviewd/count').pipe(pluck('amountOfUnreviewd'));
   }
 
-  public getCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>('categories/');
-  }
-
-  public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>('subCategories/');
+  public getCategories(): Observable<Categories> {
+    return this.get<Array<CategoryModel>>('category/categories/').pipe(transformCategory);
   }
 }

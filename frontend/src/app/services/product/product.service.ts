@@ -1,4 +1,4 @@
-import { CategoryModel } from './../../models/request/product/category-product-request.model';
+import { Categories } from '../../models/category/category.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';
@@ -84,12 +84,8 @@ export class ProductService {
     return this.reviewProductService.rejectProduct(requestBuilder);
   }
 
-  public getCategories(): Observable<Array<CategoryModel>> {
+  public getCategories(): Observable<Categories> {
     return this.getProductService.getCategories();
-  }
-
-  public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.getProductService.getSubCategories();
   }
 
   public static filter(products: Array<ProductModel>, filter: Search): Array<ProductModel> {

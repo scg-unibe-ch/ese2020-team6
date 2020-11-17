@@ -10,8 +10,8 @@
       <div class="first">
         <app-select class="product-type" name="productType" selectName="Product Type" [options]="originalProductTypeStrings" ngModel #productType="ngModel" (ngModelChange)="udateOfferTypeStrings($event)"></app-select>
         <app-select class="offer-type" name="offerType" selectName="Offer Type" [options]="offerTypeStrings" ngModel #offerType="ngModel"></app-select>
-        <app-select class="category" name="category" selectName="Category" [options]="categoriesStrings" ngModel #category="ngModel" (ngModelChange)="updateSubCategoryStrings($event)"></app-select>
-        <app-select class="subcategory" name="subcategory" selectName="Subcategory" [options]="subcategoriesStrings" ngModel #subcategory="ngModel"></app-select>
+        <app-select class="category" name="category" selectName="Category" [options]="categoryStrings" ngModel #category="ngModel" (ngModelChange)="updateSubCategoryStrings($event)"></app-select>
+        <app-select class="subcategory" name="subcategory" selectName="Subcategory" [options]="subcategoryStrings" ngModel #subcategory="ngModel"></app-select>
         <app-text-input class="title" name="title" placeholder="Title" ngModel #title="ngModel" appTitleValidator></app-text-input>
         <app-text-area class="description" name="description" placeholder="Description" rows="1" ngModel #description="ngModel" appDescriptionValidator></app-text-area>
         <app-text-input class="price" name="price" placeholder="Price" ngModel #price="ngModel" appPriceValidator></app-text-input>

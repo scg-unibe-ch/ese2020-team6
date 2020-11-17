@@ -8,8 +8,8 @@
     </div>
 
     <div class="input-grid">
-      <select-multiple name="category" selectName="Category" [(ngModel)]="criteria.categories" (ngModelChange)="updateSubCategoryStrings()" [options]="categoriesStrings"></select-multiple>
-      <select-multiple *ngIf="showSubcategoriesSelect" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategories" [options]="subcategoriesStrings"></select-multiple>
+      <select-multiple name="category" selectName="Category" [(ngModel)]="criteria.categories" (ngModelChange)="updateSubCategoryStrings()" [options]="categoryStrings"></select-multiple>
+      <select-multiple *ngIf="showSubcategoriesSelect" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategories" [options]="subcategoryStrings"></select-multiple>
     </div>
 
     <div class="input-grid">
