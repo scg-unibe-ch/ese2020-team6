@@ -19,8 +19,8 @@ import { ThemeService } from '../../../../../services/theme/theme.service';
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder, RejectProductRequestBuilder {
 
-  public showRejectResponseForm: boolean = false;
-  public showAcceptForm: boolean = false;
+  public showRejectResponseForm = false;
+  public showAcceptForm = false;
 
   private values: RejectProductFormModel = new NullRejectProductForm();
 
@@ -47,7 +47,7 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
   public buildAcceptProductRequest(): AcceptProductRequestModel {
     return {
       productId: this.product.productId
-    }
+    };
   }
 
   public toggleReject(): void {
@@ -67,6 +67,6 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
     return {
       productId: this.product.productId,
       rejectionMessage: this.values.reason
-    }
+    };
   }
 }

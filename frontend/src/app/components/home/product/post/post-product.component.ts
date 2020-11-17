@@ -1,4 +1,4 @@
-import { CategoryModel } from './../../../../models/request/product/category-product-request.model';
+import { CategoryModel, SubCategoryModel } from './../../../../models/request/product/category-product-request.model';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,7 +33,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
   productData: any;
   picture: any;
   categories: Array<CategoryModel>;
-  subCategories: Array<CategoryModel>;
+  subCategories: Array<SubCategoryModel>;
   subCat: Array<string>;
   cat: Array<string>;
   offertype: any;
@@ -177,7 +177,7 @@ export class PostProductComponent extends Themable implements PostProductRequest
       }
     }
     for (const cat of this.subCategories) {
-      if (catId === cat.id) {
+      if (catId === cat.categoryId) {
         this.subCat.push(cat.category);
       }
     }
