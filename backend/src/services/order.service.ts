@@ -1,11 +1,7 @@
-import { Products, ProductsAttributes } from '../models/products.model';
+import { Products } from '../models/products.model';
 import { User } from '../models/user.model';
-import {Orders, OrdersAttributes} from '../models/order.model';
-import { UserService } from './user.service';
-import { Model, Sequelize } from 'sequelize/types';
-import { REPL_MODE_SLOPPY } from 'repl';
-
-const {OP} = require('sequelize');
+import {Orders} from '../models/order.model';
+import { Model} from 'sequelize/types';
 
 export class OrderService {
 
@@ -23,8 +19,7 @@ export class OrderService {
         });
         const sellerId: number = product.userId;
 
-        if (seller.wallet >= product.price) {
-        }
+        // if wallet
 
            try {
               await Model.sequelize.transaction(
