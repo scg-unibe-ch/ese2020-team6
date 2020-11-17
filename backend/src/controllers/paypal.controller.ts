@@ -1,3 +1,4 @@
+// import express, { Router, Request, Response } from 'express';
 import { ProductsAttributes } from '../models/products.model';
 
 const PORT = process.env.PORT || 3000;
@@ -14,9 +15,9 @@ paypal.configure({
 
 const app = express();
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+app.get('/', (req: any, res: any) => res.sendFile(__dirname + '/payment/method.component.html'));
 
-app.post('/pay', (req, res) => {
+app.post('/pay', (req: any, res: any) => {
     const create_payment_json = {
       'intent': 'sale',
       'payer': {
@@ -44,7 +45,7 @@ app.post('/pay', (req, res) => {
       }]
   };
 
-  paypal.payment.create(create_payment_json, function (error, payment) {
+  paypal.payment.create(create_payment_json, function (error: any, payment: any) { // set value to anynpm
     if (error) {
         throw error;
     } else {
@@ -57,5 +58,32 @@ app.post('/pay', (req, res) => {
   });
 
   });
+
+  app.get('/success', (req: any, res: any) => {
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+
+    const execute_payment_json = {
+      'payer_id': payerId,
+      'transactions': [{
+          'amount': {
+              'currency': 'USD',
+              'total': '25.00'
+          }
+      }]
+    };
+
+    paypal.payment.execute(paymentId, execute_payment_json, function (error: any, payment: any) { // delete any
+      if (error) {
+          console.log(error.response);
+          throw error;
+      } else {
+          console.log(JSON.stringify(payment));
+          res.send('Success');
+      }
+  });
+  });
+
+  app.get('/cancel', (req: any, res: any) => res.send('Cancelled'));
 
 app.listen(PORT, () => console.log(`Server Started on ${PORT}`));
