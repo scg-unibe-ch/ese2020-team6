@@ -18,10 +18,9 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
     public static initialize(sequelize: Sequelize) {
         ItemSold.init({
             orderId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
-                unique: true
+                autoIncrement: true
             },
             shipping: {
                 type: DataTypes.STRING,

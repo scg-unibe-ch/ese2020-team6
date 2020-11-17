@@ -19,7 +19,7 @@ const orderService = new OrderService();
  (req: Request, res: Response) => {
      const productId: number = parseInt(req.params.productId, 10);
      const userId: number = parseInt(req.params.userId, 10);
-     const paymentMethod: string = req.params.paymentMethod;
+     const paymentMethod = 'wallet'; // because no Paypal yet
      const shipping: string = req.params.shipping;
      orderService.buyItem(productId, paymentMethod, shipping, userId)
      .then(() => res.send()) // output ergänzen

@@ -18,6 +18,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
     public static Buyer: Association;
     public static Seller: Association;
     public static Product: Association;
+    public static sequelize: Sequelize;
     orderId!: number;
     buyerId!: number;
     productId!: number;
@@ -48,6 +49,8 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                 tableName: 'orders'
             }
         );
+
+        this.sequelize = sequelize;
     }
 
     public static createAssociations(): void {

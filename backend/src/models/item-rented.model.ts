@@ -20,17 +20,16 @@ export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAt
     public static initialize(sequelize: Sequelize) {
         ItemRented.init({
             orderId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
-                unique: true
+                autoIncrement: true
             },
             shipping: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
             hours: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
 

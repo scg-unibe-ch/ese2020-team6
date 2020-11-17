@@ -3,6 +3,7 @@ import { User } from '../models/user.model';
 import { Order, OrderAttributes} from '../models/order.model';
 import { UserService } from './user.service';
 import { Sequelize } from 'sequelize/types';
+import { Model} from 'sequelize/types';
 
 const {OP} = require('sequelize');
 
@@ -10,51 +11,42 @@ export class OrderService {
 
     public async buyItem(productId: number, paymentMethod: string, shipping: string, buyerId: number) {
 
-        const product = await this.findOneProduct(productId);
+        const product = await Product.findOne({
+            where: {
+                productId: productId
+            }
+        });
+        const seller = await User.findOne({
+            where: {
+                userId: buyerId
+            }
+        });
         const sellerId: number = product.userId;
-        const user = await this.findOneUser(buyerId);
 
-        if (user.wallet >= product.price) {
-        }
+        // if wallet
 
-           /*try {
-                const result = await Sequelize.transaction(async (t) =>) {
-                    User.increment( 'wallet', {by: -product.price, where: { userId: buyerId }},
-                    { transaction :t });
-                }
+           try {
+              await Order.sequelize.transaction(
+                   async () => {
+                    User.increment( 'wallet', {by: -product.price, where: { userId: buyerId }});
+                    User.increment( 'wallet', {by: product.price, where: { userId: sellerId}});
+                    Order.create({ buyerId: buyerId, productId: productId, sellerId: sellerId});
+                    Product.update({status: 'sold'}, {
+                        where: {
+                            productId: productId
+                        }
+                    });
+                });
 
+                 return {
+                          ok: true
+                 };
+                } catch (err) {
+                console.log(err);
+                return{
+                    ok: false
+                };
             }
-            catch (error){
-            console.log('Error Saldo zu klein');
-        }*/
-    }
-
-    public transaction(product: Product, productId: number, buyerId: number, sellerId: number) {
-        User.increment( 'wallet', {by: -product.price, where: { userId: buyerId }});
-        User.increment( 'wallet', {by: product.price, where: { userId: sellerId}});
-        Order.create({productId: productId, buyerId: buyerId, sellerId: sellerId});
-        Product.update({status: 'sold'}, {
-            where: {
-                productId: productId
-            }
-        });
-    }
-
-
-    public findOneProduct(productId: number): Promise<Product> {
-        return Product.findOne({
-            where: {
-                productId: productId
-            }
-        });
-    }
-
-    public findOneUser(userId: number): Promise<User> {
-        return User.findOne({
-            where: {
-                userId: userId
-            }
-        });
     }
 
     public getMyOrders(userId: number): Promise<Array<OrderAttributes>> {
@@ -73,33 +65,3 @@ export class OrderService {
         });
     }
 }
-
-
-/*
-try {
-
-    const result = await sequelize.transaction(async (t) => {
-
-      const user = await User.create({
-        firstName: 'Abraham',
-        lastName: 'Lincoln'
-      }, { transaction: t });
-
-      await user.setShooter({
-        firstName: 'John',
-        lastName: 'Boothe'
-      }, { transaction: t });
-
-      return user;
-
-    });
-
-    // If the execution reaches this line, the transaction has been committed successfully
-    // `result` is whatever was returned from the transaction callback (the `user`, in this case)
-
-  } catch (error) {
-
-    // If the execution reaches this line, an error occurred.
-    // The transaction has already been rolled back automatically by Sequelize!
-
-  }*/

@@ -18,14 +18,13 @@ export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedC
     public static initialize(sequelize: Sequelize) {
         ServiceRented.init({
             orderId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
-                unique: true
+                autoIncrement: true
             },
 
             hours: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
 

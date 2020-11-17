@@ -82,8 +82,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 defaultValue: false
             },
             wallet: {
-                type: DataTypes.INTEGER,
-                defaultValue: 0
+                type: DataTypes.NUMBER,
+                defaultValue: 100
             }
           },
           {
