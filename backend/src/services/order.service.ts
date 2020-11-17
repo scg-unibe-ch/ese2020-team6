@@ -1,8 +1,7 @@
 import { Products } from '../models/products.model';
 import { User } from '../models/user.model';
-import {Orders, OrdersAttributes} from '../models/order.model';
+import {Orders} from '../models/order.model';
 import { Model} from 'sequelize/types';
-import { truncate } from 'fs';
 
 export class OrderService {
 
