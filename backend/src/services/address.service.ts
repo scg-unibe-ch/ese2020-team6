@@ -18,6 +18,14 @@ export class AddressService {
       });
     }
 
+    public static getAddressById(addressId: number): Promise<Address> {
+      return Address.findOne({
+        where: {
+          addressId: addressId
+        }
+      });
+    }
+
     public static addressDoesExist(address: AddressAttributes): Promise<number> {
       return this.getAddressByValues(address).then((existingAddress: AddressAttributes) => {
         if (existingAddress) {

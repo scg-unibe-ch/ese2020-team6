@@ -53,6 +53,6 @@ export class GetProductService extends GetService {
   }
 
   public getCategories(): Observable<Categories> {
-    return this.get<Array<CategoryModel>>('category/categories/').pipe(transformCategory);
+    return this.get<Array<CategoryModel>>('category/categories').pipe(transformCategory);
   }
 }

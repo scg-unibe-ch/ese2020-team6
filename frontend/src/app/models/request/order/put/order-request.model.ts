@@ -1,6 +1,6 @@
 import { OrderModel, ShippingOrderModelExtention, HoursOrderModelExtention } from '../../../order/order.model';
 
-export interface OrderRequestModel extends Omit<OrderModel, 'sellerId' | 'buyerId' | 'orderId'> {}
+export interface OrderRequestModel extends Pick<OrderModel, 'productId'> {}
 
 export interface ShippingRequestExtension extends ShippingOrderModelExtention, OrderRequestModel {}
 

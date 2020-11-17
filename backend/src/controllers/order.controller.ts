@@ -2,12 +2,16 @@
 import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
+import { AddressService } from '../services/address.service';
 import { ProductAttributes } from '../models/product.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import {OrderService} from '../services/order.service';
 import { OrderAttributes } from '../models/order.model';
 
+const productService = new ProductService();
+const userService = new UserService();
+const addressService = new AddressService();
 const orderController: Router = express.Router();
 const orderService = new OrderService();
 
@@ -39,6 +43,32 @@ orderController.get( '/order/seller/:userId', verifyToken,
      .then((orders: Array<OrderAttributes>) => res.send(orders))
      .catch((err: any) => res.status(500).send(err));
     }
+);
+
+orderController.get('/buyer', verifyToken,
+  (req: Request, res: Response) => {
+    userService.getUserById(req.body.tokenPayload.userId).then((buyer) => {
+
+      userService.getCutUserById(1).then((seller) => {
+
+        AddressService.getAddressById(1).then((shippingAddress => {
+          productService.getProductById(1).then(product => {
+
+            res.send([{
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
+            }]);
+          });
+        }));
+      });
+    });
+  }
 );
 
 export const OrderController: Router = orderController;

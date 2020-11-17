@@ -7,6 +7,8 @@ import { OrderRequestBuilder } from '../../models/request/order/order-request-bu
 import { OrderRequestModel } from '../../models/request/order/order-request-model.module';
 import { OrderResponseModel } from '../../models/response/order/order-response-model.module';
 
+import { Orders } from '../../models/order/order.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,5 +21,13 @@ export class OrderService {
 
   public orderProduct<R extends OrderRequestModel, S extends OrderResponseModel, T extends OrderRequestBuilder<R, S>>(orderInformation: T): Observable<S> {
     return this.putOrderService.orderProduct<R, S, T>(orderInformation);
+  }
+
+  public getMyOrders(): Observable<Orders> {
+    return this.getOrderService.getMyOrders();
+  }
+
+  public getMyProductOrders(): Observable<Orders> {
+    return this.getOrderService.getMyProductOrders();
   }
 }

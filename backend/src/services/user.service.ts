@@ -134,6 +134,12 @@ export class UserService {
       });
     }
 
+    public getCutUserById(userId: number): Promise<{userName: string, email: string, userId: number}> {
+      return this.getUserById(userId)
+      .then((user: User) => Promise.resolve(UserService.cutUserInformation(user)))
+      .catch(err => Promise.reject(err));
+    }
+
     private getUserByUsernameOrEmail(username: string, email: string): Promise<User> {
       return this.getUserByEitherAttributes({
         userName: username,

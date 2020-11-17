@@ -2,19 +2,13 @@ import { Observable, Subscription} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Address, AddressModel } from './address.model';
 
-type RecursiveAddress = { address: AddressModel | null; path: Array<string>; hasAddress: boolean; };
+type Path = [string, Array<Path> | AddressModel];
 
 export function transformAddress<T>(source: Observable<T>): Observable<T> {
   return new Observable(subscriber => {
     const subscription = source.subscribe({
       next(value) {
-        if (Array.isArray(value)) {
-          value.forEach((object: Object) => {
-            transformObjectAddress(object);
-          });
-        } else {
-          transformObjectAddress(value);
-        }
+        transformObjectAddress(value);
         subscriber.next(value);
       },
       error(error) {
@@ -29,44 +23,46 @@ export function transformAddress<T>(source: Observable<T>): Observable<T> {
 }
 
 function transformObjectAddress(object: Object): void {
-  let recursiveAddress: RecursiveAddress = hasAddress(object);
-  if (recursiveAddress.hasAddress) {
-    let addressModel: AddressModel = recursiveAddress.address;
-    let address: Address = Address.buildFromAddressModel(addressModel);
-    recursiveAddress.path.forEach((pathSegement: string) => {
-      if (pathSegement === 'address') object[pathSegement] = address;
-      else object = object[pathSegement];
+  let paths: Path = hasAddresses(object);
+  (paths[1] as Array<Path>).forEach((path: Path) => {
+    recursiveTansfromObjectAddress(path, object);
+  });
+}
+
+function recursiveTansfromObjectAddress(paths: Path, object: Object): void {
+  let parentKey: string = paths[0];
+  let childPaths: Array<Path> | AddressModel = paths[1];
+
+  if (Array.isArray(childPaths) && !(parentKey.includes('address') || parentKey.includes('Address'))) {
+    (childPaths as Array<Path>).forEach((childPath: Path) => {
+      recursiveTansfromObjectAddress(childPath, object[parentKey]);
     });
+  } else {
+    let address: Address = Address.buildFromAddressModel((childPaths as AddressModel));
+    object[parentKey] = address;
   }
 }
 
-function hasAddress(object: Object): RecursiveAddress {
-  return recursiveHasAddress('', object);
+function hasAddresses(object: Object): Path {
+  return recursiveHasAddresses('', object);
 }
 
-function recursiveHasAddress(parentKey: string, objectOfParentKey: Object): RecursiveAddress {
-  if (!objectOfParentKey) return { address: null, path: [], hasAddress: false };
-  let childKeys: Array<string> = Object.keys(objectOfParentKey);
+function recursiveHasAddresses(parentKey: string, objectOfParentKey: Object): Path | null {
+  if (!objectOfParentKey || typeof objectOfParentKey !== 'object') return null;
+  else if ((parentKey.includes('address') || parentKey.includes('Address')) && !parentKey.includes('Id')) {
+    return [parentKey, objectOfParentKey as AddressModel];
+  } else {
+    let childEntries: Array<[string, any]> = Object.entries(objectOfParentKey);
+    let childPaths: Array<Path> = new Array<Path>();
 
-  if (parentKey ===  'address') return { address: objectOfParentKey as AddressModel, path: [parentKey], hasAddress: true };
-  else if (childKeys.length === 0 || typeof objectOfParentKey !== 'object') return { address: null, path: [], hasAddress: false };
-  else {
-    let returnRecursiveAddress: RecursiveAddress = { address: null, path: [], hasAddress: false };
-    Object.keys(objectOfParentKey).every((childKey: string) => {
-      let recursiveAddress: RecursiveAddress = recursiveHasAddress(childKey, objectOfParentKey[childKey]);
-      if (recursiveAddress.hasAddress === true) {
-        if (parentKey !== '') {
-          recursiveAddress.path.unshift(parentKey);
-        }
-        returnRecursiveAddress = {
-          address: recursiveAddress.address,
-          path: recursiveAddress.path,
-          hasAddress: true
-        }
-        return false;
+    childEntries.forEach(([childKey, childEntry]: [string, Object]) => {
+      let childPath: Path = recursiveHasAddresses(childKey, childEntry);
+      if (childPath) {
+        childPaths.push(childPath);
       }
-      return true;
     });
-    return returnRecursiveAddress;
+
+    if (childPaths.length == 0) return null;
+    else return [parentKey, childPaths];
   }
 }
