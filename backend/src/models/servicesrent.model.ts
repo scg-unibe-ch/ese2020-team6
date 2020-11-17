@@ -22,7 +22,6 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
                     allowNull: false,
                     unique: true
                 },
-
                 hours: {
                     type: DataTypes.NUMBER,
                     allowNull: false
