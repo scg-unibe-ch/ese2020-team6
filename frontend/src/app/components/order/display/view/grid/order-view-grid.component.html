@@ -1,1 +1,3 @@
-<p>order-view-grid works!</p>
+<div class="grid">
+  <order-card-grid *ngFor="let order of orders" [order]="order" [path]="path"></order-card-grid>
+</div>

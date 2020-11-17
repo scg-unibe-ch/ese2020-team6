@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-order-card-grid',
+  selector: 'order-card-grid',
   templateUrl: './order-card-grid.component.html',
   styleUrls: ['./order-card-grid.component.scss']
 })

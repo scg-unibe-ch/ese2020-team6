@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Orders } from 'src/app/models/order/order.model';
 
 @Component({
-  selector: 'app-order-view-grid',
+  selector: 'order-view-grid',
   templateUrl: './order-view-grid.component.html',
   styleUrls: ['./order-view-grid.component.scss']
 })
-export class OrderViewGridComponent implements OnInit {
+export class OrderViewGridComponent {
 
-  constructor() { }
+  @Input()
+  path: string = "";
 
-  ngOnInit(): void {
+  private _orders: Orders = Orders.NullOrders;
+  @Input()
+  set orders(orders: Orders) {
+    this._orders = orders;
+  }
+  get orders(): Orders {
+    return this._orders;
   }
 
 }

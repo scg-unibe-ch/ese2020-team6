@@ -1,1 +1,17 @@
-<p>order-view works!</p>
+<div class="order-view" *ngIf="hasOrders; else hasNoOrders">
+  <div class="control">
+    <button theme button (click)="switchView()">Switch View</button>
+    <button theme button (click)="searchProduct(searchProducts)" type="button">Search Products</button>
+  </div>
+  <div class="view">
+    <order-view-list class="order-display list" *ngIf="isList; else isGrid" [orders]="orders" [path]="path"></order-view-list>
+    <ng-template #isGrid>
+      <order-view-grid class="order-display grid" [orders]="orders" [path]="path"></order-view-grid>
+    </ng-template>
+  </div>
+</div>
+<ng-template #hasNoOrders>
+  <div class="no-products" theme>
+    Nothing to see here.
+  </div>
+</ng-template>

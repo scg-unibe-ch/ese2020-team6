@@ -13,7 +13,14 @@ import { Orders } from 'src/app/models/order/order.model';
 })
 export class BuyerOrdersComponent implements OnInit {
 
-  public orders: Orders;
+  private _orders: Orders = Orders.NullOrders;
+  set orders(orders: Orders) {
+    this._orders = orders;
+  }
+  get orders(): Orders {
+    return this._orders;
+  }
+  
   public currentContent: ProfileNavigationElementModel;
 
   constructor(

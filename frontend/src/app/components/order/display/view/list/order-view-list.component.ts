@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Orders } from 'src/app/models/order/order.model';
 
 @Component({
-  selector: 'app-order-view-list',
+  selector: 'order-view-list',
   templateUrl: './order-view-list.component.html',
   styleUrls: ['./order-view-list.component.scss']
 })
-export class OrderViewListComponent implements OnInit {
+export class OrderViewListComponent {
 
-  constructor() { }
+  @Input()
+  path: string = "";
 
-  ngOnInit(): void {
+  private _orders: Orders = Orders.NullOrders;
+  @Input()
+  set orders(orders: Orders) {
+    this._orders = orders;
+  }
+  get orders(): Orders {
+    return this._orders;
   }
 
 }

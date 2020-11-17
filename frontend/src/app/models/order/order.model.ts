@@ -66,16 +66,31 @@ export interface OrdersModel {
   orders: Array<OrderModel>;
 }
 
-export class Orders implements OrdersModel {
+export class Orders implements OrdersModel, IterableIterator<Order> {
+
+  public static NullOrders: Orders = new Orders(new Array<Order>());
+
   constructor(
     public orders: Array<Order>
   ) {
+  }
+
+  public next(): IteratorResult<Order> {
+    return this.orders[Symbol.iterator]().next();
+  }
+
+  [Symbol.iterator](): IterableIterator<Order> {
+    return this.orders[Symbol.iterator]();;
   }
 
   public static buildFromOrderModels(orderModels: Array<OrderModel>): Orders {
     return new Orders(orderModels.map((orderModel: OrderModel) => {
       return Order.buildFromOrderModel(orderModel);
     }))
+  }
+
+  get hasOrders(): boolean {
+    return this.orders.length > 0
   }
 
   public toString = () : string => {
