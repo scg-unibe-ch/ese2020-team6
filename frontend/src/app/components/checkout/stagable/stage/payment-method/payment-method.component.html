@@ -3,6 +3,9 @@
     <radio-selection placeholder="Select Payment Method" [options]="options" [(ngModel)]="paymentMethod">
       <img theme *radioLabel="1" class="paypal-logo" src="https://www.paypalobjects.com/webstatic/de_DE/i/de-pp-logo-200px.png" alt="PayPal Logo"/>
     </radio-selection>
+    <form action="/pay" method="post">
+      <input type="submit" value="Buy">
+    </form>
   </div>
 
   <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>
