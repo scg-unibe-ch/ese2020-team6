@@ -1,4 +1,4 @@
-import { CategoryModel } from './../../models/request/product/category-product-request.model';
+import { CategoryModel, SubCategoryModel } from './../../models/request/product/category-product-request.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';
@@ -86,7 +86,7 @@ export class ProductService {
     return this.getProductService.getCategories();
   }
 
-  public getSubCategories(): Observable<Array<CategoryModel>> {
+  public getSubCategories(): Observable<Array<SubCategoryModel>> {
     return this.getProductService.getSubCategories();
   }
 }

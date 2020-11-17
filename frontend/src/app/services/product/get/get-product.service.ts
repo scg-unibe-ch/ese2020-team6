@@ -5,7 +5,7 @@ import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
 import { environment } from '../../../../environments/environment';
-import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
+import { CategoryModel, SubCategoryModel } from 'src/app/models/request/product/category-product-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +54,7 @@ export class GetProductService extends GetService {
     return this.get<Array<CategoryModel>>('categories/');
   }
 
-  public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>('subCategories/');
+  public getSubCategories(): Observable<Array<SubCategoryModel>> {
+    return this.get<Array<SubCategoryModel>>('subcategories/');
   }
 }
