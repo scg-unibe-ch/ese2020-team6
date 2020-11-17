@@ -63,6 +63,42 @@ orderController.get('/buyer', verifyToken,
               product: product,
               shippingAddress: shippingAddress,
               orderId: 1
+            }, {
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
+            }, {
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
+            }, {
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
+            }, {
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
             }]);
           });
         }));

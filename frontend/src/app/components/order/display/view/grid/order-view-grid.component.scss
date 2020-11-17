@@ -1,6 +1,15 @@
+@import '../../../../../../variables.scss';
 .grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-gap: $spaceing-m;
+
+  @media screen and (max-width: 1300px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
 }

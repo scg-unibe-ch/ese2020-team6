@@ -9,11 +9,6 @@
     color: $color;
 
     .informaion-holder {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-auto-rows: repeat(3, max-content);
-      grid-gap: $spaceing-s;
-
       &.invert {
         .info {
           background: $divisor-color;
@@ -22,12 +17,6 @@
             border-color: $info-bg;
           }
         }
-      }
-
-      .header {
-        font-size: 1.4em;
-        font-weight: normal;
-        line-height: 1em;
       }
 
       .info {

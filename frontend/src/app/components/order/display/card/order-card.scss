@@ -2,9 +2,97 @@
 @import './order-card.theme.scss';
 
 .order-card {
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-gap: $spaceing-s;
   border-radius: $border-radius;
   padding: $spaceing-m;
+
+  &.grid {
+    grid-template-columns: 1fr;
+  }
+
+  &.list {
+    grid-template-columns: 1fr 1fr;
+
+    .header {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+  }
+
+  .header {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1em;
+  }
+
+  .informaion-holder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content auto auto;
+    grid-gap: $spaceing-s;
+
+    &.one-column {
+      grid-template-columns: auto;
+
+      .header {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+    }
+
+    .header {
+      font-size: 1.4em;
+      font-weight: normal;
+      line-height: 1em;
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+
+    .info {
+      border-radius: $border-radius;
+      display: grid;
+      grid-template-columns: 2fr $spaceing-s 5fr;
+      padding: $spaceing-s;
+      align-items: center;
+
+      .label {
+        justify-self: start;
+      }
+
+      .divisor {
+        justify-self: center;
+        width: 0;
+        height: 120%;
+        border-left: 2px solid;
+      }
+
+      .content {
+        justify-self: end;
+      }
+    }
+  }
+
+  .involved-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content auto;
+    grid-gap: $spaceing-s;
+
+    .header {
+      font-size: 1.4em;
+      font-weight: normal;
+      line-height: 1em;
+    }
+
+    .user {
+      padding: $spaceing-s;
+      border-radius: $border-radius;
+    }
+  }
 }
+
 
 @each $theme-name in $theme-names {
   @include order-card-theme($theme-name);

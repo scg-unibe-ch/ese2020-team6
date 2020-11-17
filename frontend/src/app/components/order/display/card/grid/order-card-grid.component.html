@@ -1,3 +1,64 @@
-<div class="order-card" [routerLink]="routerLink" theme>
-  {{order}}
+<div class="order-card grid" [routerLink]="routerLink" theme>
+  <div class="header">
+    Order #{{ order.orderId }}
+  </div>
+  <div class="order informaion-holder">
+    <div class="header">
+      Orderinformation
+    </div>
+    <div class="order-id info">
+      <div class="label">
+        Order Id
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.orderId }}
+      </div>
+    </div>
+    <div class="product info">
+      <div class="label">
+        Purchased Product
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.product.title }}
+      </div>
+    </div>
+    <div class="paymentMethod info">
+      <div class="label">
+        Payment Method
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.paymentMethod }} Wallet
+      </div>
+    </div>
+    <div *ngIf="order.shippingAddress" class="shippingAddress info">
+      <div class="label">
+        Shipping Address
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.shippingAddress }}
+      </div>
+    </div>
+    <div *ngIf="order.hours" class="hours info">
+      <div class="label">
+        Hours of Rental
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.hours }}
+      </div>
+    </div>
+    <div class="total info">
+      <div class="label">
+        Total
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.hours ? order.hours * order.product.price : order.product.price }}$
+      </div>
+    </div>
+  </div>
 </div>

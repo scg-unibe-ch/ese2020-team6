@@ -1,4 +1,4 @@
-<div class="order-card" [routerLink]="routerLink" theme>
+<div class="order-card list" [routerLink]="routerLink" theme>
   <div class="header">
     Order #{{ order.orderId }}
   </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="divisor"></div>
       <div class="content">
-        Asdfa asdf  asdf asd asdf a sdfasdfq as asdf a asdf asdf
+        {{ order.product.title }}
       </div>
     </div>
     <div class="paymentMethod info">
