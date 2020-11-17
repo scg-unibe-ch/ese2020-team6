@@ -6,8 +6,7 @@ import { UserModel } from '../../../../models/user/user.model';
 
 @Component({
   selector: 'app-rejected-products',
-  templateUrl: './rejected-products.component.html',
-  styleUrls: ['./rejected-products.component.scss']
+  templateUrl: './rejected-products.component.html'
 })
 export class RejectedProductsComponent implements OnInit {
 

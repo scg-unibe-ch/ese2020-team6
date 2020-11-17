@@ -71,4 +71,30 @@ orderController.get('/buyer', verifyToken,
   }
 );
 
+orderController.get('/seller', verifyToken,
+  (req: Request, res: Response) => {
+    userService.getUserById(req.body.tokenPayload.userId).then((seller) => {
+
+      userService.getCutUserById(1).then((buyer) => {
+
+        AddressService.getAddressById(1).then((shippingAddress => {
+          productService.getProductById(1).then(product => {
+
+            res.send([{
+              buyerId: buyer.userId,
+              buyer: buyer,
+              sellerId: seller.userId,
+              seller: seller,
+              productId: product.productId,
+              product: product,
+              shippingAddress: shippingAddress,
+              orderId: 1
+            }]);
+          });
+        }));
+      });
+    });
+  }
+);
+
 export const OrderController: Router = orderController;
