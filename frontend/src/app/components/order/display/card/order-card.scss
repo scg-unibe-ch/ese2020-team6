@@ -1,0 +1,11 @@
+@import '../../../../../variables.scss';
+@import './order-card.theme.scss';
+
+.order-card {
+  border-radius: $border-radius;
+  padding: $spaceing-m;
+}
+
+@each $theme-name in $theme-names {
+  @include order-card-theme($theme-name);
+}

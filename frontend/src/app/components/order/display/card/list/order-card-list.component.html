@@ -1,1 +1,115 @@
-<p>order-card-list works!</p>
+<div class="order-card" [routerLink]="routerLink" theme>
+  <div class="header">
+    Order #{{ order.orderId }}
+  </div>
+  <div class="order informaion-holder">
+    <div class="header">
+      Orderinformation
+    </div>
+    <div class="order-id info">
+      <div class="label">
+        Order Id
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.orderId }}
+      </div>
+    </div>
+    <div class="product info">
+      <div class="label">
+        Purchased Product
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        Asdfa asdf  asdf asd asdf a sdfasdfq as asdf a asdf asdf
+      </div>
+    </div>
+    <div class="paymentMethod info">
+      <div class="label">
+        Payment Method
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.paymentMethod }} Wallet
+      </div>
+    </div>
+    <div *ngIf="order.shippingAddress" class="shippingAddress info">
+      <div class="label">
+        Shipping Address
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.shippingAddress }}
+      </div>
+    </div>
+    <div *ngIf="order.hours" class="hours info">
+      <div class="label">
+        Hours of Rental
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.hours }}
+      </div>
+    </div>
+    <div class="total info">
+      <div class="label">
+        Total
+      </div>
+      <div class="divisor"></div>
+      <div class="content">
+        {{ order.hours ? order.hours * order.product.price : order.product.price }}$
+      </div>
+    </div>
+  </div>
+  <div class="involved-parties">
+    <div class="header">
+      Involved Parties
+    </div>
+    <div class="seller user informaion-holder one-column invert">
+      <div class="header">
+        Seller
+      </div>
+      <div class="username info">
+        <div class="label">
+          Username
+        </div>
+        <div class="divisor"></div>
+        <div class="content">
+          {{ order.seller.userName }}
+        </div>
+      </div>
+      <div class="email info">
+        <div class="label">
+          Email
+        </div>
+        <div class="divisor"></div>
+        <div class="content">
+          {{ order.seller.email }}
+        </div>
+      </div>
+    </div>
+    <div class="buyer user informaion-holder one-column invert">
+      <div class="header">
+        Buyer
+      </div>
+      <div class="username  info">
+        <div class="label">
+          Username
+        </div>
+        <div class="divisor"></div>
+        <div class="content">
+          {{ order.buyer.userName }}
+        </div>
+      </div>
+      <div class="email info">
+        <div class="label">
+          Email
+        </div>
+        <div class="divisor"></div>
+        <div class="content">
+          {{ order.buyer.email }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

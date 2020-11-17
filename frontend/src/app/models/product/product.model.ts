@@ -37,6 +37,9 @@ export class NullProduct implements ProductModel {
 }
 
 export class Product implements ProductModel {
+
+  public static NullProduct: Product = new Product(null,null,null,null,null,null,null,new NullAddress(),null,null,null,null,null,null,null);
+
   constructor(
     public productId: number,
     public userId: number,

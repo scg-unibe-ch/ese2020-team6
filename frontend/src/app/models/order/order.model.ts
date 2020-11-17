@@ -1,7 +1,7 @@
 import { Address, AddressModel } from '../map/address/address.model';
 import { UserModel, NullUser } from '../user/user.model';
 import { CutUserModel, NullCutUser } from '../user/cut-user.model';
-import { ProductModel } from '../product/product.model';
+import { ProductModel, Product } from '../product/product.model';
 
 export interface OrderModel {
   orderId: number;
@@ -29,6 +29,9 @@ export interface HoursOrderModelExtention extends PaymentMethodOrderModelExtenti
 }
 
 export class Order implements OrderModel {
+
+  public static NullOrder: Order = new Order(null,null,new NullCutUser(), null, new NullUser(), null, Product.NullProduct);
+
   constructor(
     public orderId: number,
     public sellerId: number,

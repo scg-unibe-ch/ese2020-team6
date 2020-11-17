@@ -66,7 +66,7 @@ import { PostProductComponent } from './components/home/product/post/post-produc
 import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
 import { ProductCardListComponent } from './components/home/product/display/product-card/list/product-card-list.component';
 import { ProductCardGridComponent } from './components/home/product/display/product-card/grid/product-card-grid.component';
-import { ProductCardComponent } from './components/home/product/display/product-card/product-card.component';
+import { ProductCardDirective } from './components/home/product/display/product-card/product-card.directive';
 import { ProductPillComponent } from './components/home/product/display/product-card/product-pill/product-pill.component';
 import { ProductViewComponent } from './components/home/product/display/product-view/product-view.component';
 import { ProductViewListComponent } from './components/home/product/display/product-view/list/product-view-list.component';
@@ -165,6 +165,7 @@ import { OrderViewListComponent } from './components/order/display/view/list/ord
 import { OrderViewGridComponent } from './components/order/display/view/grid/order-view-grid.component';
 import { OrderCardGridComponent } from './components/order/display/card/grid/order-card-grid.component';
 import { OrderCardListComponent } from './components/order/display/card/list/order-card-list.component';
+import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 
 
 @NgModule({
@@ -211,7 +212,7 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
     ApproveProductsComponent,
     AngleIconComponent,
     ProductCardGridComponent,
-    ProductCardComponent,
+    ProductCardDirective,
     ProductPillComponent,
     ProductViewComponent,
     ProductViewListComponent,
@@ -268,6 +269,7 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
     OrderViewGridComponent,
     OrderCardGridComponent,
     OrderCardListComponent,
+    OrderCardDirective,
   ],
   imports: [
     BrowserModule,

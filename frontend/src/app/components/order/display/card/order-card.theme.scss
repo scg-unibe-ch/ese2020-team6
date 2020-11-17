@@ -1,0 +1,72 @@
+@mixin order-card-theme($theme-name) {
+  .order-card.#{$theme-name} {
+    $color: get-theme($theme-name, bright);
+    $bg: get-theme($theme-name, shady);
+    $info-bg: get-theme($theme-name, dark);
+    $divisor-color: get-theme($theme-name, shady);
+
+    background: $bg;
+    color: $color;
+
+    .info {
+      background: $info-bg;
+
+      &.invert {
+        background: $divisor-color;
+
+        .divisor {
+          border-color: $info-bg;
+        }
+      }
+
+      .label {
+        color: transparentize($color, 0.4);
+      }
+
+      .divisor {
+        border-color: $divisor-color;
+      }
+    }
+
+    .informaion-holder {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: repeat(3, max-content);
+      grid-gap: $spaceing-s;
+
+      &.invert {
+        .info {
+          background: $divisor-color;
+
+          .divisor {
+            border-color: $info-bg;
+          }
+        }
+      }
+
+      .header {
+        font-size: 1.4em;
+        font-weight: normal;
+        line-height: 1em;
+      }
+
+      .info {
+        background: $info-bg;
+
+        .label {
+          color: transparentize($color, 0.4);
+        }
+
+        .divisor {
+          border-color: $divisor-color;
+        }
+      }
+    }
+
+    .involved-parties {
+      .user {
+        background: $info-bg;
+      }
+    }
+  }
+}

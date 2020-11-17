@@ -49,7 +49,7 @@ orderController.get('/buyer', verifyToken,
   (req: Request, res: Response) => {
     userService.getUserById(req.body.tokenPayload.userId).then((buyer) => {
 
-      userService.getCutUserById(1).then((seller) => {
+      userService.getCutUserById(2).then((seller) => {
 
         AddressService.getAddressById(1).then((shippingAddress => {
           productService.getProductById(1).then(product => {
@@ -75,7 +75,7 @@ orderController.get('/seller', verifyToken,
   (req: Request, res: Response) => {
     userService.getUserById(req.body.tokenPayload.userId).then((seller) => {
 
-      userService.getCutUserById(1).then((buyer) => {
+      userService.getCutUserById(2).then((buyer) => {
 
         AddressService.getAddressById(1).then((shippingAddress => {
           productService.getProductById(1).then(product => {

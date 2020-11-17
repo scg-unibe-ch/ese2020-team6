@@ -1,25 +1,16 @@
-import { Component , Input } from '@angular/core';
+import { Directive , Input } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
-import { Themable } from '../../../../../models/theme/themable';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 
-@Component({
-  selector: 'app-product-card',
-  template: ``
+@Directive({
+  selector: '[product-card]',
 })
-export class ProductCardComponent extends Themable {
+export class ProductCardDirective {
 
   @Input()
   product: ProductModel;
 
   @Input()
   path: '';
-
-  constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
 
   statusIndicatorPillColorClass: () => string = () => {
     const status: string = this.product.status;

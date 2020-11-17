@@ -1,4 +1,4 @@
-@import './product-card.component.theme.scss';
+@import './product-card.theme.scss';
 
 @each $theme-name in $theme-names {
   @include product-card-theme($theme-name);
