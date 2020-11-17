@@ -94,7 +94,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             },
             wallet: {
                 type: DataTypes.NUMBER,
-                defaultValue: 0
+                defaultValue: 100
             }
 
         },

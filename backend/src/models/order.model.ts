@@ -18,13 +18,12 @@ export class Orders extends Model<OrdersAttributes, BuyOrdersAttributes>
         productId!: number;
         sellerId!: number;
 
-        public static initialize(sequelize: Sequelize){
+        public static initialize(sequelize: Sequelize) {
             Orders.init({
-                orderId:{
+                orderId: {
                     type: DataTypes.NUMBER,
                     primaryKey: true,
-                    allowNull: false,
-                    unique: true
+                    autoIncrement: true,
                 },
                 userId: {
                     type: DataTypes.NUMBER,

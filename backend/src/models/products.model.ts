@@ -39,6 +39,9 @@ export class Products extends Model<ProductsAttributes, GoodsCreationAttributes>
     userId!: number;
     rejectionMessage!: string;
     isDeliverable!: boolean;
+    static findOneProduct(productId: number) {
+        throw new Error('Method not implemented.');
+    }
 
     public static initialize(sequelize: Sequelize) {
         Products.init({

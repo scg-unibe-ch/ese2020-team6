@@ -16,9 +16,9 @@ export class ItemsRent extends Model<ItemsRentAttributes, ItemsRent>
         shipping!: string;
         hours!: number;
 
-        public static initialize(sequelize: Sequelize){
+        public static initialize(sequelize: Sequelize) {
             ItemsRent.init({
-                orderId:{
+                orderId: {
                     type: DataTypes.NUMBER,
                     primaryKey: true,
                     allowNull: false,
@@ -32,7 +32,7 @@ export class ItemsRent extends Model<ItemsRentAttributes, ItemsRent>
                     type: DataTypes.NUMBER,
                     allowNull: false
                 },
-               
+
             },
                 {
                     sequelize,

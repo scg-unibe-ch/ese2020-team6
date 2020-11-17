@@ -14,9 +14,9 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
         orderId!: number;
         hours!: number;
 
-        public static initialize(sequelize: Sequelize){
+        public static initialize(sequelize: Sequelize) {
             ServicesRent.init({
-                orderId:{
+                orderId: {
                     type: DataTypes.NUMBER,
                     primaryKey: true,
                     allowNull: false,
@@ -27,7 +27,7 @@ export class ServicesRent extends Model<ServicesRentAttributes, ServicesRent>
                     type: DataTypes.NUMBER,
                     allowNull: false
                 },
-               
+
             },
                 {
                     sequelize,

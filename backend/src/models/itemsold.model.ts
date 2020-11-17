@@ -14,9 +14,9 @@ export class ItemsSold extends Model<ItemsSoldAttributes, SoldItems>
         orderId!: number;
         shipping!: string;
 
-        public static initialize(sequelize: Sequelize){
+        public static initialize(sequelize: Sequelize) {
             ItemsSold.init({
-                orderId:{
+                orderId: {
                     type: DataTypes.NUMBER,
                     primaryKey: true,
                     allowNull: false,
@@ -26,7 +26,7 @@ export class ItemsSold extends Model<ItemsSoldAttributes, SoldItems>
                     type: DataTypes.STRING,
                     allowNull: false
                 },
-               
+
             },
                 {
                     sequelize,
