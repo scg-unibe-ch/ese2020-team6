@@ -16,4 +16,9 @@ export class DurationComponent extends StageNDEExtention<number> {
     return this.duration;
   };
 
+  protected onProductLoad(): void {}
+
+  protected onSellerLoad(): void {}
+
+  protected onBuyerLoad(): void {}
 }

@@ -1,16 +1,9 @@
-export interface OrderRequestModel {
-  productId: number;
-  paymentMethod: string;
-}
+import { OrderModel, ShippingOrderModelExtention, HoursOrderModelExtention } from '../../../order/order.model';
 
-export interface ShippingRequestExtension extends OrderRequestModel{
-  shippingAddress: string;
-}
+export interface OrderRequestModel extends Omit<OrderModel, 'sellerId' | 'buyerId' | 'orderId'> {}
 
-export interface HoursRequestExtension extends OrderRequestModel{
-  hours: number;
-}
+export interface ShippingRequestExtension extends ShippingOrderModelExtention, OrderRequestModel {}
 
-export interface ShippingHoursRequestExtension extends HoursRequestExtension {
-  shippingAddress: string;
-}
+export interface HoursRequestExtension extends HoursOrderModelExtention, OrderRequestModel {}
+
+export interface ShippingHoursRequestExtension extends ShippingOrderModelExtention, HoursOrderModelExtention {}

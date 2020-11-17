@@ -9,14 +9,42 @@ import { UserModel, NullUser } from '../../../../models/user/user.model';
 })
 export abstract class StageNDEExtention<T> extends StageNDEmitter<T> {
 
+  private _product: ProductModel = new NullProduct();
   @Input()
-  product: ProductModel = new NullProduct();
+  set product(product: ProductModel) {
+    this._product = product;
+    this.onProductLoad();
+  }
 
-  @Input()
-  seller: CutUserModel = new NullCutUser();
+  get product(): ProductModel {
+    return this._product;
+  }
 
+  private _seller: CutUserModel = new NullCutUser();
   @Input()
-  user: UserModel = new NullUser();
+  set seller(seller: CutUserModel) {
+    this._seller = seller;
+    this.onSellerLoad();
+  }
+
+  get seller(): CutUserModel {
+    return this._seller;
+  }
+
+  private _buyer: UserModel = new NullUser();
+  @Input()
+  set buyer(buyer: UserModel) {
+    this._buyer = buyer;
+    this.onBuyerLoad();
+  }
+
+  get buyer(): UserModel {
+    return this._buyer;
+  }
+
+  protected abstract onProductLoad(): void;
+  protected abstract onSellerLoad(): void;
+  protected abstract onBuyerLoad(): void;
 
   @Input()
   isFirstStage: boolean = true;

@@ -16,4 +16,10 @@ export class PaymentMethodComponent extends StageNDEExtention<string> {
   public getData(): string {
     return this.paymentMethod;
   };
+
+  protected onProductLoad(): void {}
+
+  protected onSellerLoad(): void {}
+
+  protected onBuyerLoad(): void {}
 }
