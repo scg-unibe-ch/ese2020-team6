@@ -8,26 +8,6 @@
     background: $bg;
     color: $color;
 
-    .info {
-      background: $info-bg;
-
-      &.invert {
-        background: $divisor-color;
-
-        .divisor {
-          border-color: $info-bg;
-        }
-      }
-
-      .label {
-        color: transparentize($color, 0.4);
-      }
-
-      .divisor {
-        border-color: $divisor-color;
-      }
-    }
-
     .informaion-holder {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -52,10 +32,6 @@
 
       .info {
         background: $info-bg;
-
-        .label {
-          color: transparentize($color, 0.4);
-        }
 
         .divisor {
           border-color: $divisor-color;
