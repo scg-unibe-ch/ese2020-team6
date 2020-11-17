@@ -6,6 +6,7 @@ import { ProductModel } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
 import { environment } from '../../../../environments/environment';
 import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
+import { transformAddress } from '../../../models/map/address/address.operator';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +20,27 @@ export class GetProductService extends GetService {
   }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('all');
+    return this.get<Array<ProductModel>>('all').pipe(transformAddress);;
   }
 
   public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('accepted');
+    return this.get<Array<ProductModel>>('accepted').pipe(transformAddress);
   }
 
   public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('rejected/' + userId.toString());
+    return this.get<Array<ProductModel>>('rejected/' + userId.toString()).pipe(transformAddress);;
   }
 
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('unreviewed');
+    return this.get<Array<ProductModel>>('unreviewed').pipe(transformAddress);;
   }
 
   public getMyProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('myproducts/' + userId.toString());
+    return this.get<Array<ProductModel>>('myproducts/' + userId.toString()).pipe(transformAddress);;
   }
 
   public getProductById(productId: number): Observable<ProductModel> {
-    return this.get<ProductModel>('details/' + productId.toString());
+    return this.get<ProductModel>('details/' + productId.toString()).pipe(transformAddress);;
   }
 
   public getMyRejectedProductsCount(userId: number): Observable<number> {

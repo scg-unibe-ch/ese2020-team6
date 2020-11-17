@@ -1,5 +1,14 @@
 <div class="select-wrapper" [ngClass]="classes">
-  <div class="placeholder" (click)="onToggleDropdown()"> {{this.selectedOptions.length > 0 ? this.selectedOptions[0] : this.selectName}}
+  <div class="placeholder" (click)="onToggleDropdown()">
+    <div *ngFor="let selected of selectedOptions" (click)="onDeselect(selected)" class="selected">
+      {{selected}}
+      <div class="remove">
+        <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+          <path d="M -48 -48 L 48 48 M -48 48 L 48 -48"></path>
+        </svg>
+      </div>
+    </div>
+    <div *ngIf="showSelectName" #noValue>{{selectName}}</div>
     <svg [ngClass]="SVGClass" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
       <path d="M -48 -17.0285 L 0 27.9715 L 48 -17.0285 L 37.7409 -27.9715 L 0 7.41053 L -37.7409 -27.9715 Z"></path>
     </svg>

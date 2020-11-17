@@ -41,5 +41,4 @@ orderController.get( '/order/seller/:userId', verifyToken,
     }
 );
 
-
-// test
+export const OrderController: Router = orderController;

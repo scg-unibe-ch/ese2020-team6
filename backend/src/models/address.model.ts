@@ -1,5 +1,6 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
 import { User } from './user.model';
+import { Product } from './product.model';
 
 export interface AddressAttributes {
   addressId: number;
@@ -19,6 +20,7 @@ export interface AddressCreationAttributes extends Optional<AddressAttributes, '
 export class Address extends Model<AddressAttributes, AddressCreationAttributes> implements AddressAttributes {
 
   public static Users: Association;
+  public static Products: Association;
   addressId!: number;
   streetName!: string;
   streetType!: string;
@@ -67,7 +69,7 @@ export class Address extends Model<AddressAttributes, AddressCreationAttributes>
                 allowNull: false
             },
             postal: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             country: {
@@ -86,6 +88,11 @@ export class Address extends Model<AddressAttributes, AddressCreationAttributes>
       Address.Users = Address.hasMany(User, {
         foreignKey: 'addressId',
         as: 'users'
+      });
+
+      Address.Products = Address.hasMany(Product, {
+        foreignKey: 'addressId',
+        as: 'products'
       });
     }
 }

@@ -66,11 +66,11 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 allowNull: false
             },
             phonenumber: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             addressId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             gender: {
@@ -82,7 +82,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 defaultValue: false
             },
             wallet: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 defaultValue: 0
             }
           },

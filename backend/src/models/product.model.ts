@@ -1,5 +1,7 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
+import { Address, AddressAttributes } from './address.model';
 import { Order } from './order.model';
+
 
 export interface ProductAttributes {
     productId: number;
@@ -7,7 +9,7 @@ export interface ProductAttributes {
     description: string;
     price: number;
     category: string;
-    location: string;
+    addressId: number;
     productType: string;
     offerType: string;
     picture: string;
@@ -24,12 +26,13 @@ export interface ProductCreationAttributes extends Optional<ProductAttributes, '
 
 export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
     public static Orders: Association;
+    public static Address: Association;
     productId!: number;
     title!: string;
     description!: string;
     price!: number;
     category!: string;
-    location!: string;
+    addressId!: number;
     productType!: string;
     offerType!: string;
     picture!: string;
@@ -64,19 +67,25 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            location: {
-                type: DataTypes.STRING,
-                allowNull: true
+            addressId: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             // item or service
             productType: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Item', 'Service']]
+                }
             },
             // sell or rent
             offerType: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Sell', 'Rent']]
+                }
             },
             picture: {
                 type: DataTypes.STRING,
@@ -87,13 +96,16 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 allowNull: true
             },
             expirationDate: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.STRING,
                 allowNull: true
             },
             // available, lent, sold
             status: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isIn: [['Available', 'Lent', 'Sold']]
+                }
             },
             isAccepted: {
                 type: DataTypes.BOOLEAN,
@@ -101,7 +113,8 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 allowNull: false
             },
             userId: {
-                type: DataTypes.STRING,
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             rejectionMessage: {
                 type: DataTypes.STRING,
@@ -116,12 +129,24 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
         },
             {
                 sequelize,
-                tableName: 'products'
+                tableName: 'products',
+                validate: {
+                  productTypeAndOfferType() {
+                    if (this.productType === 'Service' && this.offerType === 'Sell') {
+                      throw new Error('Service cannot be sold! Cannot insert product type Service with offer type Sell!');
+                    }
+                  }
+                }
             }
         );
     }
 
     public static createAssociations(): void {
+      Product.Address = Product.belongsTo(Address, {
+        foreignKey: 'addressId',
+        as: 'address'
+      });
+
       Product.Orders = Product.hasMany(Order, {
         foreignKey: 'productId',
         as: 'orders'

@@ -1,22 +1,24 @@
 import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
 import { Order } from './order.model';
 
-export interface ItemSoldAttributes {
+export interface ItemRentedAttributes {
     orderId: number;
     shipping: string;
+    hours: number;
 }
 
-export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes, 'orderId'> {
+export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttributes, 'orderId'> {
 
 }
 
-export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes> implements ItemSoldAttributes {
+export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAttributes> implements ItemRentedAttributes {
     public static Order: Association;
     orderId!: number;
     shipping!: string;
+    hours!: number;
 
     public static initialize(sequelize: Sequelize) {
-        ItemSold.init({
+        ItemRented.init({
             orderId: {
                 type: DataTypes.NUMBER,
                 primaryKey: true,
@@ -27,17 +29,21 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            hours: {
+                type: DataTypes.NUMBER,
+                allowNull: false
+            },
 
         },
             {
                 sequelize,
-                tableName: 'itemssold'
+                tableName: 'itemsrented'
             }
         );
     }
 
     public static createAssociations(): void {
-      ItemSold.Order = ItemSold.hasOne(Order, {
+      ItemRented.Order = ItemRented.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
       });

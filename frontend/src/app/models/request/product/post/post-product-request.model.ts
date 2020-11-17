@@ -1,15 +1,41 @@
-export interface PostProductRequestModel {
-  title: string;
-  description: string;
-  price: number;
-  category: string;
-  location: string;
-  productType: string;
-  offerType: string;
-  picture: string;
-  subcategory: string;
-  expirationDate: number;
-  status: string;
-  userId: number;
-  isDeliverable: boolean;
+import { ProductModel } from '../../../product/product.model';
+import { PostProductFormModel } from '../../../form/post-product-form.model';
+import { AddressModel, NullAddress } from '../../../map/address/address.model';
+
+export interface PostProductRequestModel extends Omit<ProductModel, 'productId' | 'userId' | 'rejectionMessage' | 'status'>{}
+
+export class PostProductRequest implements PostProductRequestModel {
+  constructor(
+    public productType: string,
+    public offerType: string,
+    public title: string,
+    public description: string,
+    public price: number,
+    public address: AddressModel,
+    public picture: string,
+    public category: string,
+    public subcategory: string,
+    public isDeliverable: boolean,
+    public expirationDate: number,
+  ) { }
+
+  public toString = () : string => {
+    return this.title;
+  }
+
+  public static buildFromPostProductFormModel(postProductForm: PostProductFormModel, picture: string): PostProductRequest {
+    return new PostProductRequest (
+      postProductForm.productType,
+      postProductForm.offerType,
+      postProductForm.title,
+      postProductForm.description,
+      postProductForm.price,
+      postProductForm.address,
+      picture,
+      postProductForm.category,
+      postProductForm.subcategory,
+      postProductForm.isDeliverableString === 'Yes' ? true : false,
+      postProductForm.expirationDate,
+    )
+  }
 }

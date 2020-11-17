@@ -3,6 +3,10 @@ import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductAttributes } from '../models/product.model';
+import { AddressAttributes, Address } from '../models/address.model';
+
+import { CategoryController } from './category.controller';
+import { OrderController } from './order.controller';
 
 const productController: Router = express.Router();
 const productService = new ProductService();
@@ -34,8 +38,10 @@ const upload = multer({
 
 productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
-        const postProduct: ProductAttributes = req.body;
-        productService.createProduct(postProduct)
+        req.body.userId = req.body.tokenPayload.userId;
+        const product: ProductAttributes = req.body as ProductAttributes;
+        const address: AddressAttributes = req.body.address as AddressAttributes;
+        productService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -61,7 +67,8 @@ productController.get('/details/:productId',
 productController.delete('/delete/:productId', verifyToken,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
-        productService.deleteProduct(productId)
+        const userId: number = req.body.tokenPayload.userId;
+        productService.deleteProduct(productId, userId)
         .then((product: ProductAttributes) => res.send(product))
         .catch(err => res.status(500).send(err));
     }
@@ -108,12 +115,14 @@ interface MulterRequest extends Request {
 
 productController.put('/update/:productId', verifyToken,
     (req: MulterRequest, res: Response) => {
-        const updateProduct: ProductAttributes = req.body;
-        productService.updateProduct(updateProduct)
-        .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
-        .catch((err: any) => res.status(500).send(err));
-    }
-);
+      req.body.productId = parseInt(req.params.productId, 10);
+      const product: ProductAttributes = req.body as ProductAttributes;
+      const address: AddressAttributes = req.body.address as AddressAttributes;
+
+      productService.updateProduct(product, address)
+      .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
+      .catch((err: any) => res.status(500).send(err));
+    });
 
  productController.get('/myproducts/:userId', verifyToken,
     (req: Request, res: Response) => {
@@ -199,5 +208,7 @@ productController.put('/update/:productId', verifyToken,
         res.send(products);
     });
 
+productController.use('/order', OrderController);
+productController.use('/category', CategoryController);
 
 export const ProductController: Router = productController;

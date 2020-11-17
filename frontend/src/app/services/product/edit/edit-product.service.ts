@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import {
   UpdateProductResponseModel,
   DeleteProductResponseModel } from '../../../models/response/product/product-response-model.module';
@@ -9,6 +9,7 @@ import {
   UpdateProductRequestModel } from '../../../models/request/product/product-request-model-builder.module';
 
 import { environment } from '../../../../environments/environment';
+import { transformAddress } from '../../../models/map/address/address.operator';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,11 @@ export class EditProductService {
   ) { }
 
   public deleteProduct(productId: number): Observable<DeleteProductResponseModel> {
-    return this.httpClient.delete<DeleteProductResponseModel>(environment.endpointURL + 'product/delete/' + productId.toString());
+    return this.httpClient.delete<DeleteProductResponseModel>(environment.endpointURL + 'product/delete/' + productId.toString()).pipe(transformAddress);
   }
 
-  public updateProduct(requestBuilder: UpdateProductRequestBuilder): Observable<UpdateProductResponseModel> {
+  public updateProduct(requestBuilder: UpdateProductRequestBuilder, productId: number): Observable<UpdateProductResponseModel> {
     const requestBody: UpdateProductRequestModel = requestBuilder.buildUpdateProductRequest();
-    const productId: number = requestBody.productId;
-    return this.httpClient.put<UpdateProductResponseModel>(environment.endpointURL + 'product/update/' + productId.toString(), requestBody);
+    return this.httpClient.put<UpdateProductResponseModel>(environment.endpointURL + 'product/update/' + productId.toString(), requestBody).pipe(transformAddress);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LoginUserService } from './login/login-user.service';
 import { LogoutUserService } from './logout/logout-user.service';
 import { RegisterUserService } from './register/register-user.service';
@@ -11,6 +12,7 @@ import { RegisterUserResponseModel } from '../../models/response/user/register/r
 import { UserModel } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
 import { PreferenceModel } from '../../models/user/preference/preference.model';
+import { Address } from '../../models/map/address/address.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,16 +72,15 @@ export class UserService {
   }
 
   public login(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseModel> {
-    let loginResponse = this.loginUserService.login(requestBuilder);
+    let loginResponse = this.loginUserService.login(requestBuilder).pipe(map((loginResponse: LoginUserResponseModel) => {
+      loginResponse.user.address = Address.buildFromAddressModel(loginResponse.user.address);
+      return loginResponse;
+    }));
+    this.userObservable = loginResponse.pipe(map((loginResponse: LoginUserResponseModel) => loginResponse.user));
     loginResponse.subscribe((res: LoginUserResponseModel) => {
-      this.loginSuccess(res);
+      this.saveUserToLocalStorage(res);
     });
     return loginResponse;
-}
-
-  private loginSuccess(res: LoginUserResponseModel): void {
-    this.userObservable = of(res.user);
-    this.saveUserToLocalStorage(res);
   }
 
   private saveUserToLocalStorage(res: LoginUserResponseModel): void {

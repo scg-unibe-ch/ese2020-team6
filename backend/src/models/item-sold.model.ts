@@ -1,44 +1,43 @@
 import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
 import { Order } from './order.model';
 
-export interface ServiceRentedAttributes {
+export interface ItemSoldAttributes {
     orderId: number;
-    hours: number;
+    shipping: string;
 }
 
-export interface ServiceRentedCreationAttributes extends Optional<ServiceRentedAttributes, 'orderId'> {
+export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes, 'orderId'> {
 
 }
 
-export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedCreationAttributes> implements ServiceRentedAttributes {
+export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes> implements ItemSoldAttributes {
     public static Order: Association;
     orderId!: number;
-    hours!: number;
+    shipping!: string;
 
     public static initialize(sequelize: Sequelize) {
-        ServiceRented.init({
+        ItemSold.init({
             orderId: {
                 type: DataTypes.NUMBER,
                 primaryKey: true,
                 allowNull: false,
                 unique: true
             },
-
-            hours: {
-                type: DataTypes.NUMBER,
+            shipping: {
+                type: DataTypes.STRING,
                 allowNull: false
             },
 
         },
             {
                 sequelize,
-                tableName: 'servicesrented'
+                tableName: 'itemssold'
             }
         );
     }
 
     public static createAssociations(): void {
-      ServiceRented.Order = ServiceRented.hasOne(Order, {
+      ItemSold.Order = ItemSold.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
       });

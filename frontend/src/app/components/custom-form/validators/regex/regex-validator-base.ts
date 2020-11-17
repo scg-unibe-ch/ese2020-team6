@@ -139,9 +139,10 @@ export const validatorRegex = {
     name: "priceValidator",
     constraints: {and : [
       {
-        regExp: /^\d*([.]\d{1,})?$/,
+        regExp: /^\d{1,}([.]\d*)?$/,
         error: 'You can either enter an Integer or a Float.'
-      }
+      },
+      constraints.minLength(1)
     ]}
   },
   location: {

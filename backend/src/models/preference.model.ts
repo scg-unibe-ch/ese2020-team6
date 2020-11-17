@@ -35,8 +35,6 @@ export class Preference extends Model<PreferenceAttributes, PreferenceCreationAt
     public static createAssociations() {
       Preference.User = Preference.belongsTo(User, {
         foreignKey: 'userId',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
         as: 'user'
       });
     }

@@ -8,22 +8,19 @@
     </div>
 
     <div class="input-grid">
-      <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="criteria.category" (ngModelChange)="SubCategoryShow(criteria.category)"
-          [options]="cats"></app-select>
-      <app-select *ngIf="show" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategory"
-          [options]="subCat"></app-select>
-          <div #parent> </div>
+      <select-multiple name="category" selectName="Category" [(ngModel)]="criteria.categories" (ngModelChange)="updateSubCategoryStrings()" [options]="categoriesStrings"></select-multiple>
+      <select-multiple *ngIf="showSubcategoriesSelect" name="subcategory" selectName="Subcategory" [(ngModel)]="criteria.subcategories" [options]="subcategoriesStrings"></select-multiple>
     </div>
 
     <div class="input-grid">
-      <app-select name="type" selectName="Product Type" [(ngModel)]="criteria.type" (ngModelChange)="OfferTypeShow(criteria.type)"
+      <app-select name="type" selectName="Product Type" [(ngModel)]="criteria.productType" (ngModelChange)="OfferTypeShow(criteria.productType)"
           [options]="['Item', 'Service']"></app-select>
       <app-select *ngIf="isShown" name="offerType" selectName="Offer Type" [(ngModel)]="criteria.offerType"
           [options]="optionArray"></app-select>
     </div>
 
     <div class="input-grid" >
-        <button id="button2" type="button" [ngClass]="'button-' + theme" (click)="changeVisibility()" >{{this.deliv}}</button>
+        <button id="button2" type="button" [ngClass]="'button-' + theme" (click)="changeVisibility()" >{{this.deliverable}}</button>
         <div class="input-grid" [ngClass]="theme" id ="deliverableGrid">
           <h2>Not Deliverable</h2><mat-slide-toggle class="toggleSlider"
           [disabled]="toggleChange" [(ngModel)]="criteria.deliverable" name="Deliverable" selectName="Product Deliverable"> <h2 id="b2"></h2></mat-slide-toggle><h2>Deliverable</h2>
@@ -46,4 +43,3 @@
     </div>
   </form>
 </div>
-

@@ -157,6 +157,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
+import { SelectMultipleComponent } from './components/custom-form/select/select-multiple/select-multiple.component';
 
 
 @NgModule({
@@ -252,6 +253,7 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     PurchaseServiceComponent,
     FilterPipeComponent,
     SelectCategoriesComponent,
+    SelectMultipleComponent,
   ],
   imports: [
     BrowserModule,
