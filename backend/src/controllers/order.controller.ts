@@ -6,7 +6,8 @@ import { AddressService } from '../services/address.service';
 import { ProductAttributes } from '../models/product.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
-import {OrderService} from '../services/order.service';
+import { Order } from '../models/order.model';
+import { OrderService } from '../services/order.service';
 import { OrderAttributes } from '../models/order.model';
 
 const productService = new ProductService();
@@ -45,102 +46,19 @@ orderController.get( '/order/seller/:userId', verifyToken,
     }
 );
 
-
-
-// Remove the implementations below, if you would like to implement the actual method
-// The returned response should look like below
-
 orderController.get('/buyer', verifyToken,
   (req: Request, res: Response) => {
-    userService.getUserById(req.body.tokenPayload.userId).then((buyer) => {
-
-      userService.getCutUserById(2).then((seller) => {
-
-        AddressService.getAddressById(1).then((shippingAddress => {
-          productService.getProductById(1).then(product => {
-
-            res.send([{
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1,
-              paymentMethod: 'Wallet',
-              hours: 10
-            }, {
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1,
-              paymentMethod: 'Wallet',
-            }, {
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1,
-              paymentMethod: 'Wallet'
-            }, {
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              orderId: 1,
-              hours: 5,
-              paymentMethod: 'Wallet'
-            }, {
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1,
-              paymentMethod: 'Wallet'
-            }]);
-          });
-        }));
-      });
-    });
+    const buyerId: number = req.body.tokenPayload.userId;
+    orderService.getMyOrders(buyerId).then((orders: Array<OrderAttributes>) => res.send(orders))
+    .catch(err => res.status(500).send(err));
   }
 );
 
 orderController.get('/seller', verifyToken,
   (req: Request, res: Response) => {
-    userService.getUserById(req.body.tokenPayload.userId).then((seller) => {
-
-      userService.getCutUserById(2).then((buyer) => {
-
-        AddressService.getAddressById(1).then((shippingAddress => {
-          productService.getProductById(1).then(product => {
-
-            res.send([{
-              buyerId: buyer.userId,
-              buyer: buyer,
-              sellerId: seller.userId,
-              seller: seller,
-              productId: product.productId,
-              product: product,
-              shippingAddress: shippingAddress,
-              orderId: 1
-            }]);
-          });
-        }));
-      });
-    });
+    const sellerId: number = req.body.tokenPayload.userId;
+    orderService.getMyProductOrders(sellerId).then((orders: Array<OrderAttributes>) => res.send(orders))
+    .catch(err => res.status(500).send(err));
   }
 );
 

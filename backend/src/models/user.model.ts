@@ -1,5 +1,6 @@
 import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
 import { Order } from './order.model';
+import { Product } from './product.model';
 import { Preference } from './preference.model';
 import { Address, AddressAttributes } from './address.model';
 
@@ -24,6 +25,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     public static Sold: Association;
     public static Preference: Association;
     public static Address: Association;
+    public static Products: Association;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -102,6 +104,11 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
       User.Address = User.belongsTo(Address, {
         foreignKey: 'addressId',
         as: 'address'
+      });
+
+      User.Products = User.hasMany(Product, {
+        foreignKey: 'userId',
+        as: 'products'
       });
 
       User.Purchases = User.hasMany(Order, {

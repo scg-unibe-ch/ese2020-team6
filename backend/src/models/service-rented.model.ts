@@ -19,8 +19,7 @@ export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedC
         ServiceRented.init({
             orderId: {
                 type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
+                primaryKey: true
             },
 
             hours: {

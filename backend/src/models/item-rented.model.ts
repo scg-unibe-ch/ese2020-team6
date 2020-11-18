@@ -21,8 +21,7 @@ export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAt
         ItemRented.init({
             orderId: {
                 type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
+                primaryKey: true
             },
             shipping: {
                 type: DataTypes.STRING,

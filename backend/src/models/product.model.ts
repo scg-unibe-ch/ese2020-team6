@@ -1,6 +1,7 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
 import { Address, AddressAttributes } from './address.model';
 import { Order } from './order.model';
+import { User } from './user.model';
 
 
 export interface ProductAttributes {
@@ -27,6 +28,7 @@ export interface ProductCreationAttributes extends Optional<ProductAttributes, '
 export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
     public static Orders: Association;
     public static Address: Association;
+    public static User: Association;
     productId!: number;
     title!: string;
     description!: string;
@@ -142,6 +144,11 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     }
 
     public static createAssociations(): void {
+      Product.User = Product.belongsTo(User, {
+        foreignKey: 'userId',
+        as: 'user'
+      });
+
       Product.Address = Product.belongsTo(Address, {
         foreignKey: 'addressId',
         as: 'address'
