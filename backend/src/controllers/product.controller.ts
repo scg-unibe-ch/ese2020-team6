@@ -9,7 +9,6 @@ import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
 const productController: Router = express.Router();
-const productService = new ProductService();
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req: Request, file: any, cd: any) {
@@ -41,7 +40,7 @@ productController.post('/post', verifyToken,
         req.body.userId = req.body.tokenPayload.userId;
         const product: ProductAttributes = req.body as ProductAttributes;
         const address: AddressAttributes = req.body.address as AddressAttributes;
-        productService.createProduct(product, address)
+        ProductService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -49,16 +48,16 @@ productController.post('/post', verifyToken,
 
 productController.get('/all', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
-        productService.getAllProducts()
+        ProductService.getAllProducts()
         .then((products: Array<ProductAttributes>) => res.send(products))
-        .catch(err => res.status(500).send(err));
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
 productController.get('/details/:productId',
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
-        productService.getProductById(productId)
+        ProductService.getProductById(productId)
         .then((product: ProductAttributes) => res.send(product))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -68,15 +67,15 @@ productController.delete('/delete/:productId', verifyToken,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
         const userId: number = req.body.tokenPayload.userId;
-        productService.deleteProduct(productId, userId)
+        ProductService.deleteProduct(productId, userId)
         .then((product: ProductAttributes) => res.send(product))
-        .catch(err => res.status(500).send(err));
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
 productController.get('/unreviewed', verifyToken, verifyIsAdmin,
 (   req: Request, res: Response) => {
-        productService.getAllUnreviewedProducts()
+        ProductService.getAllUnreviewedProducts()
     .then((products: Array<ProductAttributes>) => res.send(products))
     .catch((err: any) => res.status(500).send(err));
     }
@@ -84,7 +83,7 @@ productController.get('/unreviewed', verifyToken, verifyIsAdmin,
 
 productController.get('/accepted',
     (req: Request, res: Response) => {
-        productService.getAllAcceptedProducts()
+        ProductService.getAllAcceptedProducts()
         .then((products: Array<ProductAttributes>) => res.send(products))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -93,7 +92,7 @@ productController.get('/accepted',
 productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
-        productService.acceptProduct(productId)
+        ProductService.acceptProduct(productId)
         .then((product: ProductAttributes) => res.send(product))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -103,7 +102,7 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
-        productService.rejectProduct(productId, rejectionMessage)
+        ProductService.rejectProduct(productId, rejectionMessage)
         .then((product: ProductAttributes) => res.send(product))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -119,7 +118,7 @@ productController.put('/update/:productId', verifyToken,
       const product: ProductAttributes = req.body as ProductAttributes;
       const address: AddressAttributes = req.body.address as AddressAttributes;
 
-      productService.updateProduct(product, address)
+      ProductService.updateProduct(product, address)
       .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
       .catch((err: any) => res.status(500).send(err));
     });
@@ -127,7 +126,7 @@ productController.put('/update/:productId', verifyToken,
  productController.get('/myproducts/:userId', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
-        productService.getMyProducts(userId)
+        ProductService.getMyProducts(userId)
         .then((products: Array<ProductAttributes>) => res.send(products))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -135,7 +134,7 @@ productController.put('/update/:productId', verifyToken,
 
     productController.get('/unreviewd/count', verifyToken, verifyIsAdmin,
     (req: Request, res: Response) => {
-        productService.getUnreviewdProductsCount()
+        ProductService.getUnreviewdProductsCount()
         .then((amountOfUnreviewd: number) => res.send({amountOfUnreviewd: amountOfUnreviewd}))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -145,7 +144,7 @@ productController.put('/update/:productId', verifyToken,
     productController.get('/rejected/count/:userId', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
-        productService.getMyRejectedProductsCount(userId)
+        ProductService.getMyRejectedProductsCount(userId)
         .then((amountOfRejected: number) => res.send({amountOfRejected: amountOfRejected}))
         .catch((err: any) => res.status(500).send(err));
     }
@@ -155,7 +154,7 @@ productController.put('/update/:productId', verifyToken,
     productController.get('/rejected/:userId', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.params.userId, 10);
-        productService.getMyRejectedProducts(userId)
+        ProductService.getMyRejectedProducts(userId)
         .then((products: Array<ProductAttributes>) => res.send(products))
         .catch((err: any) => res.status(500).send(err));
     }

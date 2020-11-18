@@ -26,6 +26,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     public static Preference: Association;
     public static Address: Association;
     public static Products: Association;
+    public static sequelize: Sequelize;
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -93,6 +94,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
               tableName: 'users'
           }
         );
+
+        this.sequelize = sequelize;
     }
 
     public static createAssociations(): void {

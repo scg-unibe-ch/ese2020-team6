@@ -1,9 +1,10 @@
 import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
 import { Order } from './order.model';
+import { Address } from './address.model';
 
 export interface ItemRentedAttributes {
     orderId: number;
-    shipping: string;
+    shippingAddressId: number;
     hours: number;
 }
 
@@ -13,8 +14,9 @@ export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttribu
 
 export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAttributes> implements ItemRentedAttributes {
     public static Order: Association;
+    public static ShippingAddress: Association;
     orderId!: number;
-    shipping!: string;
+    shippingAddressId!: number;
     hours!: number;
 
     public static initialize(sequelize: Sequelize) {
@@ -23,8 +25,8 @@ export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAt
                 type: DataTypes.INTEGER,
                 primaryKey: true
             },
-            shipping: {
-                type: DataTypes.STRING,
+            shippingAddressId: {
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             hours: {
@@ -44,6 +46,11 @@ export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAt
       ItemRented.Order = ItemRented.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
+      });
+
+      ItemRented.ShippingAddress = ItemRented.belongsTo(Address, {
+        foreignKey: 'shippingAddressId',
+        as: 'shippingaddress'
       });
     }
 }

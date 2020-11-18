@@ -1,10 +1,11 @@
 import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
 import { Order } from './order.model';
+import { Address } from './address.model';
 
 export interface ItemSoldAttributes {
     itemsoldId: number;
     orderId: number;
-    shipping: string;
+    shippingAddressId: number;
 }
 
 export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes, 'itemsoldId'> {
@@ -13,9 +14,10 @@ export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes,
 
 export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes> implements ItemSoldAttributes {
     public static Order: Association;
+    public static ShippingAddress: Association;
     itemsoldId!: number;
     orderId!: number;
-    shipping!: string;
+    shippingAddressId!: number;
 
     public static initialize(sequelize: Sequelize) {
         ItemSold.init({
@@ -28,8 +30,8 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
-            shipping: {
-                type: DataTypes.STRING,
+            shippingAddressId: {
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
 
@@ -45,6 +47,11 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
       ItemSold.Order = ItemSold.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
+      });
+
+      ItemSold.ShippingAddress = ItemSold.belongsTo(Address, {
+        foreignKey: 'shippingAddressId',
+        as: 'shippingaddress'
       });
     }
 }

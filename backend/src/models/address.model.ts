@@ -1,6 +1,8 @@
 import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
 import { User } from './user.model';
 import { Product } from './product.model';
+import { ItemSold } from './item-sold.model';
+import { ItemRented } from './item-rented.model';
 
 export interface AddressAttributes {
   addressId: number;
@@ -21,6 +23,8 @@ export class Address extends Model<AddressAttributes, AddressCreationAttributes>
 
   public static Users: Association;
   public static Products: Association;
+  public static ItemsSold: Association;
+  public static ItemsRented: Association;
   addressId!: number;
   streetName!: string;
   streetType!: string;
@@ -93,6 +97,16 @@ export class Address extends Model<AddressAttributes, AddressCreationAttributes>
       Address.Products = Address.hasMany(Product, {
         foreignKey: 'addressId',
         as: 'products'
+      });
+
+      Address.ItemsSold = Address.hasMany(ItemSold, {
+        foreignKey: 'shippingAddressId',
+        as: 'itemssold'
+      });
+
+      Address.ItemsRented = Address.hasMany(ItemRented, {
+        foreignKey: 'shippingAddressId',
+        as: 'itemsrented'
       });
     }
 }
