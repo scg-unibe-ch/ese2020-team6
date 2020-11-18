@@ -133,7 +133,7 @@ export class OrderService {
       }).catch((err: any) => Promise.reject(err));
     }
 
-    public static purchaseService(
+    public static rentService(
       buyerId: number,
       sellerId: number,
       productId: number,
@@ -161,7 +161,7 @@ export class OrderService {
     }
 
     public static createServiceRented(): void {
-      
+
     }
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {

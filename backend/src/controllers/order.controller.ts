@@ -52,7 +52,7 @@ orderController.put('/service/rent', verifyToken,
       const paymentMethod: string = req.body.paymentMethod;
       const hours: number = req.body.hours;
 
-      OrderService.purchaseService(buyerId, sellerId, productId, paymentMethod, hours)
+      OrderService.rentService(buyerId, sellerId, productId, paymentMethod, hours)
         .then(() => res.send()) // output ergänzen
         .catch((err: any) => res.status(500).send(err));
 });
