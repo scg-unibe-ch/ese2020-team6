@@ -33,7 +33,7 @@ export class OrderService {
     public async buyItem(productId: number, paymentMethod: string, shipping: string, buyerId: number) {
 
        var orderId: number;
-        const product = await Products.findOne({
+        const product = await Product.findOne({
             where: {
                 productId: productId
             }
@@ -48,9 +48,9 @@ export class OrderService {
                     User.increment( 'wallet', {by: -product.price, where: { userId: buyerId }});
                     //alt: User.incremet( 'wallet', {by: -product.price, where {userId: 'buyerId'}});
                     User.increment( 'wallet', {by: product.price, where: { userId: sellerId}});
-                    const order = Orders.create({ userId: buyerId, productId: productId, sellerId: sellerId});
+                    const order = Order.create({ buyerId: buyerId, productId: productId, sellerId: sellerId});
                     OrderService.createAddress(shipping);
-                    Products.update({status: 'sold'}, {
+                    Product.update({status: 'sold'}, {
                         where: {
                             productId: productId
                         }
@@ -74,7 +74,7 @@ export class OrderService {
     public async rentItem(productId: number, hours: number, paymentMethod: string, shipping: string, buyerId: number) {
 
         var orderId: number;
-        const product = await Products.findOne({
+        const product = await Product.findOne({
             where: {
                 productId: productId
             }
@@ -88,10 +88,10 @@ export class OrderService {
                 async () => {
                     User.increment( 'wallet', {by: -(product.price * hours), where: { userId: buyerId}});
                     User.increment( 'wallet', {by: (product.price * hours), where: { userId: sellerId}});
-                    const order = Orders.create({productId: productId, userId: buyerId, sellerId: sellerId});
+                    const order = Order.create({productId: productId, buyerId: buyerId, sellerId: sellerId});
                     OrderService.createAddress(shipping);
                     //wollen wir das so? wie besser machen?
-                    Products.update({status: 'rent'}, {
+                    Product.update({status: 'rent'}, {
                       where: {
                           productId: productId
                        }
@@ -115,7 +115,7 @@ export class OrderService {
     public async purchaseService(productId: number, hours: number, paymentMethod: string, shipping: string, buyerId: number) {
 
         var orderId: number;
-        const service = await Products.findOne({
+        const service = await Product.findOne({
             where: {
                 productId: productId
             }
@@ -129,10 +129,10 @@ export class OrderService {
                 async () => {
                     User.increment( 'wallet', {by: -(service.price * hours), where: { userId: 'buyerId'}});
                     User.increment( 'wallet', {by: (service.price * hours), where: { userId: 'sellerId'}});
-                    const order = Orders.build({productId: productId, userId: buyerId, sellerId: sellerId});
+                    const order = Order.build({productId: productId, buyerId: buyerId, sellerId: sellerId});
                     OrderService.createAddress(shipping);
                     //wollen wir das besser machen, falls ja,wie?
-                    Products.update({status: 'available'}, {
+                    Product.update({status: 'available'}, {
                          where: {
                              productId: productId
                          }
