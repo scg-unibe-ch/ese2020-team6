@@ -7,7 +7,7 @@ import { AddressAttributes, Address } from '../models/address.model';
 
 export class ProductService {
 
-  public static checkProductAttributes(product: ProductAttributes): Promise<void> {
+  private static  checkProductAttributes(product: ProductAttributes): Promise<void> {
     if (!product || Object.keys(product).length === 0) {
       return Promise.reject({ message: 'Address missing!' });
     }
@@ -23,7 +23,7 @@ export class ProductService {
     product will receive the addressId of the existing address. If the address
     does not exist yet, the address will be created and assigned to the product.
   */
-  public createProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+  public static  createProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
     product.status = 'Available';
     product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
@@ -31,12 +31,12 @@ export class ProductService {
     return ProductService.checkProductAttributes(product).then(() => {
       return AddressService.checkAddressAttributes(address).then(() => {
         return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new product
-          return this.insertProductWithExistingAddress(product, addressId).catch(err => Promise.reject(err));
+          return this.insertProductWithExistingAddress(product, addressId).catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
-          return this.insertProductAndAddress(product, address).catch(err => Promise.reject(err));
+          return this.insertProductAndAddress(product, address).catch((err: any) => Promise.reject(err));
         });
-      }).catch(err => Promise.reject(err));
-    }).catch(err => Promise.reject(err));
+      }).catch((err: any) => Promise.reject(err));
+    }).catch((err: any) => Promise.reject(err));
 
   }
 
@@ -46,7 +46,7 @@ export class ProductService {
     If an address does not exist, the address will be created here, thogether with
     the product.
   */
-  private insertProductAndAddress(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+  private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     return Product.create(Object.assign(product, {address: address}), {
       include: [{
         association: Product.Address,
@@ -61,13 +61,13 @@ export class ProductService {
     This method is helpful, if we want to insert a product without creating
     a new address (which already exists).
   */
-  private insertProductWithExistingAddress(product: ProductAttributes, addressId: number): Promise<Product> {
+  private static insertProductWithExistingAddress(product: ProductAttributes, addressId: number): Promise<Product> {
     return Product.create(
       Object.assign(product, {
         addressId: addressId
       })
     ).then((createdProductTmp: Product) => this.getProductById(createdProductTmp.productId))
-    .catch(err => Promise.reject(err));
+    .catch((err: any) => Promise.reject(err));
   }
 
   /*
@@ -75,7 +75,7 @@ export class ProductService {
     This is so the product that has been deleted can be returned and still
     be used for further interaction.
   */
-  public deleteProduct(productId: number, userId: number): Promise<Product> {
+  public static deleteProduct(productId: number, userId: number): Promise<Product> {
     return this.getProductById(productId).then((product: Product) => {
       if (product.userId === userId) {
         return Product.destroy({
@@ -84,11 +84,11 @@ export class ProductService {
           }
         }).then(() => {
           return Promise.resolve(product);
-        }).catch(err => Promise.reject(err));
+        }).catch((err: any) => Promise.reject(err));
       } else {
         return Promise.reject({ message: 'Not authorized!' });
       }
-    }).catch(err => Promise.reject(err));
+    }).catch((err: any) => Promise.reject(err));
   }
 
   /*
@@ -105,7 +105,7 @@ export class ProductService {
 
     The product update process is normal and fairly easy.
   */
-  public updateProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+  public static updateProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     product.rejectionMessage = null;
     product.isAccepted = false;
 
@@ -127,7 +127,7 @@ export class ProductService {
     here, but in the method updateProduct. This method only updated the
     product attributes.
   */
-  private updateOnlyProduct(product: ProductAttributes): Promise<Product> {
+  private static updateOnlyProduct(product: ProductAttributes): Promise<Product> {
     Product.update(product, {
       where: {
         productId: product.productId
@@ -144,7 +144,7 @@ export class ProductService {
 
     The method then returns the accepted product as a Promise.
   */
-  public acceptProduct(productId: number): Promise<Product> {
+  public static acceptProduct(productId: number): Promise<Product> {
     Product.update({ isAccepted: true, rejectionMessage: null }, {
       where: {
         productId: productId
@@ -161,7 +161,7 @@ export class ProductService {
 
     The method then returns the rejected product as a Promise.
   */
-  public rejectProduct(productId: number, rejectionMessage: string): Promise<Product> {
+  public static rejectProduct(productId: number, rejectionMessage: string): Promise<Product> {
     Product.update({ isAccepted: false, rejectionMessage: rejectionMessage }, {
       where: {
         productId: productId
@@ -174,18 +174,18 @@ export class ProductService {
     Getters
   ************************************************/
 
-  public getAllProducts(): Promise<Array<Product>> {
+  public static getAllProducts(): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({});
   }
 
-  public getAllUnreviewedProducts(): Promise<Array<Product>> {
+  public static getAllUnreviewedProducts(): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
       isAccepted: false,
       rejectionMessage: null
     });
   }
 
-  public getMyRejectedProducts(userId: number): Promise<Array<Product>> {
+  public static getMyRejectedProducts(userId: number): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
       userId: userId,
       isAccepted: false,
@@ -193,7 +193,7 @@ export class ProductService {
     });
   }
 
-  public getMyRejectedProductsCount(userId: number): Promise<Number> {
+  public static getMyRejectedProductsCount(userId: number): Promise<Number> {
     return Product.count({
       where: {
         userId: userId,
@@ -203,7 +203,7 @@ export class ProductService {
     });
   }
 
-  public getUnreviewdProductsCount(): Promise<Number> {
+  public static getUnreviewdProductsCount(): Promise<Number> {
     return Product.count({
       where: {
         isAccepted: false,
@@ -212,19 +212,19 @@ export class ProductService {
     });
   }
 
-  public getAllAcceptedProducts(): Promise<Array<Product>> {
+  public static getAllAcceptedProducts(): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
       isAccepted: true
     });
   }
 
-  public getMyProducts(userId: number): Promise<Array<Product>> {
+  public static getMyProducts(userId: number): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
       userId: userId
     });
   }
 
-  public getProductById(productId: number): Promise<Product> {
+  public static getProductById(productId: number): Promise<Product> {
     return this.getProductByAllAttributes({
       productId: productId
     });
@@ -234,31 +234,31 @@ export class ProductService {
     Getter helper methods
   */
 
-  private getProductByEitherAttributes(attributes: Object): Promise<Product> {
+  private static getProductByEitherAttributes(attributes: Object): Promise<Product> {
     return this.getProductByAttributes(attributes, Op.or);
   }
 
-  private getProductByAllAttributes(attributes: Object): Promise<Product> {
+  private static getProductByAllAttributes(attributes: Object): Promise<Product> {
     return this.getProductByAttributes(attributes, Op.and);
   }
 
-  private getProductByAttributes(attributes: Object, operator: any): Promise<Product> {
+  private static getProductByAttributes(attributes: Object, operator: any): Promise<Product> {
     return Product.findOne(this.buildWhereOperator(attributes, operator));
   }
 
-  private getProductsByEitherAttributes(attributes: Object): Promise<Array<Product>> {
+  private static getProductsByEitherAttributes(attributes: Object): Promise<Array<Product>> {
     return this.getProductsByAttributes(attributes, Op.or);
   }
 
-  private getProductsByAllAttributes(attributes: Object): Promise<Array<Product>> {
+  private static getProductsByAllAttributes(attributes: Object): Promise<Array<Product>> {
     return this.getProductsByAttributes(attributes, Op.and);
   }
 
-  private getProductsByAttributes(attributes: Object, operator: any): Promise<Array<Product>> {
+  private static getProductsByAttributes(attributes: Object, operator: any): Promise<Array<Product>> {
     return Product.findAll(this.buildWhereOperator(attributes, operator));
   }
 
-  private buildWhereOperator(attributes: Object, operator: any): Object {
+  private static buildWhereOperator(attributes: Object, operator: any): Object {
     const where: Array<Object> = Object.entries(attributes).map(([key, value]) => {
       return {
         [key]: value
