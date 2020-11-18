@@ -108,7 +108,8 @@ export class OrderService {
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress).then((checkedItemSold: BuyItemAtrributes) => {
+        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress)
+        .then((checkedItemSold: BuyItemAtrributes) => {
          return this.createItemSold(checkedOrder, checkedItemSold, shippingAddress)
          .then((createdItemSold : ItemSold) => {
            Promise.all([
@@ -128,14 +129,21 @@ export class OrderService {
       shippingAddress: AddressCreationAttributes,
       hours: number
     ): Promise<void> {
+      const price: number = 10; //getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours).then((checkedItemRented) => {
-          console.log(checkedItemRented);
-          return Promise.resolve();
+        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
+        .then((checkedItemRented: RentItemAttributes) => {
+          return this.createItemRented(checkedOrder, checkedItemRented, shippingAddress)
+          .then((createdItemRented : ItemRented) => {
+            Promise.all([
+              ProductService.setStatus(productId, 'Rent'),
+              UserService.transerFee(buyerId, sellerId, price)
+            ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+          }).catch((err: any) => Promise.reject(err));
         }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
     }
@@ -147,17 +155,24 @@ export class OrderService {
       paymentMethod: string,
       hours: number
     ): Promise<void> {
+      const price: number = 10; //getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours).then((checkedServiceRented) => {
-          console.log(checkedServiceRented);
-          return Promise.resolve();
+        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours)
+        .then((checkedServiceRented: RentServiceAttributes) => {
+          return this.createServiceRented(checkedOrder, checkedServiceRented)
+          .then((createdServiceRented: ServiceRented) => {
+          Promise.all([
+            ProductService.setStatus(productId, 'Rent'),
+            UserService.transerFee(buyerId, sellerId, price)
+          ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
         }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
-    }
+    }).catch((err: any) => Promise.reject(err));
+  }
 
     public static createItemSold(order: OrderCreationAttributes, itemSold: BuyItemAtrributes, shippingAddress: AddressCreationAttributes): Promise<ItemSold> {
       return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
@@ -187,12 +202,56 @@ export class OrderService {
       }).catch((err: any) => Promise.reject(err));
     }
 
-    public static createItemRented(): void {
-
+    public static createItemRented(order: OrderCreationAttributes, itemRented: RentItemAttributes, shippingAddress: AddressCreationAttributes): Promise<ItemRented> {
+      return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
+          return ItemRented.create(
+            Object.assign(itemRented, {
+              order: order,
+              shippingAddressId: existingShippingAddress.addressId,
+              orderId: null
+            }),
+            {
+              include: [
+                {
+                  association: ItemRented.Order, 
+                  include:  [
+                    Order.ItemsSold,
+                    Order.ItemsRented,
+                    Order.ServicesRented,
+                    Order.Product,
+                    Order.Buyer,
+                    Order.Seller
+                  ]
+                },
+                ItemRented.ShippingAddress
+              ]            
+            }
+          );
+      }).catch((err: any) => Promise.reject(err));
     }
 
-    public static createServiceRented(): void {
-
+    public static createServiceRented(order: OrderCreationAttributes, serviceRented: RentServiceAttributes): Promise<ServiceRented> {
+      return ServiceRented.create(
+        Object.assign(serviceRented, {
+          order: order,
+          orderId: null
+        }),
+          {
+           include: [
+             {
+              association: ServiceRented.Order, 
+              include:  [
+                Order.ItemsSold,
+                Order.ItemsRented,
+                Order.ServicesRented,
+                Order.Product,
+                Order.Buyer,
+                Order.Seller
+              ]
+            },
+           ]
+          }         
+      ).catch((err: any) => Promise.reject(err));
     }
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
