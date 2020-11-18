@@ -15,7 +15,7 @@ paypal.configure({
 
 const app = express();
 
-app.get('/', (req: any, res: any) => res.sendFile(__dirname + '/payment/method.component.html'));
+app.get('/', (req: any, res: any) => res.sendFile('../../../frontend/src/app/components/payment-method/payment-method.component.html'));
 
 app.post('/pay', (req: any, res: any) => {
     const create_payment_json = {
