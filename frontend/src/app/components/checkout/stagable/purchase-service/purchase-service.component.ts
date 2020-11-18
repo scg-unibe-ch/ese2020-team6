@@ -6,19 +6,26 @@ import { StagableExtention } from '../stagable-extention';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
+import { OrderService } from '../../../../services/order/order.service';
+import { OrderRequestBuilder } from '../../../../models/request/order/order-request-builder.module';
+import { HoursRequestExtension } from '../../../../models/request/order/order-request-model.module';
+import { HoursResponseExtension } from '../../../../models/response/order/order-response-model.module';
 
 @Component({
   selector: 'pruchase-service',
   templateUrl: '../stagable.component.html',
   styleUrls: ['../stagable.component.scss']
 })
-export class PurchaseServiceComponent extends StagableExtention {
+export class PurchaseServiceComponent extends OrderRequestBuilder<HoursRequestExtension, HoursResponseExtension> {
+
+  protected _endpointURLExtention: string = 'order/service/rent';
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
     route: ActivatedRoute,
     productService: ProductService,
-    userService: UserService
+    userService: UserService,
+    orderService: OrderService
   ) {
     super(
       componentFactoryResolver,
@@ -36,11 +43,17 @@ export class PurchaseServiceComponent extends StagableExtention {
       ],
       route,
       productService,
-      userService
+      userService,
+      orderService
     );
   }
 
-  protected finalize: (stageIndex: number, data?: any) => void = (stageIndex: number): void => {
-    console.log(this.dataStorage);
+  protected buildOrderRequest(): HoursRequestExtension {
+    return {
+      productId: this.product.productId,
+      sellerId: this.product.userId,
+      paymentMethod: this.getDataValueByStageIndex(1),
+      hours: this.getDataValueByStageIndex(0)
+    }
   }
 }

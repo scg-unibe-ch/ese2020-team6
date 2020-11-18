@@ -55,6 +55,7 @@ export class RentItemComponent extends OrderRequestBuilder<ShippingHoursRequestE
   protected buildOrderRequest(): ShippingHoursRequestExtension {
     return {
       productId: this.product.productId,
+      sellerId: this.product.userId,
       paymentMethod: this.getDataValueByStageIndex(2),
       shippingAddress: this.getDataValueByStageIndex(0),
       hours: this.getDataValueByStageIndex(1)

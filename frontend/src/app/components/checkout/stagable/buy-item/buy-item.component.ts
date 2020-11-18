@@ -49,6 +49,7 @@ export class BuyItemComponent extends OrderRequestBuilder<ShippingRequestExtensi
   protected buildOrderRequest(): ShippingRequestExtension {
     return {
       productId: this.product.productId,
+      sellerId: this.product.userId,
       paymentMethod: this.getDataValueByStageIndex(1),
       shippingAddress: this.getDataValueByStageIndex(0)
     }
