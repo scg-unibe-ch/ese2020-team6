@@ -11,6 +11,7 @@ import { ItemSold, ItemSoldAttributes } from '../models/item-sold.model';
 import { ItemRented, ItemRentedAttributes } from '../models/item-rented.model';
 import { ServiceRented, ServiceRentedAttributes } from '../models/service-rented.model';
 import { Address, AddressAttributes } from '../models/address.model';
+import { ItemsRentAttributes } from '../models/itemrent.model';
 import { OrderService } from '../services/order.service';
 
 
