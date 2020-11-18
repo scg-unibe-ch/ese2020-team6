@@ -152,6 +152,18 @@ export class OrderService {
       }).catch((err: any) => Promise.reject(err));
     }
 
+    public static createItemSold(): void {
+
+    }
+
+    public static createItemRented(): void {
+
+    }
+
+    public static createServiceRented(): void {
+      
+    }
+
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
       return this.getByAttributes({ buyerId: buyerId });
     }
