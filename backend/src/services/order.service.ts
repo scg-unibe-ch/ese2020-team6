@@ -1,4 +1,5 @@
 import { Transaction } from 'sequelize';
+
 import { Product, ProductAttributes } from '../models/product.model';
 import { User, UserAttributes } from '../models/user.model';
 import { Order, OrderAttributes, OrderCreationAttributes } from '../models/order.model';
@@ -6,12 +7,29 @@ import { ItemSold, ItemSoldAttributes, ItemSoldCreationAttributes } from '../mod
 import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '../models/item-rented.model';
 import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
+
 import { UserService } from './user.service';
-import { Model } from 'sequelize/types';
+import { AddressService } from './address.service';
+
+interface BuyItemAtrributes {
+  paymentMethod: string;
+  shippingAddress: AddressCreationAttributes;
+}
+
+interface RentItemAttributes {
+  paymentMethod: string;
+  shippingAddress: AddressCreationAttributes;
+  hours: number;
+}
+
+interface RentServiceAttributes {
+  paymentMethod: string;
+  hours: number;
+}
 
 export class OrderService {
 
-    private static buildAndCheckOrderAttributes(
+    public static buildAndCheckOrderAttributes(
       buyerId: number,
       sellerId: number,
       productId: number
@@ -27,49 +45,47 @@ export class OrderService {
       }
     }
 
-    private static buildAndCheckItemSoldAttributes(
-      orderId: number,
+    public static buildAndCheckItemSoldAttributes(
       paymentMethod: string,
-      shippingAddressId: number
-    ): Promise<ItemSoldCreationAttributes> {
-      if (orderId && paymentMethod && shippingAddressId) {
-        return Promise.resolve({
-          orderId: orderId,
-          paymentMethod: paymentMethod,
-          shippingAddressId: shippingAddressId
-        });
+      shippingAddress: AddressCreationAttributes
+    ): Promise<BuyItemAtrributes> {
+      if (paymentMethod && shippingAddress) {
+        return AddressService.checkAddressAttributes(shippingAddress).then(() => {
+          return Promise.resolve({
+            paymentMethod: paymentMethod,
+            shippingAddress: shippingAddress
+          });
+        }).catch((err: any) => Promise.reject(err));
       } else {
         return Promise.reject({ message: 'Not enought information to build the buy item order!' });
       }
     }
 
 
-    private static buildAndCheckItemRentedAttributes(
-      orderId: number,
+    public static buildAndCheckItemRentedAttributes(
       paymentMethod: string,
-      shippingAddressId: number,
+      shippingAddress: AddressCreationAttributes,
       hours: number
-    ): Promise<ItemRentedCreationAttributes> {
-      if (orderId && paymentMethod && shippingAddressId && hours) {
-        return Promise.resolve({
-          orderId: orderId,
-          paymentMethod: paymentMethod,
-          shippingAddressId: shippingAddressId,
-          hours: hours
-        });
+    ): Promise<RentItemAttributes> {
+      if (paymentMethod && shippingAddress && hours) {
+        return AddressService.checkAddressAttributes(shippingAddress).then(() => {
+          return Promise.resolve({
+            paymentMethod: paymentMethod,
+            shippingAddress: shippingAddress,
+            hours: hours
+          });
+        }).catch((err: any) => Promise.reject(err));
       } else {
         return Promise.reject({ message: 'Not enought information to build the rent item order!' });
       }
     }
 
-    private static buildAndCheckServiceRentedAttributes(
-      orderId: number,
+    public static buildAndCheckServiceRentedAttributes(
       paymentMethod: string,
       hours: number
-    ): Promise<ServiceRentedCreationAttributes> {
-      if (orderId && paymentMethod && hours) {
+    ): Promise<RentServiceAttributes> {
+      if (paymentMethod && hours) {
         return Promise.resolve({
-          orderId: orderId,
           paymentMethod: paymentMethod,
           hours: hours
         });
@@ -83,15 +99,17 @@ export class OrderService {
       sellerId: number,
       productId: number,
       paymentMethod: string,
-      shipping: AddressAttributes
+      shippingAddress: AddressCreationAttributes
     ): Promise<void> {
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        console.log(checkedOrder);
-        return Promise.resolve();
+        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress).then((checkedItemSold) => {
+          console.log(checkedItemSold);
+          return Promise.resolve();
+        }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
     }
 
@@ -100,7 +118,7 @@ export class OrderService {
       sellerId: number,
       productId: number,
       paymentMethod: string,
-      shippingAddress: AddressAttributes,
+      shippingAddress: AddressCreationAttributes,
       hours: number
     ): Promise<void> {
       return this.buildAndCheckOrderAttributes(
@@ -108,8 +126,10 @@ export class OrderService {
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        console.log(checkedOrder);
-        return Promise.resolve();
+        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours).then((checkedItemRented) => {
+          console.log(checkedItemRented);
+          return Promise.resolve();
+        }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
     }
 
@@ -125,16 +145,11 @@ export class OrderService {
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        console.log(checkedOrder);
-        return Promise.resolve();
+        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours).then((checkedServiceRented) => {
+          console.log(checkedServiceRented);
+          return Promise.resolve();
+        }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
-    }
-
-    public static createAddress(shipping: string) {
-        const address = shipping.split(/[ ,]+/).filter(Boolean);
-        Address.create({ streetName: address[0], streetType: address[1], addressNumber: address[2],
-                         streetAddress: address[3], neighbourhood: address[4], city: address[5],
-                         region: address[6], postal: parseInt(address[7], 10), country: address[8]});
     }
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {

@@ -1,15 +1,17 @@
-import { AddressAttributes, Address } from '../models/address.model';
+import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
 export class AddressService {
 
-    public static checkAddressAttributes(address: AddressAttributes): Promise<void> {
+    public static checkAddressAttributes(
+      address: AddressCreationAttributes
+    ): Promise<AddressCreationAttributes> {
       if (!address || Object.keys(address).length === 0) {
         return Promise.reject({ message: 'Address missing!' });
       }
       if (address.addressId) {
         return Promise.reject({ message: 'Cannot set the address Id of a new address!' });
       }
-      return Promise.resolve();
+      return Promise.resolve(address);
     }
 
     public static getAddressByValues(address: AddressAttributes): Promise<Address> {
