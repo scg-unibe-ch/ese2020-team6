@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize'; 
 import { UserAttributes, User } from '../models/user.model';
 import { AddressAttributes, Address } from '../models/address.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
@@ -5,6 +6,10 @@ import { AddressService } from './address.service';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const { Op } = require('sequelize');
+
+interface HasUserId extends Partial<UserAttributes>{
+  userId: number;
+}
 
 export class UserService {
 
@@ -127,6 +132,30 @@ export class UserService {
         };
       });
     }
+
+    public static transerFee(buyerId: number, sellerId: number, price: number): Promise<void> {
+      return Promise.all([
+        this.getUserById(buyerId).then((buyer: User) => {
+          return this.updateOnlyUser({userId: buyerId, wallet: -buyer.wallet});
+        }).catch((err: any) => Promise.reject(err)),
+        this.getUserById(sellerId).then((seller: User) => {
+          return this.updateOnlyUser({userId: sellerId, wallet: seller.wallet});
+        }).catch((err: any) => Promise.reject(err))
+      ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+    }
+
+    private static updateOnlyUser(user: HasUserId): Promise<void> {
+      
+      return User.update(user, {
+        where: {
+          userId: user.userId
+        }
+      }).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+    }
+
+  /************************************************
+    Getters
+  ************************************************/
 
     public static getUserById(userId: number): Promise<User> {
       return this.getUserByAllAttributes({

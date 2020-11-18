@@ -2,6 +2,7 @@ import { Address, AddressAttributes, AddressCreationAttributes } from '../models
 
 export class AddressService {
 
+
     public static checkAddressAttributes(
       address: AddressCreationAttributes
     ): Promise<AddressCreationAttributes> {
@@ -41,4 +42,12 @@ export class AddressService {
     public static createAddress(address: AddressAttributes): Promise<Address> {
       return Address.create(address);
     }
+
+    public static findOrCreate(address: AddressCreationAttributes): Promise<Address> {
+      return Address.findOrCreate({
+        where: address,
+        defaults: address
+      }).then(([createdAddress, created]: [Address, boolean]) => Promise.resolve(createdAddress))
+      .catch((err: any) => Promise.reject(err));
+      }
 }

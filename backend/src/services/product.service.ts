@@ -5,6 +5,10 @@ const { Op } = require('sequelize');
 import { AddressService } from './address.service';
 import { AddressAttributes, Address } from '../models/address.model';
 
+interface HasProductId extends Partial<ProductAttributes>{
+  productId: number;
+};
+
 export class ProductService {
 
   private static  checkProductAttributes(product: ProductAttributes): Promise<void> {
@@ -113,11 +117,15 @@ export class ProductService {
 
     return checkIfAddressDoesExist.then((addressId: number) => {
       product.addressId = addressId;
-      return this.updateOnlyProduct(product);
+      return this.updateOnlyProduct(product).then(() => {
+        return this.getProductById(product.productId);
+      }).catch((err: any) => Promise.reject(err));
     }).catch(() => {
       return AddressService.createAddress(address).then((createdAddress: Address) => {
         product.addressId = createdAddress.addressId;
-        return this.updateOnlyProduct(product);
+        return this.updateOnlyProduct(product).then(() => {
+          return this.getProductById(product.productId);
+        }).catch((err: any) => Promise.reject(err));
       });
     });
   }
@@ -127,13 +135,12 @@ export class ProductService {
     here, but in the method updateProduct. This method only updated the
     product attributes.
   */
-  private static updateOnlyProduct(product: ProductAttributes): Promise<Product> {
-    Product.update(product, {
+  private static updateOnlyProduct(product: HasProductId): Promise<void> {
+    return Product.update(product, {
       where: {
         productId: product.productId
       }
-    });
-    return this.getProductById(product.productId);
+    }).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
   }
 
   /*
@@ -168,6 +175,10 @@ export class ProductService {
       }
     });
     return this.getProductById(productId);
+  }
+
+  public static setStatus(productId: number, status: string): Promise<void> {
+   return this.updateOnlyProduct({productId: productId, status: status});
   }
 
   /************************************************
@@ -214,7 +225,8 @@ export class ProductService {
 
   public static getAllAcceptedProducts(): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
-      isAccepted: true
+      isAccepted: true,
+      status: 'Available'
     });
   }
 

@@ -1,4 +1,4 @@
-import { Transaction } from 'sequelize';
+import { Association, Transaction } from 'sequelize';
 
 import { Product, ProductAttributes } from '../models/product.model';
 import { User, UserAttributes } from '../models/user.model';
@@ -10,6 +10,7 @@ import { Address, AddressAttributes, AddressCreationAttributes } from '../models
 
 import { UserService } from './user.service';
 import { AddressService } from './address.service';
+import { ProductService } from './product.service';
 
 interface BuyItemAtrributes {
   paymentMethod: string;
@@ -101,14 +102,20 @@ export class OrderService {
       paymentMethod: string,
       shippingAddress: AddressCreationAttributes
     ): Promise<void> {
+      const price: number =  10; //getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress).then((checkedItemSold) => {
-          console.log(checkedItemSold);
-          return Promise.resolve();
+        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress).then((checkedItemSold: BuyItemAtrributes) => {
+         return this.createItemSold(checkedOrder, checkedItemSold, shippingAddress)
+         .then((createdItemSold : ItemSold) => {
+           Promise.all([
+            ProductService.setStatus(productId, 'Sold'),
+            UserService.transerFee(buyerId, sellerId, price)
+           ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+         }).catch((err: any) => Promise.reject(err));
         }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
     }
@@ -152,8 +159,32 @@ export class OrderService {
       }).catch((err: any) => Promise.reject(err));
     }
 
-    public static createItemSold(): void {
-
+    public static createItemSold(order: OrderCreationAttributes, itemSold: BuyItemAtrributes, shippingAddress: AddressCreationAttributes): Promise<ItemSold> {
+      return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
+          return ItemSold.create(
+            Object.assign(itemSold, {
+              order: order,
+              shippingAddressId: existingShippingAddress.addressId,
+              orderId: null
+            }),
+            {
+              include: [
+                {
+                  association: ItemSold.Order, 
+                  include:  [
+                    Order.ItemsSold,
+                    Order.ItemsRented,
+                    Order.ServicesRented,
+                    Order.Product,
+                    Order.Buyer,
+                    Order.Seller
+                  ]
+                },
+                ItemSold.ShippingAddress
+              ]            
+            }
+          );
+      }).catch((err: any) => Promise.reject(err));
     }
 
     public static createItemRented(): void {
