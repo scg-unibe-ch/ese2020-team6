@@ -102,15 +102,16 @@ export class OrderService {
       paymentMethod: string,
       shippingAddress: AddressCreationAttributes
     ): Promise<void> {
-      const price: number =  10; //getPrice();
+      const price =  10; // getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress).then((checkedItemSold: BuyItemAtrributes) => {
+        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress)
+        .then((checkedItemSold: BuyItemAtrributes) => {
          return this.createItemSold(checkedOrder, checkedItemSold, shippingAddress)
-         .then((createdItemSold : ItemSold) => {
+         .then((itemSold: ItemSold) => {
            Promise.all([
             ProductService.setStatus(productId, 'Sold'),
             UserService.transerFee(buyerId, sellerId, price)
@@ -133,7 +134,8 @@ export class OrderService {
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours).then((checkedItemRented) => {
+        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
+        .then((checkedItemRented) => {
           console.log(checkedItemRented);
           return Promise.resolve();
         }).catch((err: any) => Promise.reject(err));
@@ -155,36 +157,30 @@ export class OrderService {
         return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours).then((checkedServiceRented) => {
           console.log(checkedServiceRented);
           return Promise.resolve();
-        }).catch((err: any) => Promise.reject(err));
-      }).catch((err: any) => Promise.reject(err));
+        });
+      });
     }
 
-    public static createItemSold(order: OrderCreationAttributes, itemSold: BuyItemAtrributes, shippingAddress: AddressCreationAttributes): Promise<ItemSold> {
-      return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
-          return ItemSold.create(
-            Object.assign(itemSold, {
-              order: order,
-              shippingAddressId: existingShippingAddress.addressId,
-              orderId: null
-            }),
-            {
-              include: [
-                {
-                  association: ItemSold.Order, 
-                  include:  [
-                    Order.ItemsSold,
-                    Order.ItemsRented,
-                    Order.ServicesRented,
-                    Order.Product,
-                    Order.Buyer,
-                    Order.Seller
-                  ]
-                },
-                ItemSold.ShippingAddress
-              ]            
-            }
-          );
-      }).catch((err: any) => Promise.reject(err));
+    public static createItemSold(
+      order: OrderCreationAttributes,
+      itemSold: BuyItemAtrributes,
+      shippingAddress: AddressCreationAttributes
+    ): Promise<ItemSold> {
+      return Order.sequelize.transaction((transaction: Transaction) => {
+        return AddressService.findOrCreate(shippingAddress, transaction).then((existingShippingAddress: Address) => {
+          return Order.create(order, { transaction: transaction }).then((createdOrder: Order) => {
+            return ItemSold.create(
+              Object.assign(itemSold, {
+                orderId: createdOrder.orderId,
+                shippingAddressId: existingShippingAddress.addressId
+              }),
+              {
+                transaction: transaction
+              }
+            );
+          });
+        });
+      });
     }
 
     public static createItemRented(): void {
@@ -206,14 +202,7 @@ export class OrderService {
     private static getByAttributes(where: Object): Promise<Array<Order>> {
       return Order.findAll({
           where: where,
-          include: [
-            Order.ItemsSold,
-            Order.ItemsRented,
-            Order.ServicesRented,
-            Order.Product,
-            Order.Buyer,
-            Order.Seller
-          ]
+          include: Object.values(Order.associations)
       });
     }
 

@@ -1,4 +1,15 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  Association,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Optional
+} from 'sequelize';
 import { User } from './user.model';
 import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
@@ -21,10 +32,37 @@ export interface AddressCreationAttributes extends Optional<AddressAttributes, '
 
 export class Address extends Model<AddressAttributes, AddressCreationAttributes> implements AddressAttributes {
 
-  public static Users: Association;
-  public static Products: Association;
-  public static ItemsSold: Association;
-  public static ItemsRented: Association;
+  public static associations: {
+    users: Association<Address, User>,
+    products: Association<Address, Product>,
+    itemsSold: Association<Address, ItemSold>,
+    itemsRented: Association<Address, ItemRented>,
+  };
+
+  public getItemsSold!: HasManyGetAssociationsMixin<ItemSold>;
+  public addItemSold!: HasManyAddAssociationMixin<ItemSold, number>;
+  public hasItemsSold!: HasManyHasAssociationMixin<ItemSold, number>;
+  public countItemsSold!: HasManyCountAssociationsMixin;
+  public createItemSold!: HasManyCreateAssociationMixin<ItemSold>;
+
+  public getItemsRented!: HasManyGetAssociationsMixin<ItemRented>;
+  public addItemRented!: HasManyAddAssociationMixin<ItemRented, number>;
+  public hasItemsRented!: HasManyHasAssociationMixin<ItemRented, number>;
+  public countItemsRented!: HasManyCountAssociationsMixin;
+  public createItemRented!: HasManyCreateAssociationMixin<ItemRented>;
+
+  public getProducts!: HasManyGetAssociationsMixin<Product>;
+  public addProduct!: HasManyAddAssociationMixin<Product, number>;
+  public hasProducts!: HasManyHasAssociationMixin<Product, number>;
+  public countProducts!: HasManyCountAssociationsMixin;
+  public createProduct!: HasManyCreateAssociationMixin<Product>;
+
+  public getUsers!: HasManyGetAssociationsMixin<User>;
+  public addUser!: HasManyAddAssociationMixin<User, number>;
+  public hasUsers!: HasManyHasAssociationMixin<User, number>;
+  public countUsers!: HasManyCountAssociationsMixin;
+  public createUser!: HasManyCreateAssociationMixin<User>;
+
   addressId!: number;
   streetName!: string;
   streetType!: string;
@@ -89,24 +127,26 @@ export class Address extends Model<AddressAttributes, AddressCreationAttributes>
     }
 
     public static createAssociations() {
-      Address.Users = Address.hasMany(User, {
+      Address.hasMany(User, {
         foreignKey: 'addressId',
         as: 'users'
       });
 
-      Address.Products = Address.hasMany(Product, {
+      Address.hasMany(Product, {
         foreignKey: 'addressId',
         as: 'products'
       });
 
-      Address.ItemsSold = Address.hasMany(ItemSold, {
+      Address.hasMany(ItemSold, {
+        sourceKey: 'addressId',
         foreignKey: 'shippingAddressId',
-        as: 'itemssold'
+        as: 'itemsSold'
       });
 
-      Address.ItemsRented = Address.hasMany(ItemRented, {
+      Address.hasMany(ItemRented, {
+        sourceKey: 'addressId',
         foreignKey: 'shippingAddressId',
-        as: 'itemsrented'
+        as: 'itemsRented'
       });
     }
 }

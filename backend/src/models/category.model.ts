@@ -1,4 +1,4 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
 import { Subcategory } from './subcategory.model';
 import { CategoryService } from '../services/category.service';
 
@@ -10,8 +10,11 @@ export interface CategoryAttributes {
 export interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'categoryId'> { }
 
 export class Category extends Model<CategoryAttributes, CategoryCreationAttributes> implements CategoryAttributes {
-    public static Subcategories: Association;
-    public static sequelize: Sequelize;
+
+    public static associations: {
+      subcategories: Association<Category, Subcategory>
+    };
+
     categoryId!: number;
     category!: string;
 
@@ -23,22 +26,20 @@ export class Category extends Model<CategoryAttributes, CategoryCreationAttribut
                 primaryKey: true
              },
              category: {
-                  type: DataTypes.STRING,
-                  unique: true,
-                  allowNull: false
-                },
+                type: DataTypes.STRING,
+                unique: true,
+                allowNull: false
+              },
             },
            {
                 sequelize,
                 tableName: 'categories'
             }
         );
-
-        this.sequelize = sequelize;
     }
 
     public static createAssociations(): void {
-      Category.Subcategories = Category.hasMany(Subcategory, {
+      Category.hasMany(Subcategory, {
         foreignKey: 'categoryId',
         as: 'subcategories'
       });

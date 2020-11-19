@@ -1,4 +1,4 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
 import { User } from './user.model';
 
 export interface PreferenceAttributes {
@@ -9,8 +9,10 @@ export interface PreferenceCreationAttributes extends Optional<PreferenceAttribu
 
 export class Preference extends Model<PreferenceAttributes, PreferenceCreationAttributes> implements PreferenceAttributes {
 
+    public static associations: {
+      user: Association<Preference, User>
+    };
 
-    public static User: Association;
     userId!: number;
     theme!: string;
 
@@ -21,7 +23,11 @@ export class Preference extends Model<PreferenceAttributes, PreferenceCreationAt
                 primaryKey: true
             },
             theme: {
-                type: DataTypes.ENUM('bright', 'dark'),
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                  isIn: [['bright', 'dark']]
+                },
                 defaultValue: 'bright'
             }
         },
@@ -33,7 +39,7 @@ export class Preference extends Model<PreferenceAttributes, PreferenceCreationAt
     }
 
     public static createAssociations() {
-      Preference.User = Preference.belongsTo(User, {
+      Preference.belongsTo(User, {
         foreignKey: 'userId',
         as: 'user'
       });

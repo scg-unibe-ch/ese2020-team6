@@ -1,3 +1,4 @@
+import { Transaction } from 'sequelize';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
 export class AddressService {
@@ -43,10 +44,11 @@ export class AddressService {
       return Address.create(address);
     }
 
-    public static findOrCreate(address: AddressCreationAttributes): Promise<Address> {
+    public static findOrCreate(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
       return Address.findOrCreate({
         where: address,
-        defaults: address
+        defaults: address,
+        transaction: transaction
       }).then(([createdAddress, created]: [Address, boolean]) => Promise.resolve(createdAddress))
       .catch((err: any) => Promise.reject(err));
       }

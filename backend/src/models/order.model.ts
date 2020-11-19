@@ -1,4 +1,15 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  Association,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Optional
+} from 'sequelize';
 import { User } from './user.model';
 import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
@@ -16,13 +27,33 @@ export interface OrderCreationAttributes extends Optional<OrderAttributes, 'orde
 
 export class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
 
-    public static Buyer: Association;
-    public static Seller: Association;
-    public static Product: Association;
-    public static ItemsSold: Association;
-    public static ItemsRented: Association;
-    public static ServicesRented: Association;
-    public static sequelize: Sequelize;
+    public static associations: {
+      buyer: Association<Order, User>,
+      seller: Association<Order, User>,
+      product: Association<Order, Product>,
+      itemsSold: Association<Order, ItemSold>,
+      itemsRented: Association<Order, ItemRented>,
+      servicesRented: Association<Order, ServiceRented>
+    };
+
+    public getItemsSold!: HasManyGetAssociationsMixin<ItemSold>;
+    public addItemSold!: HasManyAddAssociationMixin<ItemSold, number>;
+    public hasItemsSold!: HasManyHasAssociationMixin<ItemSold, number>;
+    public countItemsSold!: HasManyCountAssociationsMixin;
+    public createItemSold!: HasManyCreateAssociationMixin<ItemSold>;
+
+    public getItemsRented!: HasManyGetAssociationsMixin<ItemRented>;
+    public addItemRented!: HasManyAddAssociationMixin<ItemRented, number>;
+    public hasItemsRented!: HasManyHasAssociationMixin<ItemRented, number>;
+    public countItemsRented!: HasManyCountAssociationsMixin;
+    public createItemRented!: HasManyCreateAssociationMixin<ItemRented>;
+
+    public getServicesRented!: HasManyGetAssociationsMixin<ServiceRented>;
+    public addServiceRented!: HasManyAddAssociationMixin<ServiceRented, number>;
+    public hasServicesRented!: HasManyHasAssociationMixin<ServiceRented, number>;
+    public countServicesRented!: HasManyCountAssociationsMixin;
+    public createServiceRented!: HasManyCreateAssociationMixin<ServiceRented>;
+
     orderId!: number;
     buyerId!: number;
     productId!: number;
@@ -53,39 +84,39 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                 tableName: 'orders'
             }
         );
-
-        this.sequelize = sequelize;
     }
 
     public static createAssociations(): void {
-      Order.Buyer = Order.belongsTo(User, {
+      Order.belongsTo(User, {
+        targetKey: 'userId',
         foreignKey: 'buyerId',
         as: 'buyer'
       });
 
-      Order.Seller = Order.belongsTo(User, {
+      Order.belongsTo(User, {
+        targetKey: 'userId',
         foreignKey: 'sellerId',
         as: 'seller'
       });
 
-      Order.Product = Order.belongsTo(Product, {
+      Order.belongsTo(Product, {
         foreignKey: 'productId',
         as: 'product'
       });
 
-      Order.ItemsSold = Order.hasMany(ItemSold, {
+      Order.hasMany(ItemSold, {
         foreignKey: 'orderId',
-        as: 'itemssold'
+        as: 'itemsSold'
       });
 
-      Order.ItemsRented = Order.hasMany(ItemRented, {
+      Order.hasMany(ItemRented, {
         foreignKey: 'orderId',
-        as: 'itemsrented'
+        as: 'itemsRented'
       });
 
-      Order.ServicesRented = Order.hasMany(ServiceRented, {
+      Order.hasMany(ServiceRented, {
         foreignKey: 'orderId',
-        as: 'servicesrented'
+        as: 'servicesRented'
       });
     }
 

@@ -1,10 +1,11 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
 import { Order } from './order.model';
 import { Address } from './address.model';
 
 export interface ItemSoldAttributes {
     itemsoldId: number;
     orderId: number;
+    paymentMethod: string;
     shippingAddressId: number;
 }
 
@@ -13,10 +14,15 @@ export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes,
 }
 
 export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes> implements ItemSoldAttributes {
-    public static Order: Association;
-    public static ShippingAddress: Association;
+
+    public static associations: {
+      order: Association<ItemSold, Order>,
+      shippingAddress: Association<ItemSold, Address>
+    };
+
     itemsoldId!: number;
     orderId!: number;
+    paymentMethod!: string;
     shippingAddressId!: number;
 
     public static initialize(sequelize: Sequelize) {
@@ -30,11 +36,14 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
-            shippingAddressId: {
+            paymentMethod: {
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
-
+            shippingAddressId: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            }
         },
             {
                 sequelize,
@@ -44,14 +53,15 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
     }
 
     public static createAssociations(): void {
-      ItemSold.Order = ItemSold.belongsTo(Order, {
+      ItemSold.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
       });
 
-      ItemSold.ShippingAddress = ItemSold.belongsTo(Address, {
+      ItemSold.belongsTo(Address, {
+        targetKey: 'addressId',
         foreignKey: 'shippingAddressId',
-        as: 'shippingaddress'
+        as: 'shippingAddress'
       });
     }
 }

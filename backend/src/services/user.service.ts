@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize'; 
+import { Sequelize } from 'sequelize';
 import { UserAttributes, User } from '../models/user.model';
 import { AddressAttributes, Address } from '../models/address.model';
 import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const { Op } = require('sequelize');
 
-interface HasUserId extends Partial<UserAttributes>{
+interface HasUserId extends Partial<UserAttributes> {
   userId: number;
 }
 
@@ -59,11 +59,11 @@ export class UserService {
         Object.assign(user, {address: address, preference: {}}),
         {
           include: [{
-            association: User.Preference
+            association: User.associations.preference
           },
           {
-            association: User.Address,
-            include : [ Address.Users ]
+            association: User.associations.address,
+            include : [ Address.associations.users ]
           }]
         }
       );
@@ -76,9 +76,7 @@ export class UserService {
           addressId: addressId
         }),
         {
-          include: [{
-            association: User.Preference
-          }]
+          include: [ User.associations.preference ]
         }
       );
     }
@@ -102,12 +100,7 @@ export class UserService {
         where: {
           [Op.or]: this.buildWhereOperator(attributes)
         },
-        include: [{
-          association: User.Preference
-        },
-        {
-          association: User.Address
-        }]
+        include: Object.values(User.associations)
       });
     }
 
@@ -116,12 +109,7 @@ export class UserService {
         where: {
           [Op.and]: this.buildWhereOperator(attributes)
         },
-        include: [{
-          association: User.Preference
-        },
-        {
-          association: User.Address
-        }]
+        include: Object.values(User.associations)
       });
     }
 
@@ -145,7 +133,6 @@ export class UserService {
     }
 
     private static updateOnlyUser(user: HasUserId): Promise<void> {
-      
       return User.update(user, {
         where: {
           userId: user.userId

@@ -5,9 +5,9 @@ const { Op } = require('sequelize');
 import { AddressService } from './address.service';
 import { AddressAttributes, Address } from '../models/address.model';
 
-interface HasProductId extends Partial<ProductAttributes>{
+interface HasProductId extends Partial<ProductAttributes> {
   productId: number;
-};
+}
 
 export class ProductService {
 
@@ -53,8 +53,8 @@ export class ProductService {
   private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     return Product.create(Object.assign(product, {address: address}), {
       include: [{
-        association: Product.Address,
-        include : [ Address.Products ]
+        association: Product.associations.address,
+        include : [ Address.associations.products ]
       }]
     });
   }
@@ -281,9 +281,7 @@ export class ProductService {
       where: {
         [operator]: where
       },
-      include: [{
-        association: Product.Address
-      }]
+      include: [Product.associations.address]
     };
   }
 }

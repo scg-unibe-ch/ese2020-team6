@@ -60,7 +60,7 @@ orderController.put('/service/rent', verifyToken,
 orderController.get('/buyer', verifyToken,
   (req: Request, res: Response) => {
     const buyerId: number = req.body.tokenPayload.userId;
-    OrderService.getMyOrders(buyerId).then((orders: Array<OrderAttributes>) => res.send(orders))
+    OrderService.getMyOrders(buyerId).then((orders: Array<Order>) => res.send(orders))
     .catch((err: any) => res.status(500).send(err));
   }
 );
@@ -68,7 +68,7 @@ orderController.get('/buyer', verifyToken,
 orderController.get('/seller', verifyToken,
   (req: Request, res: Response) => {
     const sellerId: number = req.body.tokenPayload.userId;
-    OrderService.getMyProductOrders(sellerId).then((orders: Array<OrderAttributes>) => res.send(orders))
+    OrderService.getMyProductOrders(sellerId).then((orders: Array<Order>) => res.send(orders))
     .catch((err: any) => res.status(500).send(err));
   }
 );

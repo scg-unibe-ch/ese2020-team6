@@ -1,29 +1,46 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
 import { Order } from './order.model';
 import { Address } from './address.model';
 
 export interface ItemRentedAttributes {
+    itemRentedId: number;
     orderId: number;
+    paymentMethod: string;
     shippingAddressId: number;
     hours: number;
 }
 
-export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttributes, 'orderId'> {
+export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttributes, 'itemRentedId'> {
 
 }
 
 export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAttributes> implements ItemRentedAttributes {
-    public static Order: Association;
-    public static ShippingAddress: Association;
+
+    public static associations: {
+      order: Association<ItemRented, Order>,
+      shippingAddress: Association<ItemRented, Address>
+    };
+
+    itemRentedId!: number;
     orderId!: number;
+    paymentMethod!: string;
     shippingAddressId!: number;
     hours!: number;
 
     public static initialize(sequelize: Sequelize) {
         ItemRented.init({
+            itemRentedId: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+            },
             orderId: {
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                allowNull: false
+            },
+            paymentMethod: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             shippingAddressId: {
                 type: DataTypes.INTEGER,
@@ -43,14 +60,14 @@ export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAt
     }
 
     public static createAssociations(): void {
-      ItemRented.Order = ItemRented.belongsTo(Order, {
+      ItemRented.belongsTo(Order, {
         foreignKey: 'orderId',
         as: 'order'
       });
 
-      ItemRented.ShippingAddress = ItemRented.belongsTo(Address, {
+      ItemRented.belongsTo(Address, {
         foreignKey: 'shippingAddressId',
-        as: 'shippingaddress'
+        as: 'shippingAddress'
       });
     }
 }

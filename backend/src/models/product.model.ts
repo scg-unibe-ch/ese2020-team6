@@ -1,5 +1,15 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
-import { Address, AddressAttributes } from './address.model';
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  Association,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Optional } from 'sequelize';
+import { Address } from './address.model';
 import { Order } from './order.model';
 import { User } from './user.model';
 
@@ -23,12 +33,23 @@ export interface ProductAttributes {
     isDeliverable: boolean;
 
 }
-export interface ProductCreationAttributes extends Optional<ProductAttributes, 'productId'> { }
+export interface ProductCreationAttributes extends
+Optional<ProductAttributes, 'productId' | 'isAccepted' | 'status' | 'rejectionMessage'> { }
 
 export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
-    public static Orders: Association;
-    public static Address: Association;
-    public static User: Association;
+
+    public static associations: {
+      orders: Association<Product, Order>;
+      address: Association<Product, Address>;
+      user: Association<Product, User>;
+    };
+
+    public getOrders!: HasManyGetAssociationsMixin<Order>;
+    public addOrder!: HasManyAddAssociationMixin<Order, number>;
+    public hasOrders!: HasManyHasAssociationMixin<Order, number>;
+    public countOrders!: HasManyCountAssociationsMixin;
+    public createOrder!: HasManyCreateAssociationMixin<Order>;
+
     productId!: number;
     title!: string;
     description!: string;
@@ -53,6 +74,10 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 autoIncrement: true,
                 primaryKey: true
             },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
             title: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -62,10 +87,14 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 allowNull: false
             },
             price: {
-                type: DataTypes.INTEGER,
-                allowNull: true
+                type: DataTypes.FLOAT(5, 2),
+                allowNull: false
             },
             category: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            subcategory: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -73,7 +102,6 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
-            // item or service
             productType: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -81,7 +109,6 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                   isIn: [['Item', 'Service']]
                 }
             },
-            // sell or rent
             offerType: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -93,18 +120,18 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 type: DataTypes.STRING,
                 allowNull: true
             },
-            subcategory: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
             expirationDate: {
                 type: DataTypes.STRING,
-                allowNull: true
+                allowNull: false
             },
-            // available, lent, sold
+            isDeliverable: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
             status: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                defaultValue: 'Available',
                 validate: {
                   isIn: [['Available', 'Lent', 'Sold']]
                 }
@@ -114,19 +141,11 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 defaultValue: false,
                 allowNull: false
             },
-            userId: {
-                type: DataTypes.INTEGER,
-                allowNull: false
-            },
             rejectionMessage: {
                 type: DataTypes.STRING,
                 defaultValue : null,
                 allowNull: true,
             },
-            isDeliverable: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-            }
 
         },
             {
@@ -144,17 +163,17 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     }
 
     public static createAssociations(): void {
-      Product.User = Product.belongsTo(User, {
+      Product.belongsTo(User, {
         foreignKey: 'userId',
         as: 'user'
       });
 
-      Product.Address = Product.belongsTo(Address, {
+      Product.belongsTo(Address, {
         foreignKey: 'addressId',
         as: 'address'
       });
 
-      Product.Orders = Product.hasMany(Order, {
+      Product.hasMany(Order, {
         foreignKey: 'productId',
         as: 'orders'
       });

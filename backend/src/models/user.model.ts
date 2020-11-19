@@ -1,8 +1,19 @@
-import { Optional, Model, Sequelize, DataTypes, Association } from 'sequelize';
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  Association,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Optional
+} from 'sequelize';
 import { Order } from './order.model';
 import { Product } from './product.model';
 import { Preference } from './preference.model';
-import { Address, AddressAttributes } from './address.model';
+import { Address } from './address.model';
 
 export interface UserAttributes {
     userId: number;
@@ -21,12 +32,32 @@ export interface UserAttributes {
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-    public static Purchases: Association;
-    public static Sold: Association;
-    public static Preference: Association;
-    public static Address: Association;
-    public static Products: Association;
-    public static sequelize: Sequelize;
+    public static associations: {
+      purchases: Association<User, Order>,
+      sold: Association<User, Order>,
+      products: Association<User, Product>,
+      preference: Association<User, Preference>,
+      address: Association<User, Address>,
+    };
+
+    public getOrdersSold!: HasManyGetAssociationsMixin<Order>;
+    public addOrderSold!: HasManyAddAssociationMixin<Order, number>;
+    public hasOrdersSold!: HasManyHasAssociationMixin<Order, number>;
+    public countOrdersSold!: HasManyCountAssociationsMixin;
+    public createOrderSold!: HasManyCreateAssociationMixin<Order>;
+
+    public getOrdersPurchased!: HasManyGetAssociationsMixin<Order>;
+    public addOrderPurchased!: HasManyAddAssociationMixin<Order, number>;
+    public hasOrdersPurchased!: HasManyHasAssociationMixin<Order, number>;
+    public countOrdersPurchased!: HasManyCountAssociationsMixin;
+    public createOrderPurchased!: HasManyCreateAssociationMixin<Order>;
+
+    public getProducts!: HasManyGetAssociationsMixin<Order>;
+    public addProduct!: HasManyAddAssociationMixin<Order, number>;
+    public hasProducts!: HasManyHasAssociationMixin<Order, number>;
+    public countProducts!: HasManyCountAssociationsMixin;
+    public createProduct!: HasManyCreateAssociationMixin<Order>;
+
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -82,11 +113,13 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             },
             isAdmin: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false
+                defaultValue: false,
+                allowNull: false
             },
             wallet: {
-                type: DataTypes.NUMBER,
-                defaultValue: 100
+                type: DataTypes.FLOAT(5, 2),
+                defaultValue: 100,
+                allowNull: false
             }
           },
           {
@@ -94,32 +127,30 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
               tableName: 'users'
           }
         );
-
-        this.sequelize = sequelize;
     }
 
     public static createAssociations(): void {
-      User.Preference = User.hasOne(Preference, {
+      User.hasOne(Preference, {
         foreignKey: 'userId',
         as: 'preference'
       });
 
-      User.Address = User.belongsTo(Address, {
+      User.belongsTo(Address, {
         foreignKey: 'addressId',
         as: 'address'
       });
 
-      User.Products = User.hasMany(Product, {
+      User.hasMany(Product, {
         foreignKey: 'userId',
         as: 'products'
       });
 
-      User.Purchases = User.hasMany(Order, {
+      User.hasMany(Order, {
         foreignKey: 'buyerId',
         as: 'purchases'
       });
 
-      User.Sold = User.hasMany(Order, {
+      User.hasMany(Order, {
         foreignKey: 'sellerId',
         as: 'sold'
       });
