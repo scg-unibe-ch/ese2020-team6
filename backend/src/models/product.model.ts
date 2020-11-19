@@ -1,17 +1,8 @@
-import {
-  Sequelize,
-  Model,
-  DataTypes,
-  HasManyGetAssociationsMixin,
-  HasManyAddAssociationMixin,
-  HasManyHasAssociationMixin,
-  Association,
-  HasManyCountAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  Optional } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
 import { Address } from './address.model';
 import { Order } from './order.model';
 import { User } from './user.model';
+import { IsForRent } from '../interfaces/is-for-rent.interface';
 
 
 export interface ProductAttributes {
@@ -36,19 +27,16 @@ export interface ProductAttributes {
 export interface ProductCreationAttributes extends
 Optional<ProductAttributes, 'productId' | 'isAccepted' | 'status' | 'rejectionMessage'> { }
 
-export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
+export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes, IsForRent {
+    get purchasedStatus(): string {
+      return this.offerType === 'Rent' ? 'Lent' : 'Sold';
+    }
 
     public static associations: {
       orders: Association<Product, Order>;
       address: Association<Product, Address>;
       user: Association<Product, User>;
     };
-
-    public getOrders!: HasManyGetAssociationsMixin<Order>;
-    public addOrder!: HasManyAddAssociationMixin<Order, number>;
-    public hasOrders!: HasManyHasAssociationMixin<Order, number>;
-    public countOrders!: HasManyCountAssociationsMixin;
-    public createOrder!: HasManyCreateAssociationMixin<Order>;
 
     productId!: number;
     title!: string;
@@ -178,4 +166,6 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
         as: 'orders'
       });
     }
+
+    public isForRent: () => boolean = () => this.offerType === 'Rent';
 }

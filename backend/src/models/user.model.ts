@@ -14,6 +14,7 @@ import { Order } from './order.model';
 import { Product } from './product.model';
 import { Preference } from './preference.model';
 import { Address } from './address.model';
+import { CutUser } from '../interfaces/cut-user.interface';
 
 export interface UserAttributes {
     userId: number;
@@ -119,7 +120,14 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             wallet: {
                 type: DataTypes.FLOAT(5, 2),
                 defaultValue: 100,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                  isGreaterThanZero(value: number) {
+                    if (value < 0) {
+                      throw new Error('Your budget is too low.');
+                    }
+                  }
+                }
             }
           },
           {
@@ -154,5 +162,16 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         foreignKey: 'sellerId',
         as: 'sold'
       });
+    }
+
+    /*
+      Removes all information about a user, except for userName, email and userId.
+    */
+    public cutUserInformation(): CutUser {
+      return {
+        userName: this.userName,
+        email: this.email,
+        userId: this.userId
+      };
     }
 }

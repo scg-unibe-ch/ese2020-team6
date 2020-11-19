@@ -1,11 +1,10 @@
-import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Order } from './order.model';
 import { Address } from './address.model';
+import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
 
-export interface ItemSoldAttributes {
+export interface ItemSoldAttributes extends OrderSubTypeAttributes {
     itemsoldId: number;
-    orderId: number;
-    paymentMethod: string;
     shippingAddressId: number;
 }
 
@@ -13,12 +12,15 @@ export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes,
 
 }
 
-export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes> implements ItemSoldAttributes {
+export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttributes>
+implements ItemSoldAttributes, OrderSubType {
 
     public static associations: {
       order: Association<ItemSold, Order>,
       shippingAddress: Association<ItemSold, Address>
     };
+
+    public getOrder!: BelongsToGetAssociationMixin<Order>;
 
     itemsoldId!: number;
     orderId!: number;
@@ -64,4 +66,6 @@ export class ItemSold extends Model<ItemSoldAttributes, ItemSoldCreationAttribut
         as: 'shippingAddress'
       });
     }
+    public isForRent: () => boolean = () => false;
+    public getHours: () => number = () => 1;
 }

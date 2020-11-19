@@ -1,10 +1,9 @@
-import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Order } from './order.model';
+import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
 
-export interface ServiceRentedAttributes {
+export interface ServiceRentedAttributes extends OrderSubTypeAttributes {
     serviceRentedId: number;
-    orderId: number;
-    paymentMethod: string;
     hours: number;
 }
 
@@ -12,11 +11,14 @@ export interface ServiceRentedCreationAttributes extends Optional<ServiceRentedA
 
 }
 
-export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedCreationAttributes> implements ServiceRentedAttributes {
+export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedCreationAttributes>
+implements ServiceRentedAttributes, OrderSubType {
 
     public static associations: {
       order: Association<ServiceRented, Order>
     };
+
+    public getOrder!: BelongsToGetAssociationMixin<Order>;
 
     serviceRentedId!: number;
     orderId!: number;
@@ -57,4 +59,6 @@ export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedC
         as: 'order'
       });
     }
+    public isForRent: () => boolean = () => false;
+    public getHours: () => number = () => this.hours;
 }

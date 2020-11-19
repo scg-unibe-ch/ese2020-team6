@@ -1,15 +1,4 @@
-import {
-  Sequelize,
-  Model,
-  DataTypes,
-  HasManyGetAssociationsMixin,
-  HasManyAddAssociationMixin,
-  HasManyHasAssociationMixin,
-  Association,
-  HasManyCountAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  Optional
-} from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { User } from './user.model';
 import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
@@ -36,23 +25,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
       servicesRented: Association<Order, ServiceRented>
     };
 
-    public getItemsSold!: HasManyGetAssociationsMixin<ItemSold>;
-    public addItemSold!: HasManyAddAssociationMixin<ItemSold, number>;
-    public hasItemsSold!: HasManyHasAssociationMixin<ItemSold, number>;
-    public countItemsSold!: HasManyCountAssociationsMixin;
-    public createItemSold!: HasManyCreateAssociationMixin<ItemSold>;
-
-    public getItemsRented!: HasManyGetAssociationsMixin<ItemRented>;
-    public addItemRented!: HasManyAddAssociationMixin<ItemRented, number>;
-    public hasItemsRented!: HasManyHasAssociationMixin<ItemRented, number>;
-    public countItemsRented!: HasManyCountAssociationsMixin;
-    public createItemRented!: HasManyCreateAssociationMixin<ItemRented>;
-
-    public getServicesRented!: HasManyGetAssociationsMixin<ServiceRented>;
-    public addServiceRented!: HasManyAddAssociationMixin<ServiceRented, number>;
-    public hasServicesRented!: HasManyHasAssociationMixin<ServiceRented, number>;
-    public countServicesRented!: HasManyCountAssociationsMixin;
-    public createServiceRented!: HasManyCreateAssociationMixin<ServiceRented>;
+    public getProduct!: BelongsToGetAssociationMixin<Product>;
 
     orderId!: number;
     buyerId!: number;
