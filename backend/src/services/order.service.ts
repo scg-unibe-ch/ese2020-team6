@@ -129,15 +129,21 @@ export class OrderService {
       shippingAddress: AddressCreationAttributes,
       hours: number
     ): Promise<void> {
+      const price = 10; // getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
         return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
-        .then((checkedItemRented) => {
-          console.log(checkedItemRented);
-          return Promise.resolve();
+        .then((checkedItemRented: RentItemAttributes) => {
+          return this.createItemRented(checkedOrder, checkedItemRented, shippingAddress)
+          .then((createdItemRented: ItemRented) => {
+            Promise.all([
+              ProductService.setStatus(productId, 'Rent'),
+              UserService.transerFee(buyerId, sellerId, price)
+            ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+          }).catch((err: any) => Promise.reject(err));
         }).catch((err: any) => Promise.reject(err));
       }).catch((err: any) => Promise.reject(err));
     }
@@ -149,17 +155,24 @@ export class OrderService {
       paymentMethod: string,
       hours: number
     ): Promise<void> {
+      const price = 10; // getPrice();
       return this.buildAndCheckOrderAttributes(
         buyerId,
         sellerId,
         productId
       ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours).then((checkedServiceRented) => {
-          console.log(checkedServiceRented);
-          return Promise.resolve();
-        });
-      });
-    }
+        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours)
+        .then((checkedServiceRented: RentServiceAttributes) => {
+          return this.createServiceRented(checkedOrder, checkedServiceRented)
+          .then((createdServiceRented: ServiceRented) => {
+          Promise.all([
+            ProductService.setStatus(productId, 'Rent'),
+            UserService.transerFee(buyerId, sellerId, price)
+          ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+        }).catch((err: any) => Promise.reject(err));
+      }).catch((err: any) => Promise.reject(err));
+    }).catch((err: any) => Promise.reject(err));
+  }
 
     public static createItemSold(
       order: OrderCreationAttributes,
@@ -183,12 +196,19 @@ export class OrderService {
       });
     }
 
-    public static createItemRented(): void {
-
+    public static createItemRented (
+      order: OrderCreationAttributes,
+      itemRented: RentItemAttributes,
+      shippingAddress: AddressCreationAttributes
+    ): Promise<ItemRented> {
+      return ItemRented.findOne();
     }
 
-    public static createServiceRented(): void {
-
+    public static createServiceRented (
+      order: OrderCreationAttributes,
+      serviceRented: RentServiceAttributes
+    ): Promise<ServiceRented> {
+      return ServiceRented.findOne();
     }
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
