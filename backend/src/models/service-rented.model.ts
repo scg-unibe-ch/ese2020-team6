@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Order } from './order.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { Associations } from '../classes/associations.class';
 
 export interface ServiceRentedAttributes extends OrderSubTypeAttributes {
     serviceRentedId: number;
@@ -11,7 +12,7 @@ export interface ServiceRentedCreationAttributes extends Optional<ServiceRentedA
 
 }
 
-export class ServiceRented extends Model<ServiceRentedAttributes, ServiceRentedCreationAttributes>
+export class ServiceRented extends Associations<ServiceRentedAttributes, ServiceRentedCreationAttributes>
 implements ServiceRentedAttributes, OrderSubType {
 
     public static associations: {
@@ -59,6 +60,5 @@ implements ServiceRentedAttributes, OrderSubType {
         as: 'order'
       });
     }
-    public isForRent: () => boolean = () => false;
     public getHours: () => number = () => this.hours;
 }

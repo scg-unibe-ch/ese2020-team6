@@ -1,5 +1,6 @@
 import { Transaction } from 'sequelize';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
+import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
 
 export class AddressService {
 
@@ -16,40 +17,33 @@ export class AddressService {
       return Promise.resolve(address);
     }
 
-    public static getAddressByValues(address: AddressAttributes): Promise<Address> {
+    public static getAddressByValues(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
       return Address.findOne({
-        where: address
+        where: address,
+        rejectOnEmpty: new InstanceDoesNotExistError(Address.getTableName()),
+        transaction: transaction
       });
     }
 
-    public static getAddressById(addressId: number): Promise<Address> {
-      return Address.findOne({
-        where: {
-          addressId: addressId
-        }
-      });
+    public static getAddressById(addressId: number, transaction?: Transaction): Promise<Address> {
+      return Address.findByPk(addressId, { transaction: transaction });
     }
 
-    public static addressDoesExist(address: AddressAttributes): Promise<number> {
-      return this.getAddressByValues(address).then((existingAddress: AddressAttributes) => {
-        if (existingAddress) {
-          return Promise.resolve(existingAddress.addressId);
-        } else {
-          return Promise.reject();
-        }
-      }).catch(err => Promise.reject(err));
+    public static addressDoesExist(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
+      return this.getAddressByValues(address, transaction);
     }
 
-    public static createAddress(address: AddressAttributes): Promise<Address> {
+    public static createAddress(address: AddressCreationAttributes): Promise<Address> {
       return Address.create(address);
     }
 
     public static findOrCreate(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
-      return Address.findOrCreate({
-        where: address,
-        defaults: address,
-        transaction: transaction
-      }).then(([createdAddress, created]: [Address, boolean]) => Promise.resolve(createdAddress))
-      .catch((err: any) => Promise.reject(err));
-      }
+      return this.addressDoesExist(address, transaction).catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Address.create(address, { transaction: transaction });
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    }
 }

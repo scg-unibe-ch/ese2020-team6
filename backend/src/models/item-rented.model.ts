@@ -2,6 +2,7 @@ import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssocia
 import { Order } from './order.model';
 import { Address } from './address.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { Associations } from '../classes/associations.class';
 
 export interface ItemRentedAttributes extends OrderSubTypeAttributes {
     itemRentedId: number;
@@ -13,7 +14,7 @@ export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttribu
 
 }
 
-export class ItemRented extends Model<ItemRentedAttributes, ItemRentedCreationAttributes>
+export class ItemRented extends Associations<ItemRentedAttributes, ItemRentedCreationAttributes>
 implements ItemRentedAttributes, OrderSubType {
 
     public static associations: {
@@ -72,6 +73,5 @@ implements ItemRentedAttributes, OrderSubType {
         as: 'shippingAddress'
       });
     }
-    public isForRent: () => boolean = () => false;
     public getHours: () => number = () => this.hours;
 }

@@ -1,11 +1,18 @@
-import { Sequelize } from 'sequelize';
-import { UserAttributes, User } from '../models/user.model';
-import { AddressAttributes, Address } from '../models/address.model';
-import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { Sequelize, Transaction, Op } from 'sequelize';
+import { User, UserAttributes, UserCreationAttributes} from '../models/user.model';
+import { Address, AddressAttributes } from '../models/address.model';
+import { Order } from '../models/order.model';
+
 import { AddressService } from './address.service';
+import { OrderService } from './order.service';
+
+import { CutUser } from '../interfaces/cut-user.interface';
+import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { CO } from '../interfaces/orders.interface';
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-const { Op } = require('sequelize');
 
 interface HasUserId extends Partial<UserAttributes> {
   userId: number;
@@ -36,37 +43,11 @@ export class UserService {
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
 
-        const checkIfUserDoesNotExist: Promise<void> = this.doesUserNotExistByUsernameEmail(user.userName, user.email);
-        const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
-
-        return UserService.checkUserAttributes(user).then(() => {
-          return AddressService.checkAddressAttributes(address).then(() => {
-            return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
-              return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
-                return this.insertUserWithExistingAddress(user, addressId).then((createdUser: User) => {
-                  return this.getUserById(createdUser.userId);
-                }).catch((err: any) => Promise.reject(err));
-              }).catch(() => { // address does not exist -> insert user and address
-                return this.insertUserAndAddress(user, address).then().catch();
-              });
-            }).catch((err: any) => Promise.reject(err)); // user does already exist -> reject
-          }).catch((err: any) => Promise.reject(err));
-        }).catch((err: any) => Promise.reject(err));
-    }
-
-    private static insertUserAndAddress(user: UserAttributes, address: AddressAttributes): Promise<User> {
-      return User.create(
-        Object.assign(user, {address: address, preference: {}}),
-        {
-          include: [{
-            association: User.associations.preference
-          },
-          {
-            association: User.associations.address,
-            include : [ Address.associations.users ]
-          }]
-        }
-      );
+        return UserService.checkUserAttributes(user).then(() => AddressService.checkAddressAttributes(address))
+        .then(() => this.doesUserNotExistByUsernameEmail(user.userName, user.email))
+        .then(() => AddressService.findOrCreate(address))
+        .then((existingAddress: Address) => this.insertUserWithExistingAddress(user, existingAddress.addressId))
+        .then((createdUser: User) => this.getUserById(createdUser.userId));
     }
 
     private static insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
@@ -121,15 +102,19 @@ export class UserService {
       });
     }
 
-    public static transerFee(buyerId: number, sellerId: number, price: number): Promise<void> {
-      return Promise.all([
-        this.getUserById(buyerId).then((buyer: User) => {
-          return this.updateOnlyUser({userId: buyerId, wallet: -buyer.wallet});
-        }).catch((err: any) => Promise.reject(err)),
-        this.getUserById(sellerId).then((seller: User) => {
-          return this.updateOnlyUser({userId: sellerId, wallet: seller.wallet});
-        }).catch((err: any) => Promise.reject(err))
-      ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+    public static transerFee(orderSubType: OrderSubType, checkedOrder: CO, transaction?: Transaction): Promise<[User, User]> {
+      return OrderService.getOrderTotal(orderSubType, checkedOrder)
+      .then((total: number) => Promise.all([
+        checkedOrder.buyer.update(
+          { wallet: checkedOrder.buyer.wallet - total },
+          { transaction: transaction }
+        ),
+        checkedOrder.seller.update(
+          { wallet: checkedOrder.seller.wallet + total },
+          { transaction: transaction }
+        )
+      ])).catch((err) => {console.log(transaction); return Promise.reject(err);
+      });
     }
 
     private static updateOnlyUser(user: HasUserId): Promise<void> {
@@ -163,25 +148,25 @@ export class UserService {
       });
     }
 
-    private static doesUserExistById(userId: number): Promise<User> {
+    public static doesUserExistById(userId: number): Promise<User> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
       }).catch((err: any) => this.handleError(err));
     }
 
-    private static doesUserNotExistById(userId: number): Promise<void> {
+    public static doesUserNotExistById(userId: number): Promise<void> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userId: userId}, existingUser);
       }).catch((err: any) => this.handleError(err));
     }
 
-    private static doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
+    public static doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
       }).catch((err: any) => this.handleError(err));
     }
 
-    private static doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
+    public static doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userName: username, email: email}, existingUser);
       }).catch((err: any) => this.handleError(err));

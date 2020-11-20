@@ -1,9 +1,13 @@
+import { Transaction, Op } from 'sequelize';
+import { Product, ProductAttributes, ProductCreationAttributes } from '../models/product.model';
+import { Address, AddressAttributes } from '../models/address.model';
+import { Order } from '../models/order.model';
 
-import { Product, ProductAttributes } from '../models/product.model';
-
-const { Op } = require('sequelize');
 import { AddressService } from './address.service';
-import { AddressAttributes, Address } from '../models/address.model';
+import { OrderSubType } from '../interfaces/order-sub-type.interface';
+import { CO } from '../interfaces/orders.interface';
+
+import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
 
 interface HasProductId extends Partial<ProductAttributes> {
   productId: number;
@@ -28,19 +32,19 @@ export class ProductService {
     does not exist yet, the address will be created and assigned to the product.
   */
   public static  createProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
-    const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
+    const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
     product.status = 'Available';
     product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
     product.isDeliverable = product.productType === 'Service' ? true : product.isDeliverable;
     return ProductService.checkProductAttributes(product).then(() => {
       return AddressService.checkAddressAttributes(address).then(() => {
-        return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new product
-          return this.insertProductWithExistingAddress(product, addressId).catch((err: any) => Promise.reject(err));
+        return checkIfAddressDoesExist.then((existingAddress: Address) => { // address does exist -> only insert new product
+          return this.insertProductWithExistingAddress(product, existingAddress.addressId).catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
           return this.insertProductAndAddress(product, address).catch((err: any) => Promise.reject(err));
         });
-      }).catch((err: any) => Promise.reject(err));
-    }).catch((err: any) => Promise.reject(err));
+      });
+    });
 
   }
 
@@ -79,9 +83,9 @@ export class ProductService {
     This is so the product that has been deleted can be returned and still
     be used for further interaction.
   */
-  public static deleteProduct(productId: number, userId: number): Promise<Product> {
+  public static deleteProduct(productId: number, sellerId: number): Promise<Product> {
     return this.getProductById(productId).then((product: Product) => {
-      if (product.userId === userId) {
+      if (product.sellerId === sellerId) {
         return Product.destroy({
           where: {
             productId: productId
@@ -113,10 +117,10 @@ export class ProductService {
     product.rejectionMessage = null;
     product.isAccepted = false;
 
-    const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
+    const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
 
-    return checkIfAddressDoesExist.then((addressId: number) => {
-      product.addressId = addressId;
+    return checkIfAddressDoesExist.then((existingAddress: Address) => {
+      product.addressId = existingAddress.addressId;
       return this.updateOnlyProduct(product).then(() => {
         return this.getProductById(product.productId);
       }).catch((err: any) => Promise.reject(err));
@@ -177,8 +181,11 @@ export class ProductService {
     return this.getProductById(productId);
   }
 
-  public static setStatus(productId: number, status: string): Promise<void> {
-   return this.updateOnlyProduct({productId: productId, status: status});
+  public static setStatus(checkedOrder: CO, transaction?: Transaction): Promise<Product> {
+    return checkedOrder.product.update(
+      { status: checkedOrder.product.purchasedStatus },
+      { transaction: transaction }
+    );
   }
 
   /************************************************
@@ -196,18 +203,18 @@ export class ProductService {
     });
   }
 
-  public static getMyRejectedProducts(userId: number): Promise<Array<Product>> {
+  public static getMyRejectedProducts(sellerId: number): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
-      userId: userId,
+      sellerId: sellerId,
       isAccepted: false,
       rejectionMessage: { [Op.ne]: null }
     });
   }
 
-  public static getMyRejectedProductsCount(userId: number): Promise<Number> {
+  public static getMyRejectedProductsCount(sellerId: number): Promise<Number> {
     return Product.count({
       where: {
-        userId: userId,
+        sellerId: sellerId,
         isAccepted: false,
         rejectionMessage: { [Op.ne]: null }
       }
@@ -230,9 +237,9 @@ export class ProductService {
     });
   }
 
-  public static getMyProducts(userId: number): Promise<Array<Product>> {
+  public static getMyProducts(sellerId: number): Promise<Array<Product>> {
     return this.getProductsByAllAttributes({
-      userId: userId
+      sellerId: sellerId
     });
   }
 
@@ -283,5 +290,23 @@ export class ProductService {
       },
       include: [Product.associations.address]
     };
+  }
+
+  public static productDoesExist(product: Partial<ProductAttributes>, transaction?: Transaction): Promise<Product> {
+    return Product.findOne({
+      where: product,
+      rejectOnEmpty: new InstanceDoesNotExistError(Product.getTableName()),
+      transaction: transaction
+    });
+  }
+
+  public static findOrCreate(product: ProductCreationAttributes, transaction?: Transaction): Promise<Product> {
+    return this.productDoesExist(product, transaction).catch((err: any) => {
+      if (err instanceof InstanceDoesNotExistError) {
+        return Product.create(product, { transaction: transaction });
+      } else {
+        return Promise.reject(err);
+      }
+    });
   }
 }

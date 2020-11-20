@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, Association, Optional } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Address } from './address.model';
 import { Order } from './order.model';
 import { User } from './user.model';
@@ -19,7 +19,7 @@ export interface ProductAttributes {
     expirationDate: number;
     status: string;
     isAccepted: boolean;
-    userId: number;
+    sellerId: number;
     rejectionMessage: string;
     isDeliverable: boolean;
 
@@ -38,6 +38,8 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
       user: Association<Product, User>;
     };
 
+    public getSeller!: BelongsToGetAssociationMixin<User>;
+
     productId!: number;
     title!: string;
     description!: string;
@@ -51,7 +53,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     expirationDate!: number;
     status!: string;
     isAccepted!: boolean;
-    userId!: number;
+    sellerId!: number;
     rejectionMessage!: string;
     isDeliverable!: boolean;
 
@@ -62,7 +64,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 autoIncrement: true,
                 primaryKey: true
             },
-            userId: {
+            sellerId: {
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
@@ -152,8 +154,9 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
 
     public static createAssociations(): void {
       Product.belongsTo(User, {
-        foreignKey: 'userId',
-        as: 'user'
+        targetKey: 'userId',
+        foreignKey: 'sellerId',
+        as: 'seller'
       });
 
       Product.belongsTo(Address, {

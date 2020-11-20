@@ -15,6 +15,7 @@ import { Product } from './product.model';
 import { Preference } from './preference.model';
 import { Address } from './address.model';
 import { CutUser } from '../interfaces/cut-user.interface';
+import { Associations } from '../classes/associations.class';
 
 export interface UserAttributes {
     userId: number;
@@ -32,7 +33,7 @@ export interface UserAttributes {
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+export class User extends Associations<UserAttributes, UserCreationAttributes> implements UserAttributes {
     public static associations: {
       purchases: Association<User, Order>,
       sold: Association<User, Order>,
@@ -149,7 +150,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
       });
 
       User.hasMany(Product, {
-        foreignKey: 'userId',
+        sourceKey: 'userId',
+        foreignKey: 'sellerId',
         as: 'products'
       });
 

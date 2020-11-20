@@ -8,208 +8,241 @@ import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '
 import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
+import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { CO, CIS, COIS, COISExPromise, CIR, COIR, COIRExPromise, CSR, COSR, COSRExPromise } from '../interfaces/orders.interface';
+
 import { UserService } from './user.service';
 import { AddressService } from './address.service';
 import { ProductService } from './product.service';
 
-interface BuyItemAtrributes {
-  paymentMethod: string;
-  shippingAddress: AddressCreationAttributes;
-}
-
-interface RentItemAttributes {
-  paymentMethod: string;
-  shippingAddress: AddressCreationAttributes;
-  hours: number;
-}
-
-interface RentServiceAttributes {
-  paymentMethod: string;
-  hours: number;
-}
+import { StatusError } from '../errors/status.error';
 
 export class OrderService {
 
     public static buildAndCheckOrderAttributes(
-      buyerId: number,
-      sellerId: number,
-      productId: number
-    ): Promise<OrderCreationAttributes> {
-      if (buyerId && sellerId && productId) {
-        return Promise.resolve({
-          buyerId: buyerId,
-          sellerId: sellerId,
-          productId: productId
+      buyerId: number, productId: number
+    ): Promise<CO> {
+      if (buyerId && productId) {
+        return Promise.all([
+          UserService.doesUserExistById(buyerId),
+          ProductService.productDoesExist({productId: productId})
+          .then((product: Product) => product.getSeller().then((seller: User) => Promise.resolve([product, seller])))
+        ]).then(([buyer, [product, seller]]: [User, [Product, User]]) => {
+          if (buyer.userId === seller.userId) {
+            return Promise.reject(new StatusError('Seller cannot buy his own product!', 400));
+          } else {
+            return Promise.resolve({
+              creationAttributes: { buyerId: buyerId, sellerId: product.sellerId, productId: productId },
+              buyer: buyer, seller: seller, product: product
+            });
+          }
         });
       } else {
-        return Promise.reject({ message: 'Not enought information to build the order!' });
+        return Promise.reject(new StatusError('Not enought information to build the order!', 400));
       }
     }
 
     public static buildAndCheckItemSoldAttributes(
-      paymentMethod: string,
-      shippingAddress: AddressCreationAttributes
-    ): Promise<BuyItemAtrributes> {
+      paymentMethod: string, shippingAddress: AddressCreationAttributes
+    ): Promise<CIS> {
       if (paymentMethod && shippingAddress) {
-        return AddressService.checkAddressAttributes(shippingAddress).then(() => {
+        return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
           return Promise.resolve({
-            paymentMethod: paymentMethod,
-            shippingAddress: shippingAddress
+            creationAttributes: {
+              paymentMethod: paymentMethod,
+              shippingAddressId: existingShippingAddress.addressId
+            },
+            shippingAddress: existingShippingAddress
           });
-        }).catch((err: any) => Promise.reject(err));
+        });
       } else {
-        return Promise.reject({ message: 'Not enought information to build the buy item order!' });
+        return Promise.reject(new StatusError('Not enought information to build the buy item order!', 400));
       }
     }
 
 
     public static buildAndCheckItemRentedAttributes(
-      paymentMethod: string,
-      shippingAddress: AddressCreationAttributes,
-      hours: number
-    ): Promise<RentItemAttributes> {
+      paymentMethod: string, shippingAddress: AddressCreationAttributes, hours: number
+    ): Promise<CIR> {
       if (paymentMethod && shippingAddress && hours) {
-        return AddressService.checkAddressAttributes(shippingAddress).then(() => {
+        return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
           return Promise.resolve({
-            paymentMethod: paymentMethod,
-            shippingAddress: shippingAddress,
-            hours: hours
+            creationAttributes: {
+              paymentMethod: paymentMethod,
+              hours: hours,
+              shippingAddressId: existingShippingAddress.addressId
+            },
+            shippingAddress: existingShippingAddress,
           });
-        }).catch((err: any) => Promise.reject(err));
+        });
       } else {
-        return Promise.reject({ message: 'Not enought information to build the rent item order!' });
+        return Promise.reject(new StatusError('Not enought information to build the buy item order!', 400));
       }
     }
 
     public static buildAndCheckServiceRentedAttributes(
-      paymentMethod: string,
-      hours: number
-    ): Promise<RentServiceAttributes> {
+      paymentMethod: string, hours: number
+    ): Promise<CSR> {
       if (paymentMethod && hours) {
         return Promise.resolve({
-          paymentMethod: paymentMethod,
-          hours: hours
+          creationAttributes: {
+            paymentMethod: paymentMethod,
+            hours: hours
+          },
         });
       } else {
-        return Promise.reject({ message: 'Not enought information to build the rent service order!' });
+        return Promise.reject(new StatusError('Not enought information to build the rent service order!', 400));
       }
     }
 
-    public static buyItem(
-      buyerId: number,
-      sellerId: number,
-      productId: number,
-      paymentMethod: string,
-      shippingAddress: AddressCreationAttributes
-    ): Promise<void> {
-      const price =  10; // getPrice();
-      return this.buildAndCheckOrderAttributes(
-        buyerId,
-        sellerId,
-        productId
-      ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress)
-        .then((checkedItemSold: BuyItemAtrributes) => {
-         return this.createItemSold(checkedOrder, checkedItemSold, shippingAddress)
-         .then((itemSold: ItemSold) => {
-           Promise.all([
-            ProductService.setStatus(productId, 'Sold'),
-            UserService.transerFee(buyerId, sellerId, price)
-           ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
-         }).catch((err: any) => Promise.reject(err));
-        }).catch((err: any) => Promise.reject(err));
-      }).catch((err: any) => Promise.reject(err));
-    }
-
-    public static rentItem(
-      buyerId: number,
-      sellerId: number,
-      productId: number,
-      paymentMethod: string,
-      shippingAddress: AddressCreationAttributes,
-      hours: number
-    ): Promise<void> {
-      const price = 10; // getPrice();
-      return this.buildAndCheckOrderAttributes(
-        buyerId,
-        sellerId,
-        productId
-      ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
-        .then((checkedItemRented: RentItemAttributes) => {
-          return this.createItemRented(checkedOrder, checkedItemRented, shippingAddress)
-          .then((createdItemRented: ItemRented) => {
-            Promise.all([
-              ProductService.setStatus(productId, 'Rent'),
-              UserService.transerFee(buyerId, sellerId, price)
-            ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
-          }).catch((err: any) => Promise.reject(err));
-        }).catch((err: any) => Promise.reject(err));
-      }).catch((err: any) => Promise.reject(err));
-    }
-
-    public static rentService(
-      buyerId: number,
-      sellerId: number,
-      productId: number,
-      paymentMethod: string,
-      hours: number
-    ): Promise<void> {
-      const price = 10; // getPrice();
-      return this.buildAndCheckOrderAttributes(
-        buyerId,
-        sellerId,
-        productId
-      ).then((checkedOrder: OrderCreationAttributes) =>  {
-        return this.buildAndCheckServiceRentedAttributes(paymentMethod, hours)
-        .then((checkedServiceRented: RentServiceAttributes) => {
-          return this.createServiceRented(checkedOrder, checkedServiceRented)
-          .then((createdServiceRented: ServiceRented) => {
-          Promise.all([
-            ProductService.setStatus(productId, 'Rent'),
-            UserService.transerFee(buyerId, sellerId, price)
-          ]).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
-        }).catch((err: any) => Promise.reject(err));
-      }).catch((err: any) => Promise.reject(err));
-    }).catch((err: any) => Promise.reject(err));
-  }
-
-    public static createItemSold(
-      order: OrderCreationAttributes,
-      itemSold: BuyItemAtrributes,
-      shippingAddress: AddressCreationAttributes
-    ): Promise<ItemSold> {
-      return Order.sequelize.transaction((transaction: Transaction) => {
-        return AddressService.findOrCreate(shippingAddress, transaction).then((existingShippingAddress: Address) => {
-          return Order.create(order, { transaction: transaction }).then((createdOrder: Order) => {
-            return ItemSold.create(
-              Object.assign(itemSold, {
-                orderId: createdOrder.orderId,
-                shippingAddressId: existingShippingAddress.addressId
-              }),
-              {
-                transaction: transaction
-              }
-            );
-          });
+    private static checkBuyItem(
+      buyerId: number, productId: number, paymentMethod: string, shippingAddress: AddressCreationAttributes
+    ): Promise<COIS> {
+      return Promise.all([
+        this.buildAndCheckOrderAttributes(buyerId, productId),
+        this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress)
+      ])
+      .then(([checkedOrder, checkedItemSold]: COISExPromise) => {
+        return Promise.resolve({
+          checkedOrder: checkedOrder,
+          checkedItemSold: checkedItemSold
         });
       });
     }
 
-    public static createItemRented (
-      order: OrderCreationAttributes,
-      itemRented: RentItemAttributes,
+    private static checkRentItem(
+      buyerId: number, productId: number, paymentMethod: string, shippingAddress: AddressCreationAttributes, hours: number
+    ): Promise<COIR> {
+      return Promise.all([
+        this.buildAndCheckOrderAttributes(buyerId, productId),
+        this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
+      ])
+      .then(([checkedOrder, checkedItemRented]: COIRExPromise) => {
+        return Promise.resolve({
+          checkedOrder: checkedOrder,
+          checkedItemRented: checkedItemRented
+        });
+      });
+    }
+
+    private static checkRentService(
+      buyerId: number, productId: number, paymentMethod: string, hours: number
+    ): Promise<COSR> {
+      return Promise.all([
+        this.buildAndCheckOrderAttributes(buyerId, productId),
+        this.buildAndCheckServiceRentedAttributes(paymentMethod, hours)
+      ])
+      .then(([checkedOrder, checkedServiceRented]: COSRExPromise) => {
+        return Promise.resolve({
+          checkedOrder: checkedOrder,
+          checkedServiceRented: checkedServiceRented
+        });
+      });
+    }
+
+    public static buyItem(
+      buyerId: number,
+      productId: number,
+      paymentMethod: string,
       shippingAddress: AddressCreationAttributes
+    ): Promise<ItemSold> {
+      return this.checkBuyItem(buyerId, productId, paymentMethod, shippingAddress)
+      .then((checkedOrderItemSold: COIS) => {
+        return Order.sequelize.transaction((transaction: Transaction) => {
+          return this.createItemSold(checkedOrderItemSold.checkedOrder, checkedOrderItemSold.checkedItemSold, transaction)
+          .then((createdItemSold: ItemSold) => Promise.all([
+              ProductService.setStatus(checkedOrderItemSold.checkedOrder, transaction),
+              UserService.transerFee(createdItemSold, checkedOrderItemSold.checkedOrder, transaction)
+          ]).then(() => Promise.resolve(createdItemSold)));
+        });
+      });
+    }
+
+    public static rentItem(
+      buyerId: number,
+      productId: number,
+      paymentMethod: string,
+      shippingAddress: AddressCreationAttributes,
+      hours: number
     ): Promise<ItemRented> {
-      return ItemRented.findOne();
+      return this.checkRentItem(buyerId, productId, paymentMethod, shippingAddress, hours)
+      .then((checkedOrderItemRented: COIR) => {
+        return Order.sequelize.transaction((transaction: Transaction) => {
+          return this.createItemRented(checkedOrderItemRented.checkedOrder, checkedOrderItemRented.checkedItemRented, transaction)
+          .then((createdItemRented: ItemRented) => Promise.all([
+              ProductService.setStatus(checkedOrderItemRented.checkedOrder, transaction),
+              UserService.transerFee(createdItemRented, checkedOrderItemRented.checkedOrder, transaction)
+          ]).then(() => Promise.resolve(createdItemRented)));
+        });
+      });
+    }
+
+    public static rentService(
+      buyerId: number,
+      productId: number,
+      paymentMethod: string,
+      hours: number
+    ): Promise<ServiceRented> {
+      return this.checkRentService(buyerId, productId, paymentMethod, hours)
+      .then((checkedOrderServiceRented: COSR) => {
+        return Order.sequelize.transaction((transaction: Transaction) => {
+          return this.createServiceRented(
+            checkedOrderServiceRented.checkedOrder,
+            checkedOrderServiceRented.checkedServiceRented, transaction)
+          .then((createdServiceRented: ServiceRented) => Promise.all([
+              ProductService.setStatus(checkedOrderServiceRented.checkedOrder, transaction),
+              UserService.transerFee(createdServiceRented, checkedOrderServiceRented.checkedOrder, transaction)
+          ]).then(() => Promise.resolve(createdServiceRented)));
+        });
+      });
+    }
+
+    public static createItemSold(
+      checkedOrder: CO,
+      checkedItemSold: CIS,
+      transaction: Transaction
+    ): Promise<ItemSold> {
+      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
+      .then((createdOrder: Order) => {
+        return ItemSold.create(Object.assign(checkedItemSold.creationAttributes, {
+          orderId: createdOrder.orderId
+        }), { include: ItemSold.getAllAssociations(), transaction: transaction });
+      });
+    }
+
+    public static createItemRented (
+      checkedOrder: CO,
+      checkedItemRented: CIR,
+      transaction: Transaction
+    ): Promise<ItemRented> {
+      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
+      .then((createdOrder: Order) => {
+        return ItemRented.create(Object.assign(checkedItemRented.creationAttributes, {
+          orderId: createdOrder.orderId
+        }), { include: ItemRented.getAllAssociations(), transaction: transaction });
+      });
     }
 
     public static createServiceRented (
-      order: OrderCreationAttributes,
-      serviceRented: RentServiceAttributes
+      checkedOrder: CO,
+      checkedServiceRented: CSR,
+      transaction: Transaction
     ): Promise<ServiceRented> {
-      return ServiceRented.findOne();
+      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
+      .then((createdOrder: Order) => {
+        return ServiceRented.create(Object.assign(checkedServiceRented.creationAttributes, {
+          orderId: createdOrder.orderId
+        }), { include: ServiceRented.getAllAssociations(), transaction: transaction });
+      });
     }
+
+    public static getOrderTotal(orderSubType: OrderSubType, checkedOrder: CO): Promise<number> {
+      return Promise.resolve(orderSubType.getHours() * checkedOrder.product.price);
+    }
+
+    /************************************************
+      Getters
+    ************************************************/
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
       return this.getByAttributes({ buyerId: buyerId });

@@ -1,9 +1,7 @@
 import { BelongsToGetAssociationMixin } from 'sequelize';
 import { Order } from '../models/order.model';
-import { IsForRent } from '../interfaces/is-for-rent.interface';
 
-export interface OrderSubType extends IsForRent {
-  isForRent: () => boolean;
+export interface OrderSubType extends OrderSubTypeAttributes {
   getHours: () => number;
   getOrder: BelongsToGetAssociationMixin<Order>;
 }
