@@ -37,7 +37,7 @@ export class AddressService {
       return Address.create(address);
     }
 
-    public static findOrCreate(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
+    public static findOrCreateAddress(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
       return this.addressDoesExist(address, transaction).catch((err: any) => {
         if (err instanceof InstanceDoesNotExistError) {
           return Address.create(address, { transaction: transaction });

@@ -2,7 +2,6 @@ import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssocia
 import { Order } from './order.model';
 import { Address } from './address.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { Associations } from '../classes/associations.class';
 
 export interface ItemSoldAttributes extends OrderSubTypeAttributes {
     itemsoldId: number;
@@ -13,8 +12,8 @@ export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes,
 
 }
 
-export class ItemSold extends Associations<ItemSoldAttributes, ItemSoldCreationAttributes>
-implements ItemSoldAttributes, OrderSubType {
+export class ItemSold extends OrderSubType<ItemSoldAttributes, ItemSoldCreationAttributes>
+implements ItemSoldAttributes {
 
     public static associations: {
       order: Association<ItemSold, Order>,

@@ -1,4 +1,4 @@
-import { Association, Transaction } from 'sequelize';
+import { Association, Transaction, Model, ModelCtor } from 'sequelize';
 
 import { Product, ProductAttributes } from '../models/product.model';
 import { User, UserAttributes } from '../models/user.model';
@@ -8,14 +8,16 @@ import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '
 import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
-import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { CO, CIS, COIS, COISExPromise, CIR, COIR, COIRExPromise, CSR, COSR, COSRExPromise } from '../interfaces/orders.interface';
+import { OrderSubTypeCtor, OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { HasCreationArrtibutes, CO, COST, COCOST, CIS, COIS, COISExPromise, CIR, COIR, COIRExPromise, CSR, COSR, COSRExPromise } from '../interfaces/orders.interface';
 
 import { UserService } from './user.service';
 import { AddressService } from './address.service';
 import { ProductService } from './product.service';
 
 import { StatusError } from '../errors/status.error';
+import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
+import { InstanceDoesAlreadyExistError } from '../errors/instance-does-already-exist.error';
 
 export class OrderService {
 
@@ -46,11 +48,12 @@ export class OrderService {
       paymentMethod: string, shippingAddress: AddressCreationAttributes
     ): Promise<CIS> {
       if (paymentMethod && shippingAddress) {
-        return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
+        return AddressService.findOrCreateAddress(shippingAddress).then((existingShippingAddress: Address) => {
           return Promise.resolve({
             creationAttributes: {
               paymentMethod: paymentMethod,
-              shippingAddressId: existingShippingAddress.addressId
+              shippingAddressId: existingShippingAddress.addressId,
+              orderId: undefined
             },
             shippingAddress: existingShippingAddress
           });
@@ -65,12 +68,13 @@ export class OrderService {
       paymentMethod: string, shippingAddress: AddressCreationAttributes, hours: number
     ): Promise<CIR> {
       if (paymentMethod && shippingAddress && hours) {
-        return AddressService.findOrCreate(shippingAddress).then((existingShippingAddress: Address) => {
+        return AddressService.findOrCreateAddress(shippingAddress).then((existingShippingAddress: Address) => {
           return Promise.resolve({
             creationAttributes: {
               paymentMethod: paymentMethod,
               hours: hours,
-              shippingAddressId: existingShippingAddress.addressId
+              shippingAddressId: existingShippingAddress.addressId,
+              orderId: undefined
             },
             shippingAddress: existingShippingAddress,
           });
@@ -87,7 +91,8 @@ export class OrderService {
         return Promise.resolve({
           creationAttributes: {
             paymentMethod: paymentMethod,
-            hours: hours
+            hours: hours,
+            orderId: undefined
           },
         });
       } else {
@@ -105,7 +110,7 @@ export class OrderService {
       .then(([checkedOrder, checkedItemSold]: COISExPromise) => {
         return Promise.resolve({
           checkedOrder: checkedOrder,
-          checkedItemSold: checkedItemSold
+          checkedOrderSubType: checkedItemSold
         });
       });
     }
@@ -120,7 +125,7 @@ export class OrderService {
       .then(([checkedOrder, checkedItemRented]: COIRExPromise) => {
         return Promise.resolve({
           checkedOrder: checkedOrder,
-          checkedItemRented: checkedItemRented
+          checkedOrderSubType: checkedItemRented
         });
       });
     }
@@ -135,7 +140,7 @@ export class OrderService {
       .then(([checkedOrder, checkedServiceRented]: COSRExPromise) => {
         return Promise.resolve({
           checkedOrder: checkedOrder,
-          checkedServiceRented: checkedServiceRented
+          checkedOrderSubType: checkedServiceRented
         });
       });
     }
@@ -149,7 +154,7 @@ export class OrderService {
       return this.checkBuyItem(buyerId, productId, paymentMethod, shippingAddress)
       .then((checkedOrderItemSold: COIS) => {
         return Order.sequelize.transaction((transaction: Transaction) => {
-          return this.createItemSold(checkedOrderItemSold.checkedOrder, checkedOrderItemSold.checkedItemSold, transaction)
+          return this.createOrder<ItemSold>(ItemSold.scope(), checkedOrderItemSold, transaction)
           .then((createdItemSold: ItemSold) => Promise.all([
               ProductService.setStatus(checkedOrderItemSold.checkedOrder, transaction),
               UserService.transerFee(createdItemSold, checkedOrderItemSold.checkedOrder, transaction)
@@ -168,7 +173,7 @@ export class OrderService {
       return this.checkRentItem(buyerId, productId, paymentMethod, shippingAddress, hours)
       .then((checkedOrderItemRented: COIR) => {
         return Order.sequelize.transaction((transaction: Transaction) => {
-          return this.createItemRented(checkedOrderItemRented.checkedOrder, checkedOrderItemRented.checkedItemRented, transaction)
+          return this.createOrder<ItemRented>(ItemRented.scope(), checkedOrderItemRented, transaction)
           .then((createdItemRented: ItemRented) => Promise.all([
               ProductService.setStatus(checkedOrderItemRented.checkedOrder, transaction),
               UserService.transerFee(createdItemRented, checkedOrderItemRented.checkedOrder, transaction)
@@ -186,9 +191,7 @@ export class OrderService {
       return this.checkRentService(buyerId, productId, paymentMethod, hours)
       .then((checkedOrderServiceRented: COSR) => {
         return Order.sequelize.transaction((transaction: Transaction) => {
-          return this.createServiceRented(
-            checkedOrderServiceRented.checkedOrder,
-            checkedOrderServiceRented.checkedServiceRented, transaction)
+          return this.createOrder<ServiceRented>(ServiceRented.scope(), checkedOrderServiceRented, transaction)
           .then((createdServiceRented: ServiceRented) => Promise.all([
               ProductService.setStatus(checkedOrderServiceRented.checkedOrder, transaction),
               UserService.transerFee(createdServiceRented, checkedOrderServiceRented.checkedOrder, transaction)
@@ -197,46 +200,48 @@ export class OrderService {
       });
     }
 
-    public static createItemSold(
-      checkedOrder: CO,
-      checkedItemSold: CIS,
-      transaction: Transaction
-    ): Promise<ItemSold> {
-      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
-      .then((createdOrder: Order) => {
-        return ItemSold.create(Object.assign(checkedItemSold.creationAttributes, {
-          orderId: createdOrder.orderId
-        }), { include: ItemSold.getAllAssociations(), transaction: transaction });
+    private static createOrder<M extends OrderSubType<any, any>>(
+      model: ModelCtor<M>,
+      checkedOrderAndSubType: COCOST<M>,
+      transaction: Transaction): Promise<M> {
+      return Order.create(checkedOrderAndSubType.checkedOrder.creationAttributes, { transaction: transaction })
+      .then((createdOrder: Order) => Order.findOne({where: createdOrder}))
+      .then((createdOrder: Order) => model.create(Object.assign(checkedOrderAndSubType.checkedOrderSubType.creationAttributes, {
+        orderId: createdOrder.orderId
+      }), { transaction: transaction }));
+    }
+
+    public static orderDoesExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<Order> {
+      return Order.findOne({
+        where: order,
+        rejectOnEmpty: new InstanceDoesNotExistError(Order.getTableName()),
+        transaction: transaction
       });
     }
 
-    public static createItemRented (
-      checkedOrder: CO,
-      checkedItemRented: CIR,
-      transaction: Transaction
-    ): Promise<ItemRented> {
-      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
-      .then((createdOrder: Order) => {
-        return ItemRented.create(Object.assign(checkedItemRented.creationAttributes, {
-          orderId: createdOrder.orderId
-        }), { include: ItemRented.getAllAssociations(), transaction: transaction });
+    public static orderDoesNotExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<void> {
+      return this.orderDoesExist(order, transaction)
+      .then(() => Promise.reject(new InstanceDoesAlreadyExistError(Order.getTableName())))
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(err);
+        }
       });
     }
 
-    public static createServiceRented (
-      checkedOrder: CO,
-      checkedServiceRented: CSR,
-      transaction: Transaction
-    ): Promise<ServiceRented> {
-      return Order.create(checkedOrder.creationAttributes, { transaction: transaction })
-      .then((createdOrder: Order) => {
-        return ServiceRented.create(Object.assign(checkedServiceRented.creationAttributes, {
-          orderId: createdOrder.orderId
-        }), { include: ServiceRented.getAllAssociations(), transaction: transaction });
+    private static findOrCreateOrder(order: OrderCreationAttributes, transaction?: Transaction): Promise<Order> {
+      return this.orderDoesExist(order).catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Order.create(order, { transaction: transaction });
+        } else {
+          return Promise.reject(err);
+        }
       });
     }
 
-    public static getOrderTotal(orderSubType: OrderSubType, checkedOrder: CO): Promise<number> {
+    public static getOrderTotal(orderSubType: OrderSubType<any, any>, checkedOrder: CO): Promise<number> {
       return Promise.resolve(orderSubType.getHours() * checkedOrder.product.price);
     }
 

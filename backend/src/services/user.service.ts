@@ -45,7 +45,7 @@ export class UserService {
 
         return UserService.checkUserAttributes(user).then(() => AddressService.checkAddressAttributes(address))
         .then(() => this.doesUserNotExistByUsernameEmail(user.userName, user.email))
-        .then(() => AddressService.findOrCreate(address))
+        .then(() => AddressService.findOrCreateAddress(address))
         .then((existingAddress: Address) => this.insertUserWithExistingAddress(user, existingAddress.addressId))
         .then((createdUser: User) => this.getUserById(createdUser.userId));
     }
@@ -102,7 +102,7 @@ export class UserService {
       });
     }
 
-    public static transerFee(orderSubType: OrderSubType, checkedOrder: CO, transaction?: Transaction): Promise<[User, User]> {
+    public static transerFee(orderSubType: OrderSubType<any, any>, checkedOrder: CO, transaction?: Transaction): Promise<[User, User]> {
       return OrderService.getOrderTotal(orderSubType, checkedOrder)
       .then((total: number) => Promise.all([
         checkedOrder.buyer.update(

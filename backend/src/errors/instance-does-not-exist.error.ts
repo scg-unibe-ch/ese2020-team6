@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-interface ModelName {
+export interface ModelName {
   tableName: string;
   schema: string;
   delimiter: string;

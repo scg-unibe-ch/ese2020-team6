@@ -4,6 +4,7 @@ import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
 import { ItemRented } from './item-rented.model';
 import { ServiceRented } from './service-rented.model';
+import { Associations } from '../classes/associations.class';
 
 export interface OrderAttributes {
     orderId: number;
@@ -14,7 +15,7 @@ export interface OrderAttributes {
 
 export interface OrderCreationAttributes extends Optional<OrderAttributes, 'orderId'> {}
 
-export class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
+export class Order extends Associations<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
 
     public static associations: {
       buyer: Association<Order, User>,

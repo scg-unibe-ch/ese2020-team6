@@ -2,7 +2,6 @@ import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssocia
 import { Order } from './order.model';
 import { Address } from './address.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { Associations } from '../classes/associations.class';
 
 export interface ItemRentedAttributes extends OrderSubTypeAttributes {
     itemRentedId: number;
@@ -10,12 +9,10 @@ export interface ItemRentedAttributes extends OrderSubTypeAttributes {
     hours: number;
 }
 
-export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttributes, 'itemRentedId'> {
+export interface ItemRentedCreationAttributes extends Optional<ItemRentedAttributes, 'itemRentedId'> {}
 
-}
-
-export class ItemRented extends Associations<ItemRentedAttributes, ItemRentedCreationAttributes>
-implements ItemRentedAttributes, OrderSubType {
+export class ItemRented extends OrderSubType<ItemRentedAttributes, ItemRentedCreationAttributes>
+implements ItemRentedAttributes {
 
     public static associations: {
       order: Association<ItemRented, Order>,
