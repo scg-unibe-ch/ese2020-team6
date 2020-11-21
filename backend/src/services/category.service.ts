@@ -210,8 +210,6 @@ export class CategoryService {
         },
         transaction: transaction
       }).then(([createdSubcategory, created]: [Subcategory, boolean]) => {
-        console.log(createdSubcategory);
-
         return Promise.resolve(createdSubcategory);
       }).catch(err => Promise.reject(err));
     }

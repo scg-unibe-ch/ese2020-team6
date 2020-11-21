@@ -59,7 +59,11 @@ export class OrderService {
           });
         });
       } else {
-        return Promise.reject(new StatusError('Not enought information to build the buy item order!', 400));
+        if (!shippingAddress) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: shippingaddress missing', 400));
+        } else if (!paymentMethod) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: paymentMethod missing', 400));
+        }
       }
     }
 
@@ -80,7 +84,13 @@ export class OrderService {
           });
         });
       } else {
-        return Promise.reject(new StatusError('Not enought information to build the buy item order!', 400));
+        if (!shippingAddress) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: shippingaddress missing', 400));
+        } else if (!hours) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: rental time missing', 400));
+        } else if (!paymentMethod) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: paymentMethod missing', 400));
+        }
       }
     }
 
@@ -96,7 +106,11 @@ export class OrderService {
           },
         });
       } else {
-        return Promise.reject(new StatusError('Not enought information to build the rent service order!', 400));
+        if (!hours) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: rental time missing', 400));
+        } else if (!paymentMethod) {
+          return Promise.reject(new StatusError('Not enought information to build the buy item order: paymentMethod missing', 400));
+        }
       }
     }
 
@@ -108,10 +122,14 @@ export class OrderService {
         this.buildAndCheckItemSoldAttributes(paymentMethod, shippingAddress)
       ])
       .then(([checkedOrder, checkedItemSold]: COISExPromise) => {
-        return Promise.resolve({
-          checkedOrder: checkedOrder,
-          checkedOrderSubType: checkedItemSold
-        });
+        if (checkedOrder.product.offerType === 'Rent') {
+          return Promise.reject(new StatusError('You cannot buy an item which is for renting!', 400));
+        } else {
+          return Promise.resolve({
+            checkedOrder: checkedOrder,
+            checkedOrderSubType: checkedItemSold
+          });
+        }
       });
     }
 
@@ -123,10 +141,14 @@ export class OrderService {
         this.buildAndCheckItemRentedAttributes(paymentMethod, shippingAddress, hours)
       ])
       .then(([checkedOrder, checkedItemRented]: COIRExPromise) => {
-        return Promise.resolve({
-          checkedOrder: checkedOrder,
-          checkedOrderSubType: checkedItemRented
-        });
+        if (checkedOrder.product.offerType === 'Sell') {
+          return Promise.reject(new StatusError('You cannot rent an item which is for sale!', 400));
+        } else {
+          return Promise.resolve({
+            checkedOrder: checkedOrder,
+            checkedOrderSubType: checkedItemRented
+          });
+        }
       });
     }
 
@@ -138,10 +160,14 @@ export class OrderService {
         this.buildAndCheckServiceRentedAttributes(paymentMethod, hours)
       ])
       .then(([checkedOrder, checkedServiceRented]: COSRExPromise) => {
-        return Promise.resolve({
-          checkedOrder: checkedOrder,
-          checkedOrderSubType: checkedServiceRented
-        });
+        if (checkedOrder.product.offerType === 'Sell') {
+          return Promise.reject(new StatusError('You cannot buy a service!', 400));
+        } else {
+          return Promise.resolve({
+            checkedOrder: checkedOrder,
+            checkedOrderSubType: checkedServiceRented
+          });
+        }
       });
     }
 

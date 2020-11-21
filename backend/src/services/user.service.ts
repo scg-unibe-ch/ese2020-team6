@@ -113,8 +113,7 @@ export class UserService {
           { wallet: checkedOrder.seller.wallet + total },
           { transaction: transaction }
         )
-      ])).catch((err) => {console.log(transaction); return Promise.reject(err);
-      });
+      ])).catch((err) => Promise.reject(err));
     }
 
     private static updateOnlyUser(user: HasUserId): Promise<void> {

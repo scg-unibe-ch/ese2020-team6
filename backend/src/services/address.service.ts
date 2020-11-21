@@ -18,6 +18,9 @@ export class AddressService {
     }
 
     public static getAddressByValues(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
+      if (Object.keys(address).length === 0) {
+        return Promise.reject(new InstanceDoesNotExistError(Address.getTableName()));
+      }
       return Address.findOne({
         where: address,
         rejectOnEmpty: new InstanceDoesNotExistError(Address.getTableName()),
