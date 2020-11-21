@@ -1,9 +1,9 @@
 import { Component, ComponentFactoryResolver } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShippingComponent } from '../stage/shipping/shipping.component';
 import { DurationComponent } from '../stage/duration/duration.component';
 import { PaymentMethodComponent } from '../stage/payment-method/payment-method.component';
 import { StagableExtention } from '../stagable-extention';
-import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
 import { OrderService } from '../../../../services/order/order.service';
@@ -18,14 +18,15 @@ import { HoursResponseExtension } from '../../../../models/response/order/order-
 })
 export class PurchaseServiceComponent extends OrderRequestBuilder<HoursRequestExtension, HoursResponseExtension> {
 
-  protected _endpointURLExtention: string = 'order/service/rent';
+  protected _endpointURLExtention: string = 'product/order/service/rent';
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
     route: ActivatedRoute,
     productService: ProductService,
     userService: UserService,
-    orderService: OrderService
+    orderService: OrderService,
+    router: Router
   ) {
     super(
       componentFactoryResolver,
@@ -44,14 +45,14 @@ export class PurchaseServiceComponent extends OrderRequestBuilder<HoursRequestEx
       route,
       productService,
       userService,
-      orderService
+      orderService,
+      router
     );
   }
 
   protected buildOrderRequest(): HoursRequestExtension {
     return {
       productId: this.product.productId,
-      sellerId: this.product.userId,
       paymentMethod: this.getDataValueByStageIndex(1),
       hours: this.getDataValueByStageIndex(0)
     }

@@ -261,7 +261,7 @@ export class OrderService {
     public static orderDoesNotExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<void> {
 
       return this.orderDoesExist(order, transaction)
-      .then((orders) => {
+      .then(() => {
         Promise.reject(new InstanceDoesAlreadyExistError(Order.getTableName()));
       })
       .catch((err: any) => {
@@ -292,17 +292,11 @@ export class OrderService {
     ************************************************/
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
-      return this.getByAttributes({ buyerId: buyerId }, Order.associations.seller, Order.associations.buyer)
-      .then((orders: Array<Order>) => {
-        return Promise.resolve(orders);
-      });
+      return this.getByAttributes({ buyerId: buyerId }, Order.associations.seller, Order.associations.buyer);
     }
 
     public static getMyProductOrders(sellerId: number): Promise<Array<Order>> {
-      return this.getByAttributes({ sellerId: sellerId }, Order.associations.buyer, Order.associations.seller)
-      .then((orders: Array<Order>) => {
-        return Promise.resolve(orders);
-      });
+      return this.getByAttributes({ sellerId: sellerId }, Order.associations.buyer, Order.associations.seller);
     }
 
     private static getByAttributes(where: Object, cut: Association<Order, User>, noCut: Association<Order, User>): Promise<Array<Order>> {

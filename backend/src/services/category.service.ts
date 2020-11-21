@@ -1,8 +1,10 @@
-import { Transaction, Sequelize } from 'sequelize';
+import { Transaction, Sequelize, Op } from 'sequelize';
 import { Category, CategoryAttributes } from '../models/category.model';
 import { Subcategory, SubcategoryAttributes } from '../models/subcategory.model';
+import { StatusError } from '../errors/status.error';
+import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
+import { InstanceDoesAlreadyExistError } from '../errors/instance-does-already-exist.error';
 
-const { Op } = require('sequelize');
 
 export class CategoryService {
 
@@ -127,10 +129,9 @@ export class CategoryService {
     }
 
     private static buildAssociatedCetegories(categories: Array<Category>, subcategories: Array<Subcategory>):
-    Array<[Category, Array<Subcategory>]> {
+    Promise<Array<[Category, Array<Subcategory>]>> {
       const associations: Array<[Category, Array<Subcategory>]> = new Array<[Category, Array<Subcategory>]>();
-      const indexedSubcategories: Record<any, Array<Subcategory>> =
-      CategoryService.indexSubcategories(subcategories);
+      const indexedSubcategories: Record<any, Array<Subcategory>> = CategoryService.indexSubcategories(subcategories);
 
       categories.forEach((category: Category) => {
         associations.push([
@@ -138,81 +139,182 @@ export class CategoryService {
           indexedSubcategories[category.categoryId]
         ]);
       });
-      return associations;
+      return Promise.resolve(associations);
     }
 
-    public static setUpCategories(): any {// Promise<Array<[Category, Array<Subcategory>]>> {
-      return Category.sequelize.transaction().then((transaction: Transaction) => {
-
+    public static setUpCategories(): Promise<Array<[Category, Array<Subcategory>]>> {
+      return Category.sequelize.transaction((transaction: Transaction) => {
         const categories: Array<string> = CategoryService.getCategories();
         const allSubcategories: Array<[number, string]> = CategoryService.getAllSubcategoriesWithCategoryId();
-        const creation: Promise<Array<[Category, Array<Subcategory>]>> = CategoryService.createCategories(categories, transaction)
-        .then((createdCategories: Array<Category>) => {
-          return CategoryService.createSubcategories(allSubcategories, transaction).then((createdSubcategories: Array<Subcategory>) => {
-            const associations: Array<[Category, Array<Subcategory>]> =
-            CategoryService.buildAssociatedCetegories(createdCategories, createdSubcategories);
-            return Promise.resolve(associations);
-          }).catch((err: any) => Promise.reject(err));
-        }).catch((err: any) => Promise.reject(err));
 
-        creation.then(() => transaction.commit()).catch(() => transaction.rollback());
-        return creation;
-      }).catch((err: any) => Promise.reject(err));
+        return Promise.all([
+          CategoryService.findOrCreateCategories(categories, transaction),
+          CategoryService.findOrCreateSubcategories(allSubcategories, transaction)
+        ])
+        .then(([createdCategories, createdSubcategories]: [Array<Category>, Array<Subcategory>]) => {
+          return CategoryService.buildAssociatedCetegories(createdCategories, createdSubcategories);
+        });
+      });
     }
 
-    public static createCategories(categories: Array<string>, transaction?: Transaction): Promise<Array<Category>> {
-      return Category.bulkCreate(
-        categories.map((category: string) => ({
-          category: category
-        })),
-        {
-          ignoreDuplicates: true,
-          transaction: transaction
+    /************************************************
+      Categories creation
+    ************************************************/
+
+    public static categoriesDoNotExist(categories: Array<string>, transaction?: Transaction): Promise<void> {
+      return Promise.all(categories.map((category: string) => this.categoryDoesNotExist(category, transaction)))
+      .then(() => Promise.resolve());
+    }
+
+    public static categoriesDoExist(categories: Array<string>, transaction?: Transaction): Promise<Array<Category>> {
+      return Promise.all(categories.map((category: string) => this.categoryDoesExist(category, transaction)));
+    }
+
+
+    public static findOrCreateCategories(categories: Array<string>, transaction?: Transaction): Promise<Array<Category>> {
+      return this.categoriesDoExist(categories, transaction)
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Category.bulkCreate(
+            categories.map((category: string) => ({
+              category: category
+            })),
+            {
+              ignoreDuplicates: true,
+              transaction: transaction
+            }
+          );
+        } else {
+          return Promise.reject(err);
         }
-      );
+      });
     }
 
-    public static createCategory(category: string, transaction?: Transaction): Promise<Category> {
-      return Category.findOrCreate({
+    /************************************************
+      Category creation
+    ************************************************/
+
+    public static categoryDoesNotExist(category: string, transaction?: Transaction): Promise<void> {
+      return this.categoryDoesExist(category, transaction)
+      .then(() => {
+        Promise.reject(new InstanceDoesAlreadyExistError(Category.getTableName()));
+      })
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    }
+
+    public static categoryDoesExist(category: string, transaction?: Transaction): Promise<Category> {
+      if (!category) {
+        return Promise.reject(new InstanceDoesNotExistError(Category.getTableName()));
+      }
+
+      return Category.findOne({
         where: {
           category: category
         },
-        defaults: {
-          category: category
-        },
-        transaction: transaction
-      }).then(([createdCategory, created]: [Category, boolean]) => {
-        return Promise.resolve(createdCategory);
-      }).catch(err => Promise.reject(err));
+        transaction: transaction,
+        rejectOnEmpty: new InstanceDoesNotExistError(Category.getTableName())
+      });
     }
 
-    public static createSubcategories(subcategories: Array<[number, string]>, transaction?: Transaction): Promise<Array<Subcategory>> {
-        return Subcategory.bulkCreate(
-          subcategories.map(([categoryId, subcategory]: [number, string]) => ({
-            categoryId: categoryId,
-            subcategory: subcategory
-          })),
-          {
-            ignoreDuplicates: true,
-            transaction: transaction
-          }
-        );
+    public static findOrCreateCategory(category: string, transaction?: Transaction): Promise<Category> {
+      return this.categoryDoesExist(category, transaction)
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Category.create({ category: category }, { transaction: transaction });
+        } else {
+          return Promise.reject(err);
+        }
+      });
     }
 
-    public static createSubcategory(category: Category, subcategory: string, transaction?: Transaction): Promise<Subcategory> {
-      return Subcategory.findOrCreate({
+    /************************************************
+      Subcategories creation
+    ************************************************/
+
+    public static subcategoriesDoNotExist(subcategories: Array<[number, string]>, transaction?: Transaction): Promise<void> {
+      return Promise.all(subcategories.map((subcategory: [number, string]) => this.subcategoryDoesNotExist(subcategory, transaction)))
+      .then(() => Promise.resolve());
+    }
+
+    public static subcategoriesDoExist(subcategories: Array<[number, string]>, transaction?: Transaction): Promise<Array<Subcategory>> {
+      return Promise.all(subcategories.map((subcategory: [number, string]) => this.subcategoryDoesExist(subcategory, transaction)));
+    }
+
+    public static findOrCreateSubcategories(
+      subcategories: Array<[number, string]>, transaction?: Transaction
+    ): Promise<Array<Subcategory>> {
+      return this.subcategoriesDoExist(subcategories, transaction)
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Subcategory.bulkCreate(
+            subcategories.map(([categoryId, subcategory]: [number, string]) => ({
+              categoryId: categoryId,
+              subcategory: subcategory
+            })),
+            {
+              ignoreDuplicates: true,
+              transaction: transaction
+            }
+          );
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    }
+
+    /************************************************
+      Subcategory creation
+    ************************************************/
+
+    public static subcategoryDoesNotExist(subcategory: [number, string], transaction?: Transaction): Promise<void> {
+      return this.subcategoryDoesExist(subcategory, transaction)
+      .then(() => {
+        Promise.reject(new InstanceDoesAlreadyExistError(Subcategory.getTableName()));
+      })
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    }
+
+    public static subcategoryDoesExist([categoryId, subcategory]: [number, string], transaction?: Transaction): Promise<Subcategory> {
+      if (!subcategory || !categoryId) {
+        return Promise.reject(new InstanceDoesNotExistError(Subcategory.getTableName()));
+      }
+
+      return Subcategory.findOne({
         where: {
+          categoryId: categoryId,
           subcategory: subcategory
         },
-        defaults: {
-          categoryId: category.categoryId,
-          subcategory: subcategory
-        },
-        transaction: transaction
-      }).then(([createdSubcategory, created]: [Subcategory, boolean]) => {
-        return Promise.resolve(createdSubcategory);
-      }).catch(err => Promise.reject(err));
+        transaction: transaction,
+        rejectOnEmpty: new InstanceDoesNotExistError(Subcategory.getTableName())
+      });
     }
+
+    public static findOrCreateSubcategory([categoryId, subcategory]: [number, string], transaction?: Transaction): Promise<Subcategory> {
+      return this.subcategoryDoesExist([categoryId, subcategory], transaction)
+      .catch((err: any) => {
+        if (err instanceof InstanceDoesNotExistError) {
+          return Subcategory.create({ categoryId: categoryId, subcategory: subcategory }, { transaction: transaction });
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    }
+
+    /************************************************
+      Getters
+    ************************************************/
 
     public getAllCategories(): Promise<Array<Category>> {
         return Category.findAll({include: [Category.associations.subcategories]});

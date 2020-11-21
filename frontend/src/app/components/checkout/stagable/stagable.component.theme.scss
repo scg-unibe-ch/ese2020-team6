@@ -1,0 +1,10 @@
+@mixin stagable-theme($theme-name) {
+
+  $error-bg: get-theme($theme-name, shady);
+
+  .stagable.#{$theme-name} {
+    .error-message {
+      background: $error-bg;
+    }
+  }
+}

@@ -2,7 +2,6 @@ import { OrderModel, ShippingOrderModelExtention, HoursOrderModelExtention } fro
 
 export interface OrderRequestModel {
   productId: number;
-  sellerId: number;
 }
 
 export interface ShippingRequestExtension extends ShippingOrderModelExtention, OrderRequestModel {}

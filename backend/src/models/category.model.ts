@@ -46,6 +46,6 @@ export class Category extends Model<CategoryAttributes, CategoryCreationAttribut
     }
 
     public static createCategories(): void {
-      CategoryService.setUpCategories().catch((err: any) => {});
+      CategoryService.setUpCategories();
     }
 }

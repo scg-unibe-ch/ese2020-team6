@@ -64,8 +64,10 @@ export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
     this.map.addResultSubscriber(this.handleSearchResults);
 
     this.route.params.subscribe((params: {address: string}) => {
-      this.fullScreen = params.address ? true : false;
-      this.map.geocodeLocationText(params.address, this.handleGeocodeSearchResults);
+      if (params.address) {
+        this.fullScreen = true
+        this.map.geocodeLocationText(params.address, this.handleGeocodeSearchResults);
+      }
     })
   }
 

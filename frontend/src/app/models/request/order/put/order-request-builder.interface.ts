@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StagableExtention } from '../../../../components/checkout/stagable/stagable-extention';
 import { StageModel } from '../../../../models/checkout/stage/stage.model';
 import { OrderService } from '../../../../services/order/order.service';
@@ -17,7 +17,8 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
     route: ActivatedRoute,
     productService: ProductService,
     userService: UserService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) {
     super(
       componentFactoryResolver,
@@ -27,6 +28,8 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
       userService
     );
   }
+
+  public errorMessage: any;
 
   protected abstract _endpointURLExtention: string;
   get endpointURLExtention(): string {
@@ -39,6 +42,11 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
   }
 
   protected finalize: (stageIndex: number, data?: any) => void = (stageIndex: number): void => {
-    this.orderService.orderProduct<S, T, OrderRequestBuilder<S, T>>(this).subscribe(console.log);
+    this.orderService.orderProduct<S, T, OrderRequestBuilder<S, T>>(this)
+    .subscribe(() => {
+      this.router.navigate(['user', 'profile', 'buyer']);
+    }, (err: any) => {
+      this.errorMessage = err.error.message
+    });
   }
 }

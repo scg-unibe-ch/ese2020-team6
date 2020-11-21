@@ -8,8 +8,6 @@ export function transformAddress<T>(source: Observable<T>): Observable<T> {
   return new Observable(subscriber => {
     const subscription = source.subscribe({
       next(value) {
-        console.log(value);
-
         transformObjectAddress(value);
         subscriber.next(value);
       },
@@ -26,9 +24,11 @@ export function transformAddress<T>(source: Observable<T>): Observable<T> {
 
 function transformObjectAddress(object: Object): void {
   let paths: Path = hasAddresses(object);
-  (paths[1] as Array<Path>).forEach((path: Path) => {
-    recursiveTansfromObjectAddress(path, object);
-  });
+  if (paths) {
+    (paths[1] as Array<Path>).forEach((path: Path) => {
+      recursiveTansfromObjectAddress(path, object);
+    })
+  }
 }
 
 function recursiveTansfromObjectAddress(paths: Path, object: Object): void {
@@ -50,7 +50,7 @@ function hasAddresses(object: Object): Path {
 }
 
 function recursiveHasAddresses(parentKey: string, objectOfParentKey: Object): Path | null {
-  if (!objectOfParentKey || typeof objectOfParentKey !== 'object') return null;
+  if (!objectOfParentKey || Object.keys(objectOfParentKey).length === 0 || typeof objectOfParentKey !== 'object') return null;
   else if ((parentKey.includes('address') || parentKey.includes('Address')) && !parentKey.includes('Id')) {
     return [parentKey, objectOfParentKey as AddressModel];
   } else {
