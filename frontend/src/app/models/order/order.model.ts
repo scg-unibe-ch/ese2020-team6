@@ -14,6 +14,9 @@ export interface OrderModel {
   paymentMethod?: string;
   shippingAddress?: AddressModel;
   hours?: number;
+  itemsSold?: Array<ShippingOrderModelExtention>;
+  itemsRented?: Array<ShippingOrderModelExtention & HoursOrderModelExtention>;
+  servicesRented?: Array<HoursOrderModelExtention>;
 }
 
 export interface PaymentMethodOrderModelExtention {
@@ -43,9 +46,13 @@ export class Order implements OrderModel {
     public paymentMethod?: string,
     public shippingAddress?: Address,
     public hours?: number,
+
   ) {}
 
   public static buildFromOrderModel(orderModel: OrderModel): Order {
+
+    this.transFormOrderSubTypes(orderModel);
+
     return new Order(
       orderModel.orderId,
       orderModel.sellerId,
@@ -58,6 +65,33 @@ export class Order implements OrderModel {
       orderModel.shippingAddress,
       orderModel.hours
     );
+  }
+
+  private static transFormOrderSubTypes(orderModel: OrderModel): void {
+    switch (orderModel.product.offerType) {
+      case 'Sell':
+        let itemSold: ShippingOrderModelExtention = orderModel.itemsSold[0];
+        orderModel.shippingAddress = itemSold.shippingAddress;
+        orderModel.paymentMethod = itemSold.paymentMethod;
+        break;
+
+      case 'Rent':
+        switch (orderModel.product.productType) {
+          case 'Item':
+            let itemRented: ShippingOrderModelExtention & HoursOrderModelExtention = orderModel.itemsRented[0];
+            orderModel.shippingAddress = itemRented.shippingAddress;
+            orderModel.paymentMethod = itemRented.paymentMethod;
+            orderModel.hours = itemRented.hours;
+            break;
+
+          case 'Service':
+            let serviceRented = orderModel.servicesRented[0];
+            orderModel.paymentMethod = serviceRented.paymentMethod;
+            orderModel.hours = serviceRented.hours;
+            break;
+        }
+        break;
+    }
   }
 
   public toString = () : string => {

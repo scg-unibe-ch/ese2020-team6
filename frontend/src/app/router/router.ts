@@ -14,6 +14,10 @@ import { BuyItemComponent } from './../components/checkout/stagable/buy-item/buy
 import { RentItemComponent } from './../components/checkout/stagable/rent-item/rent-item.component';
 import { PurchaseServiceComponent } from './../components/checkout/stagable/purchase-service/purchase-service.component';
 
+
+import { MapSearchComponent } from './../components/custom-form/map-search/map-search.component';
+
+
 // Guards
 import { AuthGuard } from './guards/auth-guard/auth.guard';
 import { AuthAdminGuard } from './guards/auth-guard/auth-admin.guard';
@@ -137,5 +141,9 @@ export const routes = [
         component: PurchaseServiceComponent
       }
     ]
+  },
+  {
+    path: 'map/:address',
+    component: MapSearchComponent
   }
 ]

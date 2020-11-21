@@ -1,4 +1,4 @@
-import { Association, Transaction, Model, ModelCtor } from 'sequelize';
+import { Association, Transaction, Model, ModelCtor, Op } from 'sequelize';
 
 import { Product, ProductAttributes } from '../models/product.model';
 import { User, UserAttributes } from '../models/user.model';
@@ -37,6 +37,8 @@ export class OrderService {
         ]).then(([buyer, [product, seller]]: [User, [Product, User]]) => {
           if (buyer.userId === seller.userId) {
             return Promise.reject(new StatusError('Seller cannot buy his own product!', 400));
+          } else if (!product.isAccepted) {
+            return Promise.reject(new Error('Buyer cannot buy an unaccepted Product!'));
           } else {
             return Promise.resolve({
               creationAttributes: { buyerId: buyerId, sellerId: product.sellerId, productId: productId },
@@ -234,29 +236,34 @@ export class OrderService {
     private static createOrder<M extends OrderSubType<any, any>>(
       model: ModelCtor<M>,
       checkedOrderAndSubType: COCOST<M>,
-      transaction: Transaction): Promise<M> {
-      return this.orderDoesNotExist(checkedOrderAndSubType.checkedOrder.creationAttributes, transaction)
-      .then(() => Order.create(checkedOrderAndSubType.checkedOrder.creationAttributes, { transaction: transaction }))
-      .then((createdOrder: Order) => Order.findOne({ where: createdOrder, transaction: transaction }))
-      .then((createdOrder: Order) => model.create(Object.assign(checkedOrderAndSubType.checkedOrderSubType.creationAttributes, {
-        orderId: createdOrder.orderId
-      }), { transaction: transaction }));
+      transaction: Transaction
+    ): Promise<M> {
+      return this.findOrCreateOrder(checkedOrderAndSubType.checkedOrder.creationAttributes, transaction)
+      .then((createdOrder: Order) => {
+        return model.create(Object.assign(checkedOrderAndSubType.checkedOrderSubType.creationAttributes, {
+          orderId: createdOrder.orderId
+        }), { transaction: transaction});
+      });
     }
 
     public static orderDoesExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<Order> {
       if (Object.keys(order).length === 0) {
         return Promise.reject(new InstanceDoesNotExistError(Order.getTableName()));
       }
+
       return Order.findOne({
         where: order,
-        rejectOnEmpty: new InstanceDoesNotExistError(Order.getTableName()),
-        transaction: transaction
+        transaction: transaction,
+        rejectOnEmpty: new InstanceDoesNotExistError(Order.getTableName())
       });
     }
 
     public static orderDoesNotExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<void> {
+
       return this.orderDoesExist(order, transaction)
-      .then(() => Promise.reject(new InstanceDoesAlreadyExistError(Order.getTableName())))
+      .then((orders) => {
+        Promise.reject(new InstanceDoesAlreadyExistError(Order.getTableName()));
+      })
       .catch((err: any) => {
         if (err instanceof InstanceDoesNotExistError) {
           return Promise.resolve();
@@ -287,13 +294,15 @@ export class OrderService {
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
       return this.getByAttributes({ buyerId: buyerId }, Order.associations.seller, Order.associations.buyer)
       .then((orders: Array<Order>) => {
-
-        return orders;
+        return Promise.resolve(orders);
       });
     }
 
     public static getMyProductOrders(sellerId: number): Promise<Array<Order>> {
-      return this.getByAttributes({ sellerId: sellerId }, Order.associations.buyer, Order.associations.seller);
+      return this.getByAttributes({ sellerId: sellerId }, Order.associations.buyer, Order.associations.seller)
+      .then((orders: Array<Order>) => {
+        return Promise.resolve(orders);
+      });
     }
 
     private static getByAttributes(where: Object, cut: Association<Order, User>, noCut: Association<Order, User>): Promise<Array<Order>> {
@@ -319,48 +328,18 @@ export class OrderService {
       });
     }
 
-    // export class OrderAssociationsFound extends Order {
-    //   buyer: User;
-    //   seller: User;
-    //   product: Product;
-    //   itemssold: Array<ItemSold>;
-    //   itemsrented: Array<ItemRented>;
-    //   servicesrented: Array<ServiceRented>;
-    // }
-    //
-    // export class OrderAssociationsTransformed extends Order {
-    //   buyer: User;
-    //   seller: User;
-    //   product: Product;
-    //   itemsold: ItemSold;
-    //   itemrented: ItemRented;
-    //   servicerented: ServiceRented;
-    // }
+    private static buildWhereOperator(attributes: Object, operator: any): Object {
+      const where: Array<Object> = Object.entries(attributes).map(([key, value]) => {
+        return {
+          [key]: value
+        };
+      });
 
-    // private transformOrdersAssociations(ordersFound: Array<OrderAssociationsFound>): Array<OrderAssociationsTransformed> {
-    //   const ordersTransformed: Array<OrderAssociationsTransformed> = ordersFound.map((orderFound: OrderAssociationsFound) => {
-    //     return this.transformOrderAssociations(orderFound);
-    //   });
-    //   console.log(ordersTransformed);
-    //
-    //   return ordersTransformed;
-    // }
-
-    // private transformOrderAssociations(orderFound: OrderAssociationsFound): OrderAssociationsTransformed {
-    //   const orderFoundCopy: Record<any, any> = Object.assign({}, orderFound);
-    //
-    //   if (orderFound.itemssold.length > 0) {
-    //     orderFoundCopy.itemsold = orderFound.itemssold[0];
-    //   } else if (orderFound.itemsrented.length > 0) {
-    //     orderFoundCopy.itemrented = orderFound.itemsrented[0];
-    //   } else if (orderFound.servicesrented.length > 0) {
-    //     orderFoundCopy.servicerented = orderFound.servicesrented[0];
-    //   }
-    //
-    //   delete orderFoundCopy.itemssold;
-    //   delete orderFoundCopy.itemsrented;
-    //   delete orderFoundCopy.servicesrented;
-    //
-    //   return Object.assign({}, orderFoundCopy) as OrderAssociationsTransformed;
-    // }
+      return {
+        where: {
+          [operator]: where
+        },
+        include: Order.getAllAssociations()
+      };
+    }
 }

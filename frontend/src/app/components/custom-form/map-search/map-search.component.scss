@@ -7,6 +7,20 @@
   height: 100%;
   width: 100%;
 
+  &.full-height {
+    grid-gap: 0;
+  }
+
+  &.full-screen {
+    grid-gap: 0;
+
+    .map-container {
+      .map {
+        border-radius: 0;
+      }
+    }
+  }
+
   .map-container {
     display: flex;
     height: 100%;

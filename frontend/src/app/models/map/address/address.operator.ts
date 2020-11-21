@@ -8,6 +8,8 @@ export function transformAddress<T>(source: Observable<T>): Observable<T> {
   return new Observable(subscriber => {
     const subscription = source.subscribe({
       next(value) {
+        console.log(value);
+
         transformObjectAddress(value);
         subscriber.next(value);
       },

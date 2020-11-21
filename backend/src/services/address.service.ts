@@ -23,8 +23,13 @@ export class AddressService {
       }
       return Address.findOne({
         where: address,
-        rejectOnEmpty: new InstanceDoesNotExistError(Address.getTableName()),
         transaction: transaction
+      }).then((foundAddress: Address) => {
+        if (foundAddress) {
+          return Promise.resolve(foundAddress);
+        } else {
+          return Promise.reject(new InstanceDoesNotExistError(Address.getTableName()));
+        }
       });
     }
 

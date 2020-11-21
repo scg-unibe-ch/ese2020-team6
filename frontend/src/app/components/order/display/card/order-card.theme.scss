@@ -4,6 +4,7 @@
     $bg: get-theme($theme-name, shady);
     $info-bg: get-theme($theme-name, dark);
     $divisor-color: get-theme($theme-name, shady);
+    $shipping-address-bg: get-theme($theme-name, highlight);
 
     background: $bg;
     color: $color;
@@ -24,6 +25,14 @@
 
         .divisor {
           border-color: $divisor-color;
+        }
+
+
+
+        &.shippingAddress {
+          &:hover {
+            background: $shipping-address-bg;
+          }
         }
       }
     }

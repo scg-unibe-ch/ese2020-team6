@@ -10,6 +10,8 @@ export interface AddressModel {
   region: string;
   postal: number;
   country: string;
+
+  toRouterString(): string;
 }
 
 export interface SearchAddressModel {
@@ -23,19 +25,6 @@ export interface SearchAddressModel {
   Postal: number;
   Country: string;
 }
-
-export class NullAddress implements AddressModel {
-  streetName: string = null;
-  streetType: string = null;
-  addressNumber: string = null;
-  streetAddress: string = null;
-  neighbourhood: string = null;
-  city: string = null;
-  region: string = null;
-  postal: number = null;
-  country: string = null;
-}
-
 
 export class Address implements AddressModel {
   constructor(
@@ -57,6 +46,10 @@ export class Address implements AddressModel {
     + this.region + ", "
     + this.postal + ", "
     + this.country;
+  }
+
+  public toRouterString(): string {
+    return this.toString().split(', ').join('-').split(' ').join('-');
   }
 
   public static buildFromMapSearchResults(searchResult: SearchResultModel<SearchAddressModel>): Address {
@@ -86,5 +79,21 @@ export class Address implements AddressModel {
       address.postal,
       address.country
     )
+  }
+}
+
+export class NullAddress extends Address {
+  streetName: string = null;
+  streetType: string = null;
+  addressNumber: string = null;
+  streetAddress: string = null;
+  neighbourhood: string = null;
+  city: string = null;
+  region: string = null;
+  postal: number = null;
+  country: string = null;
+
+  constructor() {
+    super(null, null, null, null, null, null, null, null, null)
   }
 }
