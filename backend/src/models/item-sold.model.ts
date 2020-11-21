@@ -4,11 +4,11 @@ import { Address } from './address.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
 
 export interface ItemSoldAttributes extends OrderSubTypeAttributes {
-    itemsoldId: number;
+    itemSoldId: number;
     shippingAddressId: number;
 }
 
-export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes, 'itemsoldId'> {
+export interface ItemSoldCreationAttributes extends Optional<ItemSoldAttributes, 'itemSoldId'> {
 
 }
 
@@ -21,15 +21,16 @@ implements ItemSoldAttributes {
     };
 
     public getOrder!: BelongsToGetAssociationMixin<Order>;
+    public getShippingAddress!: BelongsToGetAssociationMixin<Address>;
 
-    itemsoldId!: number;
+    itemSoldId!: number;
     orderId!: number;
     paymentMethod!: string;
     shippingAddressId!: number;
 
     public static initialize(sequelize: Sequelize) {
         ItemSold.init({
-            itemsoldId: {
+            itemSoldId: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
@@ -67,4 +68,5 @@ implements ItemSoldAttributes {
       });
     }
     public getHours: () => number = () => 1;
+    public getSubTypeName: () => string = () => 'ItemSold';
 }

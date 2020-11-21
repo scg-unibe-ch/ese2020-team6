@@ -18,4 +18,5 @@ extends Associations<T, S> implements OrderSubTypeAttributes {
 
   abstract getHours: () => number;
   abstract getOrder: BelongsToGetAssociationMixin<Order>;
+  abstract getSubTypeName: () => string;
 }

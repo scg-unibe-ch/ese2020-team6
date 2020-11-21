@@ -9,7 +9,12 @@ import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
 import { OrderSubTypeCtor, OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { HasCreationArrtibutes, CO, COST, COCOST, CIS, COIS, COISExPromise, CIR, COIR, COIRExPromise, CSR, COSR, COSRExPromise } from '../interfaces/orders.interface';
+import { HasCreationArrtibutes,
+  CO, COST, COCOST,
+  CIS, COIS, COISExPromise,
+  CIR, COIR, COIRExPromise,
+  CSR, COSR, COSRExPromise
+} from '../interfaces/orders.interface';
 
 import { UserService } from './user.service';
 import { AddressService } from './address.service';
@@ -230,14 +235,18 @@ export class OrderService {
       model: ModelCtor<M>,
       checkedOrderAndSubType: COCOST<M>,
       transaction: Transaction): Promise<M> {
-      return Order.create(checkedOrderAndSubType.checkedOrder.creationAttributes, { transaction: transaction })
-      .then((createdOrder: Order) => Order.findOne({where: createdOrder}))
+      return this.orderDoesNotExist(checkedOrderAndSubType.checkedOrder.creationAttributes, transaction)
+      .then(() => Order.create(checkedOrderAndSubType.checkedOrder.creationAttributes, { transaction: transaction }))
+      .then((createdOrder: Order) => Order.findOne({ where: createdOrder, transaction: transaction }))
       .then((createdOrder: Order) => model.create(Object.assign(checkedOrderAndSubType.checkedOrderSubType.creationAttributes, {
         orderId: createdOrder.orderId
       }), { transaction: transaction }));
     }
 
     public static orderDoesExist(order: OrderCreationAttributes, transaction?: Transaction): Promise<Order> {
+      if (Object.keys(order).length === 0) {
+        return Promise.reject(new InstanceDoesNotExistError(Order.getTableName()));
+      }
       return Order.findOne({
         where: order,
         rejectOnEmpty: new InstanceDoesNotExistError(Order.getTableName()),
@@ -276,17 +285,37 @@ export class OrderService {
     ************************************************/
 
     public static getMyOrders(buyerId: number): Promise<Array<Order>> {
-      return this.getByAttributes({ buyerId: buyerId });
+      return this.getByAttributes({ buyerId: buyerId }, Order.associations.seller, Order.associations.buyer)
+      .then((orders: Array<Order>) => {
+
+        return orders;
+      });
     }
 
     public static getMyProductOrders(sellerId: number): Promise<Array<Order>> {
-      return this.getByAttributes({ sellerId: sellerId });
+      return this.getByAttributes({ sellerId: sellerId }, Order.associations.buyer, Order.associations.seller);
     }
 
-    private static getByAttributes(where: Object): Promise<Array<Order>> {
+    private static getByAttributes(where: Object, cut: Association<Order, User>, noCut: Association<Order, User>): Promise<Array<Order>> {
       return Order.findAll({
           where: where,
-          include: Object.values(Order.associations)
+          include: [
+            {
+                association: cut,
+                attributes: ['userId', 'userName', 'email']
+            },
+            noCut,
+            Order.associations.product,
+            {
+              association: Order.associations.itemsSold,
+              include: [ItemSold.associations.shippingAddress]
+            },
+            {
+              association: Order.associations.itemsRented,
+              include: [ItemRented.associations.shippingAddress]
+            },
+            Order.associations.servicesRented
+          ]
       });
     }
 

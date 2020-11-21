@@ -1,4 +1,5 @@
-import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
+import { Sequelize, Model, DataTypes, Association, Optional,
+  BelongsToGetAssociationMixin, HasManyGetAssociationsMixin } from 'sequelize';
 import { User } from './user.model';
 import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
@@ -27,6 +28,11 @@ export class Order extends Associations<OrderAttributes, OrderCreationAttributes
     };
 
     public getProduct!: BelongsToGetAssociationMixin<Product>;
+    public getSeller!: BelongsToGetAssociationMixin<User>;
+    public getBuyer!: BelongsToGetAssociationMixin<User>;
+    public getItemsSold!: HasManyGetAssociationsMixin<ItemSold>;
+    public getItemsRented!: HasManyGetAssociationsMixin<ItemRented>;
+    public getServicesRented!: HasManyGetAssociationsMixin<ServiceRented>;
 
     orderId!: number;
     buyerId!: number;

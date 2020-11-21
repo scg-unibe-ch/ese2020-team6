@@ -60,4 +60,5 @@ implements ServiceRentedAttributes {
       });
     }
     public getHours: () => number = () => this.hours;
+    public getSubTypeName: () => string = () => 'ServiceRented';
 }

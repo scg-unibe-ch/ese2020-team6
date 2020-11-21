@@ -20,6 +20,7 @@ implements ItemRentedAttributes {
     };
 
     public getOrder!: BelongsToGetAssociationMixin<Order>;
+    public getShippingAddress!: BelongsToGetAssociationMixin<Address>;
 
     itemRentedId!: number;
     orderId!: number;
@@ -71,4 +72,5 @@ implements ItemRentedAttributes {
       });
     }
     public getHours: () => number = () => this.hours;
+    public getSubTypeName: () => string = () => 'ItemRented';
 }

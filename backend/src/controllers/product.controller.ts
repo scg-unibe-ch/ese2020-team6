@@ -37,8 +37,6 @@ const upload = multer({
 
 productController.post('/post', verifyToken,
     (req: Request, res: Response) => {
-      console.log(req.body);
-
         req.body.sellerId = req.body.tokenPayload.userId;
         const product: ProductAttributes = req.body as ProductAttributes;
         const address: AddressAttributes = req.body.address as AddressAttributes;

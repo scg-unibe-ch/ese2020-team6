@@ -7,7 +7,7 @@ import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '
 import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
 import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
 
-import { OrderSubType } from './order-sub-type.interface';
+import { OrderSubType, OrderSubTypeAttributes } from './order-sub-type.interface';
 
 export interface HasCreationArrtibutes<M extends Model> {
   creationAttributes: M['_creationAttributes'];
