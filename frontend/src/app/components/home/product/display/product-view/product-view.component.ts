@@ -13,7 +13,7 @@ import { ProductService } from '../../../../../services/product/product.service'
   templateUrl: './product-view.component.html',
   styleUrls: ['./product-view.component.scss']
 })
-export class ProductViewComponent extends Themable {
+export class ProductViewComponent {
   overlayRef: any;
   @Input() path = '';
   @Input() products: Array<ProductModel>;
@@ -32,12 +32,9 @@ export class ProductViewComponent extends Themable {
   }
 
   constructor(
-    themeService: ThemeService,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef
-  ) {
-    super(themeService);
-  }
+  ) {}
 
   public switchView(): void {
     this.displayList = !this.displayList;

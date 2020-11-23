@@ -1,4 +1,4 @@
-<div class="register-wrapper" [ngClass]="theme">
+<div class="register-wrapper" theme>
   <div class="register">
     <div class="header">
       <h3 class="title">Create Account</h3>
@@ -20,7 +20,7 @@
       <div class="second">
         <map-search class="home-address" placeholder="Please search for your home address." name="address" ngModel #address="ngModel" mapSearchValidator></map-search>
         <div class="action-wrapper">
-          <button [ngClass]="'button-' + theme" [disabled]="!createAccountForm.valid">Create Account</button>
+          <button theme button [disabled]="!createAccountForm.valid">Create Account</button>
         </div>
       </div>
 

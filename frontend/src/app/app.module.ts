@@ -153,8 +153,6 @@ import { RentItemComponent } from './components/checkout/stagable/rent-item/rent
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
 import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
 import { PurchaseServiceComponent } from './components/checkout/stagable/purchase-service/purchase-service.component';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
 import { SelectMultipleComponent } from './components/custom-form/select/select-multiple/select-multiple.component';
@@ -259,7 +257,6 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
     DurationComponent,
     HoursValidatorDirective,
     PurchaseServiceComponent,
-    FilterPipeComponent,
     SelectCategoriesComponent,
     SelectMultipleComponent,
     SellerOrdersComponent,
@@ -278,7 +275,6 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
-    Ng2SearchPipeModule,
     //Angular Material
     MatButtonModule,
     MatListModule,

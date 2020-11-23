@@ -10,7 +10,6 @@ import {
   RejectProductRequestBuilder,
   AcceptProductRequestModel,
   RejectProductRequestModel } from '../../../../../models/request/product/product-request-model-builder.module';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-review-product',
@@ -19,8 +18,8 @@ import { ThemeService } from '../../../../../services/theme/theme.service';
 })
 export class ReviewProductComponent extends ProductInformationBase implements AcceptProductRequestBuilder, RejectProductRequestBuilder {
 
-  public showRejectResponseForm: boolean = false;
-  public showAcceptForm: boolean = false;
+  public showRejectResponseForm = false;
+  public showAcceptForm = false;
 
   private values: RejectProductFormModel = new NullRejectProductForm();
 
@@ -29,9 +28,8 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
     private router: Router,
     productService: ProductService,
     userService: UserService,
-    themeService: ThemeService
   ) {
-    super(route, productService, userService, themeService);
+    super(route, productService, userService);
   }
 
   public toggleAccept(): void {

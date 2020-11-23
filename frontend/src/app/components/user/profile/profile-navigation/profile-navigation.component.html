@@ -1,4 +1,4 @@
-<div class="navigation" [ngClass]="theme">
+<div class="navigation" theme>
   <app-navigation-element *ngFor="let navigationElement of navigationElements"
     [navigationElement]="navigationElement"
     (navigationClickEvent)="onNavigationElementClick($event)">

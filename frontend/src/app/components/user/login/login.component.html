@@ -1,4 +1,4 @@
-<div class="login-wrapper" [ngClass]="theme">
+<div class="login-wrapper" theme>
   <div class="login">
     <div class="header">
       <h3 class="title">Sign In</h3>
@@ -8,8 +8,8 @@
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator [showError]="false"></app-password-input>
       <div class="action-wrapper">
-        <button type="button" [ngClass]="'button-empty-' + theme" [routerLink]="['/user/register']">Create Account</button>
-        <button [ngClass]="'button-' + theme" [disabled]="!loginForm.valid">Sign In</button>
+        <button type="button" theme buttonEmpty [routerLink]="['/user/register']">Create Account</button>
+        <button theme button [disabled]="!loginForm.valid">Sign In</button>
       </div>
     </form>
   </div>

@@ -4,10 +4,9 @@ import { ThemeService } from '../../services/theme/theme.service';
 
 
 export class ValueAccessorBase<T> extends Themable implements ControlValueAccessor {
-
-  private _touched: boolean = false;
-  private _dirty: boolean = false;
-  private _focused: boolean = false;
+  private _touched = false;
+  private _dirty = false;
+  private _focused = false;
 
   private innerValue: T;
 
@@ -33,19 +32,19 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
   }
 
 
-  public touch() {
+  public touch(): void {
     this.touched = true;
     this.focused = false;
     this.onTouched();
   }
 
-  public focus() {
+  public focus(): void {
     this.focused = true;
   }
 
 
-  public writeValue(value: T) {
-    if (this.innerValue != value && this.innerValue !== value) {
+  public writeValue(value: T): void {
+    if (this.innerValue !== value && this.innerValue !== value) {
       this.innerValue = value;
     }
   }

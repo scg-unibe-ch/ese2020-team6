@@ -14,7 +14,7 @@ import { timeStamp } from 'console';
   templateUrl: './search-product.component.html',
   styleUrls: ['./search-product.component.scss']
 })
-export class SearchProductComponent extends Themable {
+export class SearchProductComponent {
   @Output()
   public criteriaChange = new EventEmitter<SearchModel>();
   @Input()
@@ -27,16 +27,14 @@ export class SearchProductComponent extends Themable {
   private categories: Categories;
   public categoryStrings: Array<string> = new Array<string>();
   public subcategoryStrings: Array<string> = new Array<string>();
-  deliverable: string="Select Deliverable";
-  toggleChange: boolean=true;
+  deliverable = "Select Deliverable";
+  toggleChange = true;
+  isShown = false;
 
 
   constructor(
     private productService: ProductService,
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.productService.getCategories().subscribe((categories: Categories) => {
@@ -60,12 +58,11 @@ export class SearchProductComponent extends Themable {
     }
   }
 
-  isShown: boolean = false ;
-  OfferTypeShow(entry: any) {
-    if(entry=="Service"){
-      this.optionArray=['Rent'];
+  OfferTypeShow(entry: any): void {
+    if (entry === 'Service'){
+      this.optionArray = ['Rent'];
     }else{
-      this.optionArray=['Sell', 'Rent'];
+      this.optionArray = ['Sell', 'Rent'];
     }
     this.isShown = true;
   }

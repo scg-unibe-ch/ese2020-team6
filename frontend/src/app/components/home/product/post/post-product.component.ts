@@ -24,7 +24,7 @@ import { Categories, Category, Subcategory } from '../../../../models/category/c
   templateUrl: './post-product.component.html',
   styleUrls: ['./post-product.component.scss']
 })
-export class PostProductComponent extends Themable implements PostProductRequestBuilder, UpdateProductRequestBuilder {
+export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   private productId: number;
   public isUpdate: boolean = false;
   public previewData: ProductModel;
@@ -47,10 +47,8 @@ export class PostProductComponent extends Themable implements PostProductRequest
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    themeService: ThemeService
+    private route: ActivatedRoute
   ) {
-    super(themeService);
   }
 
   public ngOnInit(): void {

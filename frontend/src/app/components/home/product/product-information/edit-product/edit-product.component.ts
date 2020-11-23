@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { ProductInformationBase } from '../product-information-base';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -11,17 +10,15 @@ import { ThemeService } from '../../../../../services/theme/theme.service';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent extends ProductInformationBase {
-
-  public showDeleteForm: boolean = false;
+  public showDeleteForm = false;
 
   constructor(
     route: ActivatedRoute,
     productService: ProductService,
     userService: UserService,
     private router: Router,
-    themeService: ThemeService
   ) {
-    super(route, productService, userService, themeService);
+    super(route, productService, userService);
   }
 
   public toggleDelete(): void {

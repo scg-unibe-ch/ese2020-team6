@@ -2,15 +2,13 @@ import { Component, OnInit , Input, Output, EventEmitter, ViewChild, ComponentFa
 import { ProfileNavigationElementModel } from '../../../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { PopupDirective } from '../popup/popup.directive';
 import { PopupComponent } from '../../../../../models/user/profile/navigation/popup/popup.interface';
-import { ThemeService } from '../../../../../services/theme/theme.service';
-import { Themable } from '../../../../../models/theme/themable';
 
 @Component({
   selector: 'app-navigation-element',
   templateUrl: './navigation-element.component.html',
   styleUrls: ['./navigation-element.component.scss']
 })
-export class NavigationElementComponent extends Themable implements OnInit {
+export class NavigationElementComponent implements OnInit {
 
   @Input()
   navigationElement: ProfileNavigationElementModel;
@@ -23,10 +21,7 @@ export class NavigationElementComponent extends Themable implements OnInit {
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
+  ) {}
 
   public ngOnInit(): void {
     if (this.existsPopup()) {

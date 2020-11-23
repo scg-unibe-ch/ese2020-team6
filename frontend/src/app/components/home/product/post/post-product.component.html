@@ -1,4 +1,4 @@
-<div class="post-wrapper" [ngClass]="theme">
+<div class="post-wrapper" theme>
   <div class="post">
     <div class="header">
       <h3 class="title" *ngIf="!isUpdate, else update">Create</h3>
@@ -25,10 +25,10 @@
       <div class="second">
         <map-search class="address" name="address" placeholder="Address" ngModel #address="ngModel" mapSearchValidator></map-search>
         <div class="action-wrapper">
-          <button [ngClass]="'button-empty-' + theme" (click)="showPreview(preview)" type="button">Preview</button>
-          <button *ngIf="!isUpdate, else updateButton" [ngClass]="'button-' + theme" type="submit" [disabled]="!postProductForm.valid">Create</button>
+          <button theme buttonEmpty (click)="showPreview(preview)" type="button">Preview</button>
+          <button *ngIf="!isUpdate, else updateButton" theme button type="submit" [disabled]="!postProductForm.valid">Create</button>
           <ng-template #updateButton>
-              <button [ngClass]="'button-' + theme" type="submit">Update</button>
+              <button theme button type="submit">Update</button>
           </ng-template>
         </div>
       </div>

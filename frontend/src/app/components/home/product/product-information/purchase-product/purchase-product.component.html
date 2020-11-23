@@ -1,18 +1,18 @@
 <app-product-details [product]="product" [creator]="creator">
-  <button (click)="togglePurchase()" *ngIf="isForSale; else isForRent" [ngClass]="'button-' + theme" >Buy</button>
+  <button (click)="togglePurchase()" *ngIf="isForSale; else isForRent" theme button >Buy</button>
   <ng-template #isForRent>
-      <button [ngClass]="'button-' + theme" (click)="togglePurchase()">Rent</button>
+      <button theme button (click)="togglePurchase()">Rent</button>
   </ng-template>
 </app-product-details>
-<div *ngIf="showPurchaseForm" class="overlay-wrapper" [ngClass]="theme">
+<div *ngIf="showPurchaseForm" class="overlay-wrapper" theme>
     <div class="overlay-content">
       <div class="overlay-form">
         <div>
-          <button *ngIf="isForSale; else isForRent" [ngClass]="'button-' + theme" [routerLink]="['/checkout', product.productId]">Buy</button>
+          <button *ngIf="isForSale; else isForRent" theme button [routerLink]="['/checkout', product.productId]">Buy</button>
           <ng-template #isForRent>
             <button [ngClass]="'button-' + theme" [routerLink]="['/checkout', product.productId]">Rent</button>
           </ng-template>
-          <button type="button" (click)="togglePurchase()" [ngClass]="'button-empty-' + theme">Cancel</button>
+          <button type="button" (click)="togglePurchase()" theme buttonEmpty>Cancel</button>
         </div>
       </div>
     </div>

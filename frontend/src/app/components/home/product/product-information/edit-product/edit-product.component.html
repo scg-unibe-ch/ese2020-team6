@@ -1,19 +1,6 @@
 <app-product-details [product]="product" [creator]="creator">
-  <button [ngClass]="'button-' + theme" [routerLink]="['/product/post', product.productId]">Update</button>
-  <button [ngClass]="'button-warn-' + theme" (click)="toggleDelete()">Delete</button>
-  <!-- <ng-template #tpl>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        Do you want to delete the product?
-      </header>
-      <section class="modal-card-body">
-        <button [ngClass]="'button-warn-' + theme" (click)="delete()">Delete</button>
-        <button [ngClass]="'button-empty-' + theme" (click)="doNothing()">Cancel</button>
-      </section>
-    </div>
-  </ng-template>
-  <ng-template #tplClose>
-  </ng-template> -->
+  <button theme button [routerLink]="['/product/post', product.productId]">Update</button>
+  <button theme button (click)="toggleDelete()">Delete</button>
 </app-product-details>
 <div *ngIf="product.rejectionMessage" class="rejection-message">
   <span class="title">
@@ -23,13 +10,13 @@
     {{product.rejectionMessage}}
   </div>
 </div>
-<div *ngIf="showDeleteForm" class="overlay-wrapper" [ngClass]="theme">
+<div *ngIf="showDeleteForm" class="overlay-wrapper" theme>
     <div class="overlay-content">
       <form class="overlay-form" #deleteForm="ngForm" (ngSubmit)="delete()">
         <p>Are you sure you want to delete this product?</p>
         <div>
-          <button [ngClass]="'button-warn-' + theme">Delete</button>
-          <button type="button" (click)="toggleDelete()" [ngClass]="'button-empty-' + theme">Cancel</button>
+          <button theme buttonWarn>Delete</button>
+          <button type="button" (click)="toggleDelete()" theme buttonEmpty>Cancel</button>
         </div>
       </form>
     </div>

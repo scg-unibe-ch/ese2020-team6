@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { StageModel } from '../../../../models/checkout/stage/stage.model';
-import { ThemeService } from '../../../../services/theme/theme.service';
-import { Themable } from '../../../../models/theme/themable';
 
 
 @Component({
@@ -9,7 +7,7 @@ import { Themable } from '../../../../models/theme/themable';
   templateUrl: './stage-indicator.component.html',
   styleUrls: ['./stage-indicator.component.scss']
 })
-export class StageIndicatorComponent extends Themable implements OnInit {
+export class StageIndicatorComponent implements OnInit {
 
   @Input()
   stages: Array<StageModel> = new Array<StageModel>();
@@ -18,10 +16,7 @@ export class StageIndicatorComponent extends Themable implements OnInit {
   currentStageIndex: number;
 
   constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
+  ) {}
 
   ngOnInit(): void {
   }
@@ -36,7 +31,7 @@ export class StageIndicatorComponent extends Themable implements OnInit {
 
   get connectors(): Array<number> {
     return this.stages.reduce((result: Array<number>, stage: StageModel, index: number) => {
-      if (index + 1 < this.stages.length) result.push(index);
+      if (index + 1 < this.stages.length) { result.push(index); }
       return result;
     }, []);
   }
@@ -50,12 +45,12 @@ export class StageIndicatorComponent extends Themable implements OnInit {
   }
 
   public isVisited(index: number): string {
-    if (index < this.currentStageIndex) return 'visited';
-    else return 'default';
+    if (index < this.currentStageIndex) { return 'visited'; }
+    else { return 'default'; }
   }
 
   public isActive(index: number): string {
-    if (index == this.currentStageIndex) return 'active';
-    else return null;
+    if (index === this.currentStageIndex) { return 'active'; }
+    else { return null; }
   }
 }

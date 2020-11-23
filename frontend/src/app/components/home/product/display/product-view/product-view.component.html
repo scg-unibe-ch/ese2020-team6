@@ -1,7 +1,7 @@
 <div class="product-view" *ngIf="hasProducts; else hasNoProducts">
   <div class="control">
-    <button [ngClass]="'button-' + theme" (click)="switchView()">Switch View</button>
-    <button [ngClass]="'button-' + theme" (click)="searchProduct(searchProducts)" type="button">Search Products</button>
+    <button theme button (click)="switchView()">Switch View</button>
+    <button theme button (click)="searchProduct(searchProducts)" type="button">Search Products</button>
   </div>
   <!-- <div class="select">
     <app-select-categories class="select-categories" [products]="products" [filteredProducts]="filteredProducts" [cats]="catslist" (deleteRequest)="crossOffItem($event)"></app-select-categories>
@@ -14,12 +14,12 @@
   </div>
 </div>
 <ng-template #hasNoProducts>
-  <div class="no-products" [ngClass]="theme">
+  <div class="no-products" theme>
     Nothing to see here.
   </div>
 </ng-template>
 <ng-template #searchProducts>
-  <div class="search-wrapper-wrapper"  [ngClass]="theme">
+  <div class="search-wrapper-wrapper" theme>
     <div class="search-wrapper" >
           <app-search-product [productArray]="products" (criteriaChange)='updateCriteria($event)'></app-search-product>
     </div>
