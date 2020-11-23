@@ -1,4 +1,4 @@
-import { NgForm, AbstractControl } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
@@ -12,11 +12,8 @@ import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
   UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
-import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
-import { PostProductFormModel, NullPostProductForm, PostProductForm } from '../../../../models/form/post-product-form.model';
-import { Themable } from '../../../../models/theme/themable';
-import { ThemeService } from '../../../../services/theme/theme.service';
+import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
 @Component({
@@ -26,7 +23,7 @@ import { Categories, Category, Subcategory } from '../../../../models/category/c
 })
 export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
   private productId: number;
-  public isUpdate: boolean = false;
+  public isUpdate = false;
   public previewData: ProductModel;
   public picture: string;
   private categories: Categories = Categories.NullCategories;
@@ -155,11 +152,11 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
   public udateOfferTypeStrings(productType: string): void {
-    let productTypeIndex: number = this.originalProductTypeStrings.indexOf(productType);
+    const productTypeIndex: number = this.originalProductTypeStrings.indexOf(productType);
     if (productTypeIndex >= 0) {
-      if (productTypeIndex == 0) {
+      if (productTypeIndex === 0) {
         this.offerTypeStrings = this.originalOfferTypeStrings;
-      } else if (productTypeIndex == 1) {
+      } else if (productTypeIndex === 1) {
         this.offerTypeStrings = [this.originalOfferTypeStrings[1]];
       }
     }

@@ -20,6 +20,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   private form: NgForm;
   private values: RegisterUserFormModel;
   public registerErrorMessage = '';
+  public picture: string;
 
   constructor(
     private router: Router,
@@ -37,6 +38,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
     if (form.valid) {
       this.form = form;
       this.values = form.value;
+      this.values.picture = this.picture;
       this.registerErrorMessage = '';
       this.userService.register(this).subscribe(
         (res: RegisterUserResponseModel) => this.registerSuccess(),
@@ -68,5 +70,14 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   private loginSuccess(): void {
     this.form.resetForm();
     this.router.navigate(['']);
+  }
+
+  public selectFile(event): void {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const result: string = event.target.result;
+      this.picture = result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
   }
 }

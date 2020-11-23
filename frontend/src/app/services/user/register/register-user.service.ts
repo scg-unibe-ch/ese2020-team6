@@ -17,6 +17,8 @@ export class RegisterUserService {
   ) { }
 
   public register(requestBuilder: RegisterUserRequestBuilder): Observable<RegisterUserResponseModel> {
-    return this.httpClient.post<RegisterUserResponseModel>(environment.endpointURL + 'user/register', requestBuilder.buildRegisterUserRequest()).pipe(share(), transformAddress);
+    console.log(requestBuilder, 'Heeeeeeeeeeeeeeeee')
+    return this.httpClient.post<RegisterUserResponseModel>(
+      environment.endpointURL + 'user/register', requestBuilder.buildRegisterUserRequest()).pipe(share(), transformAddress);
   }
 }
