@@ -2,7 +2,7 @@
   <div class="stage-content deliverable" content *ngIf="product.isDeliverable; else notDeliverable" theme>
     <div class="address-selection">
       <div class="smaller">The Item will be shipped to the following address:</div>
-      <div class="address">{{addressText}}</div>
+      <div class="address">{{address}}</div>
       <div class="smaller"><span *ngIf="isHomeAddress">This is your home address.</span> For a different shipping address search on the map for an address.</div>
       <div class="smaller" *ngIf="isHomeAddress; else notHomeAddress">
         If you approve, please click the button below:
@@ -17,7 +17,7 @@
         </div>
       </ng-template>
     </div>
-    <map-search (searchResultsEmitter)="onSearch($event)" [initLocation]="addressText"></map-search>
+    <map-search (ngModelChange)="onSearch()" [(ngModel)]="address"></map-search>
   </div>
   <ng-template #notDeliverable>
     <p class="stage-content not-deliverable">There is no shipping available for this item.
@@ -25,5 +25,5 @@
       The contact information will be available after payment.</p>
   </ng-template>
   <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>{{isFirstStage}}
-  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="isHomeAddress && !isHomeAddressApproved || !isHomeAddress && !searchResults">Next</button>
+  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="isHomeAddress && !isHomeAddressApproved || !isHomeAddress">Next</button>
 </stage>

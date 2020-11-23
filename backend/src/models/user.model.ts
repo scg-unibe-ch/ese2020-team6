@@ -1,6 +1,21 @@
-import { Optional, Model, Sequelize, DataTypes, IntegerDataType, Association } from 'sequelize';
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  Association,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Optional
+} from 'sequelize';
+import { Order } from './order.model';
+import { Product } from './product.model';
 import { Preference } from './preference.model';
-import { Address, AddressAttributes } from './address.model';
+import { Address } from './address.model';
+import { CutUser } from '../interfaces/cut-user.interface';
+import { Associations } from '../classes/associations.class';
 
 export interface UserAttributes {
     userId: number;
@@ -18,11 +33,33 @@ export interface UserAttributes {
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+export class User extends Associations<UserAttributes, UserCreationAttributes> implements UserAttributes {
+    public static associations: {
+      purchases: Association<User, Order>,
+      sold: Association<User, Order>,
+      products: Association<User, Product>,
+      preference: Association<User, Preference>,
+      address: Association<User, Address>,
+    };
 
+    public getOrdersSold!: HasManyGetAssociationsMixin<Order>;
+    public addOrderSold!: HasManyAddAssociationMixin<Order, number>;
+    public hasOrdersSold!: HasManyHasAssociationMixin<Order, number>;
+    public countOrdersSold!: HasManyCountAssociationsMixin;
+    public createOrderSold!: HasManyCreateAssociationMixin<Order>;
 
-    public static Preference: Association;
-    public static Address: Association;
+    public getOrdersPurchased!: HasManyGetAssociationsMixin<Order>;
+    public addOrderPurchased!: HasManyAddAssociationMixin<Order, number>;
+    public hasOrdersPurchased!: HasManyHasAssociationMixin<Order, number>;
+    public countOrdersPurchased!: HasManyCountAssociationsMixin;
+    public createOrderPurchased!: HasManyCreateAssociationMixin<Order>;
+
+    public getProducts!: HasManyGetAssociationsMixin<Order>;
+    public addProduct!: HasManyAddAssociationMixin<Order, number>;
+    public hasProducts!: HasManyHasAssociationMixin<Order, number>;
+    public countProducts!: HasManyCountAssociationsMixin;
+    public createProduct!: HasManyCreateAssociationMixin<Order>;
+
     userId!: number;
     firstName!: string;
     lastName!: string;
@@ -65,11 +102,11 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 allowNull: false
             },
             phonenumber: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             addressId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false
             },
             gender: {
@@ -78,11 +115,20 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             },
             isAdmin: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false
+                defaultValue: false,
+                allowNull: false
             },
             wallet: {
-                type: DataTypes.NUMBER,
-                defaultValue: 0
+                type: DataTypes.FLOAT(5, 2),
+                defaultValue: 100,
+                allowNull: false,
+                validate: {
+                  isGreaterThanZero(value: number) {
+                    if (value < 0) {
+                      throw new Error('Your budget is too low.');
+                    }
+                  }
+                }
             }
           },
           {
@@ -92,17 +138,42 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
         );
     }
 
-    public static createAssociations() {
-      User.Preference = User.hasOne(Preference, {
+    public static createAssociations(): void {
+      User.hasOne(Preference, {
         foreignKey: 'userId',
         as: 'preference'
       });
 
-      User.Address = User.belongsTo(Address, {
+      User.belongsTo(Address, {
         foreignKey: 'addressId',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
         as: 'address'
       });
+
+      User.hasMany(Product, {
+        sourceKey: 'userId',
+        foreignKey: 'sellerId',
+        as: 'products'
+      });
+
+      User.hasMany(Order, {
+        foreignKey: 'buyerId',
+        as: 'purchases'
+      });
+
+      User.hasMany(Order, {
+        foreignKey: 'sellerId',
+        as: 'sold'
+      });
+    }
+
+    /*
+      Removes all information about a user, except for userName, email and userId.
+    */
+    public cutUserInformation(): CutUser {
+      return {
+        userName: this.userName,
+        email: this.email,
+        userId: this.userId
+      };
     }
 }

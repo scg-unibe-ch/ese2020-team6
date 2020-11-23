@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Address, NullAddress } from '../../../../../models/map/address/address.model';
 import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.directive';
 
 @Component({
@@ -6,34 +7,22 @@ import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.di
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss']
 })
-export class ShippingComponent extends StageNDEExtention<any> {
+export class ShippingComponent extends StageNDEExtention<Address> {
 
-  public searchResults: any;
-
-  public addressSelectionOptions: Array<[string, string]> = [
-    ['Home Address', 'home'],
-    ['Other Address', 'other']
-  ];
-  public address: string = this.addressSelectionOptions[0][1];
   public isHomeAddress: boolean = true;
   public isHomeAddressApproved: boolean = false;
+  public address: Address = new NullAddress();
 
   constructor() {
     super();
   }
 
-  protected getData(): any {
-    return this.addressText;
+  protected getData(): Address {
+    return this.address;
   }
 
-  get addressText(): string {
-    if (this.searchResults) return this.searchResults.results[0].text;
-    return "Gumisweg 7, 3423, Ersigen, Bern, CHE";
-  }
-
-  public onSearch(searchResults: { results: Array<any> }): void {
-    if (searchResults.results.length > 0) {
-      this.searchResults = searchResults;
+  public onSearch(): void {
+    if (!Object.is(this.address, this.buyer.address)) {
       this.isHomeAddress = false;
     }
   }
@@ -55,14 +44,16 @@ export class ShippingComponent extends StageNDEExtention<any> {
   }
 
   public backToHomeAddress() {
-    this.searchResults = null;
+    this.onBuyerLoad();
     this.isHomeAddress = true;
     this.isHomeAddressApproved = false;
   }
 
-  public nextStage(): void {
-    super.nextStage();
-    this.emitData();
-  }
+  protected onProductLoad(): void {}
 
+  protected onSellerLoad(): void {}
+
+  protected onBuyerLoad(): void {
+    this.address = this.buyer.address;
+  }
 }

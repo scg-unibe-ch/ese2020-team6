@@ -1,0 +1,8 @@
+@mixin no-orders-theme($theme-name) {
+
+  $text-color: get-theme($theme-name, bright);
+
+  .no-orders.#{$theme-name} {
+    color: rgba($text-color, .3);
+  }
+}

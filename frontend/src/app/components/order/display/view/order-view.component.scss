@@ -1,0 +1,39 @@
+@import '../../../../../variables.scss';
+@import './order-view.component.theme.scss';
+
+.order-view {
+  width: 100%;
+
+  .control {
+    width: 100%;
+    margin-bottom: $spaceing-m;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: $spaceing-m
+  }
+
+  .view {
+    display: flex;
+    width: 100%;
+
+    .list {
+      width: 100%;
+    }
+
+    .grid {
+      width: 100%;
+    }
+  }
+}
+
+.no-orders {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@each $theme-name in $theme-names {
+  @include no-orders-theme($theme-name);
+}

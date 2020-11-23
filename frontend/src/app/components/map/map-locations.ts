@@ -57,6 +57,10 @@ export class MapLocations extends Map {
     });
   }
 
+  public geocodeLocationText(locationText: string, runOnResults: (err, searchResults: SearchResultsModel<any>) => void): void {
+    Geocoder.geocode().text(locationText).run(runOnResults);
+  }
+
   public pushLocationBySearchResults(searchResults: SearchResultsModel<any>, maxResults?: number): void {
     let locations: Array<LocationModel> = SearchResultsModel.transformResultsToLocations(searchResults, this._map);
     if (!maxResults) maxResults = locations.length;

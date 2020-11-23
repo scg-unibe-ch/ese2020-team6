@@ -1,20 +1,23 @@
-import { CategoryModel } from './../../../../models/request/product/category-product-request.model';
-import { NgForm } from '@angular/forms';
+import { NgForm, AbstractControl } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '../../../../services/product/product.service';
-import { UserService } from '../../../../services/user/user.service';
 import {
   PostProductRequestBuilder,
   PostProductRequestModel,
+  PostProductRequest,
   UpdateProductRequestBuilder,
-  UpdateProductRequestModel } from '../../../../models/request/product/product-request-model-builder.module';
+  UpdateProductRequestModel,
+  UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
 import { UserModel } from '../../../../models/user/user.model';
-import { ProductModel, NullProduct } from '../../../../models/product/product.model';
-import { PostProductFormModel, NullPostProductForm } from '../../../../models/form/post-product-form.model';
+import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
+import { PostProductFormModel, NullPostProductForm, PostProductForm } from '../../../../models/form/post-product-form.model';
+import { Themable } from '../../../../models/theme/themable';
+import { ThemeService } from '../../../../services/theme/theme.service';
+import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
 @Component({
   selector: 'app-post-product',
@@ -22,19 +25,21 @@ import { PostProductFormModel, NullPostProductForm } from '../../../../models/fo
   styleUrls: ['./post-product.component.scss']
 })
 export class PostProductComponent implements PostProductRequestBuilder, UpdateProductRequestBuilder {
-  @ViewChild('postProductForm') form: NgForm;
-  public values: PostProductFormModel = new NullPostProductForm();
-  public product: ProductModel = new NullProduct();
-  private userId: number;
   private productId: number;
-  isUpdate = false;
-  productData: any;
-  picture: any;
-  categories: Array<CategoryModel>;
-  subCategories: Array<CategoryModel>;
-  subCat: Array<string>;
-  cat: Array<string>;
-  offertype: any;
+  public isUpdate: boolean = false;
+  public previewData: ProductModel;
+  public picture: string;
+  private categories: Categories = Categories.NullCategories;
+  public categoryStrings: Array<string> = new Array<string>();
+  public subcategoryStrings: Array<string> = new Array<string>();
+  public originalProductTypeStrings: Array<string> = ['Item', 'Service'];
+  public originalOfferTypeStrings: Array<string> = ['Sell', 'Rent'];
+  public offerTypeStrings: Array<string> = new Array<string>();
+  public isDeliverableStrings: Array<string> = ['Yes', 'No'];
+  public product: ProductModel = new NullProduct();
+
+  @ViewChild('postProductForm', { read: NgForm })
+  public form: NgForm;
 
   constructor(
     private productService: ProductService,
@@ -42,49 +47,44 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    private userService: UserService,
+    private route: ActivatedRoute
   ) {
   }
 
   public ngOnInit(): void {
-    if (this.userService.isLoggedIn) {
-      this.userService.userObservable.subscribe((user: UserModel) => {
-        this.userId = user.userId;
-      });
-    }
-
     this.route.params.subscribe(parameters => {
       this.productId = parseInt(parameters.productId, 10);
       if (!isNaN(this.productId)) {
         this.isUpdate = true;
-        this.updateForm();
+        this.getProduct();
+      } else {
+        this.getCategories();
       }
     });
-    this.productService.getCategories().subscribe((values) => {
-      this.categories = values;
-      this.cat = [];
-      for (const cat of this.categories) {
-        this.cat.push(cat.category);
+
+  }
+
+  private getCategories(product?: ProductModel): void {
+    this.productService.getCategories().subscribe((categories: Categories) => {
+      this.categories = categories;
+      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.subcategoryStrings = new Array<string>();
+      if (product) {
+        this.updateSubCategoryStrings(product.category);
+        this.form.setValue(PostProductForm.buildFromProductModel(product));
       }
-    });
-    this.productService.getSubCategories().subscribe((values) => {
-      this.subCategories = values;
     });
   }
 
-  private updateForm(): void {
+  private getProduct(): void {
     this.productService.getProductById(this.productId).subscribe((product: ProductModel) => {
-      this.product = product;
-      const values: any = Object.assign({}, product);
-      values.isDeliverable = product.isDeliverable ? 'Yes' : 'No';
-      this.values = Object.assign({}, values);
       this.picture = product.picture;
+      this.getCategories(product);
     });
   }
 
 
-  selectFile(event): void {
+  public selectFile(event): void {
     const reader = new FileReader();
     reader.onload = (event: any) => {
       const result: string = event.target.result;
@@ -95,51 +95,29 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
 
-  onSubmit(form: NgForm): void {
+  public onSubmit(form: NgForm): void {
     if (form.valid) {
-      this.values = form.value;
-      if (this.values.productType === 'Service') {
-        this.values.isDeliverable = 'Yes';
-      }
-      this.values.status = 'Available';
       if (this.isUpdate) {
-        this.productService.updateProduct(this).subscribe((values) => {
-          this.openSnackBar();
-        });
+        this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
       } else {
-        this.productService.postProduct(this).subscribe((values) => {
-          this.openSnackBar();
-        });
+        this.productService.postProduct(this).subscribe((values) => this.success());
       }
-      this.router.navigate(['/user/profile/myproducts']);
     }
   }
 
-  private setupProduct(): void {
-    const product: any = this.values;
-    const picture: string = this.product.picture;
-    product.isDeliverable = this.values.isDeliverable === 'Yes' ? true : false;
-    this.product = Object.assign({}, product);
-    this.product.picture = picture;
+  private success(): void {
+    this.openSnackBar();
+    this.router.navigate(['/user/profile/myproducts']);
   }
 
+
+
   public buildUpdateProductRequest(): UpdateProductRequestModel {
-    this.setupProduct();
-    const request: UpdateProductRequestModel = Object.assign(this.product, {
-        userId: this.userId,
-        productId: this.productId
-      }
-    );
-    return request;
+    return UpdateProductRequest.buildFromPostProductFormModel(this.form.value, this.picture);
   }
 
   public buildPostProductRequest(): PostProductRequestModel {
-    this.setupProduct();
-    const request: PostProductRequestModel = Object.assign(this.product, {
-        userId: this.userId
-      }
-    );
-    return request;
+    return PostProductRequest.buildFromPostProductFormModel(this.form.value, this.picture);
   }
 
   public openSnackBar(): void {
@@ -149,8 +127,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     });
   }
 
-  public showPreview(form: NgForm, tpl: TemplateRef<any>): void {
-    this.productData = form.value;
+  public showPreview(tpl: TemplateRef<any>): void {
+    this.setUpPreviewData();
     const configs = new OverlayConfig({
       hasBackdrop: true,
      });
@@ -163,29 +141,27 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
   }
 
-  public createSubCat(): any {
-    let catId: number;
-    this.subCat = [];
-    const choosenCat = this.values.category;
-    for (const cat of this.categories) {
-      if (cat.category === choosenCat) {
-        catId = cat.id;
-      }
-    }
-    for (const cat of this.subCategories) {
-      if (catId === cat.id) {
-        this.subCat.push(cat.category);
-      }
-    }
+  private setUpPreviewData(): void {
+    this.previewData = Object.assign({
+      isDeliverable: this.form.value.isDeliverableString === 'Yes' ? true : false,
+      status: 'Available',
+      userId: ''
+    }, this.form.value);
   }
 
-  public createOfferType(): void {
-    if (this.values.productType === 'Item') {
-      this.offertype = ['Sell', 'Rent'];
-    }
-    if (this.values.productType === 'Service') {
-      this.offertype = ['Rent'];
+  public updateSubCategoryStrings(category: string): void {
+    this.subcategoryStrings = this.categories.getSubcategoriesByCategoryName(category)
+    .map((subcategory: Subcategory) => subcategory.toString());
+  }
+
+  public udateOfferTypeStrings(productType: string): void {
+    let productTypeIndex: number = this.originalProductTypeStrings.indexOf(productType);
+    if (productTypeIndex >= 0) {
+      if (productTypeIndex == 0) {
+        this.offerTypeStrings = this.originalOfferTypeStrings;
+      } else if (productTypeIndex == 1) {
+        this.offerTypeStrings = [this.originalOfferTypeStrings[1]];
+      }
     }
   }
 }
-

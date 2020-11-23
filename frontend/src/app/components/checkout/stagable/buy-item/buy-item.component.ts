@@ -1,45 +1,58 @@
 import { Component, ComponentFactoryResolver } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShippingComponent } from '../stage/shipping/shipping.component';
 import { PaymentMethodComponent } from '../stage/payment-method/payment-method.component';
-import { StageModel } from '../../../../models/checkout/stage/stage.model'
-import { StagesDirective } from '../stages.directive';
-import { StagableExtention } from '../stagable-extention';
-import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
-import { CheckoutRouteParametersModel } from '../../../../models/checkout/checkout-route-parameters.model';
+import { OrderService } from '../../../../services/order/order.service';
+import { OrderRequestBuilder } from '../../../../models/request/order/order-request-builder.module';
+import { ShippingRequestExtension } from '../../../../models/request/order/order-request-model.module';
+import { ShippingResponseExtension } from '../../../../models/response/order/order-response-model.module';
 
 @Component({
   selector: 'buy-item',
   templateUrl: '../stagable.component.html',
   styleUrls: ['../stagable.component.scss']
 })
-export class BuyItemComponent extends StagableExtention {
+export class BuyItemComponent extends OrderRequestBuilder<ShippingRequestExtension, ShippingResponseExtension> {
+
+  protected _endpointURLExtention: string = 'product/order/item/buy';
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
     route: ActivatedRoute,
     productService: ProductService,
-    userService: UserService
+    userService: UserService,
+    orderService: OrderService,
+    router: Router
   ) {
-    super(componentFactoryResolver, [
-      {
-        title: 'Shipping',
-        component: ShippingComponent,
-        componentRef: null
-      },
-      {
-        title: 'Payment Method',
-        component: PaymentMethodComponent,
-        componentRef: null
-      }
-    ],
-    route,
-    productService,
-    userService);
+    super(
+      componentFactoryResolver,
+      [
+        {
+          title: 'Shipping',
+          component: ShippingComponent,
+          componentRef: null
+        },
+        {
+          title: 'Payment Method',
+          component: PaymentMethodComponent,
+          componentRef: null
+        }
+      ],
+      route,
+      productService,
+      userService,
+      orderService,
+      router
+    );
   }
 
-  protected finalize: (stageIndex: number, data?: any) => void = (stageIndex: number): void => {
-    console.log(this.dataStorage);
+  protected buildOrderRequest(): ShippingRequestExtension {
+    return {
+      productId: this.product.productId,
+      paymentMethod: this.getDataValueByStageIndex(1),
+      shippingAddress: this.getDataValueByStageIndex(0)
+    }
   }
 }

@@ -6,38 +6,31 @@
         <h3 class="title">Update</h3>
       </ng-template>
     </div>
-    <form #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
-      <div class="input-grid">
-        <app-select (click)=createOfferType() name="productType" selectName="Product Type" [(ngModel)]="values.productType" [options]="['Item', 'Service']" appProductTypeValidator></app-select>
-        <app-select name="offerType" selectName="Offer Type" [(ngModel)]="values.offerType" [options]=offertype appOfferTypeValidator></app-select>
-      </div>
-      <div class="input-grid">
-        <app-select (click)=createSubCat() name="category" selectName="Category" [(ngModel)]="values.category" [options]=cat></app-select>
-        <app-select name="subcategory" selectName="Subcategory" 
-        [(ngModel)]="values.subcategory" [options]=subCat></app-select>
-      </div>
-      <app-text-input placeholder="Title" name="title" [(ngModel)]="values.title" appTitleValidator></app-text-input>
-      <app-text-area class="input" rows="4" placeholder="Description" name="description" [(ngModel)]="values.description" appDescriptionValidator></app-text-area>
-      <div class="input-grid">
-        <app-text-input placeholder="Price" name="price" [(ngModel)]="values.price" appPriceValidator></app-text-input>
-        <app-text-input placeholder="Location" name="location" [(ngModel)]="values.location" appLocationValidator></app-text-input>
-      </div>
-      <div class="input-grid" *ngIf="values.productType == 'Item'">
-        <app-select name="isDeliverable" selectName="Deliverable" [(ngModel)]="values.isDeliverable" [options]="['Yes', 'No']" appDeliverableValidator></app-select>
-        <app-date placeholder="Expiration Date" name="expirationDate" [(ngModel)]="values.expirationDate" min="tomorrow" appDateValidator></app-date>
-      </div>
-      <div class="input-grid">
+    <form class="post-product-form" #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
+      <div class="first">
+        <app-select class="product-type" name="productType" selectName="Product Type" [options]="originalProductTypeStrings" ngModel #productType="ngModel" (ngModelChange)="udateOfferTypeStrings($event)"></app-select>
+        <app-select class="offer-type" name="offerType" selectName="Offer Type" [options]="offerTypeStrings" ngModel #offerType="ngModel"></app-select>
+        <app-select class="category" name="category" selectName="Category" [options]="categoryStrings" ngModel #category="ngModel" (ngModelChange)="updateSubCategoryStrings($event)"></app-select>
+        <app-select class="subcategory" name="subcategory" selectName="Subcategory" [options]="subcategoryStrings" ngModel #subcategory="ngModel"></app-select>
+        <app-text-input class="title" name="title" placeholder="Title" ngModel #title="ngModel" appTitleValidator></app-text-input>
+        <app-text-area class="description" name="description" placeholder="Description" rows="1" ngModel #description="ngModel" appDescriptionValidator></app-text-area>
+        <app-text-input class="price" name="price" placeholder="Price" ngModel #price="ngModel" appPriceValidator></app-text-input>
+        <app-select class="deliverable" name="isDeliverableString" selectName="Deliverable" ngModel #isDeliverableString="ngModel" [options]="isDeliverableStrings"></app-select>
+        <app-date class="expiration-date" name="expirationDate" placeholder="Expiration Date" min="tomorrow" ngModel #expirationDate="ngModel" appDateValidator></app-date>
         <div class="picture">
           <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
           <img class="image" src={{picture}}>
         </div>
       </div>
-      <div class="action-wrapper">
-        <button theme button (click)="showPreview(postProductForm, preview)" type="button">Preview</button>
-        <button *ngIf="!isUpdate, else updateButton" theme button type="submit" [disabled]="!postProductForm.valid">Create</button>
-        <ng-template #updateButton>
-            <button theme button type="submit"  [disabled]="!postProductForm.valid">Update</button>
-        </ng-template>
+      <div class="second">
+        <map-search class="address" name="address" placeholder="Address" ngModel #address="ngModel" mapSearchValidator></map-search>
+        <div class="action-wrapper">
+          <button theme buttonEmpty (click)="showPreview(preview)" type="button">Preview</button>
+          <button *ngIf="!isUpdate, else updateButton" theme button type="submit" [disabled]="!postProductForm.valid">Create</button>
+          <ng-template #updateButton>
+              <button theme button type="submit">Update</button>
+          </ng-template>
+        </div>
       </div>
     </form>
 
@@ -46,7 +39,7 @@
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
               <h2>Your product</h2>
-            <app-product-information [product]="productData" [isPreview]="true" [picture]="picture"></app-product-information>
+            <app-product-information [product]="previewData" [isPreview]="true" [picture]="picture"></app-product-information>
         </div>
       </div>
     </ng-template>

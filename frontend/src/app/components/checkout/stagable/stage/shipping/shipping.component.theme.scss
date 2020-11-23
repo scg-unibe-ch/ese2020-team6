@@ -1,5 +1,3 @@
-@import '../../../../../../variables.scss';
-
 @mixin shipping-theme($theme-name) {
 
   $address-border-color: get-theme($theme-name, highlight);
@@ -9,8 +7,6 @@
   $checkmark-color: get-theme($theme-name, dark);
 
   .stage-content {
-    height: 100%;
-    width: 100%;
 
     &.deliverable {
 
@@ -38,13 +34,6 @@
           border-color: rgba($address-border-color, .1);
         }
       }
-
-      .map {
-      }
-    }
-
-    &.not-deliverable {
-
     }
   }
 }

@@ -53,13 +53,20 @@ export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implemen
   }
 
   /*
-  Retreives the boolean value if the input is valid or not.
+  Retreives the boolean value if the input is invalid or not.
   */
   get invalid(): boolean {
     this.isInvalidObservable.subscribe((isInvalid: boolean) => {
       return this._invalid = isInvalid
     });
     return this._invalid;
+  }
+
+  /*
+  Retreives the boolean value if the input is valid or not.
+  */
+  get valid(): boolean {
+    return !this.invalid;
   }
 
   /*

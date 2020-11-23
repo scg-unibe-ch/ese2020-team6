@@ -11,7 +11,7 @@ import { ThemeService } from '../../../../services/theme/theme.service';
     {provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true}
   ]
 })
-export class NumberInputComponent extends ValueAccessorValidatorBase<Number> {
+export class NumberInputComponent extends ValueAccessorValidatorBase<number> {
   public type: string = "number";
 
   @Input()

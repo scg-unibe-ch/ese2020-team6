@@ -1,0 +1,16 @@
+<div class="order-view" *ngIf="hasOrders; else hasNoOrders">
+  <div class="control">
+    <button theme button (click)="switchView()">Switch View</button>
+  </div>
+  <div class="view">
+    <order-view-list class="order-display list" *ngIf="isList; else isGrid" [orders]="orders" [path]="path"></order-view-list>
+    <ng-template #isGrid>
+      <order-view-grid class="order-display grid" [orders]="orders" [path]="path"></order-view-grid>
+    </ng-template>
+  </div>
+</div>
+<ng-template #hasNoOrders>
+  <div class="no-orders" theme>
+    Nothing to see here.
+  </div>
+</ng-template>

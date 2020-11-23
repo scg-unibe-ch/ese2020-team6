@@ -1,5 +1,4 @@
-import {Overlay} from '@angular/cdk/overlay';
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../../services/product/product.service';
 import { UserService } from '../../../../../services/user/user.service';
@@ -11,9 +10,6 @@ import { ProductInformationBase } from '../product-information-base';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent extends ProductInformationBase {
-
-  private overlayRef: any;
-
   public showDeleteForm = false;
 
   constructor(
@@ -32,6 +28,5 @@ export class EditProductComponent extends ProductInformationBase {
   public delete(): void {
     this.productService.deleteProduct(this.product.productId).subscribe();
     this.router.navigate(['/user/profile/myproducts']);
-    this.overlayRef.dispose();
   }
 }

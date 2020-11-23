@@ -1,0 +1,46 @@
+@mixin order-card-theme($theme-name) {
+  .order-card.#{$theme-name} {
+    $color: get-theme($theme-name, bright);
+    $bg: get-theme($theme-name, shady);
+    $info-bg: get-theme($theme-name, dark);
+    $divisor-color: get-theme($theme-name, shady);
+    $shipping-address-bg: get-theme($theme-name, highlight);
+
+    background: $bg;
+    color: $color;
+
+    .informaion-holder {
+      &.invert {
+        .info {
+          background: $divisor-color;
+
+          .divisor {
+            border-color: $info-bg;
+          }
+        }
+      }
+
+      .info {
+        background: $info-bg;
+
+        .divisor {
+          border-color: $divisor-color;
+        }
+
+
+
+        &.shippingAddress {
+          &:hover {
+            background: $shipping-address-bg;
+          }
+        }
+      }
+    }
+
+    .involved-parties {
+      .user {
+        background: $info-bg;
+      }
+    }
+  }
+}

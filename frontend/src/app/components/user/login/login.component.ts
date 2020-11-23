@@ -33,8 +33,6 @@ export class LoginComponent implements LoginUserRequestBuilder{
       .subscribe(
         (res: LoginUserResponseModel) => {
           this.loginSuccess();
-          console.log(res);
-
         },
         (err: any) => this.loginError(err)
       );

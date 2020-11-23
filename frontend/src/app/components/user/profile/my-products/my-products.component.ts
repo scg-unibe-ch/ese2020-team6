@@ -8,8 +8,7 @@ import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-my-products',
-  templateUrl: './my-products.component.html',
-  styleUrls: ['./my-products.component.scss']
+  templateUrl: './my-products.component.html'
 })
 export class MyProductsComponent implements OnInit {
   public products: Array<ProductModel>;

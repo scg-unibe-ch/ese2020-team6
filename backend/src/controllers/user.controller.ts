@@ -6,7 +6,6 @@ import { UserAttributes, User } from '../models/user.model';
 import { AddressAttributes, Address } from '../models/address.model';
 
 const userController: Router = express.Router();
-const userService = new UserService();
 
 userController.post('/register',
     (req: Request, res: Response) => {
@@ -14,7 +13,7 @@ userController.post('/register',
       const user: UserAttributes = req.body as UserAttributes;
       const address: AddressAttributes = req.body.address as AddressAttributes;
 
-        userService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch(err => {
+        UserService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch((err: any) => {
           if (err.status) {
             res.status(err.status);
           } else {
@@ -27,13 +26,13 @@ userController.post('/register',
 
 userController.post('/login',
     (req: Request, res: Response) => {
-        userService.login(req.body).then(login => res.send(login)).catch(err => res.status(500).send(err));
+        UserService.login(req.body).then(login => res.send(login)).catch((err: any) => res.status(500).send(err));
     }
 );
 
 userController.get('/userid/:userId', checkForAuth,
   (req: Request, res: Response, next) => {
-    userService.getUserById(parseInt(req.params.userId, 10)).then(user => {
+    UserService.getUserById(parseInt(req.params.userId, 10)).then((user: UserAttributes) => {
       const tokenPayload = req.body.tokenPayload;
       if (tokenPayload) {
         if (tokenPayload.userId === user.userId) {
@@ -44,7 +43,7 @@ userController.get('/userid/:userId', checkForAuth,
       } else {
         res.send(UserService.cutUserInformation(user));
       }
-    }).catch(err => res.status(500).send(err));
+    }).catch((err: any) => res.status(500).send(err));
   }
 );
 

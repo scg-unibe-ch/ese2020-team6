@@ -1,0 +1,18 @@
+<stage>
+  <div content class="stage-content">
+    <div>
+      <div class="duration">
+        <div>For how many hours would you like to rent this {{product.productType}}?</div>
+        <app-number-input placeholder="Hours" #durationInput hoursValidator [(ngModel)]="duration"></app-number-input>
+      </div>
+      <div class="total">
+        <div class="total-label">The current total amount to pay is</div>
+        <div class="total-price bigger">{{duration ? product.price * duration : 0}}$</div>
+      </div>
+      <div class="smaller">The total amount is calculated by multiplying the duration and the price per hour of the item.</div>
+    </div>
+  </div>
+
+  <button navigation type="button" name="button" (click)="previousStage()" theme buttonEmpty [disabled]="isFirstStage">Previous</button>{{isFirstStage}}
+  <button navigation type="button" name="button" (click)="nextStage()" theme button [disabled]="durationInput.invalid">Next</button>
+</stage>

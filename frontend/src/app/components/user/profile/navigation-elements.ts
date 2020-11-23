@@ -7,6 +7,8 @@ import { RejectedProductsComponent } from '../../../components/user/profile/reje
 import { PopupUnreviewedComponent } from '../../../components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
 import { PopupRejectedComponent } from '../../../components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
 import { PreferencesComponent } from '../../../components/user/profile/preferences/preferences.component';
+import { SellerOrdersComponent } from '../../../components/user/profile/seller-orders/seller-orders.component';
+import { BuyerOrdersComponent } from '../../../components/user/profile/buyer-orders/buyer-orders.component';
 
 
 export const defaultProfileComponent: number = 0;
@@ -41,6 +43,18 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     path: 'rejected',
     component: RejectedProductsComponent,
     popupComponent: PopupRejectedComponent
+  },
+  {
+    title: 'Purchased Products',
+    path: 'buyer',
+    component: BuyerOrdersComponent,
+    popupComponent: null
+  },
+  {
+    title: 'Sold Products',
+    path: 'seller',
+    component: SellerOrdersComponent,
+    popupComponent: null
   }
 ];
 

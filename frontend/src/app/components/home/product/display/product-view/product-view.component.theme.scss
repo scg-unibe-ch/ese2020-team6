@@ -1,8 +1,5 @@
 @mixin no-products-theme($theme-name) {
-
-  $theme: map-get($themes, $theme-name);
-  $background: map-get($theme, $theme-name);
-  $text-color: map-get($theme, bright);
+  $text-color: get-theme($theme-name, bright);
 
   .no-products.#{$theme-name} {
     color: rgba($text-color, .3);

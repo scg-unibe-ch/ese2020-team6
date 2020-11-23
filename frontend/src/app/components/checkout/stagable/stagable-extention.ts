@@ -18,7 +18,7 @@ export abstract class StagableExtention extends Stagable implements OnInit {
 
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();
-  public user: UserModel = new NullUser();
+  public buyer: UserModel = new NullUser();
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
@@ -48,8 +48,8 @@ export abstract class StagableExtention extends Stagable implements OnInit {
     });
 
     this.userService.userObservable.subscribe((user: UserModel) => {
-      this.user = user;
-      this.assignUserInput();
+      this.buyer = user;
+      this.assignBuyerInput();
     });
 
     this.assignIsFirstStageInput();
@@ -67,9 +67,9 @@ export abstract class StagableExtention extends Stagable implements OnInit {
     });
   }
 
-  private assignUserInput(): void {
+  private assignBuyerInput(): void {
     this.stages.forEach((stage: StageModel) => {
-      stage.componentRef.instance.user = this.user;
+      stage.componentRef.instance.buyer = this.buyer;
     });
   }
 

@@ -15,4 +15,14 @@ export abstract class StageNDEmitter<T> extends StageNEmitter {
 
   protected abstract getData(): T;
 
+  public nextStage(): void {
+    this.emitData();
+    super.nextStage();
+  }
+
+  public finalizeStages(): void {
+    this.emitData();
+    super.finalizeStages();
+  }
+
 }

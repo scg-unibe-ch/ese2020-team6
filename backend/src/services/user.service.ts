@@ -1,15 +1,36 @@
-import { UserAttributes, User } from '../models/user.model';
-import { AddressAttributes, Address } from '../models/address.model';
-import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { Sequelize, Transaction, Op } from 'sequelize';
+import { User, UserAttributes, UserCreationAttributes} from '../models/user.model';
+import { Address, AddressAttributes } from '../models/address.model';
+import { Order } from '../models/order.model';
+
 import { AddressService } from './address.service';
+import { OrderService } from './order.service';
+
+import { CutUser } from '../interfaces/cut-user.interface';
+import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import { CO } from '../interfaces/orders.interface';
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-const { Op } = require('sequelize');
+
+interface HasUserId extends Partial<UserAttributes> {
+  userId: number;
+}
 
 export class UserService {
-  datas: any;
 
-    public static cutUserInformation(user: User): {userName: string, email: string, userId: number} {
+    public static checkUserAttributes(user: UserAttributes): Promise<void> {
+      if (!user || Object.keys(user).length === 0) {
+        return Promise.reject({ message: 'Address missing!' });
+      }
+      if (user.userId) {
+        return Promise.reject({ message: 'Cannot set the user Id of a new user!' });
+      }
+      return Promise.resolve();
+    }
+
+    public static cutUserInformation(user: UserAttributes): {userName: string, email: string, userId: number} {
       return {
         userName: user.userName,
         email: user.email,
@@ -17,53 +38,31 @@ export class UserService {
       };
     }
 
-    public register(user: UserAttributes, address: AddressAttributes): Promise<User> {
+    public static register(user: UserAttributes, address: AddressAttributes): Promise<User> {
         const saltRounds = 12;
 
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password
 
-        const checkIfUserDoesNotExist: Promise<void> = this.doesUserNotExistByUsernameEmail(user.userName, user.email);
-        const checkIfAddressDoesExist: Promise<number> = AddressService.addressDoesExist(address);
-
-        return checkIfUserDoesNotExist.then(() => { // user does not exist yet -> insert
-          return checkIfAddressDoesExist.then((addressId: number) => { // address does exist -> only insert new user
-            return this.insertUserWithExistingAddress(user, addressId);
-          }).catch(() => { // address does not exist -> insert user and address
-            return this.insertUserAndAddress(user, address);
-          });
-        }).catch(err => Promise.reject(err)); // user does already exist -> reject
+        return UserService.checkUserAttributes(user).then(() => AddressService.checkAddressAttributes(address))
+        .then(() => this.doesUserNotExistByUsernameEmail(user.userName, user.email))
+        .then(() => AddressService.findOrCreateAddress(address))
+        .then((existingAddress: Address) => this.insertUserWithExistingAddress(user, existingAddress.addressId))
+        .then((createdUser: User) => this.getUserById(createdUser.userId));
     }
 
-    private insertUserAndAddress(user: UserAttributes, address: AddressAttributes): Promise<User> {
-      return User.create(
-        Object.assign(user, {address: address, preference: {}}),
-        {
-          include: [{
-            association: User.Preference
-          },
-          {
-            association: User.Address,
-            include : [ Address.Users ]
-          }]
-        }
-      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
-    }
-
-    private insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
+    private static insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
       return User.create(
         Object.assign(user, {
           preference : {},
           addressId: addressId
         }),
         {
-          include: [{
-            association: User.Preference
-          }]
+          include: [ User.associations.preference ]
         }
-      ).then((createdUser: User) => Promise.resolve(createdUser)).catch(err => Promise.reject(err));
+      );
     }
 
-    public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
+    public static login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
 
         return this.doesUserExistByUsernameEmail(loginRequestee.userName, loginRequestee.email).then((existingUser: User) => {
@@ -74,38 +73,28 @@ export class UserService {
           } else {
               return Promise.reject({ message: 'Not authorized' });
           }
-        }).catch(err => Promise.reject(err));
+        }).catch((err: any) => Promise.reject(err));
     }
 
-    private getUserByEitherAttributes(attributes: Object): Promise<User> {
+    private static getUserByEitherAttributes(attributes: Object): Promise<User> {
       return User.findOne({
         where: {
           [Op.or]: this.buildWhereOperator(attributes)
         },
-        include: [{
-          association: User.Preference
-        },
-        {
-          association: User.Address
-        }]
+        include: Object.values(User.associations)
       });
     }
 
-    private getUserByAllAttributes(attributes: Object): Promise<User> {
+    private static getUserByAllAttributes(attributes: Object): Promise<User> {
       return User.findOne({
         where: {
           [Op.and]: this.buildWhereOperator(attributes)
         },
-        include: [{
-          association: User.Preference
-        },
-        {
-          association: User.Address
-        }]
+        include: Object.values(User.associations)
       });
     }
 
-    private buildWhereOperator(attributes: Object): Array<Object> {
+    private static buildWhereOperator(attributes: Object): Array<Object> {
       return Object.entries(attributes).map(([key, value]) => {
         return {
           [key]: value
@@ -113,44 +102,76 @@ export class UserService {
       });
     }
 
-    public getUserById(userId: number): Promise<User> {
+    public static transerFee(orderSubType: OrderSubType<any, any>, checkedOrder: CO, transaction?: Transaction): Promise<[User, User]> {
+      return OrderService.getOrderTotal(orderSubType, checkedOrder)
+      .then((total: number) => Promise.all([
+        checkedOrder.buyer.update(
+          { wallet: checkedOrder.buyer.wallet - total },
+          { transaction: transaction }
+        ),
+        checkedOrder.seller.update(
+          { wallet: checkedOrder.seller.wallet + total },
+          { transaction: transaction }
+        )
+      ])).catch((err) => Promise.reject(err));
+    }
+
+    private static updateOnlyUser(user: HasUserId): Promise<void> {
+      return User.update(user, {
+        where: {
+          userId: user.userId
+        }
+      }).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+    }
+
+  /************************************************
+    Getters
+  ************************************************/
+
+    public static getUserById(userId: number): Promise<User> {
       return this.getUserByAllAttributes({
         userId: userId
       });
     }
 
-    private getUserByUsernameOrEmail(username: string, email: string): Promise<User> {
+    public static getCutUserById(userId: number): Promise<{userName: string, email: string, userId: number}> {
+      return this.getUserById(userId)
+      .then((user: User) => Promise.resolve(UserService.cutUserInformation(user)))
+      .catch((err: any) => Promise.reject(err));
+    }
+
+    private static getUserByUsernameOrEmail(username: string, email: string): Promise<User> {
       return this.getUserByEitherAttributes({
         userName: username,
         email: email
       });
     }
 
-    private doesUserExistById(userId: number): Promise<User> {
+    public static doesUserExistById(userId: number): Promise<User> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
-      }).catch(err => this.handleError(err));
+      }).catch((err: any) => this.handleError(err));
     }
 
-    private doesUserNotExistById(userId: number): Promise<void> {
+    public static doesUserNotExistById(userId: number): Promise<void> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userId: userId}, existingUser);
-      }).catch(err => this.handleError(err));
+      }).catch((err: any) => this.handleError(err));
     }
 
-    private doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
+    public static doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
-      }).catch(err => this.handleError(err));
+      }).catch((err: any) => this.handleError(err));
     }
 
-    private doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
+    public static doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userName: username, email: email}, existingUser);
-      }).catch(err => this.handleError(err));
+      }).catch((err: any) => this.handleError(err));
     }
 
-    private handleUserShouldExist(user: User): Promise <User> {
+    private static handleUserShouldExist(user: User): Promise <User> {
       if (user) {
         return Promise.resolve(user);
       } else {
@@ -158,7 +179,7 @@ export class UserService {
       }
     }
 
-    private handleUserShouldNotExist(attributes: any, existingUser: User): Promise <void> {
+    private static handleUserShouldNotExist(attributes: any, existingUser: User): Promise <void> {
       if (existingUser) {
         if (attributes.userName && attributes.email) {
           if (attributes.email === existingUser.email && attributes.userName === existingUser.userName) {
@@ -178,7 +199,7 @@ export class UserService {
       }
     }
 
-    private handleError(err: any): Promise <any> {
+    private static handleError(err: any): Promise <any> {
       return Promise.reject(err);
     }
 }

@@ -5,7 +5,9 @@ import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
 import { environment } from '../../../../environments/environment';
-import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
+import { transformAddress } from '../../../models/map/address/address.operator';
+import { transformCategory } from '../../../models/category/category.operator';
+import { Categories, CategoryModel } from '../../../models/category/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +21,27 @@ export class GetProductService extends GetService {
   }
 
   public getAllProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('all');
+    return this.get<Array<ProductModel>>('all').pipe(transformAddress);;
   }
 
   public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('accepted');
+    return this.get<Array<ProductModel>>('accepted').pipe(transformAddress);
   }
 
   public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('rejected/' + userId.toString());
+    return this.get<Array<ProductModel>>('rejected/' + userId.toString()).pipe(transformAddress);;
   }
 
   public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('unreviewed');
+    return this.get<Array<ProductModel>>('unreviewed').pipe(transformAddress);;
   }
 
   public getMyProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('myproducts/' + userId.toString());
+    return this.get<Array<ProductModel>>('myproducts/' + userId.toString()).pipe(transformAddress);;
   }
 
   public getProductById(productId: number): Observable<ProductModel> {
-    return this.get<ProductModel>('details/' + productId.toString());
+    return this.get<ProductModel>('details/' + productId.toString()).pipe(transformAddress);;
   }
 
   public getMyRejectedProductsCount(userId: number): Observable<number> {
@@ -50,11 +52,7 @@ export class GetProductService extends GetService {
     return this.get<{amountOfUnreviewd: number}>('unreviewd/count').pipe(pluck('amountOfUnreviewd'));
   }
 
-  public getCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>('categories/');
-  }
-
-  public getSubCategories(): Observable<Array<CategoryModel>> {
-    return this.get<Array<CategoryModel>>('subCategories/');
+  public getCategories(): Observable<Categories> {
+    return this.get<Array<CategoryModel>>('category/categories').pipe(transformCategory);
   }
 }

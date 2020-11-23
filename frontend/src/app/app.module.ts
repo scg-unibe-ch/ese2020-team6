@@ -66,7 +66,7 @@ import { PostProductComponent } from './components/home/product/post/post-produc
 import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
 import { ProductCardListComponent } from './components/home/product/display/product-card/list/product-card-list.component';
 import { ProductCardGridComponent } from './components/home/product/display/product-card/grid/product-card-grid.component';
-import { ProductCardComponent } from './components/home/product/display/product-card/product-card.component';
+import { ProductCardDirective } from './components/home/product/display/product-card/product-card.directive';
 import { ProductPillComponent } from './components/home/product/display/product-card/product-pill/product-pill.component';
 import { ProductViewComponent } from './components/home/product/display/product-view/product-view.component';
 import { ProductViewListComponent } from './components/home/product/display/product-view/list/product-view-list.component';
@@ -132,7 +132,6 @@ import { PopupUnreviewedComponent } from './components/user/profile/profile-navi
 import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
-import { ValidationComponent } from './components/custom-form/input/validation/validation.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
@@ -150,11 +149,21 @@ import { ButtonWarnDirective } from './models/theme/button/button-warn.directive
 import { MapComponent } from './components/map/map.component';
 import { RadioComponent } from './components/custom-form/input/radio/radio.component';
 import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FilterPipeComponent } from './components/home/product/search-product/filter-pipe/filter-pipe.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
+import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
+import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
+import { PurchaseServiceComponent } from './components/checkout/stagable/purchase-service/purchase-service.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
-
+import { SelectMultipleComponent } from './components/custom-form/select/select-multiple/select-multiple.component';
+import { SellerOrdersComponent } from './components/user/profile/seller-orders/seller-orders.component';
+import { BuyerOrdersComponent } from './components/user/profile/buyer-orders/buyer-orders.component';
+import { OrderViewComponent } from './components/order/display/view/order-view.component';
+import { OrderViewListComponent } from './components/order/display/view/list/order-view-list.component';
+import { OrderViewGridComponent } from './components/order/display/view/grid/order-view-grid.component';
+import { OrderCardGridComponent } from './components/order/display/card/grid/order-card-grid.component';
+import { OrderCardListComponent } from './components/order/display/card/list/order-card-list.component';
+import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 
 
 @NgModule({
@@ -201,7 +210,7 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     ApproveProductsComponent,
     AngleIconComponent,
     ProductCardGridComponent,
-    ProductCardComponent,
+    ProductCardDirective,
     ProductPillComponent,
     ProductViewComponent,
     ProductViewListComponent,
@@ -226,7 +235,6 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     PopupDirective,
     NavigationElementComponent,
     PreferencesComponent,
-    ValidationComponent,
     DateComponent,
     SearchProductComponent,
     FileComponent,
@@ -245,8 +253,20 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     ButtonWarnDirective,
     MapSearchComponent,
     RadioLabelDirective,
-    FilterPipeComponent,
+    RentItemComponent,
+    DurationComponent,
+    HoursValidatorDirective,
+    PurchaseServiceComponent,
     SelectCategoriesComponent,
+    SelectMultipleComponent,
+    SellerOrdersComponent,
+    BuyerOrdersComponent,
+    OrderViewComponent,
+    OrderViewListComponent,
+    OrderViewGridComponent,
+    OrderCardGridComponent,
+    OrderCardListComponent,
+    OrderCardDirective,
   ],
   imports: [
     BrowserModule,
@@ -255,7 +275,6 @@ import { MapSearchComponent } from './components/custom-form/map-search/map-sear
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
-    Ng2SearchPipeModule,
     //Angular Material
     MatButtonModule,
     MatListModule,

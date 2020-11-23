@@ -1,8 +1,10 @@
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductModel } from 'src/app/models/product/product.model';
-import { Component, EventEmitter, Output, Input, PipeTransform} from '@angular/core';
-import { SearchModel } from 'src/app/models/request/search/search.model';
-import { CategoryModel } from 'src/app/models/request/product/category-product-request.model';
+import { Component, EventEmitter, Output, Input} from '@angular/core';
+import { ThemeService } from 'src/app/services/theme/theme.service';
+import { Themable } from 'src/app/models/theme/themable';
+import { SearchModel, Search } from 'src/app/models/request/search/search.model';
+import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
 import { timeStamp } from 'console';
 
 
@@ -12,56 +14,47 @@ import { timeStamp } from 'console';
   templateUrl: './search-product.component.html',
   styleUrls: ['./search-product.component.scss']
 })
-export class SearchProductComponent implements PipeTransform {
-  @Output() criteriaChange = new EventEmitter<SearchModel>();
+export class SearchProductComponent {
+  @Output()
+  public criteriaChange = new EventEmitter<SearchModel>();
   @Input()
-  productArray: Array<ProductModel>;
-  public criteria = new SearchModel();
-  optionArray: Array<string>;
-  cat: string;
-  color = 'accent';
-  categories: Array<CategoryModel>;
-  subCategories: Array<CategoryModel>;
-  subCat: Array<string>;
-  cats: Array<string>;
-  deliv = 'Select Deliverable';
+  public products: Array<ProductModel>;
+
+  public criteria: Search = new Search();
+
+  public optionArray: Array<string>;
+  private category: string;
+  private categories: Categories;
+  public categoryStrings: Array<string> = new Array<string>();
+  public subcategoryStrings: Array<string> = new Array<string>();
+  deliverable = "Select Deliverable";
   toggleChange = true;
-  show = false;
-  isShown = false ;
+  isShown = false;
 
 
   constructor(
     private productService: ProductService,
   ) {}
 
-   public ngOnInit(): void {
-    this.productService.getCategories().subscribe((values) => {
-      this.cats = [];
-      this.categories = values;
-      for (const cat of this.categories) {
-        this.cats.push(cat.category);
-      }
+  public ngOnInit(): void {
+    this.productService.getCategories().subscribe((categories: Categories) => {
+      this.categories = categories;
+      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.subcategoryStrings = new Array<string>();
     });
-    this.productService.getSubCategories().subscribe((values) => {
-      this.subCategories = values;
-    });
+
+
   }
 
-  SubCategoryShow(entry: any): void {
-    console.log(entry);
-    this.cat = entry;
-    this.show = true;
-  }
-
-  changeVisibility(): void {
-    if (this.deliv === 'Select Deliverable'){
-      this.deliv = 'Undo Deliverable';
-      this.criteria.deliverable = false;
-      this.toggleChange = false;
+  changeVisibility(){
+    if(this.deliverable=="Select Deliverable"){
+      this.deliverable="Undo Deliverable"
+      this.criteria.deliverable=false;
+      this.toggleChange=false;
     }else{
-      this.deliv ='Select Deliverable';
-      this.toggleChange = true;
-      this.criteria.deliverable = null;
+      this.deliverable="Select Deliverable"
+      this.toggleChange=true;
+      this.criteria.deliverable=null;
     }
   }
 
@@ -77,25 +70,13 @@ export class SearchProductComponent implements PipeTransform {
   onSubmit(): void {
     this.criteriaChange.emit(this.criteria);
   }
-  transform(productArray, searchTerm: string): void {
-    for (const entry of productArray) {
-      console.log(entry);
-    }
+
+  public updateSubCategoryStrings(): void {
+    this.subcategoryStrings = this.categories.getSomeSubcategoriesByCategoryName(this.criteria.categories)
+    .map((subcategory: Subcategory) => subcategory.toString());
   }
 
-  public createSubCat(): any {
-    let catId: number;
-    this.subCat = [];
-    const choosenCat = this.criteria.category;
-    for (const cat of this.categories) {
-      if (cat.category === choosenCat) {
-        catId = cat.id;
-      }
-    }
-    for (const cat of this.subCategories) {
-      if (catId === cat.id) {
-        this.subCat.push(cat.category);
-      }
-    }
+  get showSubcategoriesSelect(): boolean {
+    return this.subcategoryStrings.length > 0;
   }
 }

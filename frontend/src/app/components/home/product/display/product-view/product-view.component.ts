@@ -1,9 +1,12 @@
-import { SearchModel } from 'src/app/models/request/search/search.model';
+import { Search } from 'src/app/models/request/search/search.model';
 import { SearchProductComponent } from './../../search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
+import { Themable } from '../../../../../models/theme/themable';
+import { ThemeService } from '../../../../../services/theme/theme.service';
+import { ProductService } from '../../../../../services/product/product.service';
 
 @Component({
   selector: 'app-product-view',
@@ -51,40 +54,11 @@ export class ProductViewComponent {
   }
 
 
-  public isInTitleOrInDescription(searchTerm: string, title: string, descrip: string): boolean {
-    if (searchTerm == null){
-      return false;
-    }
-    if (title.toLocaleLowerCase().
-    indexOf(searchTerm.toLocaleLowerCase()) !== -1 ||
-    descrip.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) !== -1){
-      return false;
-    }else{
-      return true;
-    }
-  }
 
-  public updateCriteria(event: SearchModel): void {
+
+  public updateCriteria(filter: Search): void {
+    this.filteredProducts = ProductService.filter(this.products, filter);
     this.overlayRef.detach();
-    const criteria = event;
-    this.filteredProducts = this.products.filter(product => {
-      if (
-        (criteria.category !== null && criteria.category !== product.category) ||
-        (criteria.subcategory !== null && criteria.subcategory !== product.subcategory) ||
-        (criteria.type !== null && criteria.type !== product.productType) ||
-        (criteria.offerType !== null && criteria.offerType !== product.offerType) ||
-        (criteria.priceMax !== null && product.price > criteria.priceMax) ||
-        (criteria.priceMin !== null && product.price < criteria.priceMin) ||
-        (criteria.location !== null && criteria.location.toLocaleLowerCase() !== product.location.toLocaleLowerCase()) ||
-        (criteria.deliverable !== null && criteria.deliverable !== product.isDeliverable) ||
-        (this.isInTitleOrInDescription(criteria.titleAndDescription,product.title,product.description))
-      ){
-        return false;
-      }else{
-        console.log(criteria.offerType+"    "+product.offerType);
-        return true;
-      }
-    });
   }
 
 

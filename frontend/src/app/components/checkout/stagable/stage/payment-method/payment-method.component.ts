@@ -17,8 +17,9 @@ export class PaymentMethodComponent extends StageNDEExtention<string> {
     return this.paymentMethod;
   };
 
-  public finalizeStages(): void {
-    this.emitData();
-    super.finalizeStages();
-  }
+  protected onProductLoad(): void {}
+
+  protected onSellerLoad(): void {}
+
+  protected onBuyerLoad(): void {}
 }
