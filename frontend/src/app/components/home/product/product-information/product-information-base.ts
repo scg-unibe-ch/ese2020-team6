@@ -1,3 +1,4 @@
+import { User } from './../../../../../../../backend/src/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
@@ -23,13 +24,14 @@ export class ProductInformationBase {
   private getProduct(productId: number): void {
     this.productService.getProductById(productId).subscribe((product: any) => {
       this.product = product;
-      this.getCreator(product.userId);
+      this.getCreator(product.sellerId);
     });
   }
 
   private getCreator(creatorId: number): void {
     this.userService.getUserById(creatorId).subscribe((cutUser: CutUserModel) => {
       this.creator = cutUser;
+      console.log(this.creator, 'häääääääääääääääääää')
       if (this.userService.isLoggedIn) {
         this.getCurrentUser();
       }

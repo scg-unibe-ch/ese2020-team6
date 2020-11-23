@@ -30,11 +30,12 @@ export class UserService {
       return Promise.resolve();
     }
 
-    public static cutUserInformation(user: UserAttributes): {userName: string, email: string, userId: number} {
+    public static cutUserInformation(user: UserAttributes): {userName: string, email: string, userId: number, picture: string} {
       return {
         userName: user.userName,
         email: user.email,
-        userId: user.userId
+        userId: user.userId,
+        picture: user.picture
       };
     }
 

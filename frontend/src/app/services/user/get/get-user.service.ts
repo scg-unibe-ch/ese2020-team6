@@ -24,12 +24,12 @@ export class GetUserService extends GetService {
   public getUserByIdSecured(userId: number): Observable<UserModel> {
     if (userId) {
       return this.get<UserModel>('userid/' + userId.toString()).pipe(share(), transformAddress);
-    } else return of(new NullUser());
+    } else { return of(new NullUser()); }
   }
 
   public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {
     if (userId) {
       return this.get<CutUserModel>('userid/' + userId.toString()).pipe(share());
-    } else return of(new NullCutUser());
+    } else { return of(new NullCutUser()); }
   }
 }

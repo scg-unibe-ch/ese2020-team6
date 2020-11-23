@@ -11,7 +11,7 @@ import { SellerOrdersComponent } from '../../../components/user/profile/seller-o
 import { BuyerOrdersComponent } from '../../../components/user/profile/buyer-orders/buyer-orders.component';
 
 
-export const defaultProfileComponent: number = 0;
+export const defaultProfileComponent = 0;
 
 export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>  = [
   {
