@@ -29,6 +29,7 @@ export interface UserAttributes {
     gender: string;
     isAdmin: boolean;
     wallet: number;
+    picture: string;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -71,6 +72,7 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
     gender!: string;
     isAdmin!: boolean;
     wallet!: number;
+    picture: string;
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -117,6 +119,9 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
                 allowNull: false
+            },
+            picture: {
+              type: DataTypes.STRING,
             },
             wallet: {
                 type: DataTypes.FLOAT(5, 2),
