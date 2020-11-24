@@ -7,6 +7,8 @@
     $section-color: map-get($theme, shady);
     $text-color: map-get($theme, bright);
     $accent-color: map-get($theme, accent);
+    $btn-default-bg: map-get($theme, highlight);
+    $disable-Color: map-get($theme, bright);
 
     background: $product-bg;
     color: $text-color;
@@ -25,6 +27,14 @@
 
     .lower-section {
       background: $section-color;
+    }
+
+    .btnColor {
+      color: $btn-default-bg;
+    }
+
+    .disableColor {
+      color: $disable-Color;
     }
   }
 }

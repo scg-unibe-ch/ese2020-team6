@@ -13,6 +13,7 @@ export interface UserModel {
   isAdmin: boolean;
   wallet: number;
   address: AddressModel;
+  picture: string;
 }
 
 export class NullUser implements UserModel {
@@ -28,4 +29,5 @@ export class NullUser implements UserModel {
   isAdmin: boolean = null;
   wallet: number = null;
   address: AddressModel = new NullAddress();
+  picture: string = null;
 }

@@ -8,6 +8,7 @@ import { UserModel, NullUser } from '../../../../models/user/user.model';
 })
 export class UserDetailsComponent implements OnInit {
 
+  public picture: string;
   public user: UserModel = new NullUser();
 
   constructor(
@@ -17,6 +18,7 @@ export class UserDetailsComponent implements OnInit {
   public ngOnInit(): void {
     this.userService.events.onLoad((user: UserModel) => {
       this.user = user;
+      this.picture = user.picture;
     });
   }
 

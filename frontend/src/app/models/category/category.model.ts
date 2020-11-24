@@ -35,7 +35,7 @@ export class Category implements CategoryModel {
     );
   }
 
-  public toString = () : string => {
+  public toString = (): string => {
     return this.category;
   }
 }
@@ -52,7 +52,7 @@ export class Subcategory implements SubcategoryModel {
     return new Subcategory(subcategoryModel.subcategoryId, subcategoryModel.categoryId, subcategoryModel.subcategory);
   }
 
-  public toString = () : string => {
+  public toString = (): string => {
     return this.subcategory;
   }
 }

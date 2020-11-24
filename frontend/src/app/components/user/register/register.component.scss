@@ -91,6 +91,20 @@
             grid-column: span 2;
           }
         }
+        .picture {
+          @media screen and (min-height: 850px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+          display: grid;
+          grid-template-columns: auto auto;
+          width: 100%;
+    
+          img {
+            max-height: 5em;
+            max-width: 5em;
+            border-radius: $border-radius;
+          }
+        }
       }
 
       .second {
