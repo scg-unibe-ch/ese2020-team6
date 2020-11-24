@@ -36,8 +36,11 @@ export class ProfileComponent {
   }
 
   private setCurrentContentOnReload(): void {
-    let currentNavigationElementPath: string = this.router.url.split("/").reverse()[0];
-    let currentNavigationElement: ProfileNavigationElementModel = this.navigationElements.find((element: ProfileNavigationElementModel) => element.path === currentNavigationElementPath);
+    let currentNavigationElementPath: string = this.router.url.split('/').reverse()[0];
+    let currentNavigationElement: ProfileNavigationElementModel =
+    this.navigationElements.find(
+      (element: ProfileNavigationElementModel) =>
+      element.path === currentNavigationElementPath);
     this.setCurrentContent(currentNavigationElement);
   }
 

@@ -26,6 +26,14 @@
         }
       }
     }
+    .picture-wrapper-wrapper {
+      background: $bg;
+      .waller-wrapper {
+        .wallet {
+          background: $wallet-bg;
+        }
+      }
+    }
     .details-wrapper {
       background: $bg;
       .details {
