@@ -5,7 +5,7 @@ import { LoginUserRequestBuilder } from '../../../models/request/user/login/logi
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
 import { LoginUserResponseModel } from '../../../models/response/user/login/login-user-response.model';
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
-import { UserService } from '../../../services/user/user.service';
+import { LoginUserService } from '../../../services/user/login/login-user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements LoginUserRequestBuilder{
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private loginUserService: LoginUserService,
   ) {}
 
   public onSubmit(form: NgForm): void {
@@ -29,13 +29,7 @@ export class LoginComponent implements LoginUserRequestBuilder{
       this.form = form;
       this.values = form.value;
       this.loginErrorMessage = '';
-      this.userService.login(this)
-      .subscribe(
-        (res: LoginUserResponseModel) => {
-          this.loginSuccess();
-        },
-        (err: any) => this.loginError(err)
-      );
+      this.loginUserService.login(this).events.onLogin(this.loginSuccess, this.loginError);
     }
   }
 
@@ -47,12 +41,12 @@ export class LoginComponent implements LoginUserRequestBuilder{
     };
   }
 
-  private loginSuccess(): void {
+  private loginSuccess = () => {
     this.form.resetForm();
     this.router.navigate(['']);
   }
 
-  private loginError(err: any): void {
+  private loginError = (err: any) => {
     this.loginErrorMessage = err.error.message;
   }
 }

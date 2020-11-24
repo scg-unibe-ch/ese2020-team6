@@ -81,7 +81,9 @@ export class UserService {
         where: {
           [Op.or]: this.buildWhereOperator(attributes)
         },
-        include: Object.values(User.associations)
+        include: [
+          User.associations.address
+        ]
       });
     }
 
@@ -90,7 +92,9 @@ export class UserService {
         where: {
           [Op.and]: this.buildWhereOperator(attributes)
         },
-        include: Object.values(User.associations)
+        include: [
+          User.associations.address
+        ]
       });
     }
 

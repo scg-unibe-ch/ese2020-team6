@@ -18,7 +18,7 @@ export class RejectedProductsComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.userService.userObservable.subscribe((user: UserModel) => {
+    this.userService.events.onLoad((user: UserModel) => {
       this.productService.getMyRejectedProducts(user.userId).subscribe((products: Array<ProductModel>) => this.products = products);
     });
   }

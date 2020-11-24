@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR} from '@angular/forms';
 import { ValueAccessorBase } from '../../value-accessor-base';
-import { ThemeService } from '../../../../services/theme/theme.service';
 
 @Component({
   selector: 'select-multiple',
@@ -37,12 +36,6 @@ export class SelectMultipleComponent extends ValueAccessorBase<Array<string>> {
   public availableOptions: Array<string> = new Array<string>();
 
   public optionsHidden: Boolean = true;
-
-  constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
 
   public onToggleDropdown(): void {
     this.optionsHidden = !this.optionsHidden;

@@ -1,8 +1,6 @@
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductModel } from 'src/app/models/product/product.model';
 import { Component, EventEmitter, Output, Input} from '@angular/core';
-import { ThemeService } from 'src/app/services/theme/theme.service';
-import { Themable } from 'src/app/models/theme/themable';
 import { SearchModel, Search } from 'src/app/models/request/search/search.model';
 import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
 import { timeStamp } from 'console';

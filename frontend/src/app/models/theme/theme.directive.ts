@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, HostBinding, Optional, Self, OnChanges } from '@angular/core';
 import { ThemeService } from '../../services/theme/theme.service';
-import { Themable } from './themable';
+import { ThemeObserver } from './themable';
 import { ButtonDirective } from './button/button.directive';
 import { ButtonEmptyDirective } from './button/button-empty.directive';
 import { ButtonWarnDirective } from './button/button-warn.directive';
@@ -8,9 +8,11 @@ import { ButtonWarnDirective } from './button/button-warn.directive';
 @Directive({
   selector: '[theme]'
 })
-export class ThemeDirective extends Themable implements OnChanges {
+export class ThemeDirective implements ThemeObserver, OnChanges{
 
   private classes: Array<string> = new Array<string>();
+  private currentTheme: string;
+  private previousTheme: string;
 
   @Input('class')
   @HostBinding('class')
@@ -22,66 +24,98 @@ export class ThemeDirective extends Themable implements OnChanges {
   }
 
   @Input()
-  public classExtentions: Array<string> = new Array<string>();
-  private baseExtentions: Array<string> = new Array<string>();
+  private defaultBaseClassExtensions: Array<string> = new Array<string>();
+  private otherBaseClassExtensions: Array<string> = new Array<string>();
+  private allPreviousExtendedBaseClassExtensions: Array<string> = new Array<string>();
 
   constructor(
-    themeService: ThemeService,
+    private themeService: ThemeService,
     @Optional() @Self() private button: ButtonDirective,
     @Optional() @Self() private buttonEmpty: ButtonEmptyDirective,
     @Optional() @Self() private buttonWarn: ButtonWarnDirective
   ) {
-    super(themeService);
-    this.applyThemeClass();
-    this.applyClassExtentions();
+    this.themeService.addThemeObserver(this);
   }
 
   public ngOnChanges(): void {
-    this.applyThemeClass();
-    this.applyClassExtentions();
+    this.applyThemeClass(this.currentTheme, this.previousTheme);
+    this.applyClassExtensions(this.currentTheme, this.previousTheme);
   }
 
-  private applyThemeClass(): void {
-    this.pushClass(this.theme);
+  public onThemeChange(currentTheme: string, previousTheme: string): void {
+    this.currentTheme = currentTheme;
+    this.previousTheme = previousTheme;
+    this.ngOnChanges();
   }
 
-  private removeClassExtentions(): void {
-    this.baseExtentions.forEach((singleClass: string) => {
-      let index: number = this.classes.indexOf(this.buildClassExtention(singleClass));
-      if (index > -1) {
-        this.classes.splice(index, 1);
-      }
-    });
+
+  private applyThemeClass(currentTheme: string, previousTheme: string): void {
+    this.removeClass(previousTheme)
+    this.addClass(currentTheme);
   }
 
-  private applyClassExtentions(): void {
-    this.removeClassExtentions();
-    this.pushClasses(this.buildClassExtentions());
-    this.baseExtentions = Object.assign([], this.classExtentions);
+  private applyClassExtensions(currentTheme: string, previousTheme: string): void {
+    this.removeClassExtensions(previousTheme);
+    this.buildOtherBaseClassExtensions();
+    this.addClassExtensions(currentTheme);
   }
 
-  private buildClassExtentions(): Array<string> {
-    if (this.button) this.classExtentions.push(this.button.extention);
-    if (this.buttonEmpty) this.classExtentions.push(this.buttonEmpty.extention);
-    if (this.buttonWarn) this.classExtentions.push(this.buttonWarn.extention);
+
+
+  /*******************************
+    Building Class Extensions
+  *******************************/
+
+  private buildOtherBaseClassExtensions(): void {
+    if (this.button) this.otherBaseClassExtensions.push(this.button.extension);
+    if (this.buttonEmpty) this.otherBaseClassExtensions.push(this.buttonEmpty.extension);
+    if (this.buttonWarn) this.otherBaseClassExtensions.push(this.buttonWarn.extension);
     if (this.button && this.buttonEmpty ||
         this.button && this.buttonWarn ||
         this.buttonWarn && this.buttonEmpty) throw 'You cannot assing "button" and "buttonEmpty", only one!';
-    return this.classExtentions.map((singleClass: string) => this.buildClassExtention(singleClass));
+  }
+  private buildClassExtensions(theme: string, baseClassExtensions: Array<string>): Array<string> {
+    return baseClassExtensions.map((singleClass: string) => this.buildClassExtension(theme, singleClass))
+  }
+  private buildClassExtension(theme: string, singleClass: string): string {
+    return singleClass + '-' + theme;
   }
 
-  private buildClassExtention(singleClass: string): string {
-    return singleClass + '-' + this.theme;
+  /*******************************
+    Adding and Removing classes
+  *******************************/
+
+  private addClass(singleClass: string): void {
+    if (!this.classes.includes(singleClass)) this.classes.push(singleClass);
   }
 
-  private pushClass(singleClass: string): void {
-    if (this.classes.indexOf(singleClass) == -1) this.classes.push(singleClass);
-  }
-
-  private pushClasses(classes: Array<string>): void {
+  private addClasses(classes: Array<string>): void {
     classes.forEach((singleClass: string) => {
-      this.pushClass(singleClass);
+      this.addClass(singleClass);
     });
+  }
+
+  private addClassExtensions(theme: string): void {
+    let allExtendedBaseClassExtensions = this.buildClassExtensions(theme, this.defaultBaseClassExtensions.concat(this.otherBaseClassExtensions));
+    this.addClasses(allExtendedBaseClassExtensions);
+    this.allPreviousExtendedBaseClassExtensions = allExtendedBaseClassExtensions;
+  }
+
+  private removeClass(singleClass: string): void {
+    let index: number = this.classes.indexOf(singleClass);
+    if (index > -1) {
+      this.classes.splice(index, 1);
+    }
+  }
+
+  private removeClasses(classes: Array<string>): void {
+    classes.forEach((singleClass: string) => {
+      this.removeClass(singleClass);
+    });
+  }
+
+  private removeClassExtensions(theme: string): void {
+    this.removeClasses(this.allPreviousExtendedBaseClassExtensions);
   }
 
 }

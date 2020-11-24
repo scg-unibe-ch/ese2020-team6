@@ -2,7 +2,7 @@
 @import './menu-bar.component.theme.scss';
 
 .menu-bar-wrapper {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   display: flex;
@@ -20,6 +20,10 @@
     grid-auto-columns: auto;
     grid-auto-flow: column;
     grid-gap: $spaceing-s;
+
+    button {
+      min-width: 150px;
+    }
 
     // button width in styles.scss
   }

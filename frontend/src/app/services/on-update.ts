@@ -3,16 +3,16 @@ import { Observable } from 'rxjs';
 
 export abstract class OnUpdate<T> extends OnLoad<T> {
 
-  private onUpdate: string = 'onUpdate';
+  private onUpdateEventName: string = 'onUpdate';
 
   constructor() {
     super();
-    this.addEvent(this.onUpdate);
+    this.addEvent(this.onUpdateEventName);
   }
 
-  public update(value: T): void {
-    this.observables[this.onUpdate] = this.updateObservable(value);
-    this.addSubscriptions(this.onUpdate);
+  public update(value: T): OnUpdate<T> {
+    this.setObservable<T>(this.onUpdateEventName, this.updateObservable(value));
+    return this;
   }
 
   protected abstract updateObservable(value: T): Observable<T>;

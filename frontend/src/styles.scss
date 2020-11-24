@@ -3,18 +3,11 @@
 @import './variables.scss';
 @import './mixins.theme.scss';
 
-html, body {
+html, body, app-root {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-}
-
-.menu-bar-wrapper {
-  .left {
-    button {
-      min-width: 150px;
-    }
-  }
+  position: relative;
 }
 
 // leave in

@@ -15,7 +15,7 @@ export class UserDetailsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userService.userObservable.subscribe((user: UserModel) => {
+    this.userService.events.onLoad((user: UserModel) => {
       this.user = user;
     });
   }

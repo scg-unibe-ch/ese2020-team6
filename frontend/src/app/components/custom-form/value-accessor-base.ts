@@ -1,9 +1,7 @@
 import {ControlValueAccessor} from '@angular/forms';
-import { Themable } from '../../models/theme/themable';
-import { ThemeService } from '../../services/theme/theme.service';
 
 
-export class ValueAccessorBase<T> extends Themable implements ControlValueAccessor {
+export class ValueAccessorBase<T> implements ControlValueAccessor {
   private _touched = false;
   private _dirty = false;
   private _focused = false;
@@ -13,13 +11,7 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
 
   protected onChange: (value: T) => void = (value: T) => {};
   protected onTouched: () => void = () => {};
-
-  constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
-
+  
 
   get value(): T {
     return this.innerValue;
@@ -89,7 +81,6 @@ export class ValueAccessorBase<T> extends Themable implements ControlValueAccess
     let classes: Array<string> = new Array<string>();
     classes.push(this.touched ? 'touched' : 'untouched');
     classes.push(this.dirty ? 'dirty' : 'pristine');
-    classes.push(this.theme);
 
     return classes;
   }

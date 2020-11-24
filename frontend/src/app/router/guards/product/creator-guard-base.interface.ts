@@ -4,6 +4,7 @@ import { Observable, of, concat } from 'rxjs';
 import { pluck, map,  mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
+import { UserModel } from '../../../models/user/user.model';
 import { ProductService } from '../../../services/product/product.service';
 
 export abstract class CreatorGuardBase implements CanActivate {
@@ -17,25 +18,19 @@ export abstract class CreatorGuardBase implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.userService.isLoggedIn) {
-      const productId: number = parseInt(next.parent.params.productId, 10);
-      const creatorIdObservable = this.productService.getProductById(productId).pipe(pluck('userId'));
-      const currentUserIdObservable = this.userService.userObservable.pipe(pluck('userId'));
-
-      const isCreatorOrNotObservable: Observable<boolean> = creatorIdObservable.pipe(
-        mergeMap((creatorId: number) => currentUserIdObservable.pipe(
-          map((currentUserId: number) => this.needsNoRedirect(creatorId, currentUserId))
-        ))
-      );
-      isCreatorOrNotObservable.subscribe((needsNoRedirect: boolean) => {
-        if (!needsNoRedirect) {
-          this.redirect(next, state);
-        }
-      })
-      return isCreatorOrNotObservable;
-    } else {
-      return true;
-    }
+    return this.userService.getUserObservable().pipe(mergeMap((user: UserModel) => {
+      if (user) {
+        const productId: number = parseInt(next.parent.params.productId, 10);
+        const creatorIdObservable = this.productService.getProductById(productId).pipe(pluck('userId'));
+        const isCreatorOrNotObservable = creatorIdObservable.pipe(map((creatorId: number) => this.needsNoRedirect(creatorId, user.userId)));
+        isCreatorOrNotObservable.subscribe((needsNoRedirect: boolean) => {
+          if (!needsNoRedirect) {
+            this.redirect(next, state);
+          }
+        })
+        return isCreatorOrNotObservable;
+      } else return of(false);
+    }));
   }
 
   private needsNoRedirect(creatorId: number, currentUserId: number): boolean {

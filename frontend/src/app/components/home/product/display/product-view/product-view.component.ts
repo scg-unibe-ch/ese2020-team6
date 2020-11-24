@@ -4,8 +4,6 @@ import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
 import { ProductModel } from '../../../../../models/product/product.model';
-import { Themable } from '../../../../../models/theme/themable';
-import { ThemeService } from '../../../../../services/theme/theme.service';
 import { ProductService } from '../../../../../services/product/product.service';
 
 @Component({

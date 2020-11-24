@@ -1,18 +1,18 @@
 import { OnObservalbeEvents } from './on-observable-events';
 import { Observable } from 'rxjs';
 
-export abstract class OnLoad<T> extends OnObservalbeEvents<T> {
+export abstract class OnLoad<T> extends OnObservalbeEvents {
 
-  private onLoad: string = 'onLoad';
+  private onLoadEventName: string = 'onLoad';
 
   constructor() {
     super();
-    this.addEvent(this.onLoad);
+    this.addEvent(this.onLoadEventName);
   }
 
-  public load(): void {
-    this.observables[this.onLoad] = this.loadObservable();
-    this.addSubscriptions(this.onLoad);
+  public load(): OnLoad<T> {
+    this.setObservable<T>(this.onLoadEventName, this.loadObservable());
+    return this;
   }
 
   protected abstract loadObservable(): Observable<T>;

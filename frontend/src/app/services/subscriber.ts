@@ -1,7 +1,3 @@
-export type SuccSubscriber<T> = (value: T) => void;
-export type ErrSubscriber = (err: any) => void;
-
-export interface Subscriber<T> {
-  succSubscriber: SuccSubscriber<T>;
-  errSubscriber?: (err: any) => void;
-}
+export type NextMethod<T> = (value: T) => void;
+export type ErrorMethod = (error: any) => void;
+export type CompletionMethod = () => void;

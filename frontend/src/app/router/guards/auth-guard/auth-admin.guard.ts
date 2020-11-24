@@ -17,20 +17,27 @@ export class AuthAdminGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.userService.isLoggedIn) {
-      const isAdminObservable: Observable<boolean> = this.userService.userObservable.pipe(pluck('isAdmin'));
-      isAdminObservable.subscribe((isAdmin: boolean) => {
-        if (!isAdmin) {
-          let pathSegmentArray: Array<string> = state.url.split("/").reverse();
-          pathSegmentArray[0] = 'purchase';
-          this.router.navigate([pathSegmentArray.reverse().join("/")])
-        }
-      });
-      return isAdminObservable;
-    } else {
-      return true;
-    }
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    // this.userService.onLoad((user: UserModel) => {
+    //   if (!user) this.router.navigate(['user/login'])
+    // });
+    // return this.userService.getUserObservable().pipe(map((user: UserModel) => user ? true : false));
+    //
+    // if (this.userService.isLoggedIn) {
+    //   const isAdminObservable: Observable<boolean> = this.userService.userObservable.pipe(pluck('isAdmin'));
+    //   isAdminObservable.subscribe((isAdmin: boolean) => {
+    //     if (!isAdmin) {
+    //       let pathSegmentArray: Array<string> = state.url.split("/").reverse();
+    //       pathSegmentArray[0] = 'purchase';
+    //       this.router.navigate([pathSegmentArray.reverse().join("/")])
+    //     }
+    //   });
+    //   return isAdminObservable;
+    // } else {
+    //   return true;
+    // }
+    return true;
   }
 
 }

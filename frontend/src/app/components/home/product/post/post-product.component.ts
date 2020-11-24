@@ -15,7 +15,6 @@ import {
 import { UserModel } from '../../../../models/user/user.model';
 import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
 import { PostProductFormModel, NullPostProductForm, PostProductForm } from '../../../../models/form/post-product-form.model';
-import { Themable } from '../../../../models/theme/themable';
 import { ThemeService } from '../../../../services/theme/theme.service';
 import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 

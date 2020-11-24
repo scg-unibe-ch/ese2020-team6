@@ -26,13 +26,11 @@ export class MyProductsComponent implements OnInit {
       (navigationElement: ProfileNavigationElementModel) => {
         this.currentContent = navigationElement;
       });
-    if (this.userService.isLoggedIn) {
-      this.userService.userObservable.subscribe((user: UserModel) => {
-        this.userId = user.userId;
-        this.productService.getMyProducts(this.userId).subscribe(data => {
-          this.products = data;
-        });
+    this.userService.events.onLoad((user: UserModel) => {
+      this.userId = user.userId;
+      this.productService.getMyProducts(this.userId).subscribe(data => {
+        this.products = data;
       });
-    }
+    });
   }
 }

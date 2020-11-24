@@ -3,7 +3,6 @@ import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '
 import { ActivatedRoute } from '@angular/router';
 import * as Leaflet from 'leaflet';
 import { ValueAccessorValidatorBase } from '../value-accessor-validator-base';
-import { ThemeService } from '../../../services/theme/theme.service';
 
 import { MapSearch } from '../../map/map-search';
 import { SearchResultsModel, SearchResultModel } from '../../../models/map/search/search-model.module';
@@ -53,12 +52,11 @@ export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
   }
 
   constructor(
-    themeService: ThemeService,
     private route: ActivatedRoute,
     @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
     @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>
   ) {
-    super(validators, asyncValidators, themeService);
+    super(validators, asyncValidators);
 
     this.map = new MapSearch('Topographic', new Location(new Leaflet.LatLng(46.947922, 7.440390), 6));
     this.map.addResultSubscriber(this.handleSearchResults);
@@ -85,7 +83,6 @@ export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
     let classes: Array<string> = new Array<string>();
     classes.push(this.touched ? 'touched' : 'untouched');
     classes.push(this.dirty ? 'dirty' : 'pristine');
-    classes.push(this.theme);
     classes.push(this.invalid ? 'invalid' : 'valid');
     classes.push(this.placeholder ? 'full-height' : '');
     classes.push(this.fullScreen ? 'full-screen' : '')

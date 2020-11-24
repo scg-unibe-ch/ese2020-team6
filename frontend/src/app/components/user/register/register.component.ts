@@ -9,6 +9,7 @@ import { RegisterUserRequestModel } from '../../../models/request/user/register/
 import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
 import { UserService } from '../../../services/user/user.service';
+import { LoginUserService } from '../../../services/user/login/login-user.service';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,8 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private loginUserService: LoginUserService
   ) {}
 
   public validateCrossFieldPassword(form: NgForm): void {
@@ -58,7 +60,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    this.userService.login(this).subscribe((res: LoginUserResponseModel) => this.loginSuccess());
+    this.loginUserService.login(this).events.onLogin((res: LoginUserResponseModel) => this.loginSuccess());
   }
 
   private registerError(err: any): void {
