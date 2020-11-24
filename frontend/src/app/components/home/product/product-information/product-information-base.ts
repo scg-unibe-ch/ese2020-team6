@@ -31,7 +31,6 @@ export class ProductInformationBase {
   private getCreator(creatorId: number): void {
     this.userService.getUserById(creatorId).subscribe((cutUser: CutUserModel) => {
       this.creator = cutUser;
-      console.log(this.creator, 'häääääääääääääääääää')
       if (this.userService.isLoggedIn) {
         this.getCurrentUser();
       }

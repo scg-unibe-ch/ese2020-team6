@@ -11,29 +11,32 @@
     </div>
     <div class="creator">
       <div>
-        <div>Created By <br> {{creator.userName}}</div>
+        <div class="btnColor">Created By 
+          <br> 
+          <div class="disableColor">{{creator.userName}}</div>
+        </div>
         <img class="profilPicture" src="{{creator.picture}}">
       </div>
     </div>
-    <div class="price">
+    <div class="price, btnColor">
       Price:
-      <div>{{product.price}}{{priceLabel}}</div>
+      <div class="disableColor"> {{product.price}}{{priceLabel}}</div>
     </div>
-
     <div class="location">
       <map [initAddress]="product.address"></map>
     </div>
 
-    <div class="expiration-date">
+    <div class="expiration-date, btnColor">
       Expiration Date:
-      <div>{{formatExpirationDate()}}</div>
+      <div class="disableColor">{{formatExpirationDate()}}</div>
     </div>
-    <div class="category">
+    <div class="category, btnColor">
       Category:
-      <div>{{product.category}}</div>
-      <div class="subcategory">
+      <div class="disableColor">{{product.category}}</div>
+      <br>
+      <div>
           Subcategory:
-          <div>{{product.subcategory}}</div>
+          <div class="disableColor">{{product.subcategory}}</div>
       </div>
     </div>
   </div>
