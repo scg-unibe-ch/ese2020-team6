@@ -31,7 +31,7 @@ export class ProductService {
     product will receive the addressId of the existing address. If the address
     does not exist yet, the address will be created and assigned to the product.
   */
-  public static  createProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+  public static  createProduct(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
     const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
     product.status = 'Available';
     product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
@@ -41,7 +41,7 @@ export class ProductService {
         return checkIfAddressDoesExist.then((existingAddress: Address) => { // address does exist -> only insert new product
           return this.insertProductWithExistingAddress(product, existingAddress.addressId).catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
-          return this.insertProductAndAddress(product, address).catch((err: any) => Promise.reject(err));
+          return this.insertProductAndAddress(product, address, picture).catch((err: any) => Promise.reject(err));
         });
       });
     });
@@ -54,8 +54,8 @@ export class ProductService {
     If an address does not exist, the address will be created here, thogether with
     the product.
   */
-  private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
-    return Product.create(Object.assign(product, {address: address}), {
+  private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
+    return Product.create(Object.assign(product, {address: address}, {picture: picture}), { // check if works Doris
       include: [{
         association: Product.associations.address,
         include : [ Address.associations.products ]

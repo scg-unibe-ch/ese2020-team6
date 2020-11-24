@@ -5,6 +5,9 @@ import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '../../../../services/product/product.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+
 import {
   PostProductRequestBuilder,
   PostProductRequestModel,
@@ -25,7 +28,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   private productId: number;
   public isUpdate = false;
   public previewData: ProductModel;
-  public picture: string;
+  public picture: any;
   private categories: Categories = Categories.NullCategories;
   public categoryStrings: Array<string> = new Array<string>();
   public subcategoryStrings: Array<string> = new Array<string>();
@@ -44,7 +47,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
   ) {
   }
 
@@ -82,13 +86,10 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
 
   public selectFile(event): void {
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      const result: string = event.target.result;
-      this.product.picture = result;
-      this.picture = result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.picture = file;
+    }
   }
 
 
@@ -97,7 +98,26 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       if (this.isUpdate) {
         this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
       } else {
-        this.productService.postProduct(this).subscribe((values) => this.success());
+        const formData = new FormData();
+        console.log(this.form, 'aaaaaaaaaaaaaaaaaaaaaaa')
+        formData.append('picture', this.picture);
+        formData.append('category', this.form.value.category);
+        formData.append('description', this.form.value.description);
+        formData.append('expirationDate', this.form.value.expirationDate);
+        formData.append('isDeliverable', this.form.value.isDeliverableString);
+        formData.append('offerType', this.form.value.offerType);
+        formData.append('price', this.form.value.price);
+        formData.append('productType', this.form.value.productType);
+        formData.append('subcategory', this.form.value.subcategory);
+        formData.append('title', this.form.value.title);
+        formData.append('address', this.form.value.address);
+        
+        this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
+          (res) => console.log(res),
+          (err) => console.log(err)
+        );
+
+        // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }
   }

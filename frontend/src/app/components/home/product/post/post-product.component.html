@@ -6,7 +6,7 @@
         <h3 class="title">Update</h3>
       </ng-template>
     </div>
-    <form class="post-product-form" #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
+    <form enctype="multipart/form-data" class="post-product-form" #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="first">
         <app-select class="product-type" name="productType" selectName="Product Type" [options]="originalProductTypeStrings" ngModel #productType="ngModel" (ngModelChange)="udateOfferTypeStrings($event)"></app-select>
         <app-select class="offer-type" name="offerType" selectName="Offer Type" [options]="offerTypeStrings" ngModel #offerType="ngModel"></app-select>

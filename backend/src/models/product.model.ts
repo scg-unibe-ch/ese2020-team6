@@ -48,7 +48,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     addressId!: number;
     productType!: string;
     offerType!: string;
-    picture!: string;
+    picture: string;
     subcategory!: string;
     expirationDate!: number;
     status!: string;

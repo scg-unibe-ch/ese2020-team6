@@ -12,7 +12,7 @@ export class PostProductRequest implements PostProductRequestModel {
     public description: string,
     public price: number,
     public address: AddressModel,
-    public picture: string,
+    public picture: any,
     public category: string,
     public subcategory: string,
     public isDeliverable: boolean,
@@ -23,7 +23,7 @@ export class PostProductRequest implements PostProductRequestModel {
     return this.title;
   }
 
-  public static buildFromPostProductFormModel(postProductForm: PostProductFormModel, picture: string): PostProductRequest {
+  public static buildFromPostProductFormModel(postProductForm: PostProductFormModel, picture: any): PostProductRequest {
     return new PostProductRequest (
       postProductForm.productType,
       postProductForm.offerType,
