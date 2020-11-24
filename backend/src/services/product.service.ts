@@ -33,14 +33,19 @@ export class ProductService {
   */
   public static  createProduct(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
     const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
+    console.log(product, 'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWww');
     product.status = 'Available';
     product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
     product.isDeliverable = product.productType === 'Service' ? true : product.isDeliverable;
     return ProductService.checkProductAttributes(product).then(() => {
       return AddressService.checkAddressAttributes(address).then(() => {
         return checkIfAddressDoesExist.then((existingAddress: Address) => { // address does exist -> only insert new product
-          return this.insertProductWithExistingAddress(product, existingAddress.addressId).catch((err: any) => Promise.reject(err));
+          console.log('heloo TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+          return this.insertProductWithExistingAddress(
+            product, existingAddress.addressId, picture)
+            .catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
+          console.log('heloo PRODUCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
           return this.insertProductAndAddress(product, address, picture).catch((err: any) => Promise.reject(err));
         });
       });
@@ -55,12 +60,18 @@ export class ProductService {
     the product.
   */
   private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
-    return Product.create(Object.assign(product, {address: address}, {picture: picture}), { // check if works Doris
+    console.log( ' ');
+    console.log(product, 'Ready for PROOOOODUccccctttt');
+    console.log( ' ');
+    console.log(address, 'Ready for AAAAAAAAAAAAdddreeeeeeeessss');
+    console.log( ' ');
+    console.log(Object.assign(product, {picture: picture, address: address}), 'Ready for PICTURE!!!!!!!!!!');
+    return Product.create(Object.assign(product, {picture: picture, address: address}), {
       include: [{
         association: Product.associations.address,
         include : [ Address.associations.products ]
       }]
-    });
+    }).catch((err: any) => {console.log(err); return Promise.reject(err); });
   }
 
 
@@ -69,10 +80,10 @@ export class ProductService {
     This method is helpful, if we want to insert a product without creating
     a new address (which already exists).
   */
-  private static insertProductWithExistingAddress(product: ProductAttributes, addressId: number): Promise<Product> {
+  private static insertProductWithExistingAddress(product: ProductAttributes, addressId: number, picture: string): Promise<Product> {
     return Product.create(
       Object.assign(product, {
-        addressId: addressId
+        addressId: addressId, picture: picture
       })
     ).then((createdProductTmp: Product) => this.getProductById(createdProductTmp.productId))
     .catch((err: any) => Promise.reject(err));

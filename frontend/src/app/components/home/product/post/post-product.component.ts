@@ -1,3 +1,4 @@
+import { UserService } from './../../../../services/user/user.service';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,6 +50,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
+    private userService: UserService
   ) {
   }
 
@@ -62,6 +64,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         this.getCategories();
       }
     });
+    
 
   }
 
@@ -99,7 +102,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
       } else {
         const formData = new FormData();
-        console.log(this.form, 'aaaaaaaaaaaaaaaaaaaaaaa')
         formData.append('picture', this.picture);
         formData.append('category', this.form.value.category);
         formData.append('description', this.form.value.description);
@@ -110,13 +112,22 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         formData.append('productType', this.form.value.productType);
         formData.append('subcategory', this.form.value.subcategory);
         formData.append('title', this.form.value.title);
-        formData.append('address', this.form.value.address);
-        
+        formData.append('streetName', this.form.value.address.streetName);
+        formData.append('streetType', this.form.value.address.streetType);
+        formData.append('addressNumber', this.form.value.address.addressNumber);
+        formData.append('city', this.form.value.address.city);
+        formData.append('country', this.form.value.address.country);
+        formData.append('neighbourhood', this.form.value.address.neighbourhood);
+        formData.append('postal', this.form.value.address.postal);
+        formData.append('region', this.form.value.address.region);
+        formData.append('streetAddress', this.form.value.address.streetAddress);
+
+
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
           (res) => console.log(res),
           (err) => console.log(err)
         );
-
+        this.success();
         // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }

@@ -1,4 +1,3 @@
-
 import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
@@ -9,6 +8,8 @@ import { OrderController } from './order.controller';
 
 const productController: Router = express.Router();
 
+
+// multer for saving image
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req: Request, file: any, cb: any) {
@@ -19,7 +20,6 @@ const storage = multer.diskStorage({
         cb(null, new Date().toISOString() + file.fieldname);
     }
 });
-
 const fileFilter = (req: Request, file: any, cb: any) => {
     if (file.mimetype === 'image/jpg' ||
          file.mimetype === 'image/png' ||
@@ -34,11 +34,44 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-productController.post('/post', verifyToken, upload.single('picture'),
+// extract address from form
+function convertAddress(form: any): any {
+    const addressObject = {
+        'streetName': form.streetName,
+        'streetType': form.streetType,
+        'addressNumber': form.addressNumber,
+        'city': form.city,
+        'country': form.country,
+        'neighbourhood': form.neighbourhood,
+        'postal': form.postal,
+        'region': form.region,
+        'streetAddress': form.streetAddress
+    };
+    return addressObject;
+}
+// extract product from form
+function convertProduct(form: any, seller: number): any {
+    const data = {
+        'category': form.category,
+        'description': form.description,
+        'expirationDate': form.expirationDate,
+        'isDeliverable': form.isDeliverable,
+        'offerType': form.offerType,
+        'price': form.price,
+        'productType': form.productType,
+        'subcategory': form.subcategory,
+        'title': form.title,
+        'sellerId': seller
+    };
+    return data;
+}
+
+productController.post('/post', upload.single('picture'), verifyToken ,
     (req: any, res: Response) => {
-        req.body.sellerId = req.body.tokenPayload.userId;  // problem with the token!
-        const product: ProductAttributes = req.body as ProductAttributes;
-        const address: AddressAttributes = req.body.address as AddressAttributes;
+        console.log(req.file, 'imaaaaaaaaaaaaaaaaaaaaaaaageeeeeeeeeeeeee');
+        console.log(req.body, 'heeelllllllllllllllllllllllllllloooooooooooooooooo');
+        const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId);
+        const address: AddressAttributes = convertAddress(req.body);
         const picture: string = req.file.path;
         ProductService.createProduct(product, address, picture)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))

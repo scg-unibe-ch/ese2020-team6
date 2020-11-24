@@ -32,14 +32,14 @@ export class CheckoutComponent implements OnInit {
         let sellerId: number = product.userId;
         this.userService.getUserById(sellerId).subscribe((seller: CutUserModel) => {
           this.seller = seller;
-        })
+        });
       });
     });
   }
 
   get priceLabel(): string {
-    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') return '$/h';
-    else return '$';
+    if (this.product.productType === 'Service' || this.product.offerType === 'Rent') { return '$/h'; }
+    else { return '$'; }
   }
 
 }
