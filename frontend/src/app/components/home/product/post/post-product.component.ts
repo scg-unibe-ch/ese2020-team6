@@ -108,24 +108,24 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       } else {
         const formData = new FormData();
         formData.append('picture', this.picture);
-        formData.append('category', this.form.value.category);
-        formData.append('description', this.form.value.description);
-        formData.append('expirationDate', this.form.value.expirationDate);
-        formData.append('isDeliverable', this.form.value.isDeliverableString);
-        formData.append('offerType', this.form.value.offerType);
-        formData.append('price', this.form.value.price);
-        formData.append('productType', this.form.value.productType);
-        formData.append('subcategory', this.form.value.subcategory);
-        formData.append('title', this.form.value.title);
-        formData.append('streetName', this.form.value.address.streetName);
-        formData.append('streetType', this.form.value.address.streetType);
-        formData.append('addressNumber', this.form.value.address.addressNumber);
-        formData.append('city', this.form.value.address.city);
-        formData.append('country', this.form.value.address.country);
-        formData.append('neighbourhood', this.form.value.address.neighbourhood);
-        formData.append('postal', this.form.value.address.postal);
-        formData.append('region', this.form.value.address.region);
-        formData.append('streetAddress', this.form.value.address.streetAddress);
+        formData.append('category', form.value.category);
+        formData.append('description', form.value.description);
+        formData.append('expirationDate', form.value.expirationDate);
+        formData.append('isDeliverable', form.value.isDeliverableString);
+        formData.append('offerType', form.value.offerType);
+        formData.append('price', form.value.price);
+        formData.append('productType', form.value.productType);
+        formData.append('subcategory', form.value.subcategory);
+        formData.append('title', form.value.title);
+        formData.append('streetName', form.value.address.streetName);
+        formData.append('streetType', form.value.address.streetType);
+        formData.append('addressNumber', form.value.address.addressNumber);
+        formData.append('city', form.value.address.city);
+        formData.append('country', form.value.address.country);
+        formData.append('neighbourhood', form.value.address.neighbourhood);
+        formData.append('postal', form.value.address.postal);
+        formData.append('region', form.value.address.region);
+        formData.append('streetAddress', form.value.address.streetAddress);
 
 
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
