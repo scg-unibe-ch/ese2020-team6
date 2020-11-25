@@ -2,24 +2,44 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { User, UserAttributes } from '../models/user.model';
+import { DecodedToken, Token } from '../interfaces/token.interface';
 
 // this way you can just define a function and export it instead of a whole class
 export function verifyToken(req: Request, res: Response, next: any) {
-    try {
-        // get secret key from environment (defined in nodemon.json)
-        const secret = process.env.JWT_SECRET;
-        // since the Authorizationheader consists of "Bearer <token>" where <token> is a JWT token
-        const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, secret);
-        if (decoded == null) {
-            res.status(403).send({ message: 'Unauthorized' });
-        }
-        // adds the field "tokenPayload" to the request enabling following functions to use data from the token
-        req.body.tokenPayload = decoded;
-        next();
-    } catch (err) {
-        res.status(403).send({ message: 'Unauthorized' });
-    }
+  try {
+    verifyTokenPromise(new Token(req.headers.authorization))
+    .then((decoded: DecodedToken) => {
+      req.body.tokenPayload = decoded;
+      next();
+    }).catch((err: any) => res.status(403).send({ message: 'Unauthorized' }));
+  } catch (err) {
+    res.status(403).send({ message: 'Unauthorized' });
+  }
+}
+
+export function verifyTokenPromise(token: Token): Promise<DecodedToken> {
+  const secret = process.env.JWT_SECRET;
+  try {
+    const decoded: DecodedToken = jwt.verify(token.token, secret) as DecodedToken;
+    return Promise.resolve(Object.assign(decoded, { token }));
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export function refreshTokenPromise(token: Token): Promise<Token> {
+  return verifyTokenPromise(token)
+  .then((decoded: DecodedToken) => createTokenPromise(decoded.userName, decoded.userId));
+}
+
+export function createTokenPromise(userName: string, userId: number): Promise<Token> {
+  const secret = process.env.JWT_SECRET;
+  const token: Token = new Token(jwt.sign({
+    userName: userName,
+    userId: userId
+  }, secret, { expiresIn: '2h' }));
+
+  return Promise.resolve(token);
 }
 
 export function checkForAuth(req: Request, res: Response, next: any) {

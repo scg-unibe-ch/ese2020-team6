@@ -18,18 +18,21 @@ export class LoginComponent implements LoginUserRequestBuilder{
   private values: LoginUserFormModel;
   public loginErrorMessage = '';
 
+  private loginObserverId: number;
+
 
   constructor(
     private router: Router,
     private loginUserService: LoginUserService,
-  ) {}
+  ) { }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       this.form = form;
       this.values = form.value;
       this.loginErrorMessage = '';
-      this.loginUserService.login(this).events.onLogin(this.loginSuccess, this.loginError);
+      this.loginObserverId = this.loginUserService.events.onLogin(this.loginSuccess, this.loginError)[0];
+      this.loginUserService.login(this);
     }
   }
 
@@ -44,6 +47,7 @@ export class LoginComponent implements LoginUserRequestBuilder{
   private loginSuccess = () => {
     this.form.resetForm();
     this.router.navigate(['']);
+    this.loginUserService.removeObserverById.onLogin(this.loginObserverId);
   }
 
   private loginError = (err: any) => {

@@ -5,96 +5,187 @@ import {
   CompletionMethod } from './subscriber';
 
 export class OnObservalbeEvents {
-  private observers: Record<any, Array<PartialObserver<any>>> = {};
-  private observables: Record<any, Observable<any>> = {};
-  private subscriptions: Record<any, Subscription> = {};
-  public events: Record<any, <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => void> = {};
-  public getObservable: Record<any, <T>() => Observable<T>> = {};
+
+  public static catchError(err: any) {};
+
+  private static observerId: number = 0;
+  private observers: Record<any, Record<number, PartialObserver<any>>> = {};
+  private subscriptions: Record<any, Record<number, Subscription>> = {};
+
+  public observables: Record<any, Observable<any>> = {};
+  public events: Record<any, <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => [number, Subscription]> = {};
+  public removeObserverById: Record<any, (observerId: number) => void> = {}
 
   public addEvent<T>(eventName: string) {
     this.events[eventName] = <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => {
       let observer: PartialObserver<T>;
       if (typeof subscriberOrNext === 'function') {
-        observer = { next: subscriberOrNext as NextMethod<T>, error: error, complete: complete };
+        observer = {
+          next: subscriberOrNext as NextMethod<T>,
+          error: error,
+          complete: complete
+        };
       } else {
         observer =  subscriberOrNext as PartialObserver<T>;
       }
-      this.addObserver(eventName, observer);
+      return this.addObserver<T>(eventName, observer)[0];
     }
+    this.observables[eventName] = new Observable<T>();
 
-    this.getObservable[eventName] = <T>() => {
-      return this.getObservableForOneEvent(eventName);
-    }
+    this.subscriptions[eventName] = {};
+    this.observers[eventName] = {};
+    this.removeObserverById[eventName] = (observerId: number) => this.removeObserver(eventName, observerId);
+  }
+
+  public removeEvent<T>(eventName: string): Observable<T> {
+    this.unsubscribeEvent(eventName);
+    delete this.subscriptions[eventName];
+    delete this.observers[eventName];
+    delete this.events[eventName];
+    let observable: Observable<T> = this.removeEventObservable(eventName);
+    delete this.observables[eventName];
+    delete this.removeObserverById[eventName];
+    return observable;
   }
 
   public reset(): void {
-    this.resetAllSubscriptions()
-    this.observers = {};
+    this.removeAllObservers();
     this.observables = {};
     this.subscriptions = {};
     this.events = {};
-  }
-
-  public resetSubscriptions(...eventNames: Array<string>): void {
-    eventNames.forEach((eventName: string) => {
-      this.removeSubscriptionsForOneEvent(eventName);
-    });
-  }
-  public resetAllSubscriptions(): void {
-    Object.values(this.subscriptions).forEach((subscription: Subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-  public removeSubscriptionsForOneEvent(eventName: string): void {
-    if (this.subscriptions[eventName]) this.subscriptions[eventName].unsubscribe();
+    this.removeObserverById = {};
   }
 
 
   /*
-    Removes all observers for the specified names (events)
+    Unsubscribe observers
   */
-  public resetObservers(...eventNames: Array<string>): void {
+  private unsubscribeAll(): void {
+    Object.values(this.subscriptions).forEach((subscriptionOnEvent: Record<number, Subscription>) => {
+      Object.values(subscriptionOnEvent).forEach((subscription: Subscription) => {
+        subscription.unsubscribe();
+      });
+    });
+    this.subscriptions = {};
+  }
+  private unsubscribeEvent(eventNames: Array<string>): void;
+  private unsubscribeEvent(eventNameOne: string, ...eventNames: Array<string>): void;
+  private unsubscribeEvent(eventNamesOrOne: Array<string> | string, ...additionalEventNames: Array<string>): void {
+    if (Array.isArray(eventNamesOrOne)) {
+      eventNamesOrOne = eventNamesOrOne as Array<string>;
+    } else if (typeof eventNamesOrOne === 'string') {
+      eventNamesOrOne = [eventNamesOrOne] as Array<string>;
+    }
+    const eventNames: Array<string> = eventNamesOrOne.concat(additionalEventNames);
+    this.doEventsExist(eventNames);
     eventNames.forEach((eventName: string) => {
-      this.removeObserversForOneEvent(eventName);
+      Object.values(this.subscriptions[eventName]).forEach((subscription: Subscription) => {
+        subscription.unsubscribe();
+      });
+      this.subscriptions[eventName] = {};
     });
   }
-  public resetAllObservers(): void {
-    this.observers = {};
-  }
-  public removeObserversForOneEvent(eventName: string): void {
-    while (this.observers[eventName].length > 0) {
-      this.observers[eventName].pop();
+  private unsubscribe(eventName: string, subscriptionId: number) {
+    if (this.subscriptions[eventName][subscriptionId]) {
+      this.subscriptions[eventName][subscriptionId].unsubscribe();
     }
+    delete this.subscriptions[eventName][subscriptionId];
   }
 
-  public getObservableForOneEvent<T>(eventName: string): Observable<T> {
-    let observable: Observable<T> = this.observables[eventName];
-    return observable ? observable : new Observable<T>();
+
+  private subscribeAll(): void {
+    this.subscribeEvent(Object.keys(this.observers));
+  }
+  private subscribeEvent(eventNames: Array<string>): void;
+  private subscribeEvent(eventNameOne: string, ...eventNames: Array<string>): void;
+  private subscribeEvent(eventNamesOrOne: Array<string> | string, ...additionalEventNames: Array<string>): void {
+    if (Array.isArray(eventNamesOrOne)) {
+      eventNamesOrOne = eventNamesOrOne as Array<string>;
+    } else if (typeof eventNamesOrOne === 'string') {
+      eventNamesOrOne = [eventNamesOrOne] as Array<string>;
+    }
+    const eventNames: Array<string> = eventNamesOrOne.concat(additionalEventNames);
+    this.doEventsExist(eventNames);
+    eventNames.forEach((eventName: string) => {
+      Object.keys(this.observers[eventName]).forEach((observerId: string) => {
+        this.subscribe(eventName, parseInt(observerId));
+      })
+    });
+  }
+  private subscribe(eventName: string, observerId: number) {
+    let observer: PartialObserver<any> = this.observers[eventName][observerId];
+    let observable: Observable<any> = this.observables[eventName]
+    this.subscriptions[eventName][observerId] =  observable.subscribe(observer);
+  }
+
+  /*
+    Removes observers
+  */
+  public removeAllObservers(): void {
+    this.unsubscribeAll();
+    this.observers = {};
+  }
+  public removeEventObservers(...eventNames: Array<string>): void {
+    this.unsubscribeEvent(eventNames);
+    eventNames.forEach((eventName: string) => {
+      this.observers[eventName] = {};
+    });
+  }
+  public removeObserver(eventName: string, observerId: number): void {
+    this.unsubscribe(eventName, observerId);
+    delete this.observers[eventName][observerId];
+  }
+
+  /*
+    Add observer and subscribe
+  */
+  public addObserver<T>(eventName: string, ...observers: Array<PartialObserver<T>>): Array<[number, Subscription]> {
+    let added: Array<[number, Subscription]> = new Array<[number, Subscription]>();
+    observers.forEach((observer: PartialObserver<T>) => {
+      this.observers[eventName][OnObservalbeEvents.observerId] = observer;
+      let subscription: Subscription = this.observables[eventName].subscribe(observer);
+      added.push([OnObservalbeEvents.observerId, subscription]);
+      this.subscriptions[eventName][OnObservalbeEvents.observerId++] = subscription;
+    });
+    return added;
+  }
+
+  /*
+    Handle Observables
+  */
+
+  public getObservable<T>(eventName: string): Observable<T> {
+    return this.observables[eventName];
   }
 
   public setObservable<T>(eventName: string, observable: Observable<T>): void {
     if (observable) {
-      if (!this.observers[eventName]) this.observers[eventName] = new Array<PartialObserver<T>>();
-      if (!this.subscriptions[eventName]) this.subscriptions[eventName] = new Subscription();
-      if (this.observables[eventName]) this.removeObserversForOneEvent(eventName);
-
-      let subscription: Subscription = this.subscriptions[eventName];
+      this.unsubscribeEvent(eventName);
       this.observables[eventName] = observable;
-      this.observers[eventName].forEach((observer: PartialObserver<T>) => {
-        this.subscribeObserverToObservable(eventName, observer);
-      });
-    } else throw new Error('Observable cannot be null or undefined!')
-  }
-
-  private addObserver<T>(eventName: string, observer: PartialObserver<T>): void {
-    if (!this.observers[eventName]) this.observers[eventName] = new Array<PartialObserver<T>>();
-    if (!this.observers[eventName].includes(observer)) this.observers[eventName].push(observer);
-    this.subscribeObserverToObservable(eventName, observer);
-  }
-
-  private subscribeObserverToObservable<T>(eventName: string, observer: PartialObserver<T>) {
-    if (this.observables[eventName]) {
-      this.subscriptions[eventName].add(this.observables[eventName].subscribe(observer));
+      this.subscribeEvent(eventName);
     }
+  }
+
+  private removeEventObservable<T>(eventName: string): Observable<T> {
+    this.unsubscribeEvent(eventName);
+    let observable: Observable<T> = this.observables[eventName];
+    this.observables[eventName] = new Observable<T>();
+    return observable;
+  }
+
+  private doEventsExist(eventNames: Array<string>): void {
+    eventNames.forEach((eventName: string) => {
+      this.doesEventExist(eventName);
+    });
+  }
+
+  private doesEventExist(eventName: string): void {
+    if (!this.events[eventName]) throw new EventDoesNotExistError(eventName);
+  };
+}
+
+class EventDoesNotExistError extends Error {
+  constructor(eventName: string) {
+    super('Event \"' + eventName + '\" does not exist!');
   }
 }

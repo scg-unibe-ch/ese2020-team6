@@ -8,8 +8,17 @@ import { OrderService } from './order.service';
 
 import { CutUser } from '../interfaces/cut-user.interface';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { LoginResponse, LoginRequest } from '../interfaces/login.interface';
+import {
+  LoginResponse,
+  LoginRequest,
+  LoginWithUsernameEmail,
+  LoginWithToken,
+  isLoginWithUserNameEmail,
+  isLoginWithToken } from '../interfaces/login.interface';
 import { CO } from '../interfaces/orders.interface';
+import { createTokenPromise, verifyTokenPromise } from '../middlewares/checkAuth';
+import { DecodedToken, Token } from '../interfaces/token.interface';
+import { StatusError } from '../errors/status.error';
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -65,16 +74,27 @@ export class UserService {
 
     public static login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
         const secret = process.env.JWT_SECRET;
+        if (isLoginWithUserNameEmail(loginRequestee as LoginWithUsernameEmail)) {
+          const loginRequesteeWithUsernameEmail: LoginWithUsernameEmail = loginRequestee as LoginWithUsernameEmail;
+          return this.doesUserExistByUsernameEmail(loginRequesteeWithUsernameEmail.userName, loginRequesteeWithUsernameEmail.email)
+          .then((existingUser: User) => {
 
-        return this.doesUserExistByUsernameEmail(loginRequestee.userName, loginRequestee.email).then((existingUser: User) => {
-          // compares the hash with the password from the lognin request
-          if (bcrypt.compareSync(loginRequestee.password, existingUser.password)) {
-              const token: string = jwt.sign({ userName: existingUser.userName, userId: existingUser.userId }, secret, { expiresIn: '2h' });
-              return Promise.resolve({ user: existingUser, token });
-          } else {
-              return Promise.reject({ message: 'Not authorized' });
-          }
-        }).catch((err: any) => Promise.reject(err));
+            // compares the hash with the password from the lognin request
+            if (bcrypt.compareSync(loginRequesteeWithUsernameEmail.password, existingUser.password)) {
+                return createTokenPromise(existingUser.userName, existingUser.userId)
+                .then((token: Token) => Promise.resolve({ user: existingUser, token: token.toString() }));
+            } else {
+                return Promise.reject({ message: 'Not authorized' });
+            }
+          });
+        } else if (isLoginWithToken(loginRequestee as LoginWithToken)) {
+          const loginRequesteeWithToken: LoginWithToken = loginRequestee as LoginWithToken;
+          return verifyTokenPromise(loginRequesteeWithToken.token)
+          .then((decoded: DecodedToken) => this.doesUserExistById(decoded.userId))
+          .then((user: User) => Promise.resolve(user));
+        } else {
+          return Promise.reject(new StatusError('Login Request does not contain the necessary infromation!', 400));
+        }
     }
 
     private static getUserByEitherAttributes(attributes: Object): Promise<User> {

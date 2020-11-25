@@ -4,6 +4,7 @@ import { PreferenceController } from './preference.controller';
 import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
 import { UserAttributes, User } from '../models/user.model';
 import { AddressAttributes, Address } from '../models/address.model';
+import { Token } from '../interfaces/token.interface';
 
 const userController: Router = express.Router();
 
@@ -26,6 +27,7 @@ userController.post('/register',
 
 userController.post('/login',
     (req: Request, res: Response) => {
+        req.body.token = new Token(req.headers.authorization);
         UserService.login(req.body).then(login => res.send(login)).catch((err: any) => res.status(500).send(err));
     }
 );

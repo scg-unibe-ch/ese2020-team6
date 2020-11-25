@@ -80,6 +80,20 @@ export class Address implements AddressModel {
       address.country
     )
   }
+
+  public static isAddress(address: Address): address is Address {
+    return address.streetName
+        && address.streetType
+        && address.addressNumber
+        && address.streetAddress
+        && address.neighbourhood !== null
+        && address.neighbourhood !== undefined
+        && address.neighbourhood.length >= 0
+        && address.city
+        && address.region
+        && address.postal
+        && address.country ? true : false;
+  }
 }
 
 export class NullAddress extends Address {

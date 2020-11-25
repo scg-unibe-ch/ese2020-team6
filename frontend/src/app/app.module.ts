@@ -164,6 +164,8 @@ import { OrderViewGridComponent } from './components/order/display/view/grid/ord
 import { OrderCardGridComponent } from './components/order/display/card/grid/order-card-grid.component';
 import { OrderCardListComponent } from './components/order/display/card/list/order-card-list.component';
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 
 
 @NgModule({
@@ -267,6 +269,8 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
     OrderCardGridComponent,
     OrderCardListComponent,
     OrderCardDirective,
+    LoaderComponent,
+    LoadingIndicatorComponent,
   ],
   imports: [
     BrowserModule,

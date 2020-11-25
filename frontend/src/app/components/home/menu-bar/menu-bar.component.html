@@ -6,17 +6,19 @@
     <ng-content select="[left]"></ng-content>
   </div>
   <div class="right">
-    <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
-      <button (click)="toggleDropDown()" class="dropdown-toggle" theme button>{{userName}}</button>
-      <div [ngClass]="getDropdownClasses()" theme class="dropdown-wrapper">
-        <div class="dropdown">
-          <button theme button [routerLink]="['/user/profile']">My Profile</button>
-          <app-logout></app-logout>
+    <loader [loader]="userService">
+      <div *ngIf="isLoggedIn;else notLoggedIn" class="logged-in">
+        <button (click)="toggleDropDown()" class="dropdown-toggle" theme button>{{userName}}</button>
+        <div [ngClass]="getDropdownClasses()" theme class="dropdown-wrapper">
+          <div class="dropdown">
+            <button theme button [routerLink]="['/user/profile']">My Profile</button>
+            <app-logout></app-logout>
+          </div>
         </div>
       </div>
-    </div>
-    <ng-template #notLoggedIn>
-        <app-user-icon class="not-logged-in" theme [routerLink]="['/user/login']" height="60%" width="60%"></app-user-icon>
-    </ng-template>
+      <ng-template #notLoggedIn>
+          <app-user-icon class="not-logged-in" theme [routerLink]="['/user/login']" height="60%" width="60%"></app-user-icon>
+      </ng-template>
+    </loader>
   </div>
 </div>

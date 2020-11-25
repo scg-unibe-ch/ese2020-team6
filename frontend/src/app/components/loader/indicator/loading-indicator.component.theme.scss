@@ -1,0 +1,11 @@
+@mixin loading-indicator-theme($theme-name) {
+  $theme: map-get($themes, $theme-name);
+
+  $icon-color: map-get($theme, bright);
+
+  .loading.#{$theme-name} {
+    path {
+      stroke: $icon-color;
+    }
+  }
+}

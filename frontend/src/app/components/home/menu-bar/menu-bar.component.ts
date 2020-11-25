@@ -22,9 +22,9 @@ export class MenuBarComponent {
   isHome = false;
 
   constructor(
-    userService: UserService
+    public userService: UserService
   ) {
-    userService.events.onLoad((user: UserModel) => {
+    this.userService.events.onLoad((user: UserModel) => {
       this.isLoggedIn = true;
       this.userName = user.userName;
     });
