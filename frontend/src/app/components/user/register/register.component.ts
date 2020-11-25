@@ -39,7 +39,6 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {
-      console.log(form, 'FOOOOOOOOOOOOORRRRRRRRRRRRRMMMMMMMMMMMMMM')
       const formData = new FormData();
       formData.append('picture', this.picture);
       formData.append('email', form.value.email);
@@ -76,7 +75,6 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    console.log(this, 'hahahhahaha ')
     this.loginUserService.login(this).events.onLogin((res: LoginUserResponseModel) => this.loginSuccess());
   }
 

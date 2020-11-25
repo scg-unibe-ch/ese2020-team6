@@ -19,7 +19,6 @@ export class UserDetailsComponent implements OnInit {
     this.userService.events.onLoad((user: UserModel) => {
       this.user = user;
       this.picture = user.picture;
-      console.log(this.user.picture, 'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
     });
   }
 
