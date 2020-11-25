@@ -41,6 +41,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
   @ViewChild('postProductForm', { read: NgForm })
   public form: NgForm;
+  previewPicture: string;
 
   constructor(
     private productService: ProductService,
@@ -93,8 +94,22 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       const file = event.target.files[0];
       this.picture = file;
     }
+    // for preview picture
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const result: string = event.target.result;
+      this.previewPicture = result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
   }
-
+  // readPicture(event): void {
+  //   const reader = new FileReader();
+  //   reader.onload = (event: any) => {
+  //     const result: string = event.target.result;
+  //     this.previewPicture = result;
+  //   };
+  //   reader.readAsDataURL(event.target.files[0]);
+  // }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {

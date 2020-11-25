@@ -19,7 +19,7 @@
         <app-date class="expiration-date" name="expirationDate" placeholder="Expiration Date" min="tomorrow" ngModel #expirationDate="ngModel" appDateValidator></app-date>
         <div class="picture">
           <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
-          <img class="image" src={{picture}}>
+          <img class="image" src={{previewPicture}}>
         </div>
       </div>
       <div class="second">
@@ -39,7 +39,7 @@
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
               <h2>Your product</h2>
-            <app-product-information [product]="previewData" [isPreview]="true" [picture]="picture"></app-product-information>
+            <app-product-information [product]="previewData" [isPreview]="true" [picture]="previewPicture"></app-product-information>
         </div>
       </div>
     </ng-template>
