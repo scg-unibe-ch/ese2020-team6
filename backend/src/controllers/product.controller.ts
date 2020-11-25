@@ -1,45 +1,46 @@
-
 import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductAttributes } from '../models/product.model';
-import { AddressAttributes, Address } from '../models/address.model';
-
+import { AddressAttributes } from '../models/address.model';
 import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
 const productController: Router = express.Router();
+
+
+// multer for saving image
 const multer = require('multer');
 const storage = multer.diskStorage({
-    destination: function(req: Request, file: any, cd: any) {
-        cd(null, '../public/images');
+    destination: function(req: Request, file: any, cb: any) {
+
+        cb(null, 'assets');
     },
-    filename: function(req: Request, file: any, cd: any) {
-        cd(null, new Date().toISOString() + file.filename);
+    filename: function(req: Request, file: any, cb: any) {
+        cb(null, new Date().toISOString() + file.fieldname);
     }
 });
-
-const fileFilter = (req: Request, file: any, cd: any) => {
+const fileFilter = (req: Request, file: any, cb: any) => {
     if (file.mimetype === 'image/jpg' ||
          file.mimetype === 'image/png' ||
-         file.mimetype === 'image/pdf') {
-            cd(null, true);
+         file.mimetype === 'image/jpeg') {
+            cb(null, true);
     } else {
-        cd(new Error('wrong format for Picture'), false);
+        cb(null, false);
     }
-    console.log(req);
-
 };
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter
 });
 
-productController.post('/post', verifyToken,
-    (req: Request, res: Response) => {
+productController.post('/post', upload.single('picture'), verifyToken ,
+    (req: any, res: Response) => {
         req.body.sellerId = req.body.tokenPayload.userId;
-        const product: ProductAttributes = req.body as ProductAttributes;
-        const address: AddressAttributes = req.body.address as AddressAttributes;
+        req.body.address = JSON.parse(req.body.address);
+        req.body.picture = req.file.path;
+        const product: ProductAttributes = req.body;
+        const address: AddressAttributes = req.body.address;
         ProductService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));

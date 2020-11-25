@@ -5,6 +5,9 @@ import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '../../../../services/product/product.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+
 import {
   PostProductRequestBuilder,
   PostProductRequestModel,
@@ -12,7 +15,7 @@ import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
   UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
-import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
+import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
@@ -25,7 +28,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   private productId: number;
   public isUpdate = false;
   public previewData: ProductModel;
-  public picture: string;
+  public picture: any;
   private categories: Categories = Categories.NullCategories;
   public categoryStrings: Array<string> = new Array<string>();
   public subcategoryStrings: Array<string> = new Array<string>();
@@ -37,6 +40,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
   @ViewChild('postProductForm', { read: NgForm })
   public form: NgForm;
+  previewPicture: string;
 
   constructor(
     private productService: ProductService,
@@ -44,7 +48,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
   ) {
   }
 
@@ -58,7 +63,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         this.getCategories();
       }
     });
-
   }
 
   private getCategories(product?: ProductModel): void {
@@ -82,22 +86,43 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
 
   public selectFile(event): void {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.picture = file;
+    }
+    // for preview picture
     const reader = new FileReader();
     reader.onload = (event: any) => {
       const result: string = event.target.result;
-      this.product.picture = result;
-      this.picture = result;
+      this.previewPicture = result;
     };
     reader.readAsDataURL(event.target.files[0]);
   }
-
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       if (this.isUpdate) {
         this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
       } else {
-        this.productService.postProduct(this).subscribe((values) => this.success());
+        const formData = new FormData();
+        formData.append('picture', this.picture);
+        formData.append('category', form.value.category);
+        formData.append('description', form.value.description);
+        formData.append('expirationDate', form.value.expirationDate);
+        formData.append('isDeliverable', form.value.isDeliverableString);
+        formData.append('offerType', form.value.offerType);
+        formData.append('price', form.value.price);
+        formData.append('productType', form.value.productType);
+        formData.append('subcategory', form.value.subcategory);
+        formData.append('title', form.value.title);
+        const addressString = JSON.stringify(form.value.address);
+        formData.append('address', addressString);
+
+        this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
+          (res) => this.success(),
+          (err) => console.log(err)
+        );
+        // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }
   }

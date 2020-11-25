@@ -10,14 +10,17 @@ import { ValueAccessorBase } from '../../value-accessor-base';
     {provide: NG_VALUE_ACCESSOR, useExisting: FileComponent, multi: true}
   ]
 })
-export class FileComponent  extends ValueAccessorBase<String> {
-  public type: string = "file";
+export class FileComponent  extends ValueAccessorBase<string> {
+  public type = 'file';
 
   @Input()
-  public showError: boolean = true;
+  public showError = true;
 
   @Input()
   public placeholder: string;
+
+  @Input()
+  public name: string;
 
   @Input()
   public accept: string;

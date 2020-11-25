@@ -5,7 +5,7 @@ import { User } from './user.model';
 import { IsForRent } from '../interfaces/is-for-rent.interface';
 
 
-export interface ProductAttributes {
+export interface  ProductAttributes {
     productId: number;
     title: string;
     description: string;
@@ -48,7 +48,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     addressId!: number;
     productType!: string;
     offerType!: string;
-    picture!: string;
+    picture: string;
     subcategory!: string;
     expirationDate!: number;
     status!: string;

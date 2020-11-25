@@ -1,10 +1,7 @@
 import { Transaction, Op } from 'sequelize';
 import { Product, ProductAttributes, ProductCreationAttributes } from '../models/product.model';
 import { Address, AddressAttributes } from '../models/address.model';
-import { Order } from '../models/order.model';
-
 import { AddressService } from './address.service';
-import { OrderSubType } from '../interfaces/order-sub-type.interface';
 import { CO } from '../interfaces/orders.interface';
 
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
@@ -39,7 +36,9 @@ export class ProductService {
     return ProductService.checkProductAttributes(product).then(() => {
       return AddressService.checkAddressAttributes(address).then(() => {
         return checkIfAddressDoesExist.then((existingAddress: Address) => { // address does exist -> only insert new product
-          return this.insertProductWithExistingAddress(product, existingAddress.addressId).catch((err: any) => Promise.reject(err));
+          return this.insertProductWithExistingAddress(
+            product, existingAddress.addressId)
+            .catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
           return this.insertProductAndAddress(product, address).catch((err: any) => Promise.reject(err));
         });
@@ -60,7 +59,7 @@ export class ProductService {
         association: Product.associations.address,
         include : [ Address.associations.products ]
       }]
-    });
+    }).catch((err: any) => {console.log(err); return Promise.reject(err); });
   }
 
 

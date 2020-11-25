@@ -18,8 +18,8 @@ import { transformUser, transformToTokenResponse} from '../../../models/user/use
 })
 export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequestBuilder {
 
-  private onLoginEventName: string = 'onLogin';
-  private onLogoutEventName: string = 'onLogout';
+  private onLoginEventName = 'onLogin';
+  private onLogoutEventName = 'onLogout';
 
   private isLoggedIn: boolean = false;
 

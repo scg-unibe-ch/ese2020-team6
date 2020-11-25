@@ -6,7 +6,7 @@
         <h3 class="title">Update</h3>
       </ng-template>
     </div>
-    <form class="post-product-form" #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
+    <form enctype="multipart/form-data" class="post-product-form" #postProductForm="ngForm" (ngSubmit)="onSubmit(postProductForm)">
       <div class="first">
         <app-select class="product-type" name="productType" selectName="Product Type" [options]="originalProductTypeStrings" ngModel #productType="ngModel" (ngModelChange)="udateOfferTypeStrings($event)"></app-select>
         <app-select class="offer-type" name="offerType" selectName="Offer Type" [options]="offerTypeStrings" ngModel #offerType="ngModel"></app-select>
@@ -18,8 +18,8 @@
         <app-select class="deliverable" name="isDeliverableString" selectName="Deliverable" ngModel #isDeliverableString="ngModel" [options]="isDeliverableStrings"></app-select>
         <app-date class="expiration-date" name="expirationDate" placeholder="Expiration Date" min="tomorrow" ngModel #expirationDate="ngModel" appDateValidator></app-date>
         <div class="picture">
-          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
-          <img class="image" src={{picture}}>
+          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg, jpeg"></app-file>
+          <img class="image" src={{previewPicture}}>
         </div>
       </div>
       <div class="second">
@@ -39,7 +39,7 @@
       <div class="buy-wrapper-wrapper">
         <div class="buy-wrapper">
               <h2>Your product</h2>
-            <app-product-information [product]="previewData" [isPreview]="true" [picture]="picture"></app-product-information>
+            <app-product-information [product]="previewData" [isPreview]="true" [picture]="previewPicture"></app-product-information>
         </div>
       </div>
     </ng-template>

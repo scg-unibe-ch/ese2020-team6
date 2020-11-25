@@ -37,7 +37,7 @@ export class UserService extends OnLoad<UserModel> {
     return this.observables.onLoad;
   }
 
-  public register(requestBuilder: RegisterUserRequestBuilder): Observable<RegisterUserResponseModel> {
+  public register(requestBuilder: any): Observable<RegisterUserResponseModel> {
     return this.registerUserService.register(requestBuilder);
   }
 

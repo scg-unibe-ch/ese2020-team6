@@ -1,3 +1,4 @@
+import { COSR } from './../interfaces/orders.interface';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
