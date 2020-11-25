@@ -10,8 +10,8 @@ export interface LoginResponse {
 export type LoginRequest = LoginWithToken | LoginWithUsernameEmail;
 
 export interface LoginWithUsernameEmail {
-  userName: string;
-  email: string;
+  userName?: string;
+  email?: string;
   password: string;
 }
 
@@ -21,9 +21,9 @@ export interface LoginWithToken {
 }
 
 export function isLoginWithUserNameEmail(loginRequest: LoginWithUsernameEmail): loginRequest is LoginWithUsernameEmail {
-  return loginRequest.userName
-      && loginRequest.email
-      && loginRequest.password ? true : false;
+  return (loginRequest.userName
+      || loginRequest.email)
+      && loginRequest.password.length > 0 ? true : false;
 }
 
 export function isLoginWithToken(loginRequest: LoginWithToken): loginRequest is LoginWithToken {
