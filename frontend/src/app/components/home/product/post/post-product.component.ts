@@ -63,8 +63,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         this.getCategories();
       }
     });
-    
-
   }
 
   private getCategories(product?: ProductModel): void {
@@ -117,22 +115,13 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         formData.append('productType', form.value.productType);
         formData.append('subcategory', form.value.subcategory);
         formData.append('title', form.value.title);
-        formData.append('streetName', form.value.address.streetName);
-        formData.append('streetType', form.value.address.streetType);
-        formData.append('addressNumber', form.value.address.addressNumber);
-        formData.append('city', form.value.address.city);
-        formData.append('country', form.value.address.country);
-        formData.append('neighbourhood', form.value.address.neighbourhood);
-        formData.append('postal', form.value.address.postal);
-        formData.append('region', form.value.address.region);
-        formData.append('streetAddress', form.value.address.streetAddress);
-
+        const addressString = JSON.stringify(form.value.address);
+        formData.append('address', addressString);
 
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
-          (res) => console.log(res),
+          (res) => this.success(),
           (err) => console.log(err)
         );
-        this.success();
         // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }

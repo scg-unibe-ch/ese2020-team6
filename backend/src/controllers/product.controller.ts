@@ -34,43 +34,13 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-// extract address from form
-function convertAddress(form: any): any {
-    const addressObject = {
-        'streetName': form.streetName,
-        'streetType': form.streetType,
-        'addressNumber': form.addressNumber,
-        'city': form.city,
-        'country': form.country,
-        'neighbourhood': form.neighbourhood,
-        'postal': form.postal,
-        'region': form.region,
-        'streetAddress': form.streetAddress
-    };
-    return addressObject;
-}
-// extract product from form
-function convertProduct(form: any, seller: number, picture: string): any {
-    const data = {
-        'category': form.category,
-        'description': form.description,
-        'expirationDate': form.expirationDate,
-        'isDeliverable': form.isDeliverable,
-        'offerType': form.offerType,
-        'price': form.price,
-        'productType': form.productType,
-        'subcategory': form.subcategory,
-        'title': form.title,
-        'sellerId': seller,
-        'picture': picture
-    };
-    return data;
-}
-
 productController.post('/post', upload.single('picture'), verifyToken ,
     (req: any, res: Response) => {
-        const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId, req.file.path);
-        const address: AddressAttributes = convertAddress(req.body);
+        req.body.sellerId = req.body.tokenPayload.userId;
+        req.body.address = JSON.parse(req.body.address);
+        req.body.picture = req.file.path;
+        const product: ProductAttributes = req.body;
+        const address: AddressAttributes = req.body.address;
         ProductService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
