@@ -3,7 +3,6 @@ import { ValueAccessorBase } from './value-accessor-base';
 import { validate, ValidatorArray, AsyncValidatorArray, ValidationResult } from './validate';
 import { Observable, of } from 'rxjs';
 import { map, reduce, share } from 'rxjs/operators';
-import { ThemeService } from '../../services/theme/theme.service';
 
 export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implements Validator {
 
@@ -15,9 +14,8 @@ export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implemen
   constructor(
     private validators: ValidatorArray,
     private asyncValidators: AsyncValidatorArray,
-    themeService: ThemeService
   ) {
-    super(themeService);
+    super();
   }
 
   /*
@@ -173,7 +171,6 @@ export class ValueAccessorValidatorBase<T> extends ValueAccessorBase<T> implemen
     let classes: Array<string> = new Array<string>();
     classes.push(this.touched ? 'touched' : 'untouched');
     classes.push(this.dirty ? 'dirty' : 'pristine');
-    classes.push(this.theme);
     classes.push(this.invalid ? 'invalid' : 'valid');
     return classes;
   }

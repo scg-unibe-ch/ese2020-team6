@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../../../../services/theme/theme.service';
-import { Themable } from '../../../../models/theme/themable';
 
 @Component({
   selector: 'app-preferences',
   templateUrl: './preferences.component.html',
   styleUrls: ['./preferences.component.scss']
 })
-export class PreferencesComponent extends Themable {
+export class PreferencesComponent {
 
   constructor(
-    themeService: ThemeService
+    private themeService: ThemeService
   ) {
-    super(themeService);
   }
 
   public switchTheme(): void {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Themable } from '../../models/theme/themable';
+import { ThemeObserver } from '../../models/theme/themable';
 import { PreferenceModel, NullPreference } from '../../models/user/preference/preference.model';
 import { PreferenceService } from '../user/preference/preference.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,35 +16,42 @@ export class ThemeService {
 
   private initialTheme: number = 0;
   private _currentTheme: number;
+  private _previousTheme: number;
   private preference: PreferenceModel = new NullPreference();
 
-  private themables: Array<Themable>;
+  private themeObservers: Array<ThemeObserver>;
 
   constructor(
-    private preferenceService: PreferenceService
+    private preferenceService: PreferenceService,
+    private userService: UserService
   ) {
-    this.themables = new Array<Themable>();
+    this._currentTheme = this.initialTheme;
+    this._previousTheme = this.initialTheme;
+    this.themeObservers = new Array<ThemeObserver>();
     this.load();
-    this.preferenceService.onEvent('onUpdate',()=>{});
+    this.preferenceService.events.onUpdate();
   }
 
-  public addThemable(themable: Themable): void {
-    this.themables.push(themable);
+  public addThemeObserver(themeObserver: ThemeObserver): void {
+    this.themeObservers.push(themeObserver);
+    this.notifyThemeObserver(themeObserver);
   }
 
   public switchTheme(): ThemeService {
-    this._currentTheme = (this._currentTheme + 1) % this.availableThemeStrings.length;
+    this.setTheme((this._currentTheme + 1) % this.availableThemeStrings.length);
     this.preference.theme = this.currentTheme;
     this.preferenceService.update(this.preference);
-    this.notifyThemables();
-    this.saveToLocalStorage();
     return this;
   }
 
-  private notifyThemables(): void {
-    this.themables.forEach((themable: Themable) => {
-      themable.changeTheme();
+  private notifyThemeObservers(): void {
+    this.themeObservers.forEach((themeObserver: ThemeObserver) => {
+      this.notifyThemeObserver(themeObserver);
     });
+  }
+
+  private notifyThemeObserver(themeObserver: ThemeObserver): void {
+    themeObserver.onThemeChange(this.currentTheme, this.previousTheme);
   }
 
   private load(): void {
@@ -58,18 +66,24 @@ export class ThemeService {
       let locatStorageTheme = localStorage.getItem('theme');
       let currentThemeTemp: number = parseInt(locatStorageTheme, 10);
       if (isNaN(currentThemeTemp)) throw new Error("Theme is not set correctly!");
-      this._currentTheme = currentThemeTemp;
-      this.saveToLocalStorage();
+      this.setTheme(currentThemeTemp);
   }
 
   private loadFromService(): void {
-    this._currentTheme = this.initialTheme;
-    this.preferenceService.onEvent('onLoad', (preference: PreferenceModel) => {
-      this.preference = preference;
-      this._currentTheme = this.getIndexFromThemeName(preference.theme);
-      this.notifyThemables();
-      this.saveToLocalStorage();
+    this.userService.load().events.onLoad(() => {
+      this.preferenceService.load().events.onLoad((preference: PreferenceModel) => {
+        this.preference = preference;
+        this.setTheme(this.getIndexFromThemeName(preference.theme));
+      });
     });
+  }
+
+  private setTheme(theme: number) {
+    this._previousTheme = this._currentTheme;
+    this._currentTheme = theme;
+    this.preference.theme = this.currentTheme;
+    this.notifyThemeObservers();
+    this.notifyThemeObservers();
   }
 
   private saveToLocalStorage(): void {
@@ -82,5 +96,9 @@ export class ThemeService {
 
   get currentTheme(): string {
     return this.availableThemeStrings[this._currentTheme];
+  }
+
+  get previousTheme(): string {
+    return this.availableThemeStrings[this._previousTheme];
   }
 }

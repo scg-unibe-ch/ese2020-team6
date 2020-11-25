@@ -1,7 +1,6 @@
 import { Component, Input, ContentChildren, QueryList, TemplateRef } from '@angular/core';
 import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { ValueAccessorBase } from '../../value-accessor-base';
-import { ThemeService } from '../../../../services/theme/theme.service';
 import { RadioLabelDirective } from '../../../custom-form/input/radio/label/radio-label.directive';
 
 @Component({
@@ -48,12 +47,6 @@ export class RadioComponent<T> extends ValueAccessorBase<T> {
       } else return true;
     });
     return labelTemplate;
-  }
-
-  constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
   }
 
   public onSelect(option: T) {

@@ -1,4 +1,4 @@
-<div class="select-wrapper" [ngClass]="classes">
+<div class="select-wrapper" [ngClass]="classes" theme>
   <div class="placeholder" (click)="onToggleDropdown()">
     <div *ngFor="let selected of selectedOptions" (click)="onDeselect(selected)" class="selected">
       {{selected}}

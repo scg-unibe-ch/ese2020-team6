@@ -13,13 +13,9 @@ import { OnUpdate } from '../../on-update';
 export class PreferenceService extends OnUpdate<PreferenceModel> {
 
   constructor(
-    private httpClient: HttpClient,
-    private userService: UserService
+    private httpClient: HttpClient
   ) {
     super();
-    this.userService.onLogin(() => {
-      this.load();
-    });
   }
 
   protected loadObservable(): Observable<PreferenceModel> {

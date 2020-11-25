@@ -1,12 +1,12 @@
 import { Directive } from '@angular/core';
-import { ThemeExtention } from '../theme-extention.interface';
+import { ThemeExtension } from '../theme-extension.interface';
 
 @Directive({
   selector: '[buttonWarn]'
 })
-export class ButtonWarnDirective extends ThemeExtention {
+export class ButtonWarnDirective extends ThemeExtension {
 
-  protected buildExtention(): string {
+  protected buildExtension(): string {
     return 'button-warn';
   }
 

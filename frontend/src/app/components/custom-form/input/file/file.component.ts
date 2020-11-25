@@ -1,7 +1,6 @@
 import { Component, Input, Optional, Inject, ViewChild } from '@angular/core';
 import { NgModel, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../../value-accessor-base';
-import { ThemeService } from '../../../../services/theme/theme.service';
 
 @Component({
   selector: 'app-file',
@@ -28,10 +27,4 @@ export class FileComponent  extends ValueAccessorBase<string> {
 
   @ViewChild(NgModel)
   model: NgModel;
-
-  constructor(
-    themeService: ThemeService
-  ) {
-    super(themeService);
-  }
 }

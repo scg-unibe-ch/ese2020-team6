@@ -1,4 +1,6 @@
-<div class="title-wrapper" theme>
+
+<div class="title-wrapper" theme><app-menu-bar [isHome]="true"></app-menu-bar>
+
   <div class="title">
     <div class="header">
       <div>T</div><div>E</div><div>A</div><div>M</div><div>6</div>
@@ -17,9 +19,6 @@
     (click)="show(tpl)">
   </div>
 </div>
-
-<app-menu-bar [isHome]="true"></app-menu-bar>
-
 <div class="content-wrapper" theme>
   <app-product-view [products]="products"></app-product-view>
 </div>

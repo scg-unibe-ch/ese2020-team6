@@ -24,12 +24,10 @@ export class MenuBarComponent {
   constructor(
     userService: UserService
   ) {
-    if (userService.isLoggedIn) {
-        userService.userObservable.subscribe((user: UserModel) => {
-        this.isLoggedIn = true;
-        this.userName = user.userName;
-      });
-    }
+    userService.events.onLoad((user: UserModel) => {
+      this.isLoggedIn = true;
+      this.userName = user.userName;
+    });
   }
 
   toggleDropDown(): void {
