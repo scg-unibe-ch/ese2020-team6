@@ -16,8 +16,8 @@ import { transformAddress } from '../../../models/map/address/address.operator';
 })
 export class LoginUserService extends OnObservalbeEvents {
 
-  private onLoginEventName: string = 'onLogin';
-  private onLogoutEventName: string = 'onLogout';
+  private onLoginEventName = 'onLogin';
+  private onLogoutEventName = 'onLogout';
 
   constructor(
     private httpClient: HttpClient,
@@ -28,13 +28,13 @@ export class LoginUserService extends OnObservalbeEvents {
     this.addEvent<string>(this.onLogoutEventName);
     this.events.onLogin((res: LoginUserResponseModel) => {
       this.saveUserToLocalStorage(res);
-    })
+    });
 
     this.events.onLogout(() => {
       this.navigateToLogin();
       this.removeUser();
       this.removeUserFromLocalStorage();
-    })
+    });
 
   }
 
@@ -44,11 +44,13 @@ export class LoginUserService extends OnObservalbeEvents {
   }
 
   public getUserObservable(): Observable<UserModel> {
-    return this.getObservableForOneEvent<LoginUserResponseModel>(this.onLoginEventName).pipe(map((res: LoginUserResponseModel) => res.user));
+    return this.getObservableForOneEvent<LoginUserResponseModel>(
+      this.onLoginEventName).pipe(map((res: LoginUserResponseModel) => res.user));
   }
 
   protected loginObservable(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseModel> {
-    return this.httpClient.post<LoginUserResponseModel>(environment.endpointURL + 'user/login', requestBuilder.buildLoginUserRequest()).pipe(share(), transformAddress);
+    return this.httpClient.post<LoginUserResponseModel>(
+      environment.endpointURL + 'user/login', requestBuilder.buildLoginUserRequest()).pipe(share(), transformAddress);
   }
 
   private saveUserToLocalStorage(res: LoginUserResponseModel): void {
@@ -57,14 +59,14 @@ export class LoginUserService extends OnObservalbeEvents {
   }
 
   public logout(): LoginUserService {
-    this.setObservable<string>(this.onLogoutEventName, of("logout"));
+    this.setObservable<string>(this.onLogoutEventName, of('logout'));
     console.log(this.getObservable.onLogout());
 
     return this;
   }
 
   private navigateToLogin(): void {
-    this.router.navigate(['user/login'])
+    this.router.navigate(['user/login']);
   }
 
   private removeUser(): void {

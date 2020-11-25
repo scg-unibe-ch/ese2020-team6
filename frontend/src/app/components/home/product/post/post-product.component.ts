@@ -1,4 +1,3 @@
-import { UserService } from './../../../../services/user/user.service';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +15,7 @@ import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
   UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
-import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
+import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
@@ -51,7 +50,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private userService: UserService
   ) {
   }
 
@@ -102,14 +100,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     };
     reader.readAsDataURL(event.target.files[0]);
   }
-  // readPicture(event): void {
-  //   const reader = new FileReader();
-  //   reader.onload = (event: any) => {
-  //     const result: string = event.target.result;
-  //     this.previewPicture = result;
-  //   };
-  //   reader.readAsDataURL(event.target.files[0]);
-  // }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {

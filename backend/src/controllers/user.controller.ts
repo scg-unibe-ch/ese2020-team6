@@ -7,11 +7,66 @@ import { AddressAttributes, Address } from '../models/address.model';
 
 const userController: Router = express.Router();
 
-userController.post('/register',
+// multer for saving image
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req: Request, file: any, cb: any) {
+
+        cb(null, 'assets');
+    },
+    filename: function(req: Request, file: any, cb: any) {
+        cb(null, new Date().toISOString() + file.fieldname);
+    }
+});
+const fileFilter = (req: Request, file: any, cb: any) => {
+    if (file.mimetype === 'image/jpg' ||
+         file.mimetype === 'image/png' ||
+         file.mimetype === 'image/jpeg') {
+            cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
+
+// extract address from form
+function convertAddress(form: any): any {
+    const addressObject = {
+        'streetName': form.streetName,
+        'streetType': form.streetType,
+        'addressNumber': form.addressNumber,
+        'city': form.city,
+        'country': form.country,
+        'neighbourhood': form.neighbourhood,
+        'postal': form.postal,
+        'region': form.region,
+        'streetAddress': form.streetAddress
+    };
+    return addressObject;
+}
+// extract user from form
+function convertUser(form: any): any {
+    const data = {
+        'email': form.email,
+        'firstName': form.firstName,
+        'lastName': form.lastName,
+        'gender': form.gender,
+        'password': form.password,
+        'repeatPassword': form.repeatPassword,
+        'phonenumber': form.phonenumber,
+        'userName': form.userName
+    };
+    return data;
+}
+
+userController.post('/register', upload.single('picture'),
     (req: Request, res: Response) => {
 
-      const user: UserAttributes = req.body as UserAttributes;
-      const address: AddressAttributes = req.body.address as AddressAttributes;
+      const user: UserAttributes = convertUser(req.body);
+      const address: AddressAttributes = convertAddress(req.body);
 
         UserService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch((err: any) => {
           if (err.status) {
