@@ -2,7 +2,7 @@ import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductAttributes } from '../models/product.model';
-import { AddressAttributes, Address } from '../models/address.model';
+import { AddressAttributes } from '../models/address.model';
 import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
@@ -68,8 +68,6 @@ function convertProduct(form: any, seller: number): any {
 
 productController.post('/post', upload.single('picture'), verifyToken ,
     (req: any, res: Response) => {
-        console.log(req.file, 'imaaaaaaaaaaaaaaaaaaaaaaaageeeeeeeeeeeeee');
-        console.log(req.body, 'heeelllllllllllllllllllllllllllloooooooooooooooooo');
         const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId);
         const address: AddressAttributes = convertAddress(req.body);
         const picture: string = req.file.path;

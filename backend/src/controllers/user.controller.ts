@@ -48,7 +48,7 @@ function convertAddress(form: any): any {
     return addressObject;
 }
 // extract user from form
-function convertUser(form: any): any {
+function convertUser(form: any, picture: string): any {
     const data = {
         'email': form.email,
         'firstName': form.firstName,
@@ -57,17 +57,16 @@ function convertUser(form: any): any {
         'password': form.password,
         'repeatPassword': form.repeatPassword,
         'phonenumber': form.phonenumber,
-        'userName': form.userName
+        'userName': form.userName,
+        'picture': picture
     };
     return data;
 }
 
 userController.post('/register', upload.single('picture'),
-    (req: Request, res: Response) => {
-
-      const user: UserAttributes = convertUser(req.body);
+    (req: any, res: Response) => {
+      const user: UserAttributes = convertUser(req.body, req.file.path);
       const address: AddressAttributes = convertAddress(req.body);
-
         UserService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch((err: any) => {
           if (err.status) {
             res.status(err.status);

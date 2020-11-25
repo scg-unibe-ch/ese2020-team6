@@ -52,6 +52,7 @@ export class UserService {
     }
 
     private static insertUserWithExistingAddress(user: UserAttributes, addressId: number): Promise<User> {
+      console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
       return User.create(
         Object.assign(user, {
           preference : {},
