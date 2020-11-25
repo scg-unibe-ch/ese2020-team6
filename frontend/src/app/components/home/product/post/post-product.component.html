@@ -18,7 +18,7 @@
         <app-select class="deliverable" name="isDeliverableString" selectName="Deliverable" ngModel #isDeliverableString="ngModel" [options]="isDeliverableStrings"></app-select>
         <app-date class="expiration-date" name="expirationDate" placeholder="Expiration Date" min="tomorrow" ngModel #expirationDate="ngModel" appDateValidator></app-date>
         <div class="picture">
-          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg"></app-file>
+          <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg, jpeg"></app-file>
           <img class="image" src={{previewPicture}}>
         </div>
       </div>

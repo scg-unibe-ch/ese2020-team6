@@ -7,12 +7,37 @@ import { AddressAttributes, Address } from '../models/address.model';
 
 const userController: Router = express.Router();
 
-userController.post('/register',
-    (req: Request, res: Response) => {
+// multer for saving image
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req: Request, file: any, cb: any) {
 
-      const user: UserAttributes = req.body as UserAttributes;
-      const address: AddressAttributes = req.body.address as AddressAttributes;
+        cb(null, 'assets');
+    },
+    filename: function(req: Request, file: any, cb: any) {
+        cb(null, new Date().toISOString() + file.fieldname);
+    }
+});
+const fileFilter = (req: Request, file: any, cb: any) => {
+    if (file.mimetype === 'image/jpg' ||
+         file.mimetype === 'image/png' ||
+         file.mimetype === 'image/jpeg') {
+            cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
 
+userController.post('/register', upload.single('picture'),
+    (req: any, res: Response) => {
+      req.body.address = JSON.parse(req.body.address);
+      req.body.picture = req.file.path;
+      const user: UserAttributes = req.body;
+      const address: AddressAttributes = req.body.address;
         UserService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch((err: any) => {
           if (err.status) {
             res.status(err.status);

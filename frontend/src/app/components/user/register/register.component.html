@@ -4,7 +4,7 @@
       <h3 class="title">Create Account</h3>
       <div class="warning">{{registerErrorMessage}}</div>
     </div>
-    <form class="register-form" #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
+    <form enctype="multipart/form-data" class="register-form" #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
 
       <div class="first">
         <app-select placeholder="Gender" name="gender"  selectName="Gender" [options]="['Female', 'Male', 'Other']" ngModel #gender="ngModel" appGenderValidator></app-select>
@@ -17,7 +17,7 @@
         <app-password-input class="repeat-password" placeholder="Repeat Password" name="repeatPassword" ngModel #repeatPassword="ngModel" appPasswordValidator (input)="validateCrossFieldPassword(createAccountForm)"></app-password-input>
         <div class="picture">
           <app-file placeholder="Picture" name="picture" (change)="selectFile($event)" accept="png, jpg, jpeg"></app-file>
-          <img class="image" src={{picture}}>
+          <img class="image" src={{previewPicture}}>
         </div>
       </div>
 

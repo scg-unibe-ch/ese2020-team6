@@ -22,11 +22,12 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   private values: RegisterUserFormModel;
   public registerErrorMessage = '';
   public picture: string;
+  previewPicture: string;
 
   constructor(
     private router: Router,
     private userService: UserService,
-    private loginUserService: LoginUserService
+    private loginUserService: LoginUserService,
   ) {}
 
   public validateCrossFieldPassword(form: NgForm): void {
@@ -38,14 +39,27 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {
+      console.log(form, 'FOOOOOOOOOOOOORRRRRRRRRRRRRMMMMMMMMMMMMMM')
+      const formData = new FormData();
+      formData.append('picture', this.picture);
+      formData.append('email', form.value.email);
+      formData.append('firstName', form.value.firstName);
+      formData.append('lastName', form.value.lastName);
+      formData.append('gender', form.value.gender);
+      formData.append('password', form.value.password);
+      formData.append('phonenumber', form.value.phonenumber);
+      formData.append('repeatPassword', form.value.repeatPassword);
+      formData.append('userName', form.value.userName);
+      const addressString = JSON.stringify(form.value.address);
+      formData.append('address', addressString);
+
       this.form = form;
       this.values = form.value;
-      this.values.picture = this.picture;
       this.registerErrorMessage = '';
-      this.userService.register(this).subscribe(
-        (res: RegisterUserResponseModel) => this.registerSuccess(),
-        (err: any) => this.registerError(err)
-      );
+      this.userService.register(formData).subscribe(
+         (res: RegisterUserResponseModel) => this.registerSuccess(),
+         (err: any) => this.registerError(err)
+       );
     }
   }
 
@@ -62,6 +76,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
+    console.log(this, 'hahahhahaha ')
     this.loginUserService.login(this).events.onLogin((res: LoginUserResponseModel) => this.loginSuccess());
   }
 
@@ -75,10 +90,15 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   public selectFile(event): void {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.picture = file;
+    }
+    // for preview picture
     const reader = new FileReader();
     reader.onload = (event: any) => {
       const result: string = event.target.result;
-      this.picture = result;
+      this.previewPicture = result;
     };
     reader.readAsDataURL(event.target.files[0]);
   }

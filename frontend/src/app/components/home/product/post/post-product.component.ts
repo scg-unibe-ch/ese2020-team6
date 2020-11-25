@@ -1,4 +1,3 @@
-import { UserService } from './../../../../services/user/user.service';
 import { NgForm } from '@angular/forms';
 import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +15,7 @@ import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
   UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
-import { ProductModel, NullProduct, Product } from '../../../../models/product/product.model';
+import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { PostProductForm } from '../../../../models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
 
@@ -51,7 +50,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
-    private userService: UserService
   ) {
   }
 
@@ -65,8 +63,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         this.getCategories();
       }
     });
-    
-
   }
 
   private getCategories(product?: ProductModel): void {
@@ -102,14 +98,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     };
     reader.readAsDataURL(event.target.files[0]);
   }
-  // readPicture(event): void {
-  //   const reader = new FileReader();
-  //   reader.onload = (event: any) => {
-  //     const result: string = event.target.result;
-  //     this.previewPicture = result;
-  //   };
-  //   reader.readAsDataURL(event.target.files[0]);
-  // }
 
   public onSubmit(form: NgForm): void {
     if (form.valid) {
@@ -118,31 +106,22 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       } else {
         const formData = new FormData();
         formData.append('picture', this.picture);
-        formData.append('category', this.form.value.category);
-        formData.append('description', this.form.value.description);
-        formData.append('expirationDate', this.form.value.expirationDate);
-        formData.append('isDeliverable', this.form.value.isDeliverableString);
-        formData.append('offerType', this.form.value.offerType);
-        formData.append('price', this.form.value.price);
-        formData.append('productType', this.form.value.productType);
-        formData.append('subcategory', this.form.value.subcategory);
-        formData.append('title', this.form.value.title);
-        formData.append('streetName', this.form.value.address.streetName);
-        formData.append('streetType', this.form.value.address.streetType);
-        formData.append('addressNumber', this.form.value.address.addressNumber);
-        formData.append('city', this.form.value.address.city);
-        formData.append('country', this.form.value.address.country);
-        formData.append('neighbourhood', this.form.value.address.neighbourhood);
-        formData.append('postal', this.form.value.address.postal);
-        formData.append('region', this.form.value.address.region);
-        formData.append('streetAddress', this.form.value.address.streetAddress);
-
+        formData.append('category', form.value.category);
+        formData.append('description', form.value.description);
+        formData.append('expirationDate', form.value.expirationDate);
+        formData.append('isDeliverable', form.value.isDeliverableString);
+        formData.append('offerType', form.value.offerType);
+        formData.append('price', form.value.price);
+        formData.append('productType', form.value.productType);
+        formData.append('subcategory', form.value.subcategory);
+        formData.append('title', form.value.title);
+        const addressString = JSON.stringify(form.value.address);
+        formData.append('address', addressString);
 
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
-          (res) => console.log(res),
+          (res) => this.success(),
           (err) => console.log(err)
         );
-        this.success();
         // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }

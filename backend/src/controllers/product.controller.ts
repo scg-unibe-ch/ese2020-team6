@@ -2,7 +2,7 @@ import express, { Router, Request, Response } from 'express';
 import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
 import { ProductService } from '../services/product.service';
 import { ProductAttributes } from '../models/product.model';
-import { AddressAttributes, Address } from '../models/address.model';
+import { AddressAttributes } from '../models/address.model';
 import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
@@ -34,46 +34,14 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-// extract address from form
-function convertAddress(form: any): any {
-    const addressObject = {
-        'streetName': form.streetName,
-        'streetType': form.streetType,
-        'addressNumber': form.addressNumber,
-        'city': form.city,
-        'country': form.country,
-        'neighbourhood': form.neighbourhood,
-        'postal': form.postal,
-        'region': form.region,
-        'streetAddress': form.streetAddress
-    };
-    return addressObject;
-}
-// extract product from form
-function convertProduct(form: any, seller: number): any {
-    const data = {
-        'category': form.category,
-        'description': form.description,
-        'expirationDate': form.expirationDate,
-        'isDeliverable': form.isDeliverable,
-        'offerType': form.offerType,
-        'price': form.price,
-        'productType': form.productType,
-        'subcategory': form.subcategory,
-        'title': form.title,
-        'sellerId': seller
-    };
-    return data;
-}
-
 productController.post('/post', upload.single('picture'), verifyToken ,
     (req: any, res: Response) => {
-        console.log(req.file, 'imaaaaaaaaaaaaaaaaaaaaaaaageeeeeeeeeeeeee');
-        console.log(req.body, 'heeelllllllllllllllllllllllllllloooooooooooooooooo');
-        const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId);
-        const address: AddressAttributes = convertAddress(req.body);
-        const picture: string = req.file.path;
-        ProductService.createProduct(product, address, picture)
+        req.body.sellerId = req.body.tokenPayload.userId;
+        req.body.address = JSON.parse(req.body.address);
+        req.body.picture = req.file.path;
+        const product: ProductAttributes = req.body;
+        const address: AddressAttributes = req.body.address;
+        ProductService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
     }
