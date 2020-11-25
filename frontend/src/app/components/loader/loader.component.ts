@@ -18,7 +18,9 @@ export class LoaderComponent {
   }
 
   private setUpLoader(): void {
-    this._loader.events.onLoad(() => setTimeout(() => this._loaded = true,2000));
+    // to show loader uncomment following line and comment out the other one:
+    // this._loader.events.onLoad(() => setTimeout(() => this._loaded = true, 1000));
+    this._loader.events.onLoad(() => this._loaded = true);
   }
 
   get loading(): boolean {

@@ -4,8 +4,8 @@
   $icon-color: map-get($theme, bright);
 
   .loading.#{$theme-name} {
-    path {
-      stroke: $icon-color;
+    circle {
+      fill: $icon-color;
     }
   }
 }
