@@ -1,4 +1,4 @@
-<div class="input-wrapper" [ngClass]="classes">
+<div class="input-wrapper" [ngClass]="classes" theme>
   <textarea [rows]="rows" (blur)="touch()" (focus)="focus()" required="" [(ngModel)]="value" [name]="placeholder" ngModel #textarea="ngModel"></textarea>
   <label>
     {{placeholder}}
