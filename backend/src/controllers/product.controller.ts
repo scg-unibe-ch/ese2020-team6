@@ -50,7 +50,7 @@ function convertAddress(form: any): any {
     return addressObject;
 }
 // extract product from form
-function convertProduct(form: any, seller: number): any {
+function convertProduct(form: any, seller: number, picture: string): any {
     const data = {
         'category': form.category,
         'description': form.description,
@@ -61,17 +61,17 @@ function convertProduct(form: any, seller: number): any {
         'productType': form.productType,
         'subcategory': form.subcategory,
         'title': form.title,
-        'sellerId': seller
+        'sellerId': seller,
+        'picture': picture
     };
     return data;
 }
 
 productController.post('/post', upload.single('picture'), verifyToken ,
     (req: any, res: Response) => {
-        const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId);
+        const product: ProductAttributes = convertProduct(req.body, req.body.tokenPayload.userId, req.file.path);
         const address: AddressAttributes = convertAddress(req.body);
-        const picture: string = req.file.path;
-        ProductService.createProduct(product, address, picture)
+        ProductService.createProduct(product, address)
         .then((postedProduct: ProductAttributes) => res.send(postedProduct))
         .catch((err: any) => res.status(500).send(err));
     }

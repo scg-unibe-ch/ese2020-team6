@@ -1,10 +1,7 @@
 import { Transaction, Op } from 'sequelize';
 import { Product, ProductAttributes, ProductCreationAttributes } from '../models/product.model';
 import { Address, AddressAttributes } from '../models/address.model';
-import { Order } from '../models/order.model';
-
 import { AddressService } from './address.service';
-import { OrderSubType } from '../interfaces/order-sub-type.interface';
 import { CO } from '../interfaces/orders.interface';
 
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
@@ -31,22 +28,19 @@ export class ProductService {
     product will receive the addressId of the existing address. If the address
     does not exist yet, the address will be created and assigned to the product.
   */
-  public static  createProduct(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
+  public static  createProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
-    console.log(product, 'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWww');
     product.status = 'Available';
     product.offerType = product.productType === 'Service' ? 'Rent' : product.offerType;
     product.isDeliverable = product.productType === 'Service' ? true : product.isDeliverable;
     return ProductService.checkProductAttributes(product).then(() => {
       return AddressService.checkAddressAttributes(address).then(() => {
         return checkIfAddressDoesExist.then((existingAddress: Address) => { // address does exist -> only insert new product
-          console.log('heloo TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
           return this.insertProductWithExistingAddress(
-            product, existingAddress.addressId, picture)
+            product, existingAddress.addressId)
             .catch((err: any) => Promise.reject(err));
         }).catch(() => { // address does not exist -> insert product and address
-          console.log('heloo PRODUCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-          return this.insertProductAndAddress(product, address, picture).catch((err: any) => Promise.reject(err));
+          return this.insertProductAndAddress(product, address).catch((err: any) => Promise.reject(err));
         });
       });
     });
@@ -59,14 +53,8 @@ export class ProductService {
     If an address does not exist, the address will be created here, thogether with
     the product.
   */
-  private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes, picture: string): Promise<Product> {
-    console.log( ' ');
-    console.log(product, 'Ready for PROOOOODUccccctttt');
-    console.log( ' ');
-    console.log(address, 'Ready for AAAAAAAAAAAAdddreeeeeeeessss');
-    console.log( ' ');
-    console.log(Object.assign(product, {picture: picture, address: address}), 'Ready for PICTURE!!!!!!!!!!');
-    return Product.create(Object.assign(product, {picture: picture, address: address}), {
+  private static insertProductAndAddress(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+    return Product.create(Object.assign(product, {address: address}), {
       include: [{
         association: Product.associations.address,
         include : [ Address.associations.products ]
@@ -80,10 +68,10 @@ export class ProductService {
     This method is helpful, if we want to insert a product without creating
     a new address (which already exists).
   */
-  private static insertProductWithExistingAddress(product: ProductAttributes, addressId: number, picture: string): Promise<Product> {
+  private static insertProductWithExistingAddress(product: ProductAttributes, addressId: number): Promise<Product> {
     return Product.create(
       Object.assign(product, {
-        addressId: addressId, picture: picture
+        addressId: addressId
       })
     ).then((createdProductTmp: Product) => this.getProductById(createdProductTmp.productId))
     .catch((err: any) => Promise.reject(err));
