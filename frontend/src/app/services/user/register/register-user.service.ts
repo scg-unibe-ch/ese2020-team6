@@ -16,8 +16,8 @@ export class RegisterUserService {
     private httpClient: HttpClient
   ) { }
 
-  public register(requestBuilder: any): Observable<RegisterUserResponseModel> {
+  public register(formData: any): Observable<RegisterUserResponseModel> {
     return this.httpClient.post<RegisterUserResponseModel>(
-      environment.endpointURL + 'user/register', requestBuilder);
+      environment.endpointURL + 'user/register', formData);
   }
 }

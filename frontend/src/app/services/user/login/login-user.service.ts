@@ -33,6 +33,9 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
     this.events.onLogin((res: LoginUserResponseUserTokenModel) => {
       this.saveUserToLocalStorage(res);
       this.isLoggedIn = true;
+      console.log("hi");
+
+      this.load();
     }, (err: any) => {
       if (err.error.message === 'jwt expired') {
         this.logout();
@@ -44,8 +47,7 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
       this.removeUserFromLocalStorage();
       this.isLoggedIn = false;
     })
-
-    this.load();
+    this.login(this);
   }
 
   public login(requestBuilder: LoginUserRequestBuilder): LoginUserService {
@@ -53,6 +55,7 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
       let request: LoginUserRequestModel = requestBuilder.buildLoginUserRequest();
       this.setObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName, this.sendLoginRequest(requestBuilder));
     } catch (error) {
+
     }
     return this;
   }
@@ -93,12 +96,11 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
 
   protected sendLoginRequest(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseUserTokenModel> {
     return this.httpClient.post<LoginUserResponseModel>(environment.endpointURL + 'user/login', requestBuilder.buildLoginUserRequest())
-    .pipe(share(), transformToTokenResponse, transformUser, transformAddress)
+    .pipe(share(), transformToTokenResponse, transformUser, transformAddress);
   }
 
   protected loadObservable(): Observable<UserModel> {
-    if (this.isLoggedIn) return this.getUserObservable();
-    else this.login(this);
+    return this.observables.onLogin;
   }
 
 }

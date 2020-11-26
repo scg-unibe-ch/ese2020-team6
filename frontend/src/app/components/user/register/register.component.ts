@@ -8,7 +8,7 @@ import { LoginUserResponseModel } from '../../../models/response/user/login/logi
 import { RegisterUserRequestModel } from '../../../models/request/user/register/register-user-request.model';
 import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
-import { UserService } from '../../../services/user/user.service';
+import { RegisterUserService } from '../../../services/user/register/register-user.service';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private registerUserService: RegisterUserService,
     private loginUserService: LoginUserService,
   ) {}
 
@@ -55,7 +55,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
       this.form = form;
       this.values = form.value;
       this.registerErrorMessage = '';
-      this.userService.register(formData).subscribe(
+      this.registerUserService.register(formData).subscribe(
          (res: RegisterUserResponseModel) => this.registerSuccess(),
          (err: any) => this.registerError(err)
        );
