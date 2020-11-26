@@ -9,6 +9,8 @@ import { PopupRejectedComponent } from '../../../components/user/profile/profile
 import { PreferencesComponent } from '../../../components/user/profile/preferences/preferences.component';
 import { SellerOrdersComponent } from '../../../components/user/profile/seller-orders/seller-orders.component';
 import { BuyerOrdersComponent } from '../../../components/user/profile/buyer-orders/buyer-orders.component';
+import { MessagesComponent } from './messages/messages.component';
+
 
 
 export const defaultProfileComponent = 0;
@@ -24,6 +26,12 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     title: 'Preferences',
     path: 'preferences',
     component: PreferencesComponent,
+    popupComponent: null
+  },
+  {
+    title: 'Messages',
+    path: 'messages',
+    component: MessagesComponent,
     popupComponent: null
   },
   {

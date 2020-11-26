@@ -166,6 +166,7 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
+import { MessagesComponent } from './components/user/profile/messages/messages.component';
 
 
 @NgModule({
@@ -271,6 +272,7 @@ import { LoadingIndicatorComponent } from './components/loader/indicator/loading
     OrderCardDirective,
     LoaderComponent,
     LoadingIndicatorComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

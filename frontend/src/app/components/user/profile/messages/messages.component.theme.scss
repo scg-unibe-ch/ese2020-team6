@@ -1,0 +1,24 @@
+@mixin messenger-theme($theme-name) {
+
+    .messenger-wrapper.#{$theme-name} {
+  
+      $theme: map-get($themes, $theme-name);
+  
+      $message-bg: map-get($theme, dark);
+      $messenger-bg: map-get($theme, shady);
+      $text-color: map-get($theme, bright);
+      $warning-text-color: map-get($theme, warn);
+  
+      background: $messenger-bg;
+  
+      .messenger {
+        color: $text-color;
+  
+        .header {
+          .warning {
+            color: $warning-text-color;
+          }
+        }
+      }
+    }
+  }
