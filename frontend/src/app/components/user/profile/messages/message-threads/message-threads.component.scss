@@ -6,12 +6,12 @@
   }
 
 .messenger {
-    margin: auto;
     padding-right: $spaceing-xl;
     padding-left: $spaceing-s;
     padding-bottom: $spaceing-l;
     border-radius: $border-radius;
-    grid-gap: $spaceing-m;
+    height: 100%;
+    //grid-gap: $spaceing-m;
 }
 .header {
     font-size: 1.7em;
@@ -23,4 +23,5 @@
 }
 button {
     margin-bottom: 0.5em;
+    width: 100%;
 }
