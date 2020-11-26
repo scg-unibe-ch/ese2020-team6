@@ -24,7 +24,7 @@ export class HomeComponent {
     private viewContainerRef: ViewContainerRef
   ) {
     productService.getAllAcceptedProducts().subscribe((products: Array<ProductModel>) => this.products = products);
-    userService.events.onLoad(() => this.isLoggedIn = true);
+    userService.events.onLoad(() => this.isLoggedIn = true, (err: any) => this.isLoggedIn = false);
   }
 
   public show(tpl): void {

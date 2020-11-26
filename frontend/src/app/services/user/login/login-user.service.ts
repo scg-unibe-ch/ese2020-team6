@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { OnLoad } from '../../on-load';
-import { Observable, of, EMPTY } from 'rxjs';
-import { share, map, catchError, retry } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { share, pluck, catchError, retry, isEmpty } from 'rxjs/operators';
 import { UserModel, NullUser } from '../../../models/user/user.model';
 import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
@@ -21,7 +21,7 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
   private onLoginEventName = 'onLogin';
   private onLogoutEventName = 'onLogout';
 
-  private isLoggedIn: boolean = false;
+  public isLoggedIn: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -30,23 +30,20 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
     super();
     this.addEvent<LoginUserResponseModel>(this.onLoginEventName);
     this.addEvent<string>(this.onLogoutEventName);
+
+    this.loadOn(this.events.onLogin);
     this.events.onLogin((res: LoginUserResponseUserTokenModel) => {
       this.saveUserToLocalStorage(res);
       this.isLoggedIn = true;
-      console.log("hi");
-
-      this.load();
     }, (err: any) => {
-      if (err.error.message === 'jwt expired') {
-        this.logout();
-      }
+      this.logout();
     });
 
     this.events.onLogout(() => {
       this.navigateToLogin();
       this.removeUserFromLocalStorage();
       this.isLoggedIn = false;
-    })
+    });
     this.login(this);
   }
 
@@ -55,7 +52,7 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
       let request: LoginUserRequestModel = requestBuilder.buildLoginUserRequest();
       this.setObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName, this.sendLoginRequest(requestBuilder));
     } catch (error) {
-
+      this.setObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName, throwError(error));
     }
     return this;
   }
@@ -87,11 +84,8 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
     localStorage.removeItem('userToken');
   }
 
-  public getUserObservable(): Observable<UserModel> {
-    return this.getObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName).pipe(map((loginResponse: LoginUserResponseUserTokenModel) => {
-      if (loginResponse) return loginResponse.user;
-      else return new NullUser();
-    }));
+  get userObservable(): Observable<UserModel> {
+    return this.loadObservable();
   }
 
   protected sendLoginRequest(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseUserTokenModel> {
@@ -100,7 +94,8 @@ export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequ
   }
 
   protected loadObservable(): Observable<UserModel> {
-    return this.observables.onLogin;
+    return this.getObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName)
+    .pipe(pluck('user'));
   }
 
 }

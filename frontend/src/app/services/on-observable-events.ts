@@ -1,8 +1,11 @@
-import { Observable, Subscriber, NextObserver, ErrorObserver, CompletionObserver, Subscription, PartialObserver } from 'rxjs';
+import { Observable, Subscriber, NextObserver, ErrorObserver, CompletionObserver, Subscription, PartialObserver, empty } from 'rxjs';
+import { isEmpty } from 'rxjs/operators';
 import {
   NextMethod,
   ErrorMethod,
   CompletionMethod } from './subscriber';
+
+export type Event = <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => [number, Subscription];
 
 export class OnObservalbeEvents {
 
@@ -13,24 +16,29 @@ export class OnObservalbeEvents {
   private subscriptions: Record<any, Record<number, Subscription>> = {};
 
   public observables: Record<any, Observable<any>> = {};
-  public events: Record<any, <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => [number, Subscription]> = {};
+  public events: Record<any, Event> = {};
   public removeObserverById: Record<any, (observerId: number) => void> = {}
 
   public addEvent<T>(eventName: string) {
     this.events[eventName] = <T>(subscriberOrNext?: PartialObserver<T> | NextMethod<T>, error?: ErrorMethod, complete?: CompletionMethod) => {
       let observer: PartialObserver<T>;
-      if (typeof subscriberOrNext === 'function') {
+      if (typeof subscriberOrNext === 'function' || !subscriberOrNext) {
         observer = {
           next: subscriberOrNext as NextMethod<T>,
           error: error,
           complete: complete
         };
+      } else if (!subscriberOrNext && !error && !complete) {
+        observer = {
+          next: () => {}
+        }
       } else {
         observer =  subscriberOrNext as PartialObserver<T>;
       }
+
       return this.addObserver<T>(eventName, observer)[0];
     }
-    this.observables[eventName] = new Observable<T>();
+    this.observables[eventName] = empty();
 
     this.subscriptions[eventName] = {};
     this.observers[eventName] = {};
@@ -114,7 +122,7 @@ export class OnObservalbeEvents {
   }
   private subscribe(eventName: string, observerId: number) {
     let observer: PartialObserver<any> = this.observers[eventName][observerId];
-    let observable: Observable<any> = this.observables[eventName]
+    let observable: Observable<any> = this.observables[eventName];
     this.subscriptions[eventName][observerId] =  observable.subscribe(observer);
   }
 
@@ -169,7 +177,7 @@ export class OnObservalbeEvents {
   private removeEventObservable<T>(eventName: string): Observable<T> {
     this.unsubscribeEvent(eventName);
     let observable: Observable<T> = this.observables[eventName];
-    this.observables[eventName] = new Observable<T>();
+    this.observables[eventName] = empty();
     return observable;
   }
 

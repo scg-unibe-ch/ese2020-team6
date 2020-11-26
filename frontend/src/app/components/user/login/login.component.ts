@@ -31,8 +31,8 @@ export class LoginComponent implements LoginUserRequestBuilder{
       this.form = form;
       this.values = form.value;
       this.loginErrorMessage = '';
-      this.loginObserverId = this.loginUserService.events.onLogin(this.loginSuccess, this.loginError)[0];
       this.loginUserService.login(this);
+      this.loginObserverId = this.loginUserService.events.onLogin(this.loginSuccess, this.loginError)[0];
     }
   }
 

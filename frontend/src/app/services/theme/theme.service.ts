@@ -70,11 +70,9 @@ export class ThemeService {
   }
 
   private loadFromService(): void {
-    this.userService.load().events.onLoad(() => {
-      this.preferenceService.load().events.onLoad((preference: PreferenceModel) => {
-        this.preference = preference;
-        this.setTheme(this.getIndexFromThemeName(preference.theme));
-      });
+    this.preferenceService.events.onLoad((preference: PreferenceModel) => {
+      this.preference = preference;
+      this.setTheme(this.getIndexFromThemeName(preference.theme));
     });
   }
 
