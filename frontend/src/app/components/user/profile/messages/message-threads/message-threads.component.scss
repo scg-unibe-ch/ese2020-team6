@@ -1,0 +1,26 @@
+@import '../../../../../../variables.scss';
+@import '../messages.component.theme.scss';
+
+@each $theme-name in $theme-names {
+    @include messenger-theme($theme-name);
+  }
+
+.messenger {
+    margin: auto;
+    padding-right: $spaceing-xl;
+    padding-left: $spaceing-s;
+    padding-bottom: $spaceing-l;
+    border-radius: $border-radius;
+    grid-gap: $spaceing-m;
+}
+.header {
+    font-size: 1.7em;
+    line-height: 1em;
+    margin: 0;
+    text-transform: uppercase;
+    padding-bottom: $spaceing-l;
+    padding-top: $spaceing-m;
+}
+button {
+    margin-bottom: 0.5em;
+}

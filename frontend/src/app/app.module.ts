@@ -167,6 +167,7 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { MessagesComponent } from './components/user/profile/messages/messages.component';
+import { MessageThreadsComponent } from './components/user/profile/messages/message-threads/message-threads.component';
 
 
 @NgModule({
@@ -273,6 +274,7 @@ import { MessagesComponent } from './components/user/profile/messages/messages.c
     LoaderComponent,
     LoadingIndicatorComponent,
     MessagesComponent,
+    MessageThreadsComponent,
   ],
   imports: [
     BrowserModule,
