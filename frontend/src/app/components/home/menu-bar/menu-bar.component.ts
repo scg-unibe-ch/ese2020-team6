@@ -27,7 +27,7 @@ export class MenuBarComponent {
     this.userService.events.onLoad((user: UserModel) => {
       this.isLoggedIn = true;
       this.userName = user.userName;
-    });
+    }, (err: any) => {});
   }
 
   toggleDropDown(): void {

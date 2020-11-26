@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable} from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Observable, of, pipe } from 'rxjs';
+import { pluck, defaultIfEmpty, catchError, isEmpty, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user/user.service';
+import { LoginUserService } from '../../../services/user/login/login-user.service';
+import { UserModel } from '../../../models/user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,31 +13,16 @@ export class AuthAdminGuard implements CanActivate {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private loginUserService: LoginUserService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // this.userService.onLoad((user: UserModel) => {
-    //   if (!user) this.router.navigate(['user/login'])
-    // });
-    // return this.userService.getUserObservable().pipe(map((user: UserModel) => user ? true : false));
-    //
-    // if (this.userService.isLoggedIn) {
-    //   const isAdminObservable: Observable<boolean> = this.userService.userObservable.pipe(pluck('isAdmin'));
-    //   isAdminObservable.subscribe((isAdmin: boolean) => {
-    //     if (!isAdmin) {
-    //       let pathSegmentArray: Array<string> = state.url.split("/").reverse();
-    //       pathSegmentArray[0] = 'purchase';
-    //       this.router.navigate([pathSegmentArray.reverse().join("/")])
-    //     }
-    //   });
-    //   return isAdminObservable;
-    // } else {
-    //   return true;
-    // }
+
+    const nextUrl: UrlTree = this.router.parseUrl('/user/login');
+
     return true;
   }
 

@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { LoginUserService } from './login/login-user.service';
 import { GetUserService } from './get/get-user.service';
 import { UserModel } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
-import { PreferenceModel } from '../../models/user/preference/preference.model';
-import { Address } from '../../models/map/address/address.model';
 
 import { OnLoad } from '../on-load';
 
@@ -20,9 +17,7 @@ export class UserService extends OnLoad<UserModel> {
     private getUserService: GetUserService
   ) {
     super();
-    this.loginUserService.events.onLoad(() => {
-      this.load()
-    }, OnLoad.catchError)
+    this.loadOn(this.loginUserService);
   }
 
   public getUserById(userId: number): Observable<CutUserModel> {
@@ -34,6 +29,6 @@ export class UserService extends OnLoad<UserModel> {
   }
 
   protected loadObservable(): Observable<UserModel> {
-    return this.loginUserService.getUserObservable();
+    return this.loginUserService.userObservable;
   }
 }

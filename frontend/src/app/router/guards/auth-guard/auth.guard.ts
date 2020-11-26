@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, pipe } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, pipe, of } from 'rxjs';
+import { map, defaultIfEmpty, isEmpty, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user/user.service';
-import { UserModel } from '../../../models/user/user.model';
+import { LoginUserService } from '../../../services/user/login/login-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +12,19 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private loginUserService: LoginUserService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.userService.events.onLoad((user: UserModel) => {
-      if (!user) this.router.navigate(['user/login'])
-    });
-    return this.userService.getUserObservable().pipe(map((user: UserModel) => user ? true : false));
+    const nextUrl: UrlTree = this.router.parseUrl('/user/login');
+    return this.loginUserService.observables.onLogin.pipe(
+      isEmpty(),
+      map((isEmpty: boolean) => isEmpty ? nextUrl : true),
+      catchError(() => of(nextUrl))
+    );
   }
 
 }
