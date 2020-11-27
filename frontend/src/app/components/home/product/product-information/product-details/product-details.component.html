@@ -50,12 +50,16 @@
     </div>
   </div>
   <hr class="separator section-margin"/>
-  <div class="lower-section">
+  <div class="lower-section" style="margin-bottom: 3em">
     <div class="description">
       {{product.description}}
     </div>
     <div class="options">
       <ng-content></ng-content>
     </div>
+  </div>
+  <hr class="separator section-margin"/>
+  <div class="lower-section">
+     <app-message-content [name]="creator.userName"></app-message-content>
   </div>
 </div>
