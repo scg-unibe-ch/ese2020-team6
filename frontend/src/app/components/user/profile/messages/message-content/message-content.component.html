@@ -5,7 +5,7 @@
     </div>
     <div class="messages"
         *ngFor="let message of thread.messages">
-        <app-product-pill [pillValue]="message" title="" [size]="1.3"></app-product-pill></div>
+        <app-product-pill [pillValue]="message.body" title="" [size]="1.3"></app-product-pill></div>
 </div> 
 <div class="messenger-wrapper" theme>
     <div class="answer-area">

@@ -27,7 +27,20 @@ export class MessageContentComponent implements OnInit {
     if (this.thread.name === '') {
       this.openSnackBar();
     } else {
-      this.answer = answer.value;
+      const messageId = this.thread.messages[this.thread.messages.length - 1].messageId + 1;
+      const messageThread = this.thread.messages[0].messageThreadId;
+      const senderId = 1;
+      const createdAd = 20201127;
+      const readStatus = true;
+      this.answer = {
+        messageId: messageId,
+        messageThreadId: messageThread,
+        senderId: senderId,
+        body: answer.value,
+        createdAt: createdAd,
+        readStatus: readStatus
+        };
+      console.log(this.answer, 'ääääääääääääääääääääääääää')
       this.thread.messages.push(this.answer);
     }
   }
