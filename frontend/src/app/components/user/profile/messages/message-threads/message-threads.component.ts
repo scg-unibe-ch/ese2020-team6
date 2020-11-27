@@ -9,7 +9,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class MessageThreadsComponent implements OnInit {
   public threads: any;
   @Output() thread = new EventEmitter<any>();
-  anton = ['Hallo', 'Wie gehts?'];
+  anton = ['Hallo', 'Wie gehts?', 'solala', 'ich liebe nebel', 'blabla', 'eins', 
+  'irgend', 'sowieso', 'wie weit geht das?', 'wei', 'ie', 'so', 'wo', 'klar', 'endlich'];
   maya = ['Ich brauche was zu essen', 'dringend', 'Dringend was zu essen'];
   leroy = ['Ich liebe Pizza', 'Warum habe ich keine Pizza?'];
   shane = ['Warum programmieren wir?', 'Immer wenn etwas geht, ist es gleich wieder kaputt'];

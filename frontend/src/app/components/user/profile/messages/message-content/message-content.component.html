@@ -7,3 +7,9 @@
         *ngFor="let message of thread.messages">
         <app-product-pill (click)="method()" [pillValue]="message" title="" [size]="1.3"></app-product-pill></div>
 </div> 
+<div class="messenger-wrapper" theme>
+    <div class="answer-area">
+        <app-text-area class="text" name="answer" placeholder="Answer for {{thread.name}}"
+         rows="1" ngModel #answer="ngModel" appDescriptionValidator></app-text-area>
+    </div>
+</div>

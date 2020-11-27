@@ -20,6 +20,13 @@
     padding-top: $spaceing-m;
 }
 
+.answer-area {
+    border-radius: $border-radius;
+    font-size: 1em;
+    line-height: 1em;
+    margin-top: $spaceing-m;
+    padding: $spaceing-s;
+}
 .messages {
     margin-bottom: 0.5em;
 }

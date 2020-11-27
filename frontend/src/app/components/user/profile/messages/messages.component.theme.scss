@@ -11,6 +11,10 @@
   
       background: $messenger-bg;
   
+      .answer-area {
+        background: $message-bg;
+      }
+      
       .messenger {
         color: $text-color;
         .header {
