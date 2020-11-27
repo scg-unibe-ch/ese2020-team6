@@ -4,6 +4,6 @@
         My Messages
     </div>
     <div *ngFor="let thread of threads">
-    <button buttonEmpty theme [name]=thread (click)="showMessage(thread)">{{thread}}</button>
+    <button buttonEmpty theme [name]=thread.name (click)="showMessage(thread)">{{thread.name}}</button>
     </div>
 </div> 

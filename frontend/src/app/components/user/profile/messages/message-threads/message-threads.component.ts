@@ -1,3 +1,4 @@
+import { share } from 'rxjs/operators';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -7,23 +8,45 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class MessageThreadsComponent implements OnInit {
   public threads: any;
-  @Output() threadName = new EventEmitter<string>();
-  
+  @Output() thread = new EventEmitter<any>();
+  anton = ['Hallo', 'Wie gehts?'];
+  maya = ['Ich brauche was zu essen', 'dringend', 'Dringend was zu essen'];
+  leroy = ['Ich liebe Pizza', 'Warum habe ich keine Pizza?'];
+  shane = ['Warum programmieren wir?', 'Immer wenn etwas geht, ist es gleich wieder kaputt'];
+  elenoi = ['Ich habe schon eine Million Mal console.log geschriben', 'Lalalilu'];
+  konstanze = ['Bringst du noch Bier mit?', 'Und Chips', 'Warum haben wir nie Chips?'];
+  names: any;
   constructor() { }
 
   ngOnInit(): void {
-    this.threads = [
-      'Anton',
-      'Maya',
-      'Leroy',
-      'Shane',
-      'Samir',
-      'Elenoi',
-      'Konstanze'
-    ];
+    const threadA = {
+      name: 'Anton',
+      messages: this.anton
+    };
+    const threadM = {
+      name: 'Maya',
+      messages: this.maya
+    };
+    const threadL = {
+      name: 'Leroy',
+      messages: this.leroy
+    };
+    const threadS = {
+      name: 'Shane',
+      messages: this.shane
+    };
+    const threadE = {
+      name: 'Elenoi',
+      messages: this.elenoi
+    };
+    const threadK = {
+      name: 'Konstanze',
+      messages: this.konstanze
+    };
+    this.threads = [threadA, threadM, threadL, threadS, threadE, threadK];
   }
 
-  showMessage(name): void {
-    this.threadName.emit(name);
+  showMessage(name: string): void {
+    this.thread.emit(name);
   }
 }

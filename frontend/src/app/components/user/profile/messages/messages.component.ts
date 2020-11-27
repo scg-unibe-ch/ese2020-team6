@@ -7,7 +7,7 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
-  public threadName: string;
+  public threadName: any;
 
   constructor() { }
 

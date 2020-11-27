@@ -7,17 +7,19 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MessageContentComponent implements OnInit {
   public messages: any;
-  @Input() name: string;
+  @Input() thread: any;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.messages = [
-      'Hallo wie geht es dir?',
-      'Mir geht es super',
-      'Wird das so ein langweiliges Smalltalk?',
-      'Ja.'
-    ];
+    this.thread = {
+      name: '',
+      messages: [],
+    };
+  }
+
+  method(): void {
+    console.log(this.thread);
   }
 
 }
