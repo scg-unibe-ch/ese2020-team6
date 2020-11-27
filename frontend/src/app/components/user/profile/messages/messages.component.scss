@@ -4,7 +4,6 @@
 .messenger-wrapper {
   width: 100%;
   height: 100%;
-  display: flex;
   border-radius: $border-radius;
   padding: $spaceing-m;
 
@@ -12,6 +11,15 @@
       padding: $spaceing-m;
     }
 }
+
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(33%, 1fr) minmax(67%, 1fr);
+    grid-gap: 20px;
+}
+
 @each $theme-name in $theme-names {
     @include messenger-theme($theme-name);
   }
+

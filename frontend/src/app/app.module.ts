@@ -168,6 +168,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { MessagesComponent } from './components/user/profile/messages/messages.component';
 import { MessageThreadsComponent } from './components/user/profile/messages/message-threads/message-threads.component';
+import { MessageContentComponent } from './components/user/profile/messages/message-content/message-content.component';
 
 
 @NgModule({
@@ -275,6 +276,7 @@ import { MessageThreadsComponent } from './components/user/profile/messages/mess
     LoadingIndicatorComponent,
     MessagesComponent,
     MessageThreadsComponent,
+    MessageContentComponent,
   ],
   imports: [
     BrowserModule,
