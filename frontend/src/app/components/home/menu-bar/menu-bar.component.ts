@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserService } from '../../../services/user/user.service';
+import { LoginUserService } from '../../../services/user/login/login-user.service';
 import { UserModel } from '../../../models/user/user.model';
 
 
@@ -22,12 +22,12 @@ export class MenuBarComponent {
   isHome = false;
 
   constructor(
-    public userService: UserService
+    public loginUserService: LoginUserService
   ) {
-    this.userService.events.onLoad((user: UserModel) => {
-      this.isLoggedIn = true;
-      this.userName = user.userName;
-    }, (err: any) => {});
+    // this.userService.events.onLoad((user: UserModel) => {
+    //   this.isLoggedIn = true;
+    //   this.userName = user.userName;
+    // }, (err: any) => {});
   }
 
   toggleDropDown(): void {

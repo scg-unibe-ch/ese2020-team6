@@ -10,14 +10,13 @@ import { OnLoad } from '../on-load';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends OnLoad<UserModel> {
+export class UserService {
 
   constructor(
     private loginUserService: LoginUserService,
     private getUserService: GetUserService
   ) {
-    super();
-    this.loadOn(this.loginUserService);
+
   }
 
   public getUserById(userId: number): Observable<CutUserModel> {
@@ -25,10 +24,10 @@ export class UserService extends OnLoad<UserModel> {
   }
 
   public getUserObservable(): Observable<UserModel> {
-    return this.observables.onLoad;
+    return null;
   }
 
   protected loadObservable(): Observable<UserModel> {
-    return this.loginUserService.userObservable;
+    return null;
   }
 }

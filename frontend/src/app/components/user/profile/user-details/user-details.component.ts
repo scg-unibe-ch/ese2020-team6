@@ -16,10 +16,10 @@ export class UserDetailsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userService.events.onLoad((user: UserModel) => {
-      this.user = user;
-      this.picture = user.picture;
-    });
+    // this.userService.events.onLoad((user: UserModel) => {
+    //   this.user = user;
+    //   this.picture = user.picture;
+    // });
   }
 
 }

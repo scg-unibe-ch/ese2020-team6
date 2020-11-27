@@ -29,7 +29,7 @@ export class ThemeService {
     this._previousTheme = this.initialTheme;
     this.themeObservers = new Array<ThemeObserver>();
     this.load();
-    this.preferenceService.events.onUpdate();
+    //this.preferenceService.events.onUpdate();
   }
 
   public addThemeObserver(themeObserver: ThemeObserver): void {
@@ -40,7 +40,7 @@ export class ThemeService {
   public switchTheme(): ThemeService {
     this.setTheme((this._currentTheme + 1) % this.availableThemeStrings.length);
     this.preference.theme = this.currentTheme;
-    this.preferenceService.update(this.preference);
+    //this.preferenceService.update(this.preference);
     return this;
   }
 
@@ -70,10 +70,10 @@ export class ThemeService {
   }
 
   private loadFromService(): void {
-    this.preferenceService.events.onLoad((preference: PreferenceModel) => {
-      this.preference = preference;
-      this.setTheme(this.getIndexFromThemeName(preference.theme));
-    });
+    // this.preferenceService.events.onLoad((preference: PreferenceModel) => {
+    //   this.preference = preference;
+    //   this.setTheme(this.getIndexFromThemeName(preference.theme));
+    // });
   }
 
   private setTheme(theme: number) {

@@ -1,11 +1,14 @@
 import { OnObservalbeEvents, Event} from './on-observable-events';
 import { Observable, of, empty } from 'rxjs';
-import { catchError, isEmpty } from 'rxjs/operators';
+import { catchError, isEmpty, finalize } from 'rxjs/operators';
+import { success, error } from '../models/operator/operators.module';
 
 export abstract class OnLoad<T> extends OnObservalbeEvents {
 
-  private onLoadEventName: string = 'onLoad';
-  private onDidLoadEventName: string = 'onDidLoad';
+  public onLoadEventName: string = 'onLoad';
+  public onDidLoadEventName: string = 'onDidLoad';
+
+  private nextLoaders: Array<OnLoad<any>> = new Array<OnLoad<any>>();
 
   constructor() {
     super();
@@ -14,36 +17,46 @@ export abstract class OnLoad<T> extends OnObservalbeEvents {
   }
 
   protected load(): OnLoad<T> {
-    let loadObservable: Observable<T> = this.loadObservable()
-    .pipe(catchError((error: any) => {
-      this.dontLoad();
-      return empty();
-    }));
-
+    let loadObservable: Observable<T> = this.loadObservable().pipe(
+      success(() => this.didLoad(true)),
+      catchError((error: any) => {
+        this.didLoad(false)
+        return empty();
+      })
+    );
     this.setObservable<T>(this.onLoadEventName, loadObservable);
-    this.events.onLoad(() => this.didLoad(true));
     return this;
   }
 
-  private dontLoad(): OnLoad<T> {
-    this.setObservable<T>(this.onLoadEventName, empty());
-    this.didLoad(false);
+  private loadNextLoaders(): OnLoad<T> {
+    this.nextLoaders.forEach((loader: OnLoad<any>) => {
+      console.log(loader, this);
+
+      loader.load();
+    });
+    return this;
+  }
+
+  private addNextLoader(next: OnLoad<any>): OnLoad<T> {
+    this.nextLoaders.push(next);
     return this;
   }
 
   public loadOn(event: Event): OnLoad<T>;
   public loadOn(loader: OnLoad<any>): OnLoad<T>;
   public loadOn(loaderOrEvent: Event | OnLoad<any>): OnLoad<T> {
-    if (typeof loaderOrEvent === 'function') {
-      let event: Event = loaderOrEvent as Event;
-      event(null, () => this.dontLoad(), () => this.load());
-    } else if (loaderOrEvent as OnLoad<any> !== this) {
-      let loader: OnLoad<any> = loaderOrEvent as OnLoad<any>;
-      loader.events.onDidLoad((didLoad: boolean) => {
-        if (didLoad) this.load();
-        else this.dontLoad();
-      })
-    }
+    return typeof loaderOrEvent === 'function' ?
+      this.loadOnEvent(loaderOrEvent as Event) :
+      this.loadOnLoader(loaderOrEvent as OnLoad<any>);
+  }
+
+  private loadOnEvent(event: Event): OnLoad<T> {
+    event(null, () => this.didLoad(false), () => this.load())
+    return this;
+  }
+
+  private loadOnLoader(loader: OnLoad<any>): OnLoad<T> {
+    loader.events.onLoad(null, () => this.didLoad(false), () => this.load())
     return this;
   }
 

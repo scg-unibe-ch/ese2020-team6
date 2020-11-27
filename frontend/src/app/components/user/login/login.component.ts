@@ -32,7 +32,6 @@ export class LoginComponent implements LoginUserRequestBuilder{
       this.values = form.value;
       this.loginErrorMessage = '';
       this.loginUserService.login(this);
-      this.loginObserverId = this.loginUserService.events.onLogin(this.loginSuccess, this.loginError)[0];
     }
   }
 
@@ -47,7 +46,6 @@ export class LoginComponent implements LoginUserRequestBuilder{
   private loginSuccess = () => {
     this.form.resetForm();
     this.router.navigate(['']);
-    this.loginUserService.removeObserverById.onLogin(this.loginObserverId);
   }
 
   private loginError = (err: any) => {

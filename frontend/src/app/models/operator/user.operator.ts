@@ -1,7 +1,7 @@
-import { Observable, Subscription, pipe} from 'rxjs';
+import { Observable, Subscription, pipe, OperatorFunction} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User, UserModel } from './user.model';
-import { transformator } from '../operator/transformator.model';
+import { User, UserModel } from '../user/user.model';
+import { transformator } from './transformator.model';
 import {
   LoginUserResponseModel,
   LoginUserResponseUserModel,
@@ -19,6 +19,6 @@ export function transformToTokenResponse(source: Observable<LoginUserResponseMod
   }));
 }
 
-export function transformUser<T>(source: Observable<T>): Observable<T> {
-  return transformator<UserModel, T>(source, User.buildFromUserModel, 'user', 'User');
+export function transformUser<T>(): OperatorFunction<any, any> {
+  return transformator<UserModel, T>(User.buildFromUserModel, 'user', 'User');
 }

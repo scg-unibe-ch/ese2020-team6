@@ -3,99 +3,97 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { OnLoad } from '../../on-load';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, empty } from 'rxjs';
 import { share, pluck, catchError, retry, isEmpty } from 'rxjs/operators';
 import { UserModel, NullUser } from '../../../models/user/user.model';
 import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
 import { LoginUserResponseModel, LoginUserResponseUserTokenModel, isLoginUserResponseUserTokenModel, isLoginUserResponseUserModel } from '../../../models/response/user/login/login-user-response.model';
 import { environment } from '../../../../environments/environment';
-import { transformAddress } from '../../../models/map/address/address.operator';
-import { transformUser, transformToTokenResponse} from '../../../models/user/user.operator';
+import {
+  transformAddress,
+  transformUser,
+  transformToTokenResponse} from '../../../models/operator/operators.module';
+import { ILoaderObserver } from '../../loader-observer.interface';
+import { LoaderObservable } from '../../loader-observable.interface';
+import { Loader } from '../../loader.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginUserService extends OnLoad<UserModel> implements LoginUserRequestBuilder {
+export class LoginUserService extends Loader<LoginUserResponseUserTokenModel> implements LoginUserRequestBuilder {
 
-  private onLoginEventName = 'onLogin';
-  private onLogoutEventName = 'onLogout';
-
-  public isLoggedIn: boolean = false;
+  private requestBuilder: LoginUserRequestBuilder;
+  private isLoggedIn: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
     private router: Router
   ) {
     super();
-    this.addEvent<LoginUserResponseModel>(this.onLoginEventName);
-    this.addEvent<string>(this.onLogoutEventName);
-
-    this.loadOn(this.events.onLogin);
-    this.events.onLogin((res: LoginUserResponseUserTokenModel) => {
-      this.saveUserToLocalStorage(res);
-      this.isLoggedIn = true;
-    }, (err: any) => {
-      this.logout();
-    });
-
-    this.events.onLogout(() => {
-      this.navigateToLogin();
-      this.removeUserFromLocalStorage();
-      this.isLoggedIn = false;
-    });
-    this.login(this);
+    this.successSubscription = this.subscribeOnSuccess(this);
+    this.failSubscription = this.subscribeOnFail(this);
+    this.login(this)
   }
 
+
+
   public login(requestBuilder: LoginUserRequestBuilder): LoginUserService {
-    try {
-      let request: LoginUserRequestModel = requestBuilder.buildLoginUserRequest();
-      this.setObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName, this.sendLoginRequest(requestBuilder));
-    } catch (error) {
-      this.setObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName, throwError(error));
+    this.requestBuilder = requestBuilder;
+    this.load();
+    return this;
+  }
+  public logout(): LoginUserService {
+    return this.removeUserFromLocalStorage().navigateToLogin();
+  }
+
+
+
+
+  private navigateToLogin(): LoginUserService {
+    if(this.isLoggedIn) this.router.navigate(['user/login'])
+    return this;
+  }
+  private saveUserToLocalStorage(login: LoginUserResponseUserTokenModel): LoginUserService {
+    if (login && login.token) {
+      localStorage.setItem('userToken', login.token);
+      localStorage.setItem('userId', login.user.userId.toString());
     }
     return this;
   }
+  private removeUserFromLocalStorage(): LoginUserService {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userToken');
+    return this;
+  }
 
+
+
+  protected buildObservable(): Observable<LoginUserResponseUserTokenModel> {
+    return this.sendLoginRequest();
+  }
+  protected sendLoginRequest(): Observable<LoginUserResponseUserTokenModel> {
+    return this.httpClient.post<LoginUserResponseModel>(environment.endpointURL + 'user/login', this.requestBuilder.buildLoginUserRequest())
+    .pipe(share(), transformToTokenResponse, transformUser(), transformAddress());
+  }
   public buildLoginUserRequest(): LoginUserRequestModel {
     let userId = parseInt(localStorage.getItem('userId'));
     if (isNaN(userId)) throw new Error('No User Id is parasable from localStorage!');
     else return { userId: userId };
   }
 
-  public logout(): LoginUserService {
-    this.setObservable<boolean>(this.onLogoutEventName, of(false));
-    return this;
-  }
 
-  private saveUserToLocalStorage(res: LoginUserResponseUserTokenModel): void {
-    if (res && res.token) {
-      localStorage.setItem('userToken', res.token);
-      localStorage.setItem('userId', res.user.userId.toString());
-    }
+  public onSuccess(login: LoginUserResponseUserTokenModel): void {
+    this.saveUserToLocalStorage(login)
   }
-
-  private navigateToLogin(): void {
-    if (this.isLoggedIn) this.router.navigate(['user/login'])
+  public onFail(error: any): void {
+    this.logout()
   }
+  public onLoading(): void {
 
-  private removeUserFromLocalStorage(): void {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userToken');
   }
+  public onLoaded(): void {
 
-  get userObservable(): Observable<UserModel> {
-    return this.loadObservable();
-  }
-
-  protected sendLoginRequest(requestBuilder: LoginUserRequestBuilder): Observable<LoginUserResponseUserTokenModel> {
-    return this.httpClient.post<LoginUserResponseModel>(environment.endpointURL + 'user/login', requestBuilder.buildLoginUserRequest())
-    .pipe(share(), transformToTokenResponse, transformUser, transformAddress);
-  }
-
-  protected loadObservable(): Observable<UserModel> {
-    return this.getObservable<LoginUserResponseUserTokenModel>(this.onLoginEventName)
-    .pipe(pluck('user'));
   }
 
 }

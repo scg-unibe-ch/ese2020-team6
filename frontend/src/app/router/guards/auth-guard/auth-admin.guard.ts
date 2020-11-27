@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } fro
 import { Observable, of, pipe } from 'rxjs';
 import { pluck, defaultIfEmpty, catchError, isEmpty, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LoginUserService } from '../../../services/user/login/login-user.service';
+import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AuthAdminGuard implements CanActivate {
 
   constructor(
     private router: Router,
-    private loginUserService: LoginUserService
+    private userService: UserService
   ) { }
 
   canActivate(
@@ -21,9 +21,19 @@ export class AuthAdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const nextUrl: UrlTree = this.router.parseUrl('/user/login');
+    const noLogin: UrlTree = this.router.parseUrl('/user/login');
 
-    return true;
+    let pathSegmentArray: Array<string> = state.url.split("/").reverse();
+    console.log(next);
+
+    pathSegmentArray[0] = next.data.canActivateDestination;
+    const noAdmin: UrlTree = this.router.parseUrl(pathSegmentArray.reverse().join("/"));
+
+    return this.userService.getUserObservable().pipe(
+      map((user: UserModel) => user.isAdmin ? true : noAdmin),
+      defaultIfEmpty(noLogin),
+      catchError(() => of(noLogin))
+    );
   }
 
 }

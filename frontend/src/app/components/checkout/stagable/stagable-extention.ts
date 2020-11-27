@@ -47,10 +47,10 @@ export abstract class StagableExtention extends Stagable implements OnInit {
       });
     });
 
-    this.userService.events.onLoad((user: UserModel) => {
-      this.buyer = user;
-      this.assignBuyerInput();
-    });
+    // this.userService.events.onLoad((user: UserModel) => {
+    //   this.buyer = user;
+    //   this.assignBuyerInput();
+    // });
 
     this.assignIsFirstStageInput();
   }

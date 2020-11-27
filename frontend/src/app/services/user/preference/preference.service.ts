@@ -10,14 +10,12 @@ import { OnUpdate } from '../../on-update';
 @Injectable({
   providedIn: 'root'
 })
-export class PreferenceService extends OnUpdate<PreferenceModel> {
+export class PreferenceService {
 
   constructor(
     private userService: UserService,
     private httpClient: HttpClient
   ) {
-    super();
-    this.loadOn(this.userService);
   }
 
   protected loadObservable(): Observable<PreferenceModel> {

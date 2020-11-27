@@ -25,14 +25,14 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.userService.events.onLoad((user: UserModel) => {
-      this.userName = user.userName;
-      this.userId = user.userId;
-      if (user.isAdmin) {
-        this.navigationElements = adminNavigationElements;
-      }
-      this.setCurrentContentOnReload();
-    });
+    // this.userService.events.onLoad((user: UserModel) => {
+    //   this.userName = user.userName;
+    //   this.userId = user.userId;
+    //   if (user.isAdmin) {
+    //     this.navigationElements = adminNavigationElements;
+    //   }
+    //   this.setCurrentContentOnReload();
+    // });
   }
 
   private setCurrentContentOnReload(): void {

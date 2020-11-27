@@ -36,8 +36,8 @@ export class ProductInformationBase {
   }
 
   private getCurrentUser(): void {
-      this.userService.events.onLoad((currentUser: UserModel) => {
-        this.currentUser = currentUser;
-      });
+      // this.userService.events.onLoad((currentUser: UserModel) => {
+      //   this.currentUser = currentUser;
+      // });
   }
 }
