@@ -9,7 +9,7 @@ import { Orders } from 'src/app/models/order/order.model';
 export class OrderViewListComponent {
 
   @Input()
-  path: string = "";
+  path = '';
 
   private _orders: Orders = Orders.NullOrders;
   @Input()

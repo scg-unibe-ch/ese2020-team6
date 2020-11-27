@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-message-threads',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessageThreadsComponent implements OnInit {
   public threads: any;
+  @Output() threadName = new EventEmitter<string>();
   
   constructor() { }
 
@@ -22,4 +23,7 @@ export class MessageThreadsComponent implements OnInit {
     ];
   }
 
+  showMessage(name): void {
+    this.threadName.emit(name);
+  }
 }
