@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./message-content.component.scss']
 })
 export class MessageContentComponent implements OnInit {
-
+  public messages: any;
   constructor() { }
 
   ngOnInit(): void {
+    this.messages = [
+      'Hallo wie geht es dir?',
+      'Mir geht es super',
+      'Wird das so ein langweiliges Smalltalk?',
+      'Ja.'
+    ];
   }
 
 }
