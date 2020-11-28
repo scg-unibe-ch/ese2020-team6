@@ -33,9 +33,10 @@
 .text {
     text-align: left;
 }
+.answerButton {
+    text-align: right;
+  }
 .button {
     margin-top: $spaceing-s;    
 }
-.answerButton {
-    color: red;
-}
+
