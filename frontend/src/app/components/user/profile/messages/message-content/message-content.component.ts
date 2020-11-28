@@ -11,6 +11,7 @@ export class MessageContentComponent implements OnInit {
   public messages: any;
   @Input() thread: any;
   answer: any;
+  myId = 1;
 
   constructor(
     private snackBar: MatSnackBar
@@ -40,8 +41,8 @@ export class MessageContentComponent implements OnInit {
         createdAt: createdAd,
         readStatus: readStatus
         };
-      console.log(this.answer, 'ääääääääääääääääääääääääää')
       this.thread.messages.push(this.answer);
+      console.log(this.thread, 'show thread')
     }
   }
 

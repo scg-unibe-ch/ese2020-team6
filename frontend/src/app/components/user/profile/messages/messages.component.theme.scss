@@ -8,6 +8,7 @@
       $messenger-bg: map-get($theme, shady);
       $text-color: map-get($theme, bright);
       $warning-text-color: map-get($theme, warn);
+      $answer-color: map-get($theme, highlight);
   
       background: $messenger-bg;
   
@@ -15,6 +16,9 @@
         background: $message-bg;
       }
       
+      .answerButton {
+        color: $answer-color;
+    }
       .messenger {
         color: $text-color;
         .header {
