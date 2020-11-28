@@ -27,9 +27,9 @@ import {
     readStatus: boolean; 
   }
   
-  export interface AddressCreationAttributes extends Optional<AddressAttributes, 'addressId'> { }
+ //export interface AddressCreationAttributes extends Optional<AddressAttributes, 'addressId'> { }
   
-  export class Address extends Model<AddressAttributes, AddressCreationAttributes> implements AddressAttributes {
+  export class Message extends Model<MessageAttributes> implements MessageAttributes {
   
     public static associations: {
       users: Association<Address, User>,
@@ -80,21 +80,22 @@ import {
                   type: DataTypes.DATE,
                   allowNull: false
               },
-              readStatusd: {
+              readStatus: {
                   type: DataTypes.BOOLEAN,
                   allowNull: false,
                   defaultValue: false
-              },
+              }
+            },
           
               {
                   sequelize,
                   tableName: 'messages'
-              },
+              }
           );
       }
   
       public static createAssociations() {
-        User.hasMany(Messages, {
+        User.hasMany(Message, {
           foreignKey: 'messageId',
           as: 'messages'
         });
