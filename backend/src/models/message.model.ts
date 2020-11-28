@@ -23,13 +23,13 @@ import {
     messageThreadId: number;
     senderId: number;
     body: string; //check
-    createdAt: date; //date
+    createdAt: Date;
     readStatus: boolean; 
   }
   
- //export interface AddressCreationAttributes extends Optional<AddressAttributes, 'addressId'> { }
+ export interface MessageCreationAttributes extends Optional<MessageAttributes, 'messageId'> { }
   
-  export class Message extends Model<MessageAttributes> implements MessageAttributes {
+  export class Message extends Model<MessageAttributes, MessageCreationAttributes> implements MessageAttributes {
   
     public static associations: {
       users: Association<Address, User>,
@@ -53,7 +53,7 @@ import {
     messageThreadId!: number;
     senderId!: number;
     body!: string; //check
-    createdAt!: date;
+    createdAt!: Date;
     readStatus!: boolean; 
   
       public static initialize(sequelize: Sequelize) {

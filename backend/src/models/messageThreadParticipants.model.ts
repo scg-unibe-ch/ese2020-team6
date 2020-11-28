@@ -18,14 +18,14 @@ import {
   import { ItemSold } from './item-sold.model';
   import { ItemRented } from './item-rented.model';
   
-  export interface MessageThreadAttributes {
+  export interface MessageThreadParticipantsAttributes {
     messageThreadId: number;
     participantId: number;
   }
   
-  export interface AddressCreationAttributes extends Optional<AddressAttributes, 'addressId'> { }
+  export interface MessageThreadParticipantsCreationAttributes extends Optional<MessageThreadParticipantsAttributes, 'messageThreadId'> { }
   
-  export class Address extends Model<AddressAttributes, AddressCreationAttributes> implements AddressAttributes {
+  export class MessageThreadParticipants extends Model<MessageThreadParticipantsAttributes, MessageThreadParticipantsCreationAttributes> implements MessageThreadParticipantsAttributes {
   
     public static associations: {
       users: Association<Address, User>,
@@ -49,7 +49,7 @@ import {
     participantId!:number;
   
       public static initialize(sequelize: Sequelize) {
-          Message.init({
+          MessageThreadParticipants.init({
                 messageThreadId: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
@@ -59,12 +59,11 @@ import {
                   type: DataTypes.INTEGER,
                   allowNull: false
               },
+          },
               {
                   sequelize,
                   tableName: 'messagethreadparticipants'
-              },
+              }
           );
       }
-  
-  }
-  
+    }

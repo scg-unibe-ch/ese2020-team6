@@ -15,8 +15,6 @@ import {
 
   import { User } from './user.model';
   import { Product } from './product.model';
-  import { ItemSold } from './item-sold.model';
-  import { ItemRented } from './item-rented.model';
   
   export interface MessageThreadAttributes {
     messageThreadId: number;
@@ -24,9 +22,9 @@ import {
     isAccepted: boolean; 
   }
   
-  export interface AddressCreationAttributes extends Optional<AddressAttributes, 'addressId'> { }
+  export interface MessageThreadCreationAttributes extends Optional<MessageThreadAttributes, 'messageThreadId'> { }
   
-  export class Address extends Model<AddressAttributes, AddressCreationAttributes> implements AddressAttributes {
+  export class MessageThread extends Model<MessageThreadAttributes, MessageThreadCreationAttributes> implements MessageThreadAttributes {
   
     public static associations: {
       users: Association<Address, User>,
@@ -34,24 +32,13 @@ import {
       //messageThread
     };
     //for message thread
-    public getProducts!: HasManyGetAssociationsMixin<Product>;
-    public addProduct!: HasManyAddAssociationMixin<Product, number>;
-    public hasProducts!: HasManyHasAssociationMixin<Product, number>;
-    public countProducts!: HasManyCountAssociationsMixin;
-    public createProduct!: HasManyCreateAssociationMixin<Product>;
-  
-    public getUsers!: HasManyGetAssociationsMixin<User>;
-    public addUser!: HasManyAddAssociationMixin<User, number>;
-    public hasUsers!: HasManyHasAssociationMixin<User, number>;
-    public countUsers!: HasManyCountAssociationsMixin;
-    public createUser!: HasManyCreateAssociationMixin<User>;
   
     messageThreadId!: number;
     productId!:number;
     isAccepted!: boolean; 
   
       public static initialize(sequelize: Sequelize) {
-          Message.init({
+          MessageThread.init({
                 messageThreadId: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
@@ -66,19 +53,20 @@ import {
                   allowNull: false,
                   defaultValue: false
               },
+          },
           
               {
                   sequelize,
                   tableName: 'messagethreads'
-              },
+              }
           );
       }
   
       public static createAssociations() {
-        Address.hasMany(ItemRented, {   //messageThreadParticipants
-          sourceKey: 'addressId',
-          foreignKey: 'shippingAddressId',
-          as: 'itemsRented'
+        MessageThread.hasMany(MessageThreadParticipant, {   //messageThreadParticipants
+          sourceKey: 'messageThreadId',
+          foreignKey: 'messageThreadParticipantId',
+          as: 'messagethreads'
         });
       }
   }
