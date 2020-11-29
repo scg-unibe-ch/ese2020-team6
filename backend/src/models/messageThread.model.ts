@@ -65,21 +65,15 @@ import {
       }
   
       public static createAssociations() {
-       /*  Product.hasMany(MessageThread, {       //product model apasse
-          sourceKey: 'messageThreadId',
-          foreignKey: 'productId',
-          as: 'messagethreads'
-        });*/
 
         MessageThread.belongsTo(Product, {
           targetKey: 'productId',
-          foreignKey: 'Id',
           as: 'messagethreads'
         });
 
         MessageThread.hasMany(MessageThreadParticipants, { 
           sourceKey: 'messageThreadId',
-         // foreignKey: 'messageThreadParticipantId',
+          foreignKey: "messageThreatParticipantId",
           as: 'messagethreads'
         });
 

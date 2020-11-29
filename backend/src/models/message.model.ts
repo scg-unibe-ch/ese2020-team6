@@ -96,13 +96,13 @@ import { MessageThread } from './messageThread.model';
       }
   
       public static createAssociations() {
-        User.hasMany(Message, {
-          foreignKey: 'messageId',
+        Message.belongsTo(User, {
+          foreignKey: 'userId',
           as: 'messages'
         });
-  
-        MessageThread.hasMany(Message, {
-          foreignKey: 'messageId',  //messageTheradId
+
+        Message.belongsTo(MessageThread, {
+          foreignKey: 'messageThreadId',
           as: 'messages'
         });
       }

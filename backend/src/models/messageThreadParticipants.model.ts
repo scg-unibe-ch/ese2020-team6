@@ -69,8 +69,8 @@ import { MessageThread } from './messageThread.model';
       public static createAssociations() {
      
          MessageThreadParticipants.belongsTo(User, {
-           targetKey: 'userId',
-           foreignKey: 'participantId',
+           targetKey: 'participantId',
+           foreignKey: 'userId',
            as: 'messagethreadparticipants'
          });
 

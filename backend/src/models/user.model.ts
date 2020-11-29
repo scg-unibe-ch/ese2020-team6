@@ -16,6 +16,8 @@ import { Preference } from './preference.model';
 import { Address } from './address.model';
 import { CutUser } from '../interfaces/cut-user.interface';
 import { Associations } from '../classes/associations.class';
+import { Message } from './message.model';
+import { MessageThreadParticipants } from './messageThreadParticipants.model';
 
 export interface UserAttributes {
     userId: number;
@@ -168,6 +170,17 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
       User.hasMany(Order, {
         foreignKey: 'sellerId',
         as: 'sold'
+      });
+
+      User.hasMany(Message, {
+        foreignKey: 'messageId',
+        as: 'messages'
+      });
+
+      User.hasMany(MessageThreadParticipants, {
+        sourceKey: 'userId',
+        foreignKey: 'participantId',
+        as: 'messagethreadparticipants'
       });
     }
 
