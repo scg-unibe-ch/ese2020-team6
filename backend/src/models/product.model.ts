@@ -1,5 +1,6 @@
 import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Address } from './address.model';
+import { MessageThread } from './messageThread.model';
 import { Order } from './order.model';
 import { User } from './user.model';
 import { IsForRent } from '../interfaces/is-for-rent.interface';
@@ -167,6 +168,12 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
       Product.hasMany(Order, {
         foreignKey: 'productId',
         as: 'orders'
+      });
+      
+      Product.hasMany(MessageThread, {
+        sourceKey: 'messageThreadId',
+        foreignKey: 'productId',
+        as: 'messagethreads'
       });
     }
 

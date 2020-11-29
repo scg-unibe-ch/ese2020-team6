@@ -17,6 +17,7 @@ import {
   import { Product } from './product.model';
   import { ItemSold } from './item-sold.model';
   import { ItemRented } from './item-rented.model';
+import { MessageThread } from './messageThread.model';
   
   export interface MessageThreadParticipantsAttributes {
     messageThreadId: number;
@@ -28,9 +29,8 @@ import {
   export class MessageThreadParticipants extends Model<MessageThreadParticipantsAttributes, MessageThreadParticipantsCreationAttributes> implements MessageThreadParticipantsAttributes {
   
     public static associations: {
-      users: Association<Address, User>,
-      products: Association<Address, Product>,
-      //messageThread
+      users: Association<MessageThreadParticipants, User>,
+      messageThread: Association<MessageThreadParticipants, MessageThread>,
     };
     //for message thread
     public getProducts!: HasManyGetAssociationsMixin<Product>;
@@ -52,7 +52,7 @@ import {
           MessageThreadParticipants.init({
                 messageThreadId: {
                     type: DataTypes.INTEGER,
-                    autoIncrement: true,
+                    autoIncrement: true,    //wrong???
                     primaryKey: true
               },
               participantId: {
@@ -66,4 +66,17 @@ import {
               }
           );
       }
+      public static createAssociations() {
+     
+         MessageThreadParticipants.belongsTo(User, {
+           targetKey: 'userId',
+           foreignKey: 'participantId',
+           as: 'messagethreadparticipants'
+         });
+
+         MessageThreadParticipants.belongsTo(MessageThread, {
+          foreignKey: 'messageThreadId',
+          as: 'messagethreadparticipants'
+        });
+       }
     }

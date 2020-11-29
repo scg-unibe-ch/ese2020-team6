@@ -15,6 +15,8 @@ import {
 
   import { User } from './user.model';
   import { Product } from './product.model';
+  import { MessageThreadParticipants } from './messageThreadParticipants.model';
+  import { Message } from './message.model';
   
   export interface MessageThreadAttributes {
     messageThreadId: number;
@@ -27,9 +29,9 @@ import {
   export class MessageThread extends Model<MessageThreadAttributes, MessageThreadCreationAttributes> implements MessageThreadAttributes {
   
     public static associations: {
-      users: Association<Address, User>,
-      products: Association<Address, Product>,
-      //messageThread
+      message: Association<MessageThread, Message>,
+      products: Association<MessageThread, Product>,
+      messageThreadParticipants: Association<MessageThread, MessageThreadParticipants>
     };
     //for message thread
   
@@ -63,11 +65,27 @@ import {
       }
   
       public static createAssociations() {
-        MessageThread.hasMany(MessageThreadParticipant, {   //messageThreadParticipants
+       /*  Product.hasMany(MessageThread, {       //product model apasse
           sourceKey: 'messageThreadId',
-          foreignKey: 'messageThreadParticipantId',
+          foreignKey: 'productId',
+          as: 'messagethreads'
+        });*/
+
+        MessageThread.belongsTo(Product, {
+          targetKey: 'productId',
+          foreignKey: 'Id',
+          as: 'messagethreads'
+        });
+
+        MessageThread.hasMany(MessageThreadParticipants, { 
+          sourceKey: 'messageThreadId',
+         // foreignKey: 'messageThreadParticipantId',
+          as: 'messagethreads'
+        });
+
+        MessageThread.hasMany(Message, {
+          foreignKey: 'messageThreadId', 
           as: 'messagethreads'
         });
       }
   }
-  

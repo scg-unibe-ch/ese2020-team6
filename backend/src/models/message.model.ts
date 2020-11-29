@@ -17,6 +17,7 @@ import {
   import { Product } from './product.model';
   import { ItemSold } from './item-sold.model';
   import { ItemRented } from './item-rented.model';
+import { MessageThread } from './messageThread.model';
   
   export interface MessageAttributes {
     messageId: number;
@@ -32,9 +33,9 @@ import {
   export class Message extends Model<MessageAttributes, MessageCreationAttributes> implements MessageAttributes {
   
     public static associations: {
-      users: Association<Address, User>,
-      products: Association<Address, Product>,
-      //messageThread
+      users: Association<Message, User>,
+      messageThread: Association<Message, MessageThread>,
+  
     };
     //for message thread
     public getProducts!: HasManyGetAssociationsMixin<Product>;
@@ -65,7 +66,7 @@ import {
               },
                 messageThreadId: {
                     type: DataTypes.INTEGER,
-                    autoIncrement: true,
+                    autoIncrement: true,    //wrong????
                     primaryKey: true
               },
               senderId: {
@@ -100,22 +101,9 @@ import {
           as: 'messages'
         });
   
-        Address.hasMany(Product, {
-          foreignKey: 'addressId',
-          as: 'products'
-        });
-  
-        Address.hasMany(ItemSold, {
-          sourceKey: 'addressId',
-          foreignKey: 'shippingAddressId',
-          as: 'itemsSold'
-        });
-  
-        Address.hasMany(ItemRented, {
-          sourceKey: 'addressId',
-          foreignKey: 'shippingAddressId',
-          as: 'itemsRented'
+        MessageThread.hasMany(Message, {
+          foreignKey: 'messageId',  //messageTheradId
+          as: 'messages'
         });
       }
   }
-  
