@@ -169,10 +169,10 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
         foreignKey: 'productId',
         as: 'orders'
       });
-      
+
       Product.hasMany(MessageThread, {
-        sourceKey: 'messageThreadId',
-        foreignKey: 'productId',
+        sourceKey: 'productId',
+        foreignKey: 'messageThreadId',
         as: 'messagethreads'
       });
     }
