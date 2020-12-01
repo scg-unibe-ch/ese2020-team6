@@ -15,11 +15,11 @@ export class MessageService{
             }
         });
     }
-
-    public static getUserThreads(userId: number): Promise<Array<MessageThreadParticipants>>{
-        return MessageThreadParticipants.findAll({
+    //fix
+    public static getUserThreads(userId: number): Promise<Array<MessageThread>>{
+        return MessageThread.findAll({
             where:{
-                participantId: userId
+                //participantId: userId
             }
         });
     }
@@ -36,6 +36,15 @@ export class MessageService{
         return MessageThread.create(messageThread);
       }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static getThreadIdByUserId(userId: number): Promise<Array<MessageThreadParticipants>>{
+         return MessageThreadParticipants.findAll({
+            where: {
+                participantId: userId
+            }
+        });
+    }
+
+
     public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
         const test = MessageThreadParticipants.findAll({
             where: {
@@ -43,18 +52,13 @@ export class MessageService{
             }
         })
         return MessageThread.findAll({
-            attributes: ['messageThreadId', [Sequelize.literal('0'), 'test']
-        ],
-        where : {messageThreadId : test}
-    })
-    /*
-            where: {
-                messageThreadId: test
+            where : {
+                messageThreadId : test
             }
         })
-    }*/
     }
-    public static getAllMessageThreads(userId: number){
+
+    public static getAllMessageThreads(userId: number): Promise<Array<MessageThread>>{
         return MessageThreadParticipants.findAll({
             where: {
                 participantId: userId

@@ -17,9 +17,10 @@ messageController.get('/message/thread/product/:productId'), verifyToken,
         .catch((err: any) => handleError(err, res));
 }
 
+//fix
 messageController.get('/message/thread'), verifyToken,
     (req: Request, res: Response) => {
-        const userId: number = parseInt(req.params.userId, 10); //body udr params
+        const userId: number = parseInt(req.body.userId, 10); //body udr params
         MessageService.getUserThreads(userId)
         .then((messageThreadParticipants: Array<MessageThreadParticipants>) => res.send(messageThreadParticipants)) //messageThread or participants
         .catch((err:any) => handleError(err, res));
