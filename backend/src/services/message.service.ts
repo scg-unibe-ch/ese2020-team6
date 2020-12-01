@@ -2,7 +2,7 @@
 import {Message, MessageCreationAttributes} from "../models/message.model"
 import {MessageThread, MessageThreadCreationAttributes, MessageThreadAttributes} from "../models/messageThread.model"
 import {MessageThreadParticipants} from "../models/messageThreadParticipants.model"
-
+import { Transaction, Op } from 'sequelize';
 import { Sequelize, where } from "sequelize/types"
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
 
@@ -32,21 +32,63 @@ export class MessageService{
         });
     }
 
+    public static async getMessageThreadIdByProductId(productId: number): Promise<number>{
+        const messageThread = await MessageThread.findOne({
+            where: {
+                productId: productId
+            }
+        });
+        return messageThread.messageThreadId;
+    }
+
     public static createMessageThread(messageThread: MessageThreadCreationAttributes): Promise<MessageThread> {
         return MessageThread.create(messageThread);
       }
+
+    public static saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
+        if (roleOfSender === 'buyer'){
+            this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
+            const messageThreadId = this.getMessageThreadIdByProductId(productId);
+            this.insertMessageInMessageThread(messageThreadId, senderId, text)   
+        }else if (roleOfSender === 'sender'){
+            this.insertMessageInMessageThread(messageThreadId, senderId, text)   
+            this.setMessageThreadToAccepted(productId)
+        }else {
+            return Promise.reject();
+        }
+
+        return Promise.resolve();
+    }
+    
+    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static getThreadIdByUserId(userId: number): Promise<Array<MessageThreadParticipants>>{
          return MessageThreadParticipants.findAll({
+            attributes: ['messageThreadId'],
             where: {
                 participantId: userId
             }
         });
     }
+    public static getParticipantByUserId(userId: number): Promise<Array<MessageThreadParticipants>> {
+        return MessageThreadParticipants.findAll({
+            where: {
+                participantId: userId
+            }
+        })
+    }
+    public static getMessageThreadByParticipant(userId: number, messageThreadId): Promise<Array<MessageThread>> {
+        return MessageThread.findAll({
+            where: {
+                messageThreadId: messageThreadId
+            }
+        })
+    }
 
 
     public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
         const test = MessageThreadParticipants.findAll({
+            attributes: ['messageThreadId'],
             where: {
                 participantId: userId
             }
@@ -55,15 +97,7 @@ export class MessageService{
             where : {
                 messageThreadId : test
             }
-        })
-    }
-
-    public static getAllMessageThreads(userId: number): Promise<Array<MessageThread>>{
-        return MessageThreadParticipants.findAll({
-            where: {
-                participantId: userId
-            }
-        })
+        });
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
       /*
@@ -78,13 +112,19 @@ export class MessageService{
         return this.getMessagesByThreadId(messageThreadId);
       }
 
-    public static setThreadToAccepted(messageThreadId: number): Promise<Array<Message>> {
+    public static setMessageThreadToAccepted(productId: number): Promise<Array<Message>> {
+        //if
         MessageThread.update({ isAccepted: true}, {
           where: {
-            messageThreadId: messageThreadId
+            productId: productId
           }
         });
-        return this.getMessagesByThreadId(messageThreadId);
+        return this.getMessagesByThreadId(productId);
+      }
+      public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string, transaction?:Transaction): Promise<void>{
+          const date = new Date(); //check date
+        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false}, {transaction:transaction})
+        return Promise.resolve();
       }
 
     /*
@@ -97,10 +137,16 @@ export class MessageService{
         });
       }
 
-    public static findOrCreateMessageThread(messageThread: MessageThreadCreationAttributes): Promise<MessageThread> {
+    public static findOrCreateMessageThread(messageThread: MessageThreadCreationAttributes, buyerId: number, transaction?: Transaction): Promise<MessageThread> {
         return this.threadDoesExist(messageThread).catch((err: any) => {
           if (err instanceof InstanceDoesNotExistError) {
-            return MessageThread.create(messageThread);
+            MessageThread.create(messageThread, {transaction: transaction});
+            MessageThreadParticipants.create({messageThreadId: messageThread.messageThreadId, participantId: buyerId},{transaction:transaction});
+            return MessageThread.findOne({
+                where: {
+                    messageThreadId: messageThread.messageThreadId
+                }
+            })
           } else {
             return Promise.reject(err);
           }
