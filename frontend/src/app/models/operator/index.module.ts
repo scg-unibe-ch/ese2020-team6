@@ -4,3 +4,4 @@ export * from './order.operator';
 export * from './category.operator';
 export * from './success.operator';
 export * from './error.operator';
+export * from './login.operator';

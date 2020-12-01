@@ -102,6 +102,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       if (this.isUpdate) {
+        console.log("hi")
         this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
       } else {
         const formData = new FormData();
@@ -167,7 +168,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     this.previewData = Object.assign({
       isDeliverable: this.form.value.isDeliverableString === 'Yes' ? true : false,
       status: 'Available',
-      userId: ''
+      sellerId: ''
     }, this.form.value);
   }
 

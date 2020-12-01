@@ -1,4 +1,4 @@
-@import '../../../../../variables.scss';
+@import 'variables';
 @import './product-information.component.theme.scss';
 
 .modal-card-head {
@@ -18,7 +18,7 @@
 }
 
 .overlay-wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;

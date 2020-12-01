@@ -1,4 +1,4 @@
-@import '../../../../../../variables.scss';
+@import 'variables';
 @import './product-view.component.theme.scss';
 
 .product-view {
@@ -75,6 +75,3 @@
   margin-top: auto;
   overflow: auto;
 }
-
-
-

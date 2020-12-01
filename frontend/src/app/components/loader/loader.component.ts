@@ -1,48 +1,57 @@
 import { Component, Input } from '@angular/core';
-import { LoaderObservable } from '../../services/loader-observable.interface';
-import { ILoaderObserver } from '../../services/loader-observer.interface';
-import { LoaderSuccessSubscription, LoaderFailSubscription } from '../../services/loader-subscription.interface';
-
+import { ValuePartialLoader, LoaderObservable } from '../../services/service.module';
 
 @Component({
   selector: 'loader',
-  templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss']
+  templateUrl: './loader.component.html'
 })
-export class LoaderComponent implements ILoaderObserver<any> {
+export class LoaderComponent {
 
-  public successSubscription: LoaderSuccessSubscription<any>;
-  public failSubscription: LoaderFailSubscription;
 
   private _loaded: boolean = false;
   private _loading: boolean = true;
   private _fail: boolean = false;
   private _success: boolean = true;
-  private _loader: LoaderObservable<any>;
 
   @Input()
   set loader(loader: LoaderObservable<any>) {
-    this._loader = loader;
-    this.successSubscription = loader.subscribeOnSuccess(this);
-    this.failSubscription = loader.subscribeOnFail(this);
+    loader.subscribe(this.fullLoader)
   }
 
-  public onSuccess(value: any): void {
+  public onSuccess = () => {
     this._fail = false;
     this._success = true;
   }
-  public onFail(error: any): void {
+  public onFail = () => {
     this._fail = true;
     this._success = false;
   }
-  public onLoading(): void {
+  public onLoading = () => {
     this._loaded = false;
     this._loading = true;
   }
-  public onLoaded(): void {
+  public onLoaded = (success: boolean) => {
+    /*  Uncomment the follwoing and comment out the next four lines of code
+        for a demo of the loader. */
+    /*
+    setTimeout(()=>{
+      this._loaded = true;
+      this._loading = false;
+      this._success = success;
+      this._fail = !success
+    }, 2000)*/
     this._loaded = true;
     this._loading = false;
+    this._success = success;
+    this._fail = !success
   }
+
+  private fullLoader = new ValuePartialLoader(
+    this.onSuccess,
+    this.onFail,
+    this.onLoading,
+    this.onLoaded
+  )
 
   get loading(): boolean { return this._loading }
   get loaded(): boolean { return this._loaded }

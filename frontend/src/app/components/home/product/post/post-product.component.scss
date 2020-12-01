@@ -1,4 +1,4 @@
-@import '../../../../../variables.scss';
+@import 'variables';
 @import './post-product.component.theme.scss';
 
 .post-wrapper {
@@ -6,7 +6,7 @@
   height: 100%;
   display: flex;
   padding: $spaceing-m;
-  overflow-y: scroll;
+  overflow-x: hidden;
 
   .post {
     margin: auto;

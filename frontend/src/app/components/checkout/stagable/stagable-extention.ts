@@ -1,7 +1,5 @@
-import { Directive, OnInit, ViewChild, ComponentFactoryResolver, EventEmitter, Type } from '@angular/core';
+import { Directive, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { StageModel } from '../../../models/checkout/stage/stage.model'
-import { StagesDirective } from './stages.directive';
-import { StageNDEExtention } from './stage/stage-navigation-data-emitter-extention.directive';
 import { Stagable } from './stagable';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
@@ -10,6 +8,7 @@ import { CheckoutRouteParametersModel } from '../../../models/checkout/checkout-
 import { ProductModel, NullProduct } from '../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../models/user/cut-user.model';
 import { UserModel, NullUser } from '../../../models/user/user.model';
+import { SuccessLoader } from 'src/app/services/service.module';
 
 @Directive({
   selector: '[stagable]'
@@ -39,7 +38,7 @@ export abstract class StagableExtention extends Stagable implements OnInit {
       .subscribe((product: ProductModel) => {
         this.product = product;
         this.assignProductInput();
-        let sellerId: number = product.userId;
+        let sellerId: number = product.sellerId;
         this.userService.getUserById(sellerId).subscribe((seller: CutUserModel) => {
           this.seller = seller;
           this.assignSellerInput();
@@ -47,10 +46,10 @@ export abstract class StagableExtention extends Stagable implements OnInit {
       });
     });
 
-    // this.userService.events.onLoad((user: UserModel) => {
-    //   this.buyer = user;
-    //   this.assignBuyerInput();
-    // });
+    this.userService.subscribe(new SuccessLoader((user: UserModel) => {
+      this.buyer = user;
+      this.assignBuyerInput();
+    }));
 
     this.assignIsFirstStageInput();
   }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
-import { UserModel } from '../../../models/user/user.model';
+import { User } from '../../../models/user/user.model';
 import { ProfileNavigationElementModel, NullProfileNavigationElement } from '../../../models/user/profile/navigation-element/profile-navigation-element.model';
 import { defaultUserNavigationElements, adminNavigationElements } from './navigation-elements';
+import { SuccessLoader } from 'src/app/services/service.module';
 
 @Component({
   selector: 'app-profile',
@@ -25,14 +26,14 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    // this.userService.events.onLoad((user: UserModel) => {
-    //   this.userName = user.userName;
-    //   this.userId = user.userId;
-    //   if (user.isAdmin) {
-    //     this.navigationElements = adminNavigationElements;
-    //   }
-    //   this.setCurrentContentOnReload();
-    // });
+    this.userService.subscribe(new SuccessLoader((user: User) => {
+      this.userName = user.userName;
+      this.userId = user.userId;
+      if (user.isAdmin) {
+        this.navigationElements = adminNavigationElements;
+      }
+      this.setCurrentContentOnReload();
+    }));
   }
 
   private setCurrentContentOnReload(): void {

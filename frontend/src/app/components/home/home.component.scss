@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@import 'variables';
 @import './home.component.theme.scss';
 
 .title-wrapper {
@@ -23,7 +23,7 @@
       width: 3px;
       background: #DBA295;
       top: 0;
-      left: $spaceing-xs - 1.5px;
+      left: calc(#{$spaceing-xs} - 1.5px);
     }
 
     .header {

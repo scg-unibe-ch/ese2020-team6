@@ -11,33 +11,28 @@
     </div>
     <div class="creator">
       <div>
-        <div class="btnColor">Created By 
-          <br> 
+        <div class="btnColor">Created By
+          <br>
           <div class="disableColor">{{creator.userName}}</div>
         </div>
-        <img class="profilPicture" src="http://localhost:3000/{{creator.picture}}">
+        <img class="profile-picture" src="http://localhost:3000/{{creator.picture}}">
       </div>
     </div>
-    <div class="price, btnColor">
+    <div class="information btnColor">
       Price:
       <div class="disableColor"> {{product.price}}{{priceLabel}}</div>
-    </div>
-    <div class="location">
-      <map [initAddress]="product.address"></map>
-    </div>
-
-    <div class="expiration-date, btnColor">
-      Expiration Date:
-      <div class="disableColor">{{formatExpirationDate()}}</div>
-    </div>
-    <div class="category, btnColor">
+      <br>
       Category:
       <div class="disableColor">{{product.category}}</div>
       <br>
-      <div>
-          Subcategory:
-          <div class="disableColor">{{product.subcategory}}</div>
-      </div>
+      Subcategory:
+      <div class="disableColor">{{product.subcategory}}</div>
+      <br>
+      Expiration Date:
+      <div class="disableColor">{{formatExpirationDate()}}</div>
+    </div>
+    <div class="location">
+      <map [initAddress]="product.address"></map>
     </div>
   </div>
   <hr class="separator section-margin"/>

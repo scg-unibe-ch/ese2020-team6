@@ -2,7 +2,7 @@ import { ProductModel } from '../../../product/product.model';
 import { PostProductFormModel } from '../../../form/post-product-form.model';
 import { AddressModel, NullAddress } from '../../../map/address/address.model';
 
-export interface PostProductRequestModel extends Omit<ProductModel, 'productId' | 'userId' | 'rejectionMessage' | 'status'>{}
+export interface PostProductRequestModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'rejectionMessage' | 'status'>{}
 
 export class PostProductRequest implements PostProductRequestModel {
   constructor(

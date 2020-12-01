@@ -6,7 +6,7 @@
       <div class="smaller"><span *ngIf="isHomeAddress">This is your home address.</span> For a different shipping address search on the map for an address.</div>
       <div class="smaller" *ngIf="isHomeAddress; else notHomeAddress">
         If you approve, please click the button below:
-        <div class="approve-home-address" [ngClass]="approveHomeAddressClass" theme [classExtentions]="approveHomeAddressClassExtentions" (click)="onApproveAddress()">
+        <div class="approve-home-address" [ngClass]="approveHomeAddressClass" theme buttonWarn [classExtentions]="approveHomeAddressClassExtentions" (click)="onApproveAddress()">
           Approve Home Address
           <span class="checkmark"></span>
         </div>

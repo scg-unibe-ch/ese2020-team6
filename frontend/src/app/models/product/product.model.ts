@@ -2,7 +2,7 @@ import { AddressModel, NullAddress } from '../map/address/address.model';
 
 export interface ProductModel {
   productId: number;
-  userId: number;
+  sellerId: number;
   productType: string;
   offerType: string;
   title: string;
@@ -20,7 +20,7 @@ export interface ProductModel {
 
 export class NullProduct implements ProductModel {
   productId: number = null;
-  userId: number = null;
+  sellerId: number = null;
   productType: string = null;
   offerType: string = null;
   title: string = null;
@@ -42,7 +42,7 @@ export class Product implements ProductModel {
 
   constructor(
     public productId: number,
-    public userId: number,
+    public sellerId: number,
     public productType: string,
     public offerType: string,
     public title: string,
@@ -65,7 +65,7 @@ export class Product implements ProductModel {
   public static buildFromProductModel(product: ProductModel): Product {
     return new Product (
       product.productId,
-      product.userId,
+      product.sellerId,
       product.productType,
       product.offerType,
       product.title,

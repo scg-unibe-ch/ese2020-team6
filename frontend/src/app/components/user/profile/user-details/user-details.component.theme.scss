@@ -9,24 +9,18 @@
     $detail-bg: get-theme($theme-name, shady);
 
     color: $color;
-    .name-wrapper {
+    .name-picture-wrapper {
       background: $bg;
-      .name {
+      .name-wrapper {
+        .name {
+          .separator{
+              background: $accent-color;
+          }
+        }
+      }
+    }
 
-        .separator{
-            background: $accent-color;
-        }
-      }
-    }
     .wallet-wrapper-wrapper {
-      background: $bg;
-      .waller-wrapper {
-        .wallet {
-          background: $wallet-bg;
-        }
-      }
-    }
-    .picture-wrapper-wrapper {
       background: $bg;
       .waller-wrapper {
         .wallet {

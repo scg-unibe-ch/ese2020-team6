@@ -6,7 +6,7 @@
     <ng-content select="[left]"></ng-content>
   </div>
   <div class="right">
-    <loader [loader]="loginUserService">
+    <loader [loader]="userService">
       <div success class="logged-in">
         <button (click)="toggleDropDown()" class="dropdown-toggle" theme button>{{userName}}</button>
         <div [ngClass]="getDropdownClasses()" theme class="dropdown-wrapper">

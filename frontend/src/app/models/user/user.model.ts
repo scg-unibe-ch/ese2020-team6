@@ -87,4 +87,8 @@ export class User implements UserModel {
         && Address.isAddress(user.address)
         && user.picture ? true : false;
   }
+
+  public static isLoggedIn(user: User): boolean {
+    return User.isUser(user);
+  }
 }

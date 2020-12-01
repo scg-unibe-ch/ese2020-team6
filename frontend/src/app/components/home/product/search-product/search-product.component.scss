@@ -1,4 +1,4 @@
-@import '../../../../../variables.scss';
+@import 'variables';
 @import './search-product-component-theme.scss';
 
 @each $theme-name in $theme-names {

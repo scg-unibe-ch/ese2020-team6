@@ -75,10 +75,10 @@ productController.delete('/delete/:productId', verifyToken,
 );
 
 productController.get('/unreviewed', verifyToken, verifyIsAdmin,
-(   req: Request, res: Response) => {
+    (req: Request, res: Response) => {
         ProductService.getAllUnreviewedProducts()
-    .then((products: Array<ProductAttributes>) => res.send(products))
-    .catch((err: any) => res.status(500).send(err));
+        .then((products: Array<ProductAttributes>) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
@@ -109,19 +109,16 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-interface MulterRequest extends Request {
-  file: any;
-}
-
-productController.put('/update/:productId', verifyToken,
-    (req: MulterRequest, res: Response) => {
-      req.body.productId = parseInt(req.params.productId, 10);
-      const product: ProductAttributes = req.body as ProductAttributes;
-      const address: AddressAttributes = req.body.address as AddressAttributes;
-
-      ProductService.updateProduct(product, address)
-      .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
-      .catch((err: any) => res.status(500).send(err));
+productController.put('/update/:productId', upload.single('picture'), verifyToken ,
+    (req: any, res: Response) => {
+        req.body.productId = parseInt(req.params.productId, 10);
+        console.log(req);
+        req.body.picture = req.file.path;
+        const product: ProductAttributes = req.body;
+        const address: AddressAttributes = req.body.address;
+        ProductService.updateProduct(product, address)
+        .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
+        .catch((err: any) => res.status(500).send(err));
     });
 
  productController.get('/myproducts/:userId', verifyToken,

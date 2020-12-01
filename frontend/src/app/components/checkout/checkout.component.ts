@@ -29,7 +29,7 @@ export class CheckoutComponent implements OnInit {
       this.productService.getProductById(productId)
       .subscribe((product: ProductModel) => {
         this.product = product;
-        let sellerId: number = product.userId;
+        let sellerId: number = product.sellerId;
         this.userService.getUserById(sellerId).subscribe((seller: CutUserModel) => {
           this.seller = seller;
         });

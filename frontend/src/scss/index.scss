@@ -1,13 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import './variables.scss';
-@import './mixins.theme.scss';
+@import './mixins.scss';
+
 
 html, body, app-root {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
   position: relative;
+  font-size: 1em;
+  //@include responsive-font-size();
 }
 
 // leave in
