@@ -10,24 +10,24 @@ const messageController: Router = express.Router();
 const messageService = new MessageService();
 
 messageController.get('/message/thread/product/:productId'), verifyToken,
-    (req:Request, res:Response) =>{
-        const productId: number = req.body.productId;
+    (req: Request, res: Response) => {
+        const productId: number = parseInt(req.body.productId, 10); //body udr params?
         MessageService.getProductThread(productId)
-        .then((messageThread:MessageThread) => res.send(messageThread))
-        .catch((err:any) => handleError(err, res));
+        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
+        .catch((err: any) => handleError(err, res));
 }
 
 messageController.get('/message/thread'), verifyToken,
-    (req:Request, res:Response) =>{
-        const userId: number = req.body.userId;
+    (req: Request, res: Response) => {
+        const userId: number = parseInt(req.params.userId, 10); //body udr params
         MessageService.getUserThreads(userId)
-        .then((messageThreads:Array<MessageThread>) => res.send(messageThreads))
+        .then((messageThreadParticipants: Array<MessageThreadParticipants>) => res.send(messageThreadParticipants)) //messageThread or participants
         .catch((err:any) => handleError(err, res));
 }
 
 messageController.get('/message/thread/messages/:threadId'), verifyToken,
-    (req:Request, res:Response) =>{
-        const threadId: number = req.body.threadId;
+    (req: Request, res: Response) => {
+        const threadId: number = parseInt(req.body.threadId, 10); //body udr params
         MessageService.getMessagesByThreadId(threadId)
         .then((messages:Array<Message>) => res.send(messages))
         .catch((err:any) => handleError(err, res));
