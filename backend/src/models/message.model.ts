@@ -66,7 +66,6 @@ import { MessageThread } from './messageThread.model';
               },
                 messageThreadId: {
                     type: DataTypes.INTEGER,
-                    autoIncrement: true,    //wrong????
                     primaryKey: true
               },
               senderId: {

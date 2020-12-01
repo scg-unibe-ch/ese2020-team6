@@ -52,7 +52,6 @@ import { MessageThread } from './messageThread.model';
           MessageThreadParticipants.init({
                 messageThreadId: {
                     type: DataTypes.INTEGER,
-                    autoIncrement: true,    //wrong???
                     primaryKey: true
               },
               participantId: {
