@@ -1,4 +1,4 @@
-import { SelectCategoriesComponent } from './components/home/product/search-product/select-categories/select-categories.component';
+import { SelectCategoriesComponent } from './components/product/search-product/select-categories/select-categories.component';
 // --------------------------------------------------------------------------------- //
 
 
@@ -62,19 +62,19 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component';
 
 
-import { PostProductComponent } from './components/home/product/post/post-product.component';
-import { ProductInformationComponent } from './components/home/product/product-information/product-information.component';
-import { ProductCardListComponent } from './components/home/product/display/product-card/list/product-card-list.component';
-import { ProductCardGridComponent } from './components/home/product/display/product-card/grid/product-card-grid.component';
-import { ProductCardDirective } from './components/home/product/display/product-card/product-card.directive';
-import { ProductPillComponent } from './components/home/product/display/product-card/product-pill/product-pill.component';
-import { ProductViewComponent } from './components/home/product/display/product-view/product-view.component';
-import { ProductViewListComponent } from './components/home/product/display/product-view/list/product-view-list.component';
-import { ProductViewGridComponent } from './components/home/product/display/product-view/grid/product-view-grid.component';
-import { PurchaseProductComponent } from './components/home/product/product-information/purchase-product/purchase-product.component';
-import { EditProductComponent } from './components/home/product/product-information/edit-product/edit-product.component';
-import { ReviewProductComponent } from './components/home/product/product-information/review-product/review-product.component';
-import { ProductDetailsComponent } from './components/home/product/product-information/product-details/product-details.component';
+import { PostProductComponent } from './components/product/post/post-product.component';
+import { ProductInformationComponent } from './components/product/product-information/product-information.component';
+import { ProductCardListComponent } from './components/product/display/product-card/list/product-card-list.component';
+import { ProductCardGridComponent } from './components/product/display/product-card/grid/product-card-grid.component';
+import { ProductCardDirective } from './components/product/display/product-card/product-card.directive';
+import { ProductPillComponent } from './components/product/display/product-card/product-pill/product-pill.component';
+import { ProductViewComponent } from './components/product/display/product-view/product-view.component';
+import { ProductViewListComponent } from './components/product/display/product-view/list/product-view-list.component';
+import { ProductViewGridComponent } from './components/product/display/product-view/grid/product-view-grid.component';
+import { PurchaseProductComponent } from './components/product/product-information/purchase-product/purchase-product.component';
+import { EditProductComponent } from './components/product/product-information/edit-product/edit-product.component';
+import { ReviewProductComponent } from './components/product/product-information/review-product/review-product.component';
+import { ProductDetailsComponent } from './components/product/product-information/product-details/product-details.component';
 
 
 // Custom Form
@@ -133,7 +133,7 @@ import { PopupDirective } from './components/user/profile/profile-navigation/pop
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
 import { DateComponent } from './components/custom-form/input/date/date.component';
-import { SearchProductComponent } from './components/home/product/search-product/search-product.component';
+import { SearchProductComponent } from './components/product/search-product/search-product.component';
 import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
@@ -167,6 +167,7 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { CenterCardComponent } from './components/card/center/center-card.component';
+import { TopCardComponent } from './components/card/top/top-card.component';
 
 
 @NgModule({
@@ -273,6 +274,7 @@ import { CenterCardComponent } from './components/card/center/center-card.compon
     LoaderComponent,
     LoadingIndicatorComponent,
     CenterCardComponent,
+    TopCardComponent,
   ],
   imports: [
     BrowserModule,

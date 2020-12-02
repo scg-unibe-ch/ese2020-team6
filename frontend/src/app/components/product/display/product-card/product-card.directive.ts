@@ -1,5 +1,5 @@
 import { Directive , Input } from '@angular/core';
-import { ProductModel } from '../../../../../models/product/product.model';
+import { ProductModel } from 'src/app/models/product/product.model';
 
 @Directive({
   selector: '[product-card]',

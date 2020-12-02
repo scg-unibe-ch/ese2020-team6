@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CardDirective } from '../card.directivce'
 
 @Component({
-  selector: 'center-card',
+  selector: 'top-card',
   templateUrl: '../card.component.html',
-  styleUrls: ['./center-card.component.scss']
+  styleUrls: ['./top-card.component.scss']
 })
-export class CenterCardComponent extends CardDirective {}
+export class TopCardComponent extends CardDirective {}

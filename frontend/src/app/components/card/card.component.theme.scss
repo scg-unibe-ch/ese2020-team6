@@ -1,6 +1,6 @@
-@mixin center-card-theme($theme-name) {
+@mixin card-theme($theme-name) {
 
-  .center-card-wrapper.#{$theme-name} {
+  .app-card-wrapper.#{$theme-name} {
 
     $theme: map-get($themes, $theme-name);
 
@@ -11,7 +11,7 @@
 
     background: $login-wrapper-bg;
 
-    .center-card {
+    .app-card {
       background: $login-bg;
       color: $text-color;
 

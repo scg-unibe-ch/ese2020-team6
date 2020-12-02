@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProductModel } from '../../../../../../models/product/product.model';
+import { ProductModel } from 'src/app/models/product/product.model';
 
 @Component({
   selector: 'app-product-view-grid',

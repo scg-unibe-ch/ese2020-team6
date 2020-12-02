@@ -3,8 +3,8 @@ import { SearchProductComponent } from './../../search-product/search-product.co
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
-import { ProductModel } from '../../../../../models/product/product.model';
-import { ProductService } from '../../../../../services/product/product.service';
+import { ProductModel } from 'src/app/models/product/product.model';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-product-view',

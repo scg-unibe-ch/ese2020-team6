@@ -1,10 +1,9 @@
-import { User } from './../../../../../../../backend/src/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../../../services/product/product.service';
-import { UserService } from '../../../../services/user/user.service';
-import { ProductModel, NullProduct } from '../../../../models/product/product.model';
-import { CutUserModel, NullCutUser } from '../../../../models/user/cut-user.model';
-import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
+import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
+import { UserModel, NullUser } from 'src/app/models/user/user.model';
 export class ProductInformationBase {
 
   public product: ProductModel = new NullProduct();

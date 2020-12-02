@@ -1,21 +1,21 @@
 // Components
-import { LoginComponent } from './../components/user/login/login.component';
-import { RegisterComponent } from './../components/user/register/register.component';
-import { ProfileComponent } from './../components/user/profile/profile.component';
-import { HomeComponent } from './../components/home/home.component';
-import { PostProductComponent } from './../components/home/product/post/post-product.component';
-import { ProductInformationComponent } from './../components/home/product/product-information/product-information.component';
-import { PurchaseProductComponent } from './../components/home/product/product-information/purchase-product/purchase-product.component';
-import { EditProductComponent } from './../components/home/product/product-information/edit-product/edit-product.component';
-import { ReviewProductComponent } from './../components/home/product/product-information/review-product/review-product.component';
+import { LoginComponent } from 'src/app/components/user/login/login.component';
+import { RegisterComponent } from 'src/app/components/user/register/register.component';
+import { ProfileComponent } from 'src/app/components/user/profile/profile.component';
+import { HomeComponent } from 'src/app/components/home/home.component';
+import { PostProductComponent } from 'src/app/components/product/post/post-product.component';
+import { ProductInformationComponent } from 'src/app/components/product/product-information/product-information.component';
+import { PurchaseProductComponent } from 'src/app/components/product/product-information/purchase-product/purchase-product.component';
+import { EditProductComponent } from 'src/app/components/product/product-information/edit-product/edit-product.component';
+import { ReviewProductComponent } from 'src/app/components/product/product-information/review-product/review-product.component';
 
-import { CheckoutComponent } from './../components/checkout/checkout.component';
-import { BuyItemComponent } from './../components/checkout/stagable/buy-item/buy-item.component';
-import { RentItemComponent } from './../components/checkout/stagable/rent-item/rent-item.component';
-import { PurchaseServiceComponent } from './../components/checkout/stagable/purchase-service/purchase-service.component';
+import { CheckoutComponent } from 'src/app/components/checkout/checkout.component';
+import { BuyItemComponent } from 'src/app/components/checkout/stagable/buy-item/buy-item.component';
+import { RentItemComponent } from 'src/app/components/checkout/stagable/rent-item/rent-item.component';
+import { PurchaseServiceComponent } from 'src/app/components/checkout/stagable/purchase-service/purchase-service.component';
 
 
-import { MapSearchComponent } from './../components/custom-form/map-search/map-search.component';
+import { MapSearchComponent } from 'src/app/components/custom-form/map-search/map-search.component';
 
 
 // Guards
@@ -23,7 +23,7 @@ import { AuthGuard } from './guards/auth-guard/auth.guard';
 import { AuthAdminGuard } from './guards/auth-guard/auth-admin.guard';
 import { CreatorGuard, NotCreatorGuard } from './guards/product/creator.guard';
 import { CheckoutGuard } from './redirect/checkout/checkout.guard';
-import { defaultUserNavigationElements, adminNavigationElements, defaultProfileComponent } from './../components/user/profile/navigation-elements';
+import { defaultUserNavigationElements, adminNavigationElements, defaultProfileComponent } from 'src/app/components/user/profile/navigation-elements';
 
 export const routes = [
   {

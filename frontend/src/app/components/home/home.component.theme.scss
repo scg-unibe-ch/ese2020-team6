@@ -5,6 +5,7 @@
   $title-bg: map-get($theme, dark);
   $line-color: map-get($theme, warn);
   $text-color: map-get($theme, bright);
+  $bg: get-theme($theme-name, highlight);
   $plus-color: map-get($theme, highlight);
 
   .title-wrapper.#{$theme-name} {
@@ -15,7 +16,7 @@
     .title-background-wrapper {
       .title-background {
         div {
-          color: rgba($text-color, .02);
+          color: $bg;
         }
       }
     }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ProductModel, NullProduct } from '../../../../../models/product/product.model';
-import { CutUserModel, NullCutUser } from '../../../../../models/user/cut-user.model';
+import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
+import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
 
 @Component({
   selector: 'app-product-details',

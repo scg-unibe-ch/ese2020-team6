@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductService } from '../../../../services/product/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 import {
   PostProductRequestBuilder,
@@ -14,10 +14,10 @@ import {
   PostProductRequest,
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
-  UpdateProductRequest } from '../../../../models/request/product/product-request-model-builder.module';
-import { ProductModel, NullProduct } from '../../../../models/product/product.model';
-import { PostProductForm } from '../../../../models/form/post-product-form.model';
-import { Categories, Category, Subcategory } from '../../../../models/category/category.model';
+  UpdateProductRequest } from 'src/app/models/request/product/product-request-model-builder.module';
+import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
+import { PostProductForm } from 'src/app/models/form/post-product-form.model';
+import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
 
 @Component({
   selector: 'app-post-product',

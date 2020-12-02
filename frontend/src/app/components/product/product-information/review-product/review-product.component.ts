@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../../../../services/product/product.service';
-import { UserService } from '../../../../../services/user/user.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { ProductInformationBase } from '../product-information-base';
-import { RejectProductFormModel, NullRejectProductForm } from '../../../../../models/form/reject-product-form.model';
+import { RejectProductFormModel, NullRejectProductForm } from 'src/app/models/form/reject-product-form.model';
 import {
   AcceptProductRequestBuilder,
   RejectProductRequestBuilder,
   AcceptProductRequestModel,
-  RejectProductRequestModel } from '../../../../../models/request/product/product-request-model-builder.module';
+  RejectProductRequestModel } from 'src/app/models/request/product/product-request-model-builder.module';
 
 @Component({
   selector: 'app-review-product',
