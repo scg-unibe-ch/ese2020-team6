@@ -1,12 +1,9 @@
-import { AfterViewInit, Output, Input, Component, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { AfterViewInit, Input, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { MapLocations } from './map-locations';
-import * as Esri from 'esri-leaflet';
-import * as Geocoder from 'esri-leaflet-geocoder';
 import * as Leaflet from 'leaflet';
-import { SearchResultModel, SearchResultsModel } from '../../models/map/search/search-model.module';
-import { Address, SearchAddressModel } from '../../models/map/address/address.model';
-import { Location, LocationModel } from '../../models/map/location/location.model';
+import { Address } from '../../models/map/address/address.model';
+import { Location } from '../../models/map/location/location.model';
 
 @Component({
   selector: 'map',

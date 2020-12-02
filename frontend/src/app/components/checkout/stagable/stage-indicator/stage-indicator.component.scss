@@ -1,10 +1,5 @@
-@import '../../../../../variables.scss';
+@import 'variables';
 @import './stage-indicator.component.theme.scss';
-
-.stage-indicator {
-  height: auto;
-  width: 100%;
-}
 
 @for $size from 2 through $stages-max-size {
   .length-#{$size} {

@@ -1,34 +1,85 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { LoginUserService } from './login/login-user.service';
 import { GetUserService } from './get/get-user.service';
-import { UserModel } from '../../models/user/user.model';
+import { UserModel, User, NullUser } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
-
-import { OnLoad } from '../on-load';
+import { UserTokenModel, isUserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
+import { LoaderObservable, ValueUnloaderCascade } from '../service.module';
+import { map } from 'rxjs/operators';
+import { toUser } from 'src/app/models/operator/index.module';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends OnLoad<UserModel> {
+export class UserService extends LoaderObservable<UserModel> {
+
+  private currentUser: User;
+  private currentError: any;
+
+  private loginSuccess = (login: UserTokenModel) => {
+    this.currentError = undefined;
+    this.loginToUserPromise(login)
+    .then((user: User) => this.setCurrentUser(user))
+    .then(() => this.load())
+    .catch((error: any) => console.log("error in UserService"))
+  }
+  private loginFailure = (error: any) => this.currentError = error;
+  private valueUnloaderCascade = new ValueUnloaderCascade(
+    this.loginSuccess,
+    this.loginFailure,
+    this
+  )
 
   constructor(
     private loginUserService: LoginUserService,
     private getUserService: GetUserService
   ) {
     super();
-    this.loadOn(this.loginUserService);
+    this.loginUserService.subscribe(this.valueUnloaderCascade);
   }
 
   public getUserById(userId: number): Observable<CutUserModel> {
     return this.getUserService.getUserByIdUnsecured(userId);
   }
 
-  public getUserObservable(): Observable<UserModel> {
-    return this.observables.onLoad;
+  protected loadPromise(): Promise<User> {
+    if (this.currentError) return Promise.reject(this.currentError)
+    return Promise.resolve(this.currentUser);
   }
 
-  protected loadObservable(): Observable<UserModel> {
-    return this.loginUserService.userObservable;
+  private loginToUserPromise(login: UserTokenModel): Promise<User> {
+    return Promise.resolve(login.user);
+  }
+
+  private setCurrentUser(user: User): Promise<User> {
+    this.currentUser = user;
+    return Promise.resolve(user);
+  }
+
+  public isLoggedIn(): Observable<boolean> {
+    return this.getSource().pipe(map((user: User) => {
+      return User.isLoggedIn(user)
+    }));
+  }
+
+  public isAdmin(): Observable<[boolean, boolean]> {
+    return this.getSource().pipe(map((user: User) => {
+      if (!User.isLoggedIn(user)) return [false, false];
+      else if (!user.isAdmin) return [true, false];
+      else return [true, true];
+    }));
+  }
+
+  public getSource(): Observable<UserModel> {
+    let login: Observable<UserTokenModel> = this.loginUserService.getSource();
+    if (login) return this.loginUserService.getSource().pipe(toUser);
+    else return of(new NullUser());
+  }
+  public setSource(): Promise<Observable<UserModel>> {
+    return Promise.resolve(empty());
+  }
+  public resetSource(): Promise<void> {
+    return this.loginUserService.resetSource();
   }
 }

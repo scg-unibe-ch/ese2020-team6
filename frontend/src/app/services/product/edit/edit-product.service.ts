@@ -9,7 +9,7 @@ import {
   UpdateProductRequestModel } from '../../../models/request/product/product-request-model-builder.module';
 
 import { environment } from '../../../../environments/environment';
-import { transformAddress } from '../../../models/map/address/address.operator';
+import { transformAddress } from '../../../models/operator/address.operator';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,11 @@ export class EditProductService {
   ) { }
 
   public deleteProduct(productId: number): Observable<DeleteProductResponseModel> {
-    return this.httpClient.delete<DeleteProductResponseModel>(environment.endpointURL + 'product/delete/' + productId.toString()).pipe(transformAddress);
+    return this.httpClient.delete<DeleteProductResponseModel>(environment.endpointURL + 'product/delete/' + productId.toString()).pipe(transformAddress());
   }
 
   public updateProduct(requestBuilder: UpdateProductRequestBuilder, productId: number): Observable<UpdateProductResponseModel> {
     const requestBody: UpdateProductRequestModel = requestBuilder.buildUpdateProductRequest();
-    return this.httpClient.put<UpdateProductResponseModel>(environment.endpointURL + 'product/update/' + productId.toString(), requestBody).pipe(transformAddress);
+    return this.httpClient.put<UpdateProductResponseModel>(environment.endpointURL + 'product/update/' + productId.toString(), requestBody).pipe(transformAddress());
   }
 }

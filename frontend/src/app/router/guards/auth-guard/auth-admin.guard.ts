@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, of, pipe } from 'rxjs';
-import { pluck, defaultIfEmpty, catchError, isEmpty, mergeMap, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { LoginUserService } from '../../../services/user/login/login-user.service';
-import { UserModel } from '../../../models/user/user.model';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserService } from '../../../services/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +11,22 @@ export class AuthAdminGuard implements CanActivate {
 
   constructor(
     private router: Router,
-    private loginUserService: LoginUserService
+    private userService: UserService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    const nextUrl: UrlTree = this.router.parseUrl('/user/login');
-
-    return true;
+  ): Observable<boolean | UrlTree> {
+    const goToLogin: UrlTree = this.router.parseUrl('/user/login');
+    let pathSegmentArray: Array<string> = state.url.split("/").reverse();
+    pathSegmentArray[0] = next.data.canActivateDestination;
+    const goToDesination: UrlTree = this.router.parseUrl(pathSegmentArray.reverse().join("/"));
+    return this.userService.isAdmin().pipe(map(([isLoggedIn, isAdmin]: [boolean, boolean]) => {
+      if (!isLoggedIn) return goToLogin;
+      else if (!isAdmin) return goToDesination;
+      else return true;
+    }))
   }
 
 }

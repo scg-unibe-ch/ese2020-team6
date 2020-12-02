@@ -12,6 +12,14 @@
     background: $title-bg;
     color: $text-color;
 
+    .title-background-wrapper {
+      .title-background {
+        div {
+          color: rgba($text-color, .02);
+        }
+      }
+    }
+
     .title {
       &::before {
         background: $line-color;

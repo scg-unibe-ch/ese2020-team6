@@ -1,4 +1,4 @@
-@import '../../../../variables.scss';
+@import 'variables';
 @import './menu-bar.component.theme.scss';
 
 .menu-bar-wrapper {
@@ -11,8 +11,16 @@
   padding: $spaceing-m;
   z-index: 1;
 
-  &.block {
+  &.absolute {
+    position: absolute;
+  }
+
+  &.relative {
     position: relative;
+  }
+
+  &.fixed {
+    position: fixed;
   }
 
   .left {

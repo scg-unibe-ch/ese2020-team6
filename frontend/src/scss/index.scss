@@ -1,0 +1,14 @@
+@import './variables.scss';
+@import './mixins.scss';
+@import "~@angular/cdk/overlay-prebuilt.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+
+html, body, app-root {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  font-size: 1em;
+  font-family: 'Roboto', sans-serif;
+  //@include responsive-font-size();
+}

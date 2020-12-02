@@ -1,4 +1,4 @@
-@import '../../../../variables.scss';
+@import 'variables';
 @import './profile.component.theme.scss';
 
 $navigation-width: 250px;
@@ -9,8 +9,10 @@ $header-height: 112px;
   min-height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(max-content, $navigation-width) auto;
-  grid-template-rows: $header-height $title-height auto;
+  grid-template-columns: minmax(min-content, max-content) auto;
+  grid-template-rows: min-content max-content auto;
+  grid-gap: $spaceing-s;
+  padding: $spaceing-s;
   // @media screen and (max-width: 500px) {
   //   grid-template-columns: 1fr;
   // }
@@ -19,26 +21,26 @@ $header-height: 112px;
   .top {
     grid-column: 1 / 3;
     grid-row: 1 / 2;
-    padding: $spaceing-s;
     display: flex;
     justify-content: space-between;
 
     .header-wrapper {
-      padding: 15px;
+      padding: $spaceing-s;
       border-radius: $border-radius;
 
       .header {
         width: inherit;
         border-bottom: 2px dashed;
-        margin-bottom: 20px;
 
         .username {
-          font-size: 2rem;
-          font-weight: 100;
+          font: 2em 'Roboto', sans-serif;
+          font-weight: 700;
         }
 
         .id {
-          font-size: .8rem;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 700;
+          font-size: .8em;
           margin-left: 20px;
         }
       }
@@ -47,7 +49,7 @@ $header-height: 112px;
     .home-wrapper {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
 
       .home {
         height: auto;
@@ -81,7 +83,6 @@ $header-height: 112px;
     // }
     grid-column: 1 / 2;
     grid-row: 2 / 4;
-    padding: $spaceing-s;
   }
 
   .nav-title {
@@ -119,13 +120,15 @@ $header-height: 112px;
       @media screen and (max-width: 500px) {
         justify-content: space-around;
       }
+      font: 2em 'Roboto', sans-serif;
+      font-weight: 700;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 1.5rem;
-      font-weight: bold;
+      line-height: 1em;
       border-radius: $border-radius;
-      margin: $spaceing-s;
+      padding: $spaceing-s;
     }
   }
 
@@ -137,7 +140,6 @@ $header-height: 112px;
     // }
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-    padding: $spaceing-s;
   }
 }
 

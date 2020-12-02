@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { UserService } from '../../../services/user/user.service';
-import { UserModel } from '../../../models/user/user.model';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/user/user.model';
+import { SuccessLoader } from 'src/app/services/service.module';
 
 
 @Component({
@@ -13,21 +14,18 @@ export class MenuBarComponent {
   private newReload = true;
 
   public userName: string;
-  public isLoggedIn = false;
 
   @Input()
-  block = false;
+  public position: string;
 
   @Input()
-  isHome = false;
+  public isHome = false;
+  private successLoader = new SuccessLoader<User>((user: User) => this.userName = user.userName);
 
   constructor(
     public userService: UserService
   ) {
-    this.userService.events.onLoad((user: UserModel) => {
-      this.isLoggedIn = true;
-      this.userName = user.userName;
-    }, (err: any) => {});
+    this.userService.subscribe(this.successLoader)
   }
 
   toggleDropDown(): void {
@@ -44,7 +42,7 @@ export class MenuBarComponent {
 
   public getClasses(): Array<string> {
     const classes: Array<string> = new Array<string>();
-    classes.push(this.block ? 'block' : 'fix');
+    classes.push(this.position ? this.position : '');
     return classes;
   }
 }

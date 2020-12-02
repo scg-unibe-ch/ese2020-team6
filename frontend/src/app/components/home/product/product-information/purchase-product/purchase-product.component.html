@@ -10,7 +10,7 @@
         <div>
           <button *ngIf="isForSale; else isForRent" theme button [routerLink]="['/checkout', product.productId]">Buy</button>
           <ng-template #isForRent>
-            <button [ngClass]="'button-' + theme" [routerLink]="['/checkout', product.productId]">Rent</button>
+            <button theme button [routerLink]="['/checkout', product.productId]">Rent</button>
           </ng-template>
           <button type="button" (click)="togglePurchase()" theme buttonEmpty>Cancel</button>
         </div>

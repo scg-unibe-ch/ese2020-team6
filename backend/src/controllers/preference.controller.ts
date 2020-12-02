@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from 'express';
-import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
+import { verifyToken } from '../middlewares/checkAuth';
 import { PreferenceService } from '../services/preference.service';
 import { PreferenceAttributes } from '../models/preference.model';
 const preferenceController: Router = express.Router();

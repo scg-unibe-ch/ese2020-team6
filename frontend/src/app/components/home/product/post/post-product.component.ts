@@ -102,7 +102,10 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       if (this.isUpdate) {
-        this.productService.updateProduct(this, this.productId).subscribe((values) => this.success());
+        this.productService.updateProduct(this, this.productId).subscribe(
+          (values) => this.success(),
+          (err) => {}
+        );
       } else {
         const formData = new FormData();
         formData.append('picture', this.picture);
@@ -120,7 +123,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
           (res) => this.success(),
-          (err) => console.log(err)
+          (err) => {console.log(err)}
         );
         // this.productService.postProduct(this).subscribe((values) => this.success());
       }
@@ -167,7 +170,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     this.previewData = Object.assign({
       isDeliverable: this.form.value.isDeliverableString === 'Yes' ? true : false,
       status: 'Available',
-      userId: ''
+      sellerId: ''
     }, this.form.value);
   }
 

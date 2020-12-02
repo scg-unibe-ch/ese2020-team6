@@ -1,6 +1,6 @@
-@mixin login-theme($theme-name) {
+@mixin center-card-theme($theme-name) {
 
-  .login-wrapper.#{$theme-name} {
+  .center-card-wrapper.#{$theme-name} {
 
     $theme: map-get($themes, $theme-name);
 
@@ -11,12 +11,12 @@
 
     background: $login-wrapper-bg;
 
-    .login {
+    .center-card {
       background: $login-bg;
       color: $text-color;
 
       .header {
-        .warning {
+        .error-message {
           color: $warning-text-color;
         }
       }

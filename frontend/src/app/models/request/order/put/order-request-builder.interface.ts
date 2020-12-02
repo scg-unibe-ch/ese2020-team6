@@ -29,8 +29,6 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
     );
   }
 
-  public errorMessage: any;
-
   protected abstract _endpointURLExtention: string;
   get endpointURLExtention(): string {
     return this._endpointURLExtention;
@@ -46,7 +44,7 @@ export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends
     .subscribe(() => {
       this.router.navigate(['user', 'profile', 'buyer']);
     }, (err: any) => {
-      this.errorMessage = err.error.message
+      this.errorEmitter.emit(err.error.message);
     });
   }
 }

@@ -1,4 +1,4 @@
-@import './functions.theme.scss';
+@import './functions.scss';
 
 $primary: #4F8AC9;
 $faded: #EBD4C5;
@@ -16,11 +16,11 @@ $dark-dark: #242e42;
 $dark-warn: #c55051;
 
 $border-radius: 10px;
-$spaceing-xs: 10px;
-$spaceing-s: 15px;
-$spaceing-m: 20px;
-$spaceing-l: 30px;
-$spaceing-xl: 50px;
+$spaceing-xs: 0.6rem;
+$spaceing-s: .9rem;
+$spaceing-m: 1.2rem;
+$spaceing-l: 1.7rem;
+$spaceing-xl: 2.2rem;
 
 
 // theme bright
@@ -29,6 +29,7 @@ $bright-light: #30566E;
 $bright-highlight: #97B9D3;
 $bright-shady: #C8E8E9;
 $bright-dark: #FFFFFF;
+
 
 
 $bright-accent: #A284C2;

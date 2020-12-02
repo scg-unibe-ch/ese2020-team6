@@ -1,22 +1,14 @@
-import { Observable, Subscription, Subscriber} from 'rxjs';
+import { Observable, OperatorFunction } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-export function transformator<T, S>(source: Observable<S>, transformationMethod: (model: T) => any, ...indicators: Array<string>): Observable<S> {
-  return new Observable((subscriber: Subscriber<S>) => {
-    const subscription = source.subscribe({
-      next(value: S) {
-        if (indicators.length === 0) throw new Error('Needs at least one indicator!');
-        transformObject(value, indicators, transformationMethod);
-        subscriber.next(value);
-      },
-      error(error: any) {
-        subscriber.error(error);
-      },
-      complete() {
-        subscriber.complete();
-      }
-    });
-    return () => subscription.unsubscribe();
-  });
+export function transformator<T, S>(transformationMethod: (model: T) => any, ...indicators: Array<string>): OperatorFunction<any, any> {
+  return <S>(source: Observable<S>) => {
+    return source.pipe(map((value: S) => {
+      if (indicators.length === 0) throw new Error('Needs at least one indicator!');
+      transformObject(value, indicators, transformationMethod);
+      return value;
+    }))
+  }
 }
 
 type Path<T> = [string, Array<Path<T>> | T];
@@ -54,7 +46,7 @@ function recursiveHasType<T>(parentKey: string, objectOfParentKey: Object, indic
     return [parentKey, objectOfParentKey as T];
   } else {
     let childEntries: Array<[string, any]> = Object.entries(objectOfParentKey);
-    searchInChildEntries(parentKey, childEntries, indicators)
+    return searchInChildEntries(parentKey, childEntries, indicators)
   }
 }
 

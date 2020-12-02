@@ -1,4 +1,4 @@
-@import '../../../../../variables.scss';
+@import 'variables';
 
 .stage-content-wrapper {
   height: 100%;
@@ -7,7 +7,7 @@
   display: grid;
   grid-template-rows: 4fr auto;
   grid-row-gap: $spaceing-xs;
-  
+
   .stage-navigation {
     width: 100%;
     height: 100%;

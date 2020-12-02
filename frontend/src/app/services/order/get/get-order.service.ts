@@ -7,8 +7,8 @@ import { environment } from '../../../../environments/environment';
 
 import { Orders, OrderModel } from '../../../models/order/order.model';
 
-import { transformOrder } from '../../../models/order/order.operator';
-import { transformAddress } from '../../../models/map/address/address.operator';
+import { transformOrder } from '../../../models/operator/order.operator';
+import { transformAddress } from '../../../models/operator/address.operator';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,10 @@ export class GetOrderService extends GetService {
   }
 
   public getMyOrders(): Observable<Orders> {
-    return this.get<Array<OrderModel>>('buyer').pipe(share(), transformAddress, transformOrder);
+    return this.get<Array<OrderModel>>('buyer').pipe(share(), transformAddress(), transformOrder);
   }
 
   public getMyProductOrders(): Observable<Orders> {
-    return this.get<Array<OrderModel>>('seller').pipe(share(), transformAddress, transformOrder);
+    return this.get<Array<OrderModel>>('seller').pipe(share(), transformAddress(), transformOrder);
   }
 }
