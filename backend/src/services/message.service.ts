@@ -9,6 +9,9 @@ import { User, UserAttributes } from "../models/user.model";
 
 export class MessageService{
   
+    /***********************
+        Getter methods
+    ***********************/
     public static getMessagesByThreadId(messageThreadId: number): Promise<Array<Message>>{
         return Message.findAll({
             where:{
@@ -16,14 +19,20 @@ export class MessageService{
             }
         });
     }
-    //fix
-    public static getUserThreads(userId: number): Promise<Array<MessageThread>>{
-        return MessageThread.findAll({
-            where:{
-                //participantId: userId
-            }
-        });
-    }
+    
+    public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
+        return User.findByPk(userId).then((user: User) => user.getMessageThreadParticipants())
+         .then((messageThreadParticipants: Array<MessageThreadParticipants>) => Promise.all(messageThreadParticipants.map(
+             (messageThreadParticipant: MessageThreadParticipants) => messageThreadParticipant.getMessageThread()
+         )));
+     }
+     /*messageThread.findAll({
+         where:{
+          '$MessageThreadParticipats.messageThreadParticipantId$' : userId
+         },
+         include: [association: MessageThread.association.messageThreadParticipant]
+     })
+     */
 
     public static getProductThread(productId: number): Promise<Array<MessageThread>>{
         return MessageThread.findAll({
@@ -63,28 +72,12 @@ export class MessageService{
 
         return Promise.resolve();
     }
-    
-    
-//////////////////////////////////////////////////////////////////////////////////////////////////////////    }
 
-    public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
-       return User.findByPk(userId).then((user: User) => user.getMessageThreadParticipants())
-        .then((messageThreadParticipants: Array<MessageThreadParticipants>) => Promise.all(messageThreadParticipants.map(
-            (messageThreadParticipant: MessageThreadParticipants) => messageThreadParticipant.getMessageThread()
-        )));
-    }
-    /*messageThread.findAll({
-        where:{
-         '$MessageThreadParticipats.messageThreadParticipantId$' : userId
-        },
-        include: [association: MessageThread.association.messageThreadParticipant]
-    })
-    */
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-      /*
+     /************************
         Setter helper methods
-      */
+    *************************/
+       
+
     public static setToRead(messageThreadId: number): Promise<Array<Message>> {
         Message.update({ readStatus: true}, {
           where: {
@@ -109,9 +102,10 @@ export class MessageService{
         return Promise.resolve();
       }
 
-    /*
+    /********************************************************************
         Helper methods to check if a thread exists and if not creates one
-    */
+    ********************************************************************/
+   
     public static threadDoesExist(messageThread: Partial<MessageThreadAttributes>): Promise<MessageThread> {
         return MessageThread.findOne({
           where: messageThread,

@@ -17,12 +17,12 @@ messageController.get('/message/thread/product/:productId'), verifyToken,
         .catch((err: any) => handleError(err, res));
 };
 
-// fix
+
 messageController.get('/message/thread'), verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.body.userId, 10); // body udr params
-        MessageService.getUserThreads(userId)
-        .then((messageThreadParticipants: Array<MessageThreadParticipants>) => res.send(messageThreadParticipants)) // messageThread or participants
+        MessageService.getMessageThreadsByUserId(userId)
+        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
         .catch((err: any) => handleError(err, res));
 };
 
