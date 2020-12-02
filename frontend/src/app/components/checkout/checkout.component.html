@@ -1,16 +1,8 @@
-<app-menu-bar position="fixed">
-  <button [routerLink]="['/product', 'information', product.productId]" theme button left>Cancel</button>
-</app-menu-bar>
-<div class="checkout-wrapper" theme>
-  <div class="checkout">
-    <div class="header">
-      Product
-      <span class="product-id">#{{product.productId}}</span>
-      for
-      <span>{{product.price}}{{priceLabel}}</span>
-    </div>
-    <div class="stagable-wrapper">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+<div class="checkout-wrapper">
+  <app-menu-bar position="relative">
+    <button [routerLink]="['/product', 'information', product.productId]" theme button left>Cancel</button>
+  </app-menu-bar>
+  <center-card [title]="'Product #' + product.productId + ' for ' + product.price + priceLabel" [errorMessage]="errorMessage">
+    <router-outlet (activate)="componentAdded($event)"></router-outlet>
+  </center-card>
 </div>

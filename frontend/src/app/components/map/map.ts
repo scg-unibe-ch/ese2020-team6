@@ -1,7 +1,6 @@
 import { ElementRef } from '@angular/core';
 
 import * as Esri from 'esri-leaflet';
-import * as Geocoder from 'esri-leaflet-geocoder';
 import * as Leaflet from 'leaflet';
 import { LocationModel } from '../../models/map/location/location.model';
 

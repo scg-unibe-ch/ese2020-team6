@@ -7,6 +7,32 @@
   width: 100%;
   position: relative;
 
+  .title-background-wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title-background {
+      height: 100%;
+
+      div {
+        height: 100%;
+        line-height: 200vh;
+        font-size: 200vh;
+        margin: 0 auto;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 900;
+      }
+    }
+  }
+
   .title {
     margin: auto;
     display: grid;

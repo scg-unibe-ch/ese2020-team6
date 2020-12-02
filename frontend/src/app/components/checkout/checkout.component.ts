@@ -5,6 +5,7 @@ import { UserService } from '../../services/user/user.service';
 import { CheckoutRouteParametersModel } from '../../models/checkout/checkout-route-parameters.model';
 import { ProductModel, NullProduct } from '../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../models/user/cut-user.model';
+import { StagableExtention } from './stagable/stagable-extention';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class CheckoutComponent implements OnInit {
 
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();
+
+  public errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +43,12 @@ export class CheckoutComponent implements OnInit {
   get priceLabel(): string {
     if (this.product.productType === 'Service' || this.product.offerType === 'Rent') { return '$/h'; }
     else { return '$'; }
+  }
+
+  componentAdded(stagable: StagableExtention) {
+    stagable.errorEmitter.subscribe((errorMessage: string) => {
+      this.errorMessage = errorMessage;
+    });
   }
 
 }
