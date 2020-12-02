@@ -1,26 +1,26 @@
-//import {MessageService} from "../controllers/messages.controller"
-import {Message, MessageCreationAttributes} from "../models/message.model"
-import {MessageThread, MessageThreadCreationAttributes, MessageThreadAttributes} from "../models/messageThread.model"
-import {MessageThreadParticipants} from "../models/messageThreadParticipants.model"
+// import {MessageService} from "../controllers/messages.controller"
+import {Message, MessageCreationAttributes} from '../models/message.model';
+import {MessageThread, MessageThreadCreationAttributes, MessageThreadAttributes} from '../models/messageThread.model';
+import {MessageThreadParticipants} from '../models/messageThreadParticipants.model';
 import { Transaction, Op, Association } from 'sequelize';
-import { Sequelize, where } from "sequelize/types"
+import { Sequelize, where } from 'sequelize/types';
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
-import { User, UserAttributes } from "../models/user.model";
+import { User, UserAttributes } from '../models/user.model';
 
-export class MessageService{
-  
+export class MessageService {
+
     /***********************
         Getter methods
     ***********************/
-    public static getMessagesByThreadId(messageThreadId: number): Promise<Array<Message>>{
+    public static getMessagesByThreadId(messageThreadId: number): Promise<Array<Message>> {
         return Message.findAll({
-            where:{
+            where: {
                 messageThreadId: messageThreadId
             }
         });
     }
-    
-    public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
+
+    public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>> {
         return User.findByPk(userId).then((user: User) => user.getMessageThreadParticipants())
          .then((messageThreadParticipants: Array<MessageThreadParticipants>) => Promise.all(messageThreadParticipants.map(
              (messageThreadParticipant: MessageThreadParticipants) => messageThreadParticipant.getMessageThread()
@@ -34,15 +34,15 @@ export class MessageService{
      })
      */
 
-    public static getProductThread(productId: number): Promise<Array<MessageThread>>{
+    public static getProductThread(productId: number): Promise<Array<MessageThread>> {
         return MessageThread.findAll({
-            where:{
+            where: {
                 productId: productId
             }
         });
     }
 
-    public static async getMessageThreadIdByProductId(productId: number): Promise<number>{
+    public static async getMessageThreadIdByProductId(productId: number): Promise<number> {
         const messageThread = await MessageThread.findOne({
             where: {
                 productId: productId
@@ -56,17 +56,17 @@ export class MessageService{
       }
 
     public static saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
-        if (roleOfSender === 'buyer'){
+        if (roleOfSender === 'buyer') {
             this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId);
-            var threadId: number;
-            this.getMessageThreadIdByProductId(productId) //more than one thread for a product
+            let threadId: number;
+            this.getMessageThreadIdByProductId(productId) // more than one thread for a product
             .then((messageThreadId: number) => messageThreadId = threadId)
-            .catch((err: any) => Promise.reject()); //handle error better
-            this.insertMessageInMessageThread(threadId, senderId, text);   
-        }else if (roleOfSender === 'sender'){
-            this.insertMessageInMessageThread(threadId, senderId, text);   
+            .catch((err: any) => Promise.reject()); // handle error better
+            this.insertMessageInMessageThread(threadId, senderId, text);
+        } else if (roleOfSender === 'sender') {
+            this.insertMessageInMessageThread(threadId, senderId, text);
             this.setMessageThreadToAccepted(productId);
-        }else {
+        } else {
             return Promise.reject();
         }
 
@@ -76,7 +76,7 @@ export class MessageService{
      /************************
         Setter helper methods
     *************************/
-       
+
 
     public static setToRead(messageThreadId: number): Promise<Array<Message>> {
         Message.update({ readStatus: true}, {
@@ -88,7 +88,7 @@ export class MessageService{
       }
 
     public static setMessageThreadToAccepted(productId: number): Promise<Array<Message>> {
-        //if
+        // if
         MessageThread.update({ isAccepted: true}, {
           where: {
             productId: productId
@@ -96,16 +96,16 @@ export class MessageService{
         });
         return this.getMessagesByThreadId(productId);
       }
-      public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string, transaction?:Transaction): Promise<void>{
-          const date = new Date(); //check date
-        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false}, {transaction:transaction})
+      public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string, transaction?: Transaction): Promise<void> {
+          const date = new Date(); // check date
+        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false}, {transaction: transaction});
         return Promise.resolve();
       }
 
     /********************************************************************
         Helper methods to check if a thread exists and if not creates one
     ********************************************************************/
-   
+
     public static threadDoesExist(messageThread: Partial<MessageThreadAttributes>): Promise<MessageThread> {
         return MessageThread.findOne({
           where: messageThread,
@@ -117,7 +117,7 @@ export class MessageService{
         return this.threadDoesExist(messageThread).catch((err: any) => {
           if (err instanceof InstanceDoesNotExistError) {
             MessageThread.create(messageThread, {transaction: transaction});
-            MessageThreadParticipants.create({messageThreadId: messageThread.messageThreadId, participantId: buyerId},{transaction:transaction});
+            MessageThreadParticipants.create({messageThreadId: messageThread.messageThreadId, participantId: buyerId}, {transaction: transaction});
             return MessageThread.findOne({
                 where: {
                     messageThreadId: messageThread.messageThreadId

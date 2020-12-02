@@ -46,7 +46,7 @@ import { MessageThread } from './messageThread.model';
     public countUsers!: HasManyCountAssociationsMixin;
     public createUser!: HasManyCreateAssociationMixin<User>;
 
-    public getMessageThread!: BelongsToGetAssociationMixin<MessageThread>
+    public getMessageThread!: BelongsToGetAssociationMixin<MessageThread>;
 
     messageThreadId!: number;
     participantId!: number;

@@ -65,8 +65,8 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
     public countProducts!: HasManyCountAssociationsMixin;
     public createProduct!: HasManyCreateAssociationMixin<Order>;
 
-    public getMessageThreadParticipants!: HasManyGetAssociationsMixin<MessageThreadParticipants> //-> Array<MessageThreadParticipants>
-    
+    public getMessageThreadParticipants!: HasManyGetAssociationsMixin<MessageThreadParticipants>; // -> Array<MessageThreadParticipants>
+
     userId!: number;
     firstName!: string;
     lastName!: string;
