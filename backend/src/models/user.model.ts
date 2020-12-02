@@ -37,12 +37,14 @@ export interface UserAttributes {
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
 
 export class User extends Associations<UserAttributes, UserCreationAttributes> implements UserAttributes {
+
     public static associations: {
       purchases: Association<User, Order>,
       sold: Association<User, Order>,
       products: Association<User, Product>,
       preference: Association<User, Preference>,
       address: Association<User, Address>,
+      messageThreadParticipant: Association<User, MessageThreadParticipants>
     };
 
     public getOrdersSold!: HasManyGetAssociationsMixin<Order>;
@@ -63,6 +65,8 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
     public countProducts!: HasManyCountAssociationsMixin;
     public createProduct!: HasManyCreateAssociationMixin<Order>;
 
+    public getMessageThreadParticipants!: HasManyGetAssociationsMixin<MessageThreadParticipants> //-> Array<MessageThreadParticipants>
+    
     userId!: number;
     firstName!: string;
     lastName!: string;

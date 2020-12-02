@@ -11,34 +11,33 @@ import {
     Optional
   } from 'sequelize';
 
-  //check imports
+  // check imports
 
   import { User } from './user.model';
   import { Product } from './product.model';
   import { MessageThreadParticipants } from './messageThreadParticipants.model';
   import { Message } from './message.model';
-  
+
   export interface MessageThreadAttributes {
     messageThreadId: number;
     productId: number;
-    isAccepted: boolean; 
+    isAccepted: boolean;
   }
-  
+
   export interface MessageThreadCreationAttributes extends Optional<MessageThreadAttributes, 'messageThreadId'> { }
-  
+
   export class MessageThread extends Model<MessageThreadAttributes, MessageThreadCreationAttributes> implements MessageThreadAttributes {
-  
+
     public static associations: {
       message: Association<MessageThread, Message>,
       products: Association<MessageThread, Product>,
       messageThreadParticipants: Association<MessageThread, MessageThreadParticipants>
     };
-    //for message thread
-  
+
     messageThreadId!: number;
-    productId!:number;
-    isAccepted!: boolean; 
-  
+    productId!: number;
+    isAccepted!: boolean;
+
       public static initialize(sequelize: Sequelize) {
           MessageThread.init({
                 messageThreadId: {
@@ -56,14 +55,14 @@ import {
                   defaultValue: false
               },
           },
-          
+
               {
                   sequelize,
                   tableName: 'messagethreads'
               }
           );
       }
-  
+
       public static createAssociations() {
 
         MessageThread.belongsTo(Product, {
@@ -71,14 +70,14 @@ import {
           as: 'messagethreads'
         });
 
-        MessageThread.hasMany(MessageThreadParticipants, { 
+        MessageThread.hasMany(MessageThreadParticipants, {
           sourceKey: 'messageThreadId',
-          foreignKey: "messageThreatParticipantId",
+          foreignKey: 'messageThreatParticipantId',
           as: 'messagethreads'
         });
 
         MessageThread.hasMany(Message, {
-          foreignKey: 'messageThreadId', 
+          foreignKey: 'messageThreadId',
           as: 'messagethreads'
         });
       }

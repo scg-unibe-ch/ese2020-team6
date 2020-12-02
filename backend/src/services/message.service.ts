@@ -2,9 +2,10 @@
 import {Message, MessageCreationAttributes} from "../models/message.model"
 import {MessageThread, MessageThreadCreationAttributes, MessageThreadAttributes} from "../models/messageThread.model"
 import {MessageThreadParticipants} from "../models/messageThreadParticipants.model"
-import { Transaction, Op } from 'sequelize';
+import { Transaction, Op, Association } from 'sequelize';
 import { Sequelize, where } from "sequelize/types"
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
+import { User, UserAttributes } from "../models/user.model";
 
 export class MessageService{
   
@@ -47,12 +48,15 @@ export class MessageService{
 
     public static saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
         if (roleOfSender === 'buyer'){
-            this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
-            const messageThreadId = this.getMessageThreadIdByProductId(productId);
-            this.insertMessageInMessageThread(messageThreadId, senderId, text)   
+            this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId);
+            var threadId: number;
+            this.getMessageThreadIdByProductId(productId) //more than one thread for a product
+            .then((messageThreadId: number) => messageThreadId = threadId)
+            .catch((err: any) => Promise.reject()); //handle error better
+            this.insertMessageInMessageThread(threadId, senderId, text);   
         }else if (roleOfSender === 'sender'){
-            this.insertMessageInMessageThread(messageThreadId, senderId, text)   
-            this.setMessageThreadToAccepted(productId)
+            this.insertMessageInMessageThread(threadId, senderId, text);   
+            this.setMessageThreadToAccepted(productId);
         }else {
             return Promise.reject();
         }
@@ -61,44 +65,22 @@ export class MessageService{
     }
     
     
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static getThreadIdByUserId(userId: number): Promise<Array<MessageThreadParticipants>>{
-         return MessageThreadParticipants.findAll({
-            attributes: ['messageThreadId'],
-            where: {
-                participantId: userId
-            }
-        });
-    }
-    public static getParticipantByUserId(userId: number): Promise<Array<MessageThreadParticipants>> {
-        return MessageThreadParticipants.findAll({
-            where: {
-                participantId: userId
-            }
-        })
-    }
-    public static getMessageThreadByParticipant(userId: number, messageThreadId): Promise<Array<MessageThread>> {
-        return MessageThread.findAll({
-            where: {
-                messageThreadId: messageThreadId
-            }
-        })
-    }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////    }
 
     public static getMessageThreadsByUserId(userId: number): Promise<Array<MessageThread>>{
-        const test = MessageThreadParticipants.findAll({
-            attributes: ['messageThreadId'],
-            where: {
-                participantId: userId
-            }
-        })
-        return MessageThread.findAll({
-            where : {
-                messageThreadId : test
-            }
-        });
+       return User.findByPk(userId).then((user: User) => user.getMessageThreadParticipants())
+        .then((messageThreadParticipants: Array<MessageThreadParticipants>) => Promise.all(messageThreadParticipants.map(
+            (messageThreadParticipant: MessageThreadParticipants) => messageThreadParticipant.getMessageThread()
+        )));
     }
+    /*messageThread.findAll({
+        where:{
+         '$MessageThreadParticipats.messageThreadParticipantId$' : userId
+        },
+        include: [association: MessageThread.association.messageThreadParticipant]
+    })
+    */
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
       /*
         Setter helper methods
@@ -146,7 +128,7 @@ export class MessageService{
                 where: {
                     messageThreadId: messageThread.messageThreadId
                 }
-            })
+            });
           } else {
             return Promise.reject(err);
           }

@@ -11,52 +11,52 @@ import {
     Optional
   } from 'sequelize';
 
-  //check imports
+  // check imports
 
   import { User } from './user.model';
   import { Product } from './product.model';
   import { ItemSold } from './item-sold.model';
   import { ItemRented } from './item-rented.model';
 import { MessageThread } from './messageThread.model';
-  
+
   export interface MessageAttributes {
     messageId: number;
     messageThreadId: number;
     senderId: number;
-    body: string; //check
+    body: string; // check
     createdAt: Date;
-    readStatus: boolean; 
+    readStatus: boolean;
   }
-  
+
  export interface MessageCreationAttributes extends Optional<MessageAttributes, 'messageId'> { }
-  
+
   export class Message extends Model<MessageAttributes, MessageCreationAttributes> implements MessageAttributes {
-  
+
     public static associations: {
       users: Association<Message, User>,
       messageThread: Association<Message, MessageThread>,
-  
+
     };
-    //for message thread
+    // for message thread
     public getProducts!: HasManyGetAssociationsMixin<Product>;
     public addProduct!: HasManyAddAssociationMixin<Product, number>;
     public hasProducts!: HasManyHasAssociationMixin<Product, number>;
     public countProducts!: HasManyCountAssociationsMixin;
     public createProduct!: HasManyCreateAssociationMixin<Product>;
-  
+
     public getUsers!: HasManyGetAssociationsMixin<User>;
     public addUser!: HasManyAddAssociationMixin<User, number>;
     public hasUsers!: HasManyHasAssociationMixin<User, number>;
     public countUsers!: HasManyCountAssociationsMixin;
     public createUser!: HasManyCreateAssociationMixin<User>;
-  
+
     messageId!: number;
     messageThreadId!: number;
     senderId!: number;
-    body!: string; //check
+    body!: string; // check
     createdAt!: Date;
-    readStatus!: boolean; 
-  
+    readStatus!: boolean;
+
       public static initialize(sequelize: Sequelize) {
           Message.init({
               messageId: {
@@ -78,7 +78,8 @@ import { MessageThread } from './messageThread.model';
               },
               createdAt: {
                   type: DataTypes.DATE,
-                  allowNull: false
+                  allowNull: false,
+                  defaultValue: Date.now
               },
               readStatus: {
                   type: DataTypes.BOOLEAN,
@@ -86,14 +87,14 @@ import { MessageThread } from './messageThread.model';
                   defaultValue: false
               }
             },
-          
+
               {
                   sequelize,
                   tableName: 'messages'
               }
           );
       }
-  
+
       public static createAssociations() {
         Message.belongsTo(User, {
           foreignKey: 'userId',
