@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FullscreenOverlayContainer, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 
 //  Interceptors
@@ -59,7 +59,7 @@ import { ApproveProductsComponent } from './components/user/profile/approve-prod
 //  Home
 import { HomeComponent } from './components/home/home.component';
 //  Login Bar
-import { MenuBarComponent } from './components/home/menu-bar/menu-bar.component';
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 
 
 import { PostProductComponent } from './components/product/post/post-product.component';
@@ -78,14 +78,7 @@ import { ProductDetailsComponent } from './components/product/product-informatio
 
 
 // Custom Form
-//  Input
-import { TextInputComponent } from './components/custom-form/input/text-input/text-input.component';
-import { NumberInputComponent } from './components/custom-form/input/number-input/number-input.component';
-import { PasswordInputComponent } from './components/custom-form/input/password-input/password-input.component';
-//  Select
-import { SelectComponent } from './components/custom-form/select/select.component';
-//  Text-Area
-import { TextAreaComponent } from './components/custom-form/text-area/text-area.component';
+import { CustomFormModule } from './components/custom-form/custom-form.module';
 
 
 import { UserIconComponent } from './components/icons/user-icon/user-icon.component';
@@ -95,46 +88,14 @@ import { AngleIconComponent } from './components/icons/angle-icon/angle-icon.com
 
 
 
-//  Validators
-import { HouseNumberValidatorDirective } from './components/custom-form/validators/regex/house-number/house-number-validator.directive';
-import { NounValidatorDirective } from './components/custom-form/validators/regex/noun/noun-validator.directive';
-import { PhonenumberValidatorDirective } from './components/custom-form/validators/regex/phonenumber/phonenumber-validator.directive';
-import { PlzValidatorDirective } from './components/custom-form/validators/regex/plz/plz-validator.directive';
-import { UsernameValidatorDirective } from './components/custom-form/validators/regex/username/username-validator.directive';
-import { UsernameOrEmailValidatorDirective } from './components/custom-form/validators/regex/username-or-email/username-or-email-validator.directive';
-import { EmailValidatorDirective } from './components/custom-form/validators/regex/email/email-validator.directive';
-import { PasswordValidatorDirective } from './components/custom-form/validators/regex/password/password-validator.directive';
-import { ProductTypeValidatorDirective } from './components/custom-form/validators/select/product-type/product-type-validator.directive';
-import { OfferTypeValidatorDirective } from './components/custom-form/validators/select/offer-type/offer-type-validator.directive';
-import { DeliverableValidatorDirective } from './components/custom-form/validators/select/deliverable/deliverable-validator.directive';
-import { TitleValidatorDirective } from './components/custom-form/validators/regex/title/title-validator.directive';
-import { DescriptionValidatorDirective } from './components/custom-form/validators/regex/description/description-validator.directive';
-import { PriceValidatorDirective } from './components/custom-form/validators/regex/price/price-validator.directive';
-import { LocationValidatorDirective } from './components/custom-form/validators/regex/location/location-validator.directive';
-import { DateValidatorDirective } from './components/custom-form/validators/date/date-validator.directive';
-import { MapSearchValidatorDirective } from './components/custom-form/validators/map-search/map-search-validator.directive';
-//    Cross Field
-import { PasswordMatchValidatorDirective } from './components/custom-form/validators/cross-field/password-match-validator.directive';
-//    Select
-import { GenderValidatorDirective } from './components/custom-form/validators/select/gender/gender-validator.directive';
-
-
-
-// --------------------------------------------------------------------------------- //
-
-
-
 import { routes } from './router/router';
-import { RejectionMessageValidatorDirective } from './components/custom-form/validators/regex/rejection-message/rejection-message-validator.directive';
 import { RejectedProductsComponent } from './components/user/profile/rejected-products/rejected-products.component';
 import { PopupRejectedComponent } from './components/user/profile/profile-navigation/popup/rejected/popup-rejected.component';
 import { PopupUnreviewedComponent } from './components/user/profile/profile-navigation/popup/unreviewed/popup-unreviewed.component';
 import { PopupDirective } from './components/user/profile/profile-navigation/popup/popup.directive';
 import { NavigationElementComponent } from './components/user/profile/profile-navigation/navigation-element/navigation-element.component';
 import { PreferencesComponent } from './components/user/profile/preferences/preferences.component';
-import { DateComponent } from './components/custom-form/input/date/date.component';
 import { SearchProductComponent } from './components/product/search-product/search-product.component';
-import { FileComponent } from './components/custom-form/input/file/file.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { BuyItemComponent } from './components/checkout/stagable/buy-item/buy-item.component';
 import { ShippingComponent } from './components/checkout/stagable/stage/shipping/shipping.component';
@@ -147,15 +108,10 @@ import { ButtonDirective } from './models/theme/button/button.directive';
 import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
 import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
 import { MapComponent } from './components/map/map.component';
-import { RadioComponent } from './components/custom-form/input/radio/radio.component';
-import { RadioLabelDirective } from './components/custom-form/input/radio/label/radio-label.directive';
 import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
-import { HoursValidatorDirective } from './components/custom-form/validators/regex/hours/hours-validator.directive';
 import { PurchaseServiceComponent } from './components/checkout/stagable/purchase-service/purchase-service.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MapSearchComponent } from './components/custom-form/map-search/map-search.component';
-import { SelectMultipleComponent } from './components/custom-form/select/select-multiple/select-multiple.component';
 import { SellerOrdersComponent } from './components/user/profile/seller-orders/seller-orders.component';
 import { BuyerOrdersComponent } from './components/user/profile/buyer-orders/buyer-orders.component';
 import { OrderViewComponent } from './components/order/display/view/order-view.component';
@@ -166,8 +122,7 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
-import { CenterCardComponent } from './components/card/center/center-card.component';
-import { TopCardComponent } from './components/card/top/top-card.component';
+import { CardModule } from './components/card/card.module';
 
 
 @NgModule({
@@ -178,10 +133,6 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     MenuBarComponent,
     LoginComponent,
     RegisterComponent,
-    SelectComponent,
-    TextInputComponent,
-    NumberInputComponent,
-    PasswordInputComponent,
     LogoutComponent,
     PostProductComponent,
     ProfileComponent,
@@ -191,19 +142,6 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     ProductInformationComponent,
     ApproveProductsComponent,
     ProductCardListComponent,
-    //Validators
-    EmailValidatorDirective,
-    PasswordValidatorDirective,
-    HouseNumberValidatorDirective,
-    NounValidatorDirective,
-    PhonenumberValidatorDirective,
-    PlzValidatorDirective,
-    UsernameValidatorDirective,
-    GenderValidatorDirective,
-    UsernameOrEmailValidatorDirective,
-    MapSearchValidatorDirective,
-    //Crossfield
-    PasswordMatchValidatorDirective,
     PostProductComponent,
     ProfileComponent,
     ProfileNavigationComponent,
@@ -223,25 +161,13 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     EditProductComponent,
     ReviewProductComponent,
     ProductDetailsComponent,
-    TitleValidatorDirective,
-    DescriptionValidatorDirective,
-    PriceValidatorDirective,
-    LocationValidatorDirective,
-    DateValidatorDirective,
-    TextAreaComponent,
-    ProductTypeValidatorDirective,
-    OfferTypeValidatorDirective,
-    DeliverableValidatorDirective,
-    RejectionMessageValidatorDirective,
     RejectedProductsComponent,
     PopupUnreviewedComponent,
     PopupRejectedComponent,
     PopupDirective,
     NavigationElementComponent,
     PreferencesComponent,
-    DateComponent,
     SearchProductComponent,
-    FileComponent,
     CheckoutComponent,
     BuyItemComponent,
     ShippingComponent,
@@ -253,16 +179,11 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     ButtonDirective,
     MapComponent,
     ButtonEmptyDirective,
-    RadioComponent,
     ButtonWarnDirective,
-    MapSearchComponent,
-    RadioLabelDirective,
     RentItemComponent,
     DurationComponent,
-    HoursValidatorDirective,
     PurchaseServiceComponent,
     SelectCategoriesComponent,
-    SelectMultipleComponent,
     SellerOrdersComponent,
     BuyerOrdersComponent,
     OrderViewComponent,
@@ -272,9 +193,7 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     OrderCardListComponent,
     OrderCardDirective,
     LoaderComponent,
-    LoadingIndicatorComponent,
-    CenterCardComponent,
-    TopCardComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -294,8 +213,9 @@ import { TopCardComponent } from './components/card/top/top-card.component';
     MatToolbarModule,
     MatSnackBarModule,
     OverlayModule,
-    ReactiveFormsModule,
     MatSlideToggleModule,
+    CardModule,
+    CustomFormModule
   ],
   providers: [
     {
