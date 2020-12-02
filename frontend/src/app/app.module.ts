@@ -103,10 +103,6 @@ import { StageIndicatorComponent } from './components/checkout/stagable/stage-in
 import { PaymentMethodComponent } from './components/checkout/stagable/stage/payment-method/payment-method.component';
 import { StageComponent } from './components/checkout/stagable/stage/stage.component';
 import { StagesDirective } from './components/checkout/stagable/stages.directive';
-import { ThemeDirective } from './models/theme/theme.directive';
-import { ButtonDirective } from './models/theme/button/button.directive';
-import { ButtonEmptyDirective } from './models/theme/button/button-empty.directive';
-import { ButtonWarnDirective } from './models/theme/button/button-warn.directive';
 import { MapComponent } from './components/map/map.component';
 import { RentItemComponent } from './components/checkout/stagable/rent-item/rent-item.component';
 import { DurationComponent } from './components/checkout/stagable/stage/duration/duration.component';
@@ -123,6 +119,7 @@ import { OrderCardDirective } from './components/order/display/card/order-card.d
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { CardModule } from './components/card/card.module';
+import { ThemeModule } from './models/theme/theme.module';
 
 
 @NgModule({
@@ -175,11 +172,7 @@ import { CardModule } from './components/card/card.module';
     StagesDirective,
     PaymentMethodComponent,
     StageComponent,
-    ThemeDirective,
-    ButtonDirective,
     MapComponent,
-    ButtonEmptyDirective,
-    ButtonWarnDirective,
     RentItemComponent,
     DurationComponent,
     PurchaseServiceComponent,
@@ -215,7 +208,8 @@ import { CardModule } from './components/card/card.module';
     OverlayModule,
     MatSlideToggleModule,
     CardModule,
-    CustomFormModule
+    CustomFormModule,
+    ThemeModule
   ],
   providers: [
     {

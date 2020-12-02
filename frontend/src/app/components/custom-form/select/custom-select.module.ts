@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SelectComponent } from './single/select.component';
 import { SelectMultipleComponent } from './multiple/select-multiple.component';
+import { ThemeModule } from 'src/app/models/theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { SelectMultipleComponent } from './multiple/select-multiple.component';
     SelectMultipleComponent
   ],
   imports: [
+    ThemeModule,
     CommonModule
   ],
   exports: [

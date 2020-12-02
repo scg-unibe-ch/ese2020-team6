@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ThemeModule } from 'src/app/models/theme/theme.module';
 
 
 import { TextInputComponent } from './base/text-input.component';
@@ -21,6 +22,7 @@ import { RadioComponent } from './radio/radio.component';
     RadioComponent
   ],
   imports: [
+    ThemeModule,
     FormsModule,
     CommonModule
   ],

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ThemeModule } from 'src/app/models/theme/theme.module';
 
 import { ValidatorModule } from './validator/validator.module';
 import { CustomInputModule } from './input/custom-input.module';
@@ -15,6 +16,7 @@ import { MapSearchComponent } from './map-search/map-search.component';
     MapSearchComponent,
   ],
   imports: [
+    ThemeModule,
     FormsModule,
     ValidatorModule,
     CustomInputModule,

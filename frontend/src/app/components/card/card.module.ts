@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ThemeModule } from 'src/app/models/theme/theme.module';
 
-import * as Card from './card.index';
+import { CenterCardComponent } from './center/center-card.component';
+import { TopCardComponent } from './top/top-card.component';
 
 
 
 @NgModule({
   declarations: [
-    Card.CenterCardComponent,
-    Card.TopCardComponent
+    CenterCardComponent,
+    TopCardComponent
   ],
   imports: [
+    ThemeModule,
     CommonModule
   ],
   exports: [
-    Card.CenterCardComponent,
-    Card.TopCardComponent
+    CenterCardComponent,
+    TopCardComponent
   ]
 })
 export class CardModule { }
