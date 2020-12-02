@@ -24,7 +24,6 @@ export class LoginUserService extends LoaderObservable<UserTokenModel> implement
   private isLoggedIn = false;
 
   private loginSuccess = (login: UserTokenModel) => {
-    console.log(login)
     this.saveUserToLocalStorage(login)
     .then(() => this.isLoggedIn = true);
   }

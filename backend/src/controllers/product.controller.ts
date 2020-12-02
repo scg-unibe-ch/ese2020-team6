@@ -114,9 +114,10 @@ productController.put('/update/:productId', upload.single('picture'), verifyToke
         req.body.productId = parseInt(req.params.productId, 10);
         console.log(req);
         req.body.picture = req.file.path;
+        const userId: number = req.body.tokenPayload.userId;
         const product: ProductAttributes = req.body;
         const address: AddressAttributes = req.body.address;
-        ProductService.updateProduct(product, address)
+        ProductService.updateProduct(userId, product, address)
         .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
         .catch((err: any) => res.status(500).send(err));
     });
