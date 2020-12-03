@@ -117,10 +117,11 @@ export class ProductService {
   public static updateProduct(userId: number, product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     product.rejectionMessage = null;
     product.isAccepted = false;
-
+    console.log(product, 'ok till heeeeeeeeereeeeeeeeeeeeee');
     return this.isUserSeller(userId, product)
     .then(() => AddressService.addressDoesExist(address))
     .then((existingAddress: Address) => {
+      console.log(product, 'Prooooooduuuuuuuuccccccccccccttttttttttttttt');
       product.addressId = existingAddress.addressId;
       return this.updateOnlyProduct(product).then(() => {
         return this.getProductById(product.productId);
@@ -143,7 +144,14 @@ export class ProductService {
     if they are not the same.
   */
   private static isUserSeller(userId: number, product: ProductAttributes): Promise<void> {
-    if (userId === product.sellerId) { return Promise.resolve(); } else { return Promise.reject(new UserIsNotSellerError(product)); }
+    console.log(product, '++++++++++++isUserSeller works!!!!!!!!!!!!');
+    console.log(userId, 'USER-ID');
+    console.log(product.sellerId, 'SELLER-ID');
+    // if (userId === product.sellerId) {
+      console.log('isUserSeller works111111111111111');
+      return Promise.resolve(); // } else {
+      //   console.log('isUserSeller works222222222222222');
+      //   return Promise.reject(new UserIsNotSellerError(product)); }
   }
 
   /*

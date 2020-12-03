@@ -19,15 +19,19 @@ export class AddressService {
 
     public static getAddressByValues(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
       if (Object.keys(address).length === 0) {
+        console.log('addressValue 1');
         return Promise.reject(new InstanceDoesNotExistError(Address.getTableName()));
       }
+      console.log('addressValue 2');
       return Address.findOne({
         where: address,
         transaction: transaction
       }).then((foundAddress: Address) => {
         if (foundAddress) {
+          console.log('addressValue 3');
           return Promise.resolve(foundAddress);
         } else {
+          console.log('addressValue 4');
           return Promise.reject(new InstanceDoesNotExistError(Address.getTableName()));
         }
       });
@@ -38,6 +42,7 @@ export class AddressService {
     }
 
     public static addressDoesExist(address: AddressCreationAttributes, transaction?: Transaction): Promise<Address> {
+      console.log('addressDoesExitst works???????????????????');
       return this.getAddressByValues(address, transaction);
     }
 
