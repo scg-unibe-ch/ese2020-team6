@@ -5,6 +5,7 @@ import { UserModel } from 'src/app/models/user/user.model';
 import { ProductModel } from 'src/app/models/product/product.model';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { SuccessLoader } from 'src/app/services/service.module';
 
 @Component({
   selector: 'app-my-products',
@@ -26,11 +27,11 @@ export class MyProductsComponent implements OnInit {
       (navigationElement: ProfileNavigationElementModel) => {
         this.currentContent = navigationElement;
       });
-    this.userService.events.onLoad((user: UserModel) => {
+    this.userService.subscribe(new SuccessLoader((user: UserModel) => {
       this.userId = user.userId;
       this.productService.getMyProducts(this.userId).subscribe(data => {
         this.products = data;
       });
-    });
+    }));
   }
 }

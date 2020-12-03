@@ -1,16 +1,15 @@
 import express, { Router, Request, Response } from 'express';
-import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
+import { verifyToken } from '../middlewares/checkAuth';
 
 import { OrderService } from '../services/order.service';
 
-import { User, UserAttributes } from '../models/user.model';
-import { Order, OrderAttributes } from '../models/order.model';
-import { ItemSold, ItemSoldAttributes } from '../models/item-sold.model';
-import { ItemRented, ItemRentedAttributes } from '../models/item-rented.model';
-import { ServiceRented, ServiceRentedAttributes } from '../models/service-rented.model';
-import { Address, AddressAttributes } from '../models/address.model';
+import { Order } from '../models/order.model';
+import { ItemSold } from '../models/item-sold.model';
+import { ItemRented } from '../models/item-rented.model';
+import { ServiceRented } from '../models/service-rented.model';
+import { AddressAttributes } from '../models/address.model';
 
-import { StatusError, handleError } from '../errors/status.error';
+import { handleError } from '../errors/status.error';
 
 const orderController: Router = express.Router();
 

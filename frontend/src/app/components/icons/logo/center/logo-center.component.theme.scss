@@ -1,0 +1,12 @@
+@mixin logo-center-theme($theme-name) {
+  $color: get-theme($theme-name, highlight);
+  $hover: get-theme($theme-name, light);
+
+  svg.#{$theme-name} {
+    transition: all .1s ease-in-out;
+    fill: $color;
+    &:hover {
+      fill: $hover;
+    }
+  }
+}

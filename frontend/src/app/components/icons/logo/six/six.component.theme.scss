@@ -1,0 +1,7 @@
+@mixin six-theme($theme-name) {
+  $color: get-theme($theme-name, highlight);
+
+  svg.#{$theme-name} {
+    fill: $color;
+  }
+}

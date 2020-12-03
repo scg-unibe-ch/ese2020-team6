@@ -1,0 +1,93 @@
+@import 'variables';
+@import './select-multiple.component.theme.scss';
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: $spaceing-s;
+
+  &.pristine {
+    .placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .placeholder {
+    border: 0;
+    border-bottom: 2px solid;
+    width: 100%;
+    padding: 8px 0 5px 0;
+    font-size: 1em;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    display: flex;
+
+    .selected {
+      padding: 0 5px 0 $spaceing-xs;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      margin-right: $spaceing-xs;
+
+      .remove {
+        margin-left: $spaceing-xs;
+        height: $spaceing-s;
+        width: $spaceing-s;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .1s ease-in-out;
+
+        svg {
+          height: 60%;
+          width: 60%;
+          margin: 0;
+
+          path {
+            stroke-width: 20%;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+          }
+        }
+      }
+    }
+
+
+    svg {
+      height: $spaceing-s;
+      width: $spaceing-s;
+      transition: all .1s ease-in-out;
+      margin-left: auto;
+
+      &.up {
+        transform: scaleY(-1);
+      }
+
+      path {
+        stroke-width: 4%;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: all .1s ease-in-out;
+      }
+    }
+  }
+
+  .options {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: calc(100% - 2px);
+    border-radius: 0 0 $border-radius $border-radius;
+
+    .option {
+      margin: $spaceing-xs;
+      border-bottom: 1px solid;
+      cursor: pointer;
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include custom-select-theme($theme-name);
+}

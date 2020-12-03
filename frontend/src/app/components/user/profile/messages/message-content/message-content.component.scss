@@ -1,4 +1,4 @@
-@import '../../../../../../variables.scss';
+@import 'variables';
 @import '../messages.component.theme.scss';
 
 @each $theme-name in $theme-names {
@@ -37,6 +37,5 @@
     text-align: right;
   }
 .button {
-    margin-top: $spaceing-s;    
+    margin-top: $spaceing-s;
 }
-

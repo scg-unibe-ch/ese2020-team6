@@ -1,0 +1,119 @@
+@import 'variables';
+@import './product-details.component.theme.scss';
+
+.content-wrapper {
+  padding: $spaceing-m;
+  width: 100%;
+  min-height: calc(100% - 2 * #{$spaceing-m} - 2 * #{$spaceing-xs} - 1.5em);
+}
+
+.section-margin {
+  width: 100%;
+  margin: 0;
+  margin-bottom: $spaceing-m;
+}
+
+.upper-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: $spaceing-s;
+  border-radius: $border-radius;
+  padding: $spaceing-s;
+}
+
+.picture {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding: $spaceing-s;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  grid-column: 2 / 5;
+  grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
+}
+
+.title > div {
+  font-size: 50px;
+  line-height: 50px;
+}
+
+.creator {
+  grid-column: 5 / 6;
+  grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.creator > div {
+  position: relative;
+}
+
+.creator > div::before {
+  content: '';
+  height: 100%;
+  left: -10px;
+  position: absolute;
+  border-left: 2px solid;
+}
+
+.profile-picture {
+  max-width: 50px;
+  max-height: 50px;
+}
+.information {
+  grid-column: 2 / 4;
+  grid-row: 2 / 3;
+}
+.location {
+  grid-column: 4 / 6;
+  grid-row: 2 / 3;
+  height: 100%;
+  width: 100%;
+}
+
+.category {
+
+  position: relative;
+}
+
+.subcategory {
+  position: absolute;
+  left: $spaceing-xl;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.lower-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+  grid-column-gap: $spaceing-xl;
+  padding: $spaceing-s;
+  border-radius: $border-radius;
+}
+
+.options {
+  display: grid;
+  grid-gap: $spaceing-s;
+}
+@each $theme-name in $theme-names {
+  @include product-details-theme($theme-name);
+}

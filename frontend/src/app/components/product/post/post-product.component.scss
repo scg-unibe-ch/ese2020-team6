@@ -1,0 +1,207 @@
+@import 'variables';
+@import './post-product.component.theme.scss';
+
+.post-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: $spaceing-m;
+  overflow-x: hidden;
+
+  .post {
+    margin: auto;
+    padding: $spaceing-xl;
+    border-radius: $border-radius;
+    display: grid;
+    grid-template-rows: min-content auto;
+    grid-gap: $spaceing-m;
+
+    @media screen and (max-width: 350px){
+      padding: $spaceing-m;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+
+      .title {
+        font-size: 1.7em;
+        line-height: 1em;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      .warning {
+        font-size: 1em;
+        line-height: 1em;
+        margin: 0;
+        text-transform: uppercase;
+      }
+    }
+
+    .post-product-form {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 4fr 3fr;
+      grid-gap: $spaceing-s;
+      @media screen and (max-width: 700px) {
+        grid-template-columns: auto;
+      }
+
+      .first {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        @media screen and (max-width: 1000px) {
+          grid-template-columns: auto;
+        }
+        grid-gap: $spaceing-xs;
+
+        .product-type {
+          @media screen and (min-height: 750px) and (min-width: 1000px){
+            grid-column: span 2;
+          }
+        }
+
+        .offer-type {
+          @media screen and (min-height: 750px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .category {
+          @media screen and (min-height: 700px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .subcategory {
+          @media screen and (min-height: 700px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .title {
+          @media screen and (min-height: 600px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .description {
+          @media screen and (min-height: 600px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .price {
+          @media screen and (min-height: 800px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .deliverable {
+          @media screen and (min-height: 800px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .expiration-date {
+          @media screen and (min-height: 850px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+        }
+
+        .picture {
+          @media screen and (min-height: 850px) and (min-width: 1000px) {
+            grid-column: span 2;
+          }
+          display: grid;
+          grid-template-columns: auto auto;
+          width: 100%;
+
+          img {
+            max-height: 5em;
+            max-width: 5em;
+            border-radius: $border-radius;
+          }
+        }
+      }
+
+      .second {
+        display: grid;
+        grid-template-rows: auto min-content;
+        grid-gap: $spaceing-s;
+
+        .address {
+          min-height: 200px;
+        }
+
+        .action-wrapper {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: $spaceing-s;
+          button {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+// -------------------------- overlay -------------------------- //
+// (not gonna touch that -- kind regards sevi)
+
+.buy-wrapper-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.buy-wrapper {
+  height: 50em;
+  width: 50em;
+  padding: 50px;
+  padding-top: 40px;
+  border: 2px solid #2f2f36;
+  background: white;
+}
+
+.card {
+  width: 100%;
+  height: 80%;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      border-radius: 4px;
+      width: 100%;
+ }
+
+ h2 {
+  height: auto;
+  letter-spacing: 10px;
+  color: #8a838a;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #352e34;
+  margin-bottom: 2em;
+}
+
+::ng-deep .snackbar {
+  background: #DBA295;
+  border: 2px solid #352e34;
+  height: 150px;
+  width: 200px;
+  letter-spacing: 2px;
+  color: #352e34;
+}
+
+@each $theme-name in $theme-names {
+  @include post-theme($theme-name);
+}

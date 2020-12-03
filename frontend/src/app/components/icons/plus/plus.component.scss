@@ -1,0 +1,15 @@
+@import 'variables';
+@import './plus.component.theme.scss';
+
+svg {
+  height: 100%;
+  width: 100%;
+  stroke-width: 4;
+  stroke: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@each $theme-name in $theme-names {
+  @include plus-theme($theme-name);
+}

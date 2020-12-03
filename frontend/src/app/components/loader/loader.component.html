@@ -1,6 +1,11 @@
-<div class="loading" *ngIf="loading">
-  <loading-indicator></loading-indicator>
+<div class="fail" *ngIf="fail">
+  <ng-content select="[fail]"></ng-content>
 </div>
-<div class="loaded" *ngIf="loaded">
-  <ng-content></ng-content>
+<div class="success" *ngIf="success">
+  <div class="loading" *ngIf="loading">
+    <loading-indicator></loading-indicator>
+  </div>
+  <div class="loaded" *ngIf="loaded">
+    <ng-content select="[success]"></ng-content>
+  </div>
 </div>

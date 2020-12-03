@@ -1,0 +1,10 @@
+@import 'variables';
+@import '../card.component.scss';
+
+.app-card-wrapper {
+  display: flex;
+
+  .app-card {
+    margin: auto;
+  }
+}

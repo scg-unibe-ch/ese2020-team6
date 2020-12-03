@@ -1,0 +1,67 @@
+@import 'variables';
+@import './product-information.component.theme.scss';
+
+.modal-card-head {
+  height: 60px;
+  width: 300px;
+  font-size: 16px;
+  padding-top: 10px;
+  text-align: center;
+  background-color: white;
+}
+.modal-card-body {
+  height: 60px;
+  width: 300px;
+  padding-top: 5px;
+  padding-left: 2.6em;
+  background-color: white;
+}
+
+.overlay-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .3s ease-in-out;
+  z-index: 1000;
+
+  .overlay-content {
+    height: 40%;
+    width: 40%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius;
+
+    .overlay-form {
+      width: 80%;
+
+      app-text-area {
+        width: 100%;
+      }
+
+      p {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      div {
+        margin-top: $spaceing-s;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: $spaceing-l;
+      }
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include overlay-theme($theme-name);
+}

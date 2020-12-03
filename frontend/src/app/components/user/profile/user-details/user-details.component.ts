@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { SuccessLoader } from 'src/app/services/service.module';
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -16,10 +17,10 @@ export class UserDetailsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userService.events.onLoad((user: UserModel) => {
+    this.userService.subscribe(new SuccessLoader((user: UserModel) => {
       this.user = user;
       this.picture = user.picture;
-    });
+    }));
   }
 
 }
