@@ -17,4 +17,4 @@ sqlite> update users set isAdmin = true where users.lastName = 'put admin user's
 sqlite> .q
 ```
 Now you can login with one admin user and one default user.
-![Logo](https://github.com/scg-unibe-ch/ese2020-team6/blob/master/Logo.png)
+![Logo](https://github.com/scg-unibe-ch/ese2020-team6/blob/master/frontend/src/assets/favicon-highlight-small.png)
