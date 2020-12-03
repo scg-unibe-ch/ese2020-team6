@@ -120,6 +120,11 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { CardModule } from './components/card/card.module';
 import { ThemeModule } from './models/theme/theme.module';
+import { LogoComponent } from './components/icons/logo/logo.component';
+import { SixComponent } from './components/icons/logo/six/six.component';
+import { PlusComponent } from './components/icons/plus/plus.component';
+import { IconComponent } from './components/icons/logo/icon/icon.component';
+import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
 
 
 @NgModule({
@@ -186,7 +191,12 @@ import { ThemeModule } from './models/theme/theme.module';
     OrderCardListComponent,
     OrderCardDirective,
     LoaderComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    LogoComponent,
+    SixComponent,
+    PlusComponent,
+    IconComponent,
+    LogoCenterComponent
   ],
   imports: [
     BrowserModule,

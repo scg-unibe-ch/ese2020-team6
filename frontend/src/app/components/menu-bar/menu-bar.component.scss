@@ -28,18 +28,29 @@
     grid-auto-columns: auto;
     grid-auto-flow: column;
     grid-gap: $spaceing-s;
+    align-items: center;
+    justify-content: center;
+
+    .home {
+      height: 100%;
+      width: 200px;
+      cursor: pointer;
+    }
 
     button {
-      min-width: 150px;
+      min-width: 200px;
     }
 
     // button width in styles.scss
   }
 
   .right {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-auto-columns: auto;
+    grid-auto-flow: column;
+    grid-gap: $spaceing-s;
     align-items: center;
+    justify-content: center;
 
     .logged-in {
       position: relative;

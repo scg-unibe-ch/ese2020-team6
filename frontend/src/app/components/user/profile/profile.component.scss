@@ -47,14 +47,9 @@ $header-height: 112px;
     }
 
     .home-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-
-      .home {
-        height: auto;
-        width: 150px;
-      }
+      height: 100%;
+      width: 200px;
+      cursor: pointer;
     }
   }
 

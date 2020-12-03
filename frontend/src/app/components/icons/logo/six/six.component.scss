@@ -1,0 +1,12 @@
+@import 'variables';
+@import './six.component.theme.scss';
+
+svg {
+  max-height: 100%;
+  width: 100%;
+  stroke-width: 28.16901398;
+}
+
+@each $theme-name in $theme-names {
+  @include six-theme($theme-name);
+}

@@ -1,0 +1,7 @@
+@mixin logo-theme($theme-name) {
+  $color: get-theme($theme-name, light);
+
+  svg.#{$theme-name} {
+    fill: $color;
+  }
+}
