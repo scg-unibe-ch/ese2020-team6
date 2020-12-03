@@ -171,5 +171,12 @@ export const validatorRegex = {
       constraints.numbers,
       constraints.minLength(1)
     ]}
+  },
+  message: {
+    name: "messageValidator",
+    constraints: { and : [
+      constraints.anyCharacter,
+      constraints.minLength(1)
+    ]}
   }
 }

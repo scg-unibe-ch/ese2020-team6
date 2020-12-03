@@ -118,9 +118,9 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
-import { MessagesComponent } from './components/user/profile/messages/messages.component';
-import { MessageThreadsComponent } from './components/user/profile/messages/message-threads/message-threads.component';
-import { MessageContentComponent } from './components/user/profile/messages/message-content/message-content.component';
+import { MessagesComponent } from './components/message/messages.component';
+import { MessageThreadsComponent } from './components/message/threads/message-threads.component';
+import { MessageContentComponent } from './components/message/content/message-content.component';
 import { CardModule } from './components/card/card.module';
 import { ThemeModule } from './models/theme/theme.module';
 import { LogoComponent } from './components/icons/logo/logo.component';
@@ -128,7 +128,7 @@ import { SixComponent } from './components/icons/logo/six/six.component';
 import { PlusComponent } from './components/icons/plus/plus.component';
 import { IconComponent } from './components/icons/logo/icon/icon.component';
 import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
-
+import { MessageModule } from './components/message/message.module';
 
 @NgModule({
   declarations: [
@@ -195,9 +195,6 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
     OrderCardDirective,
     LoaderComponent,
     LoadingIndicatorComponent,
-    MessagesComponent,
-    MessageThreadsComponent,
-    MessageContentComponent,
     LogoComponent,
     SixComponent,
     PlusComponent,
@@ -225,7 +222,8 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
     MatSlideToggleModule,
     CardModule,
     CustomFormModule,
-    ThemeModule
+    ThemeModule,
+    MessageModule
   ],
   providers: [
     {

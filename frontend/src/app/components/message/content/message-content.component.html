@@ -1,0 +1,27 @@
+<div class="messenger-wrapper" theme>
+  <div class="receiver">
+      'User Name' (Profile Picture)
+  </div>
+  <div class="messenger">
+    <div class="messages">
+      <ng-template ngFor [ngForOf]="messages" let-message>
+        <div [ngClass]="messageClasses(message)" theme>
+          <div class="body">
+            {{ message.body }}
+          </div>
+          <div class="info">
+            <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
+            <div class="date">
+              {{ formatCreatedAt(message) }}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="answer-area">
+    <app-text-area  name="answer" placeholder="Enter Message"
+    rows="1" ngModel #answer="ngModel" messageValidator></app-text-area>
+    <button class="" button theme (click)="sendMessage(answer)">Send</button>
+  </div>
+</div>

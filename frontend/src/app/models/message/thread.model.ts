@@ -12,6 +12,7 @@ export interface ThreadModel {
   messages: Array<Message>;
 }
 
+
 export class Thread implements ThreadModel {
   public messages: Array<Message>;
 
@@ -97,4 +98,18 @@ export class Thread implements ThreadModel {
   private static buildMessagesArray(messages: Array<MessageResponseModel>): Array<Message> {
     return messages.map((message: MessageResponseModel) => Message.buildFromMessageResponseModel(message));
   }
+}
+
+export class NullThread extends Thread {
+  private static _instance: NullThread;
+
+  constructor() {
+    super(null, null, Product.NullProduct, [User.NullUser, User.NullUser], null, new Array<Message>());
+  }
+
+  public static instance(): NullThread {
+    if (!NullThread._instance) NullThread._instance = new NullThread();
+    return NullThread._instance;
+  }
+
 }

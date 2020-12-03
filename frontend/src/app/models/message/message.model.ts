@@ -10,6 +10,16 @@ export interface MessageModel {
 }
 
 export class Message implements MessageModel {
+
+  private static messageDateFormatOptions: Intl.DateTimeFormatOptions = {
+    localeMatcher: 'lookup',
+    day: 'numeric', month: 'short',
+    hour: '2-digit', minute: '2-digit'
+  }
+  private static messageDateFormat = new Intl.DateTimeFormat('de-CH', Message.messageDateFormatOptions);
+
+
+
   constructor(
     public messageId: number,
     public messageThreadId: number,
@@ -18,6 +28,12 @@ export class Message implements MessageModel {
     public createdAt: Date,
     public readStatus: boolean
   ) {}
+
+
+
+  get fromatCreatedAt(): string {
+    return Message.messageDateFormat.format(this.createdAt).split(',').join('');
+  }
 
   public static buildFromMessageResponseModel(message: MessageResponseModel): Message {
     return new Message(

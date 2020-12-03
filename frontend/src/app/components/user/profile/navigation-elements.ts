@@ -9,7 +9,7 @@ import { PopupRejectedComponent } from 'src/app/components/user/profile/profile-
 import { PreferencesComponent } from 'src/app/components/user/profile/preferences/preferences.component';
 import { SellerOrdersComponent } from 'src/app/components/user/profile/seller-orders/seller-orders.component';
 import { BuyerOrdersComponent } from 'src/app/components/user/profile/buyer-orders/buyer-orders.component';
-import { MessagesComponent } from './messages/messages.component';
+import { MessagesComponent } from 'src/app/components/message/messages.component';
 
 
 export const defaultProfileComponent = 0;

@@ -1,0 +1,129 @@
+@import 'variables';
+@import '../messages.component.theme.scss';
+@import './message-content.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include messenger-theme($theme-name);
+  @include message-theme($theme-name);
+}
+
+.messenger-wrapper {
+  display: grid;
+  grid-template-rows: min-content 1fr auto;
+  grid-gap: $spaceing-s;
+  height: 100%;
+
+  .messenger {
+      padding: $spaceing-s;
+      border-radius: $border-radius;
+      height: 100%;
+      width: 100%;
+
+      .header {
+          font-size: 1.7em;
+          line-height: 1em;
+          margin: 0;
+          text-transform: uppercase;
+          padding-bottom: $spaceing-l;
+          padding-top: $spaceing-m;
+      }
+
+
+      .messages {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 100%;
+          grid-auto-rows: min-content;
+          grid-gap: $spaceing-s;
+
+          $width: $spaceing-s;
+          $height: $border-radius;
+
+          .message {
+            position: relative;
+            max-width: 80%;
+            display: grid;
+            grid-template-rows: auto min-content;
+            grid-gap: $spaceing-xs;
+            padding: $spaceing-xs;
+            border-radius: $border-radius;
+
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              height: $height;
+              width: $width;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              height: $height;
+              width: $width;
+            }
+
+            &.sent {
+              justify-self: flex-end;
+              border-bottom-right-radius: 0;
+
+              &::before {
+                right: - $width;
+              }
+
+              &::after {
+                right: - $width;
+                border-bottom-left-radius: $border-radius;
+              }
+            }
+
+            &.response {
+              justify-self: flex-start;
+              border-bottom-left-radius: 0;
+
+              &::before {
+                left: - $width;
+              }
+
+              &::after {
+                left: - $width;
+                border-bottom-right-radius: $border-radius;
+              }
+
+              .info {
+                .read-status {
+                  grid-column: 2 / 3;
+                }
+              }
+            }
+
+            .info {
+              font-size: .6em;
+              line-height: 1em;
+              display: grid;
+              grid-auto-flow: column;
+              grid-auto-columns: max-content;
+              grid-gap: $spaceing-xs;
+
+              .read-status {
+                height: 1em;
+                width: 1em;
+                border-radius: 50%;
+              }
+            }
+          }
+      }
+  }
+
+
+  .answer-area {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-gap: $spaceing-s;
+      height: auto;
+      border-radius: $border-radius;
+      line-height: 1em;
+      padding: $spaceing-s;
+  }
+}

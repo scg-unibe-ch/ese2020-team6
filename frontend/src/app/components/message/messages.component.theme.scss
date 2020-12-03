@@ -1,21 +1,20 @@
 @mixin messenger-theme($theme-name) {
 
     .messenger-wrapper.#{$theme-name} {
-  
-      $theme: map-get($themes, $theme-name);
-  
-      $message-bg: map-get($theme, dark);
-      $messenger-bg: map-get($theme, shady);
-      $text-color: map-get($theme, bright);
-      $warning-text-color: map-get($theme, warn);
-      $answer-color: map-get($theme, highlight);
-  
+        
+      $message-bg: get-theme($theme-name, dark);
+      $messenger-bg: get-theme($theme-name, shady);
+      $text-color: get-theme($theme-name, bright);
+      $warning-text-color: get-theme($theme-name, warn);
+      $answer-color: get-theme($theme-name, highlight);
+
       background: $messenger-bg;
-  
+      color: $text-color;
+
       .answer-area {
         background: $message-bg;
       }
-      
+
       .answerButton {
         color: $answer-color;
       }
