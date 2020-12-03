@@ -1,5 +1,5 @@
 import { Address, AddressModel } from '../map/address/address.model';
-import { UserModel, NullUser } from '../user/user.model';
+import { UserModel, User } from '../user/user.model';
 import { CutUserModel, NullCutUser } from '../user/cut-user.model';
 import { ProductModel, Product } from '../product/product.model';
 
@@ -33,7 +33,7 @@ export interface HoursOrderModelExtention extends PaymentMethodOrderModelExtenti
 
 export class Order implements OrderModel {
 
-  public static NullOrder: Order = new Order(null,null,new NullCutUser(), null, new NullUser(), null, Product.NullProduct);
+  public static NullOrder: Order = new Order(null,null,new NullCutUser(), null, User.NullUser, null, Product.NullProduct);
 
   constructor(
     public orderId: number,
@@ -62,7 +62,7 @@ export class Order implements OrderModel {
       orderModel.productId,
       orderModel.product,
       orderModel.paymentMethod,
-      orderModel.shippingAddress,
+      Address.buildFromAddressModel(orderModel.shippingAddress),
       orderModel.hours
     );
   }

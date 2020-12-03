@@ -94,6 +94,23 @@ export class Address implements AddressModel {
         && address.postal
         && address.country ? true : false;
   }
+
+
+  static equals(addressOne: Address, addressTwo: Address): boolean {
+    return addressOne.equals(addressTwo);
+  }
+
+  public equals(address: Address): boolean {
+    return address.streetName === this.streetName
+        && address.streetType === this.streetType
+        && address.addressNumber === this.addressNumber
+        && address.streetAddress === this.streetAddress
+        && address.neighbourhood === this.neighbourhood
+        && address.city === this.city
+        && address.region === this.region
+        && address.postal === this.postal
+        && address.country === this.country;
+  }
 }
 
 export class NullAddress extends Address {

@@ -2,7 +2,7 @@ import { Directive, Input, EventEmitter} from '@angular/core';
 import { StageNDEmitter } from './stage-navigation-data-emitter.directive';
 import { ProductModel, NullProduct } from '../../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../../models/user/cut-user.model';
-import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { UserModel, User } from '../../../../models/user/user.model';
 
 @Directive({
   selector: '[stage-navigation-data-emitter-extention]'
@@ -31,14 +31,14 @@ export abstract class StageNDEExtention<T> extends StageNDEmitter<T> {
     return this._seller;
   }
 
-  private _buyer: UserModel = new NullUser();
+  private _buyer: User = User.NullUser;
   @Input()
-  set buyer(buyer: UserModel) {
+  set buyer(buyer: User) {
     this._buyer = buyer;
     this.onBuyerLoad();
   }
 
-  get buyer(): UserModel {
+  get buyer(): User {
     return this._buyer;
   }
 

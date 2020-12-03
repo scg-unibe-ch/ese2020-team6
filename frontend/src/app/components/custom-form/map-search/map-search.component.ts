@@ -29,7 +29,7 @@ export class MapSearchComponent extends ValueAccessorValidatorBase<Address> {
 
   private map: MapSearch;
   private handleSearchResults: (searchResults: SearchResultsModel<SearchAddressModel>) => void = (searchResults: SearchResultsModel<SearchAddressModel>): void => {
-    let addresses: Array<AddressModel> = searchResults.results.map((searchResult: SearchResultModel<SearchAddressModel>) => {
+    let addresses: Array<Address> = searchResults.results.map((searchResult: SearchResultModel<SearchAddressModel>) => {
       return Address.buildFromMapSearchResults(searchResult);
     })
     this.touch();

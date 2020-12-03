@@ -1,5 +1,7 @@
-import { share } from 'rxjs/operators';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Message } from 'src/app/models/message/message.model';
+import { Thread } from 'src/app/models/message/thread.model';
+import { Threads } from 'src/app/models/message/threads.model';
 
 @Component({
   selector: 'app-message-threads',

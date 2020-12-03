@@ -3,12 +3,12 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
 import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
-import { UserModel, NullUser } from 'src/app/models/user/user.model';
+import { UserModel, User } from 'src/app/models/user/user.model';
 export class ProductInformationBase {
 
   public product: ProductModel = new NullProduct();
   public creator: CutUserModel = new NullCutUser();
-  public currentUser: UserModel = new NullUser();
+  public currentUser: UserModel = User.NullUser;
 
   constructor(
     protected route: ActivatedRoute,

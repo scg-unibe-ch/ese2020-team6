@@ -1,5 +1,5 @@
 //Models
-import { UserModel, User, NullUser } from '../../../user/user.model';
+import { UserModel, User } from '../../../user/user.model';
 
 export type LoginUserResponseModel = LoginUserResponseUserModel | UserTokenModel;
 
@@ -10,7 +10,7 @@ export interface UserTokenModel {
 }
 
 export class NullUserTokenModel implements UserTokenModel {
-  public user: UserModel = new NullUser();
+  public user: UserModel = User.NullUser;
   public token: string = null;
 }
 
@@ -19,5 +19,5 @@ export function isUserTokenModel(response: UserTokenModel): response is UserToke
 }
 
 export function isLoginUserResponseUserModel(response: LoginUserResponseUserModel): response is LoginUserResponseUserModel {
-  return User.isUser(response) ? true : false;
+  return User.isUser(response as User) ? true : false;
 }

@@ -1,13 +1,11 @@
-import { Sequelize, Transaction, Op } from 'sequelize';
-import { User, UserAttributes, UserCreationAttributes} from '../models/user.model';
+import { Transaction, Op } from 'sequelize';
+import { User, UserAttributes} from '../models/user.model';
 import { Address, AddressAttributes } from '../models/address.model';
-import { Order } from '../models/order.model';
 
 import { AddressService } from './address.service';
 import { OrderService } from './order.service';
 
-import { CutUser } from '../interfaces/cut-user.interface';
-import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { OrderSubType } from '../interfaces/order-sub-type.interface';
 import {
   LoginResponse,
   LoginRequest,
@@ -21,7 +19,6 @@ import { DecodedToken, Token } from '../interfaces/token.interface';
 import { StatusError } from '../errors/status.error';
 
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 interface HasUserId extends Partial<UserAttributes> {
   userId: number;
@@ -91,7 +88,10 @@ export class UserService {
           const loginRequesteeWithToken: LoginWithToken = loginRequestee as LoginWithToken;
           return verifyTokenPromise(loginRequesteeWithToken.token)
           .then((decoded: DecodedToken) => this.doesUserExistById(decoded.userId))
-          .then((user: User) => Promise.resolve(user));
+          .then((user: User) => {
+            console.log(user);
+            return Promise.resolve(user);
+          });
         } else {
           return Promise.reject(new StatusError('Login Request does not contain the necessary infromation!', 400));
         }

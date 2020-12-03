@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, empty } from 'rxjs';
 import { LoginUserService } from './login/login-user.service';
 import { GetUserService } from './get/get-user.service';
-import { UserModel, User, NullUser } from '../../models/user/user.model';
+import { UserModel, User } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
 import { UserTokenModel, isUserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
 import { LoaderObservable, ValueUnloaderCascade } from '../service.module';
@@ -49,7 +49,7 @@ export class UserService extends LoaderObservable<UserModel> {
   }
 
   private loginToUserPromise(login: UserTokenModel): Promise<User> {
-    return Promise.resolve(login.user);
+    return Promise.resolve(User.buildFromUserModel(login.user));
   }
 
   private setCurrentUser(user: User): Promise<User> {
@@ -74,7 +74,7 @@ export class UserService extends LoaderObservable<UserModel> {
   public getSource(): Observable<UserModel> {
     let login: Observable<UserTokenModel> = this.loginUserService.getSource();
     if (login) return this.loginUserService.getSource().pipe(toUser);
-    else return of(new NullUser());
+    else return of(User.NullUser);
   }
   public setSource(): Promise<Observable<UserModel>> {
     return Promise.resolve(empty());

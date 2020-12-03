@@ -7,7 +7,7 @@ import { UserService } from '../../../services/user/user.service';
 import { CheckoutRouteParametersModel } from '../../../models/checkout/checkout-route-parameters.model';
 import { ProductModel, NullProduct } from '../../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../../models/user/cut-user.model';
-import { UserModel, NullUser } from '../../../models/user/user.model';
+import { UserModel, User } from '../../../models/user/user.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 
 @Directive({
@@ -19,7 +19,7 @@ export abstract class StagableExtention extends Stagable implements OnInit {
   public errorEmitter: EventEmitter<string> = new EventEmitter<string>();
   public product: ProductModel = new NullProduct();
   public seller: CutUserModel = new NullCutUser();
-  public buyer: UserModel = new NullUser();
+  public buyer: UserModel = User.NullUser;
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,

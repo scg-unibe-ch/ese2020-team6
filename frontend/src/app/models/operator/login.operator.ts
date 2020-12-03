@@ -19,6 +19,6 @@ export function toTokenResponse(source: Observable<LoginUserResponseModel>): Obs
 
 export function toUser(source: Observable<UserTokenModel>): Observable<User> {
   return source.pipe(map((value: UserTokenModel) => {
-    return value.user
+    return User.buildFromUserModel(value.user);
   }));
 }

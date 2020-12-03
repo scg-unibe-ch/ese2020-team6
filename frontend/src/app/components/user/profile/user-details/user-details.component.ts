@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
-import { UserModel, NullUser } from '../../../../models/user/user.model';
+import { UserModel, User } from '../../../../models/user/user.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 @Component({
   selector: 'app-user-details',
@@ -10,7 +10,7 @@ import { SuccessLoader } from 'src/app/services/service.module';
 export class UserDetailsComponent implements OnInit {
 
   public picture: string;
-  public user: UserModel = new NullUser();
+  public user: UserModel = User.NullUser;
 
   constructor(
     private userService: UserService,

@@ -16,24 +16,12 @@ export interface UserModel {
   picture: string;
 }
 
-export class NullUser implements UserModel {
-  userId: number = null;
-  firstName: string = null;
-  lastName: string = null;
-  userName: string = null;
-  email: string = null;
-  password: string = null;
-  phonenumber: number = null;
-  addressId: number = null;
-  gender: string = null;
-  isAdmin: boolean = null;
-  wallet: number = null;
-  address: AddressModel = new NullAddress();
-  picture: string = null;
-}
-
-
 export class User implements UserModel {
+
+
+  public static NullUser: User = new User(null, null, null, null, null, null,
+    null, null, null, null, null, new NullAddress(), null);
+
   constructor(
     public userId: number,
     public firstName: string,
@@ -63,7 +51,7 @@ export class User implements UserModel {
       userModel.gender,
       userModel.isAdmin,
       userModel.wallet,
-      userModel.address,
+      Address.buildFromAddressModel(userModel.address),
       userModel.picture
     )
   }
@@ -86,6 +74,26 @@ export class User implements UserModel {
         && user.address
         && Address.isAddress(user.address)
         && user.picture ? true : false;
+  }
+
+  public static equals(userOne: User, userTwo: User): boolean {
+    return userOne.equals(userTwo);
+  }
+
+  public equals(user: User): boolean {
+    return user.userId === this.userId
+        && user.firstName === this.firstName
+        && user.lastName === this.lastName
+        && user.userName === this.userName
+        && user.email === this.email
+        && user.password === this.password
+        && user.phonenumber === this.phonenumber
+        && user.addressId === this.addressId
+        && user.gender === this.gender
+        && user.isAdmin === this.isAdmin
+        && user.wallet === this.wallet
+        && Address.equals(user.address, this.address)
+        && user.picture === this.picture
   }
 
   public static isLoggedIn(user: User): boolean {
