@@ -1,3 +1,6 @@
+<p align="center">
+  <img align="center" width="100" height="100" src="https://github.com/scg-unibe-ch/ese2020-team6/blob/master/frontend/src/assets/favicon-highlight-small.png">
+</p>
 
 # README for creating users
 
@@ -17,4 +20,4 @@ sqlite> update users set isAdmin = true where users.lastName = 'put admin user's
 sqlite> .q
 ```
 Now you can login with one admin user and one default user.
-![Logo](https://github.com/scg-unibe-ch/ese2020-team6/blob/master/frontend/src/assets/favicon-highlight-small.png)
+
