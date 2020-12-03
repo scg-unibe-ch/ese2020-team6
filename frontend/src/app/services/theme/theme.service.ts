@@ -3,6 +3,7 @@ import { ThemeObserver } from '../../models/theme/themable';
 import { PreferenceModel, NullPreference } from '../../models/user/preference/preference.model';
 import { PreferenceService } from '../user/preference/preference.service';
 import { UserService } from '../user/user.service';
+import { SuccessLoader } from '../service.module';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class ThemeService {
 
   private themeObservers: Array<ThemeObserver>;
 
+  private preferenceLoader = new SuccessLoader((prerefence: PreferenceModel) => {
+    this.preference = prerefence;
+    this.setTheme(this.getIndexFromThemeName(prerefence.theme));
+  });
+
   constructor(
     private preferenceService: PreferenceService,
     private userService: UserService
@@ -28,8 +34,7 @@ export class ThemeService {
     this._currentTheme = this.initialTheme;
     this._previousTheme = this.initialTheme;
     this.themeObservers = new Array<ThemeObserver>();
-    this.load();
-    this.preferenceService.events.onUpdate();
+    this.laod();
   }
 
   public addThemeObserver(themeObserver: ThemeObserver): void {
@@ -54,32 +59,22 @@ export class ThemeService {
     themeObserver.onThemeChange(this.currentTheme, this.previousTheme);
   }
 
-  private load(): void {
+  private laod(): void | Error {
     try {
-      this.loadFromLocalStorage();
-    } catch (error) {
-      this.loadFromService();
-    }
-  }
-
-  private loadFromLocalStorage(): void | Error {
       let locatStorageTheme = localStorage.getItem('theme');
       let currentThemeTemp: number = parseInt(locatStorageTheme, 10);
       if (isNaN(currentThemeTemp)) throw new Error("Theme is not set correctly!");
       this.setTheme(currentThemeTemp);
-  }
-
-  private loadFromService(): void {
-    this.preferenceService.events.onLoad((preference: PreferenceModel) => {
-      this.preference = preference;
-      this.setTheme(this.getIndexFromThemeName(preference.theme));
-    });
+    } catch (error) {
+      this.preferenceService.subscribe(this.preferenceLoader);
+    }
   }
 
   private setTheme(theme: number) {
     this._previousTheme = this._currentTheme;
     this._currentTheme = theme;
     this.preference.theme = this.currentTheme;
+    this.saveToLocalStorage();
     this.notifyThemeObservers();
     this.notifyThemeObservers();
   }

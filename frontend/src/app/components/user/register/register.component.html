@@ -1,9 +1,4 @@
-<div class="register-wrapper" theme>
-  <div class="register">
-    <div class="header">
-      <h3 class="title">Create Account</h3>
-      <div class="warning">{{registerErrorMessage}}</div>
-    </div>
+<center-card title="Register" [errorMessage]="registerErrorMessage">
     <form enctype="multipart/form-data" class="register-form" #createAccountForm="ngForm" (ngSubmit)="onSubmit(createAccountForm)" appPasswordMatchValidator>
 
       <div class="first">
@@ -30,5 +25,4 @@
 
 
     </form>
-  </div>
-</div>
+</center-card>

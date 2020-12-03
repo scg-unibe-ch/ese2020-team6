@@ -1,0 +1,12 @@
+@import 'variables';
+@import './logo.component.theme.scss';
+
+svg {
+  max-height: 100%;
+  max-width: 100%;
+  stroke-width: 7.80031204;
+}
+
+@each $theme-name in $theme-names {
+  @include logo-theme($theme-name);
+}

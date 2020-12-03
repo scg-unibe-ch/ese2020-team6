@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="home-wrapper">
-      <button class="home" theme button [routerLink]="['']">Home</button>
+      <logo-center [routerLink]="['']"></logo-center>
     </div>
   </div>
   <app-profile-navigation class="navigation-wrapper" [ngClass]="navigationClass" [navigationElements]="navigationElements" (navigationClickEvent)="setCurrentContent($event)"></app-profile-navigation>

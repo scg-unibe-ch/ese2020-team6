@@ -1,0 +1,7 @@
+<ng-template [ngIf]="isPreview" [ngIfElse]="isNotPreview">
+  <app-product-details [product]="product" [creator]="creator" [picture]="picture" [isPreview]=true></app-product-details>
+</ng-template>
+<ng-template #isNotPreview>
+  <app-menu-bar position="relative"></app-menu-bar>
+  <router-outlet></router-outlet>
+</ng-template>

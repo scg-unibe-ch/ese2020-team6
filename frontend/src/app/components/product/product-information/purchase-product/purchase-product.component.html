@@ -1,0 +1,19 @@
+<app-product-details [product]="product" [creator]="creator">
+  <button (click)="togglePurchase()" *ngIf="isForSale; else isForRent" theme button >Buy</button>
+  <ng-template #isForRent>
+      <button theme button (click)="togglePurchase()">Rent</button>
+  </ng-template>
+</app-product-details>
+<div *ngIf="showPurchaseForm" class="overlay-wrapper" theme>
+    <div class="overlay-content">
+      <div class="overlay-form">
+        <div>
+          <button *ngIf="isForSale; else isForRent" theme button [routerLink]="['/checkout', product.productId]">Buy</button>
+          <ng-template #isForRent>
+            <button theme button [routerLink]="['/checkout', product.productId]">Rent</button>
+          </ng-template>
+          <button type="button" (click)="togglePurchase()" theme buttonEmpty>Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>

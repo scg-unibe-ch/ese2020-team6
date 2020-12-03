@@ -2,11 +2,13 @@
 
   $address-border-color: get-theme($theme-name, highlight);
 
-  $checkmark-unchecked: get-theme($theme-name, light);
+  $checkmark-unchecked: get-theme($theme-name, shady);
   $checkmark-checked: get-theme($theme-name, light);
-  $checkmark-color: get-theme($theme-name, dark);
+  $checkmark-color: get-theme($theme-name, shady);
+  $approved-color: get-theme($theme-name, highlight);
+  $color: get-theme($theme-name, bright);
 
-  .stage-content {
+  .stage-content.#{$theme-name} {
 
     &.deliverable {
 
@@ -20,6 +22,11 @@
             }
 
             &.approved {
+              &:hover {
+                color: $color;
+              }
+              cursor: default;
+              background: $approved-color;
               .checkmark {
                 background-color: $checkmark-checked;
 

@@ -1,130 +1,90 @@
-@import '../../../../variables.scss';
+@import 'variables';
 @import './register.component.theme.scss';
 
-.register-wrapper {
-  width: 100%;
+.register-form {
   height: 100%;
-  display: flex;
-  padding: $spaceing-m;
-  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  grid-gap: $spaceing-s;
+  @media screen and (max-width: 700px) {
+    grid-template-columns: auto;
+  }
 
-  .register {
-    margin: auto;
-    padding: $spaceing-xl;
-    border-radius: $border-radius;
+  .first {
     display: grid;
-    grid-template-rows: min-content auto;
-    grid-gap: $spaceing-m;
-
-    @media screen and (max-width: 300px){
-      padding: $spaceing-m;
+    grid-template-columns: 1fr 1fr;
+    @media screen and (max-width: 700px) {
+      grid-template-columns: auto;
     }
+    grid-gap: $spaceing-xs;
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-
-      .title {
-        font-size: 1.7em;
-        line-height: 1em;
-        margin: 0;
-        text-transform: uppercase;
-      }
-
-      .warning {
-        font-size: 1em;
-        line-height: 1em;
-        margin: 0;
-        text-transform: uppercase;
+    .firstname {
+      @media screen and (min-height: 900px) and (min-width: 500px){
+        grid-column: span 2;
       }
     }
 
-    .register-form {
-      height: 100%;
+    .lastname {
+      @media screen and (min-height: 900px) and (min-width: 500px) {
+        grid-column: span 2;
+      }
+    }
+
+    .username {
+      @media screen and (min-height: 700px) and (min-width: 500px) {
+        grid-column: span 2;
+      }
+    }
+
+    .email {
+      @media screen and (min-height: 700px) and (min-width: 500px) {
+        grid-column: span 2;
+      }
+    }
+
+    .password {
+      @media screen and (min-height: 500px) and (min-width: 500px) {
+        grid-column: span 2;
+      }
+    }
+
+    .repeat-password {
+      @media screen and (min-height: 500px) and (min-width: 500px) {
+        grid-column: span 2;
+      }
+    }
+    .picture {
+      @media screen and (min-height: 850px) and (min-width: 1000px) {
+        grid-column: span 2;
+      }
       display: grid;
-      grid-template-columns: 4fr 3fr;
-      grid-gap: $spaceing-s;
-      @media screen and (max-width: 700px) {
-        grid-template-columns: auto;
+      grid-template-columns: auto auto;
+      width: 100%;
+
+      img {
+        max-height: 5em;
+        max-width: 5em;
+        border-radius: $border-radius;
       }
+    }
+  }
 
-      .first {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        @media screen and (max-width: 700px) {
-          grid-template-columns: auto;
-        }
-        grid-gap: $spaceing-xs;
+  .second {
+    display: grid;
+    grid-template-rows: auto min-content;
+    grid-gap: $spaceing-s;
 
-        .firstname {
-          @media screen and (min-height: 900px) and (min-width: 500px){
-            grid-column: span 2;
-          }
-        }
+    .home-address {
+      min-height: 200px;
+    }
 
-        .lastname {
-          @media screen and (min-height: 900px) and (min-width: 500px) {
-            grid-column: span 2;
-          }
-        }
-
-        .username {
-          @media screen and (min-height: 700px) and (min-width: 500px) {
-            grid-column: span 2;
-          }
-        }
-
-        .email {
-          @media screen and (min-height: 700px) and (min-width: 500px) {
-            grid-column: span 2;
-          }
-        }
-
-        .password {
-          @media screen and (min-height: 500px) and (min-width: 500px) {
-            grid-column: span 2;
-          }
-        }
-
-        .repeat-password {
-          @media screen and (min-height: 500px) and (min-width: 500px) {
-            grid-column: span 2;
-          }
-        }
-        .picture {
-          @media screen and (min-height: 850px) and (min-width: 1000px) {
-            grid-column: span 2;
-          }
-          display: grid;
-          grid-template-columns: auto auto;
-          width: 100%;
-    
-          img {
-            max-height: 5em;
-            max-width: 5em;
-            border-radius: $border-radius;
-          }
-        }
-      }
-
-      .second {
-        display: grid;
-        grid-template-rows: auto min-content;
-        grid-gap: $spaceing-s;
-
-        .home-address {
-          min-height: 200px;
-        }
-
-        .action-wrapper {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          button {
-            width: 100%;
-            height: auto;
-          }
-        }
+    .action-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button {
+        width: 100%;
+        height: auto;
       }
     }
   }

@@ -4,8 +4,7 @@ import { ProductModel } from '../../../../models/product/product.model';
 
 @Component({
   selector: 'app-approve-products',
-  templateUrl: './approve-products.component.html',
-  styleUrls: ['./approve-products.component.scss']
+  templateUrl: './approve-products.component.html'
 })
 export class ApproveProductsComponent {
 

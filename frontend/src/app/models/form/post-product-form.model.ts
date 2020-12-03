@@ -1,7 +1,7 @@
 import { ProductModel } from '../product/product.model';
 import { AddressModel, NullAddress } from '../map/address/address.model';
 
-export interface PostProductFormModel extends Omit<ProductModel, 'productId' | 'userId' | 'isDeliverable' | 'rejectionMessage' | 'status' | 'picture'> {
+export interface PostProductFormModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'isDeliverable' | 'rejectionMessage' | 'status' | 'picture'> {
   isDeliverableString: string;
 }
 

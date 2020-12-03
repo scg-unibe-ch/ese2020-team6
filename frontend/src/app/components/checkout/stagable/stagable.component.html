@@ -1,13 +1,8 @@
-<div class="stagable" theme>
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
+<div class="stages-wrapper">
   <div class="stage-indicator">
     <stage-indicator [stages]="stages" [currentStageIndex]="currentStageIndex"></stage-indicator>
   </div>
-  <div class="stages-wrapper">
-    <div class="stages" [ngClass]="'size-' + stages.length + ' stage-' + currentStageIndex">
-      <ng-template stagesBox></ng-template>
-    </div>
+  <div class="stages" [ngClass]="'size-' + stages.length + ' stage-' + currentStageIndex">
+    <ng-template stagesBox></ng-template>
   </div>
 </div>

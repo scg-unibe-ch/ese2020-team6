@@ -20,12 +20,12 @@ export class PopupRejectedComponent implements PopupComponent, OnInit{
   ) {}
 
   public ngOnInit(): void {
-    this.userService.events.onLoad((user: UserModel) => {
-      this.productService.getMyRejectedProductsCount(user.userId).subscribe((count: number) => {
-        this.popupNumber = count;
-        this.popupDisplay = (count !== 0);
-      });
-    });
+    // this.userService.events.onLoad((user: UserModel) => {
+    //   this.productService.getMyRejectedProductsCount(user.userId).subscribe((count: number) => {
+    //     this.popupNumber = count;
+    //     this.popupDisplay = (count !== 0);
+    //   });
+    // });
   }
 
 }

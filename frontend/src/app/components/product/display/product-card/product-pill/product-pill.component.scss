@@ -1,0 +1,31 @@
+@import 'variables';
+@import './product-pill.component.theme.scss';
+
+.pill-wrapper {
+  font-size: 12px;
+
+  .title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: none;
+    margin-bottom: 5px;
+  }
+
+  .pill {
+    padding: $spaceing-xs;
+    height: $spaceing-l;
+    border-radius: $spaceing-l;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .default {
+    width: $spaceing-xl;
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include product-pill-theme($theme-name);
+}

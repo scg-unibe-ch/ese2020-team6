@@ -1,0 +1,8 @@
+@import 'variables';
+@import '../card.component.scss';
+
+.app-card-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}

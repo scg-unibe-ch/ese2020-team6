@@ -1,10 +1,5 @@
-<div class="login-wrapper" theme>
-  <div class="login">
-    <div class="header">
-      <h3 class="title">Sign In</h3>
-      <div class="warning">{{loginErrorMessage}}</div>
-    </div>
-    <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+<center-card title="Sign In" [errorMessage]="loginErrorMessage">
+    <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" theme>
       <app-text-input placeholder="Username or Email" name="usernameEmail" ngModel #usernameEmail="ngModel" appUsernameOrEmailValidator></app-text-input>
       <app-password-input placeholder="Password" name="password" ngModel #password="ngModel" appPasswordValidator [showError]="false"></app-password-input>
       <div class="action-wrapper">
@@ -12,5 +7,4 @@
         <button theme button [disabled]="!loginForm.valid">Sign In</button>
       </div>
     </form>
-  </div>
-</div>
+</center-card>
