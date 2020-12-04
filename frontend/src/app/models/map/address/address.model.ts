@@ -1,4 +1,6 @@
 import { SearchResultModel } from '../search/search-result.model';
+import { Equality } from 'src/app/models/compare/equality';
+import { Is } from 'src/app/models/compare/is';
 
 export interface AddressModel {
   streetName: string;
@@ -81,35 +83,26 @@ export class Address implements AddressModel {
     )
   }
 
+  public static equals(addressOne: Address, addressTwo: Address): boolean {
+    return Equality.equals(addressOne, addressTwo);
+  }
+
   public static isAddress(address: Address): address is Address {
-    return address.streetName
-        && address.streetType
-        && address.addressNumber
-        && address.streetAddress
-        && address.neighbourhood !== null
-        && address.neighbourhood !== undefined
-        && address.neighbourhood.length >= 0
-        && address.city
-        && address.region
-        && address.postal
-        && address.country ? true : false;
+    return Address.isAddressModel(address as AddressModel);
   }
 
-
-  static equals(addressOne: Address, addressTwo: Address): boolean {
-    return addressOne.equals(addressTwo);
-  }
-
-  public equals(address: Address): boolean {
-    return address.streetName === this.streetName
-        && address.streetType === this.streetType
-        && address.addressNumber === this.addressNumber
-        && address.streetAddress === this.streetAddress
-        && address.neighbourhood === this.neighbourhood
-        && address.city === this.city
-        && address.region === this.region
-        && address.postal === this.postal
-        && address.country === this.country;
+  public static isAddressModel(address: AddressModel): address is AddressModel {
+    return Is.is(address, [
+      'streetName',
+      'streetType',
+      'addressNumber',
+      'streetAddress',
+      'neighbourhood',
+      'city',
+      'region',
+      'postal',
+      'country'
+    ]);
   }
 }
 

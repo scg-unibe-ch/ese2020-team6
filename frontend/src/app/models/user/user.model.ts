@@ -1,4 +1,6 @@
 import { AddressModel, NullAddress, Address } from '../map/address/address.model';
+import { Equality } from '../compare/equality';
+import { Is } from '../compare/is';
 
 export interface UserModel {
   userId: number;
@@ -60,40 +62,35 @@ export class User implements UserModel {
 
 
   public static isUser(user: User): user is User {
-    return user.userId
-        && user.firstName
-        && user.lastName
-        && user.userName
-        && user.email
-        && user.password
-        && user.phonenumber
-        && user.addressId
-        && user.gender
-        && (user.isAdmin !== undefined || user.isAdmin !== null)
-        && user.wallet
-        && user.address
-        && Address.isAddress(user.address)
-        && user.picture ? true : false;
+    return User.isUserModel(user as UserModel);
+  }
+
+  public static isUserModel(user: UserModel): user is UserModel {
+    let userCopy: any = Object.assign({}, user);
+    delete userCopy.address;
+    return Is.is(userCopy, [
+      'userId',
+      'firstName',
+      'lastName',
+      'userName',
+      'email',
+      'password',
+      'phonenumber',
+      'addressId',
+      'gender',
+      'isAdmin',
+      'wallet',
+      'picture'
+    ]) && Address.isAddressModel(user.address);
   }
 
   public static equals(userOne: User, userTwo: User): boolean {
-    return userOne.equals(userTwo);
-  }
-
-  public equals(user: User): boolean {
-    return user.userId === this.userId
-        && user.firstName === this.firstName
-        && user.lastName === this.lastName
-        && user.userName === this.userName
-        && user.email === this.email
-        && user.password === this.password
-        && user.phonenumber === this.phonenumber
-        && user.addressId === this.addressId
-        && user.gender === this.gender
-        && user.isAdmin === this.isAdmin
-        && user.wallet === this.wallet
-        && Address.equals(user.address, this.address)
-        && user.picture === this.picture
+    let userOneCopy: any = Object.assign({}, userOne);
+    let userTwoCopy: any = Object.assign({}, userTwo);
+    delete userOneCopy.address;
+    delete userTwoCopy.address;
+    return Equality.equals(userOneCopy, userTwoCopy)
+        && Equality.equals(userOne.address, userTwo.address);
   }
 
   public static isLoggedIn(user: User): boolean {

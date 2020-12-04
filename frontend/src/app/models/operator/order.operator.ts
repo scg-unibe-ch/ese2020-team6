@@ -1,5 +1,4 @@
-import { Observable, Subscription} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable} from 'rxjs';
 import { Orders, OrderModel } from '../order/order.model';
 
 export function transformOrder(source: Observable<Array<OrderModel>>): Observable<Orders> {

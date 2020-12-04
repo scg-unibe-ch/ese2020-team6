@@ -5,3 +5,4 @@ export * from './category.operator';
 export * from './success.operator';
 export * from './error.operator';
 export * from './login.operator';
+export * from './message.operator';

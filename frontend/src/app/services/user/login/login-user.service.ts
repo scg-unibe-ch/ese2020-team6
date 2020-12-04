@@ -13,6 +13,8 @@ import {
   transformUser,
   toTokenResponse} from '../../../models/operator/index.module';
 import { LoaderObservable, ValueLoader } from '../../service.module';
+import { User } from 'src/app/models/user/user.model';
+import { Address } from 'src/app/models/map/address/address.model';
 
 @Injectable({
   providedIn: 'root'

@@ -43,9 +43,9 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
   public getByParticipants(participantOne: User, participantTwo: User): Thread {
     return this.threads.find((thread: Thread) => {
       let [seller, buyer]: [User, User] = thread.participants;
-      return (seller.equals(participantOne) || seller.equals(participantTwo))
-          && (buyer.equals(participantOne) || buyer.equals(participantTwo))
-          && !participantOne.equals(participantTwo);
+      return (User.equals(seller, participantOne) || User.equals(seller, participantTwo))
+          && (User.equals(buyer, participantOne) || User.equals(buyer, participantTwo))
+          && !User.equals(participantOne, participantTwo);
     })
   }
 

@@ -1,5 +1,8 @@
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
 import { User } from '../user/user.model';
+import { Thread } from './thread.model';
+import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
+import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
 
 export interface MessageModel {
   senderId: number;
@@ -8,7 +11,7 @@ export interface MessageModel {
   readStatus: boolean;
 }
 
-export class Message implements MessageModel {
+export class Message implements MessageModel, RequestBuilder<SendMessageRequest> {
 
   private static messageDateFormatOptions: Intl.DateTimeFormatOptions = {
     localeMatcher: 'lookup',
@@ -17,16 +20,22 @@ export class Message implements MessageModel {
   }
   private static messageDateFormat = new Intl.DateTimeFormat('de-CH', Message.messageDateFormatOptions);
 
-
+  private _thread: Thread;
 
   constructor(
     public senderId: number,
     public body: string,
     public createdAt: Date,
-    public readStatus: boolean
+    public readStatus: boolean,
   ) {}
 
+  public setThread(thread: Thread): void {
+    this._thread = thread;
+  }
 
+  public request(): SendMessageRequest {
+    return new SendMessageRequest(this.body, this._thread.product.productId);
+  }
 
   get fromatCreatedAt(): string {
     return Message.messageDateFormat.format(this.createdAt).split(',').join('');
