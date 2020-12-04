@@ -2,9 +2,9 @@ import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/respon
 import { Message } from './message.model';
 import { User, UserModel } from '../user/user.model';
 import { Product } from '../product/product.model';
-import { UserService } from 'src/app/services/user/user.service';
 
 export interface ThreadModel {
+  messageThreadId: number;
   product: Product;
   participants: [User, User]; // seller, buyer
   isAccepted: boolean;
@@ -17,6 +17,7 @@ export class Thread implements ThreadModel {
   private currentSenderId: number;
 
   constructor(
+    public messageThreadId: number,
     public product: Product,
     public participants: [User, User],
     public isAccepted: boolean,
@@ -26,11 +27,15 @@ export class Thread implements ThreadModel {
   }
 
   get latestMessageDate(): Date {
-    return this.latestMessage.createdAt;
+    if (this.length > 0) return this.latestMessage.createdAt;
   }
 
   get latestMessage(): Message {
     return this.messages[0]
+  }
+
+  get length(): number {
+    return this.messages.length;
   }
 
   public hasParticipant(participant: User): boolean {
@@ -66,7 +71,10 @@ export class Thread implements ThreadModel {
     returns > 0: this older than thread
   */
   public compare(thread: Thread): number {
-    return this.latestMessageDate.getTime() - thread.latestMessageDate.getTime();
+    if (this.length > 0 && thread.length > 0) return this.latestMessageDate.getTime() - thread.latestMessageDate.getTime();
+    else if (this.length > 0 && thread.length === 0) return -1;
+    else if (this.length === 0 && thread.length > 0) return 1;
+    else return 0;
   }
 
   /*
@@ -92,6 +100,7 @@ export class Thread implements ThreadModel {
 
   public static buildFromThreadResponseModel(thread: ThreadResponseModel): Thread {
     return new Thread(
+      thread.messageThreadId,
       Product.buildFromProductModel(thread.product),
       this.buildParticipants(thread.participants),
       thread.isAccepted,
@@ -113,7 +122,7 @@ export class NullThread extends Thread {
   private static _instance: NullThread;
 
   constructor() {
-    super(Product.NullProduct, [User.NullUser, User.NullUser], null, new Array<Message>());
+    super(null, Product.NullProduct, [User.NullUser, User.NullUser], null, new Array<Message>());
   }
 
   public static instance(): NullThread {

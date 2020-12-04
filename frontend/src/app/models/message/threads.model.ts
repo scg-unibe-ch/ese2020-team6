@@ -1,12 +1,13 @@
 import { ThreadResponseModel } from 'src/app/models/response/response-model.module';
 import { User } from '../user/user.model';
-import { Thread } from './thread.model';
+import { Thread, NullThread } from './thread.model';
+
 
 export interface ThreadsModel {
   threads: Array<Thread>;
 }
 
-export class Threads implements ThreadsModel {
+export class Threads implements ThreadsModel, IterableIterator<Thread>{
   public threads: Array<Thread>;
 
   constructor(
@@ -23,6 +24,22 @@ export class Threads implements ThreadsModel {
     return this.threads[0]
   }
 
+  get length(): number {
+    return this.threads.length;
+  }
+
+  public next(): IteratorResult<Thread> {
+    return this.threads[Symbol.iterator]().next();
+  }
+
+  [Symbol.iterator](): IterableIterator<Thread> {
+    return this.threads[Symbol.iterator]();;
+  }
+
+  public getByIndex(index: number): Thread {
+    return this.threads[index];
+  }
+
   public getByParticipants(participantOne: User, participantTwo: User): Thread {
     return this.threads.find((thread: Thread) => {
       let [seller, buyer]: [User, User] = thread.participants;
@@ -35,4 +52,19 @@ export class Threads implements ThreadsModel {
   public static buildFromThreadResponseModelArray(threads: Array<ThreadResponseModel>): Threads {
     return new Threads(threads.map((thread: ThreadResponseModel) => Thread.buildFromThreadResponseModel(thread)));
   }
+}
+
+
+export class NullThreads extends Threads {
+  private static _instance: NullThreads;
+
+  constructor() {
+    super(new Array<NullThread>());
+  }
+
+  public static instance(): NullThreads {
+    if (!NullThreads._instance) NullThreads._instance = new NullThreads();
+    return NullThreads._instance;
+  }
+
 }

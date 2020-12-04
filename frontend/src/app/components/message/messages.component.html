@@ -1,4 +1,4 @@
 <div class="messenger-wrapper">
-  <app-message-threads (threadEmitter)="showThread($event)"></app-message-threads>
+  <app-message-threads [threads]="threads" (threadEmitter)="showThread($event)"></app-message-threads>
   <app-message-content [thread]="currentThread"></app-message-content>
 </div>
