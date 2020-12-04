@@ -55,15 +55,16 @@ export class MessageService {
         return MessageThread.create(messageThread);
       }
 
-    public static saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
+    public static async  saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
         if (roleOfSender === 'buyer') {
             this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId);
-            let threadId: number;
+            const threadId = await this.getMessageThreadIdByProductId(productId);
             this.getMessageThreadIdByProductId(productId) // more than one thread for a product
             .then((messageThreadId: number) => messageThreadId = threadId)
             .catch((err: any) => Promise.reject()); // handle error better
             this.insertMessageInMessageThread(threadId, senderId, text);
         } else if (roleOfSender === 'sender') {
+          const threadId = await this.getMessageThreadIdByProductId(productId);
             this.insertMessageInMessageThread(threadId, senderId, text);
             this.setMessageThreadToAccepted(productId);
         } else {
