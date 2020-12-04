@@ -100,7 +100,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   }
 
   public onSubmit(form: NgForm): void {
-    console.log('HellllllllllllOOOOOOOOOOOOoooooooooooooo')
     if (form.valid) {
       if (this.isUpdate) {
         const formData = new FormData();
@@ -116,10 +115,9 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         formData.append('title', form.value.title);
         const addressString = JSON.stringify(form.value.address);
         formData.append('address', addressString);
-        console.log(this.productId, 'idddddddddddddddd')
         this.httpClient.put<any>(environment.endpointURL + 'product/update/' + this.productId, formData).subscribe(
           (values) => this.success(),
-          (err) => {console.log('Feeeeeeeehhhhhhhler')}
+          (err) => {console.log(err)}
         );
       } else {
         const formData = new FormData();
