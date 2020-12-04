@@ -27,7 +27,8 @@ import { MessageThread } from './messageThread.model';
 
   export interface MessageThreadParticipantsCreationAttributes extends Optional<MessageThreadParticipantsAttributes, 'messageThreadId'> { }
 
-  export class MessageThreadParticipants extends Model<MessageThreadParticipantsAttributes, MessageThreadParticipantsCreationAttributes> implements MessageThreadParticipantsAttributes {
+  export class MessageThreadParticipants extends Model<MessageThreadParticipantsAttributes, MessageThreadParticipantsCreationAttributes>
+    implements MessageThreadParticipantsAttributes {
 
     public static associations: {
       users: Association<MessageThreadParticipants, User>,

@@ -9,27 +9,27 @@ import { MessageService } from '../services/message.service';
 const messageController: Router = express.Router();
 const messageService = new MessageService();
 
-messageController.get('/message/thread/product/:productId'), verifyToken,
-    (req: Request, res: Response) => {
+messageController.get('/message/thread/product/:productId', verifyToken,
+(req: Request, res: Response) => {
         const productId: number = parseInt(req.body.productId, 10); // body udr params?
         MessageService.getProductThread(productId)
         .then((messageThread: Array<MessageThread>) => res.send(messageThread))
         .catch((err: any) => handleError(err, res));
-};
+});
 
 
-messageController.get('/message/thread'), verifyToken,
+messageController.get('/message/thread', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.body.userId, 10); // body udr params
         MessageService.getMessageThreadsByUserId(userId)
         .then((messageThread: Array<MessageThread>) => res.send(messageThread))
         .catch((err: any) => handleError(err, res));
-};
+});
 
-messageController.get('/message/thread/messages/:threadId'), verifyToken,
+messageController.get('/message/thread/messages/:threadId', verifyToken,
     (req: Request, res: Response) => {
         const threadId: number = parseInt(req.body.threadId, 10); // body udr params
         MessageService.getMessagesByThreadId(threadId)
         .then((messages: Array<Message>) => res.send(messages))
         .catch((err: any) => handleError(err, res));
-};
+});

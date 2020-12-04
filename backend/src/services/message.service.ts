@@ -96,9 +96,11 @@ export class MessageService {
         });
         return this.getMessagesByThreadId(productId);
       }
-      public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string, transaction?: Transaction): Promise<void> {
+      public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string,
+        transaction?: Transaction): Promise<void> {
           const date = new Date(); // check date
-        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false}, {transaction: transaction});
+        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false},
+          {transaction: transaction});
         return Promise.resolve();
       }
 
@@ -113,11 +115,13 @@ export class MessageService {
         });
       }
 
-    public static findOrCreateMessageThread(messageThread: MessageThreadCreationAttributes, buyerId: number, transaction?: Transaction): Promise<MessageThread> {
+    public static findOrCreateMessageThread(messageThread: MessageThreadCreationAttributes, buyerId: number,
+      transaction?: Transaction): Promise<MessageThread> {
         return this.threadDoesExist(messageThread).catch((err: any) => {
           if (err instanceof InstanceDoesNotExistError) {
             MessageThread.create(messageThread, {transaction: transaction});
-            MessageThreadParticipants.create({messageThreadId: messageThread.messageThreadId, participantId: buyerId}, {transaction: transaction});
+            MessageThreadParticipants.create({messageThreadId: messageThread.messageThreadId, participantId: buyerId},
+              {transaction: transaction});
             return MessageThread.findOne({
                 where: {
                     messageThreadId: messageThread.messageThreadId
