@@ -1,35 +1,57 @@
-@mixin message-theme($theme-name) {
+@mixin message-content-theme($theme-name) {
+  .message-content-wrapper.#{$theme-name} {
 
-    .message.#{$theme-name} {
+    $bg: get-theme($theme-name, shady);
+    $answer-bg: get-theme($theme-name, dark);
+    $text-color: get-theme($theme-name, bright);
+    $message-bg: get-theme($theme-name, light);
+    $message-color: get-theme($theme-name, dark);
+    $messenger-bg: get-theme($theme-name, shady);
+    $read-color: get-theme($theme-name, highlight);
+    $unread-color: get-theme($theme-name, warn);
 
-      $message-bg: get-theme($theme-name, light);
-      $message-color: get-theme($theme-name, dark);
-      $messenger-bg: get-theme($theme-name, shady);
-      $read-color: get-theme($theme-name, highlight);
-      $unread-color: get-theme($theme-name, warn);
+    background: $bg;
+    color: $text-color;
 
-      background: $message-bg;
-      color: $message-color;
-
-
-      &::before {
-        background-color: $message-bg;
+    .messenger {
+      .no-messages {
+        color: rgba($text-color, .3);
       }
 
-      &::after {
-        background-color: $messenger-bg;
-      }
+      .messages-wrapper {
+        .messages {
+          .message {
 
-      .info {
-        .read-status {
-          &.read {
-            background: $read-color;
-          }
+            background: $message-bg;
+            color: $message-color;
 
-          &.unread {
-            background: $unread-color;
+
+            &::before {
+              background-color: $message-bg;
+            }
+
+            &::after {
+              background-color: $messenger-bg;
+            }
+
+            .info {
+              .read-status {
+                &.read {
+                  background: $read-color;
+                }
+
+                &.unread {
+                  background: $unread-color;
+                }
+              }
+            }
           }
         }
       }
     }
+
+    .answer-area {
+      background: $answer-bg;
+    }
   }
+}

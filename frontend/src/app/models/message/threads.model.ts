@@ -23,12 +23,6 @@ export class Threads implements ThreadsModel {
     return this.threads[0]
   }
 
-  public getById(messageThreadId: number) {
-    return this.threads.find((thread: Thread) => {
-      return thread.messageThreadId === messageThreadId;
-    })
-  }
-
   public getByParticipants(participantOne: User, participantTwo: User): Thread {
     return this.threads.find((thread: Thread) => {
       let [seller, buyer]: [User, User] = thread.participants;

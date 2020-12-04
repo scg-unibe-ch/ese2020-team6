@@ -1,9 +1,10 @@
-<div class="messenger-wrapper" theme>
-    <div class="messenger">
-    <div class="header">
-        My Messages
+<div class="threads-wrapper-wrapper" theme>
+  <div class="header">
+      Threads
+  </div>
+  <div class="threads-wrapper">
+    <div class="threads">
+      <button class="thread-button" *ngFor="let thread of threads; index as i;" buttonEmpty theme [name]=thread.name (click)="showMessage(thread)">User {{i}}</button>
     </div>
-    <div *ngFor="let thread of threads">
-    <button buttonEmpty theme [name]=thread.name (click)="showMessage(thread)">{{thread.name}}</button>
-    </div>
-</div> 
+  </div>
+</div>

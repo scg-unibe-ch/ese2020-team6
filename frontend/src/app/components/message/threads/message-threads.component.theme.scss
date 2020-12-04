@@ -1,0 +1,12 @@
+@mixin threads-theme($theme-name) {
+
+  .threads-wrapper-wrapper.#{$theme-name} {
+
+    $message-bg: get-theme($theme-name, dark);
+    $bg: get-theme($theme-name, shady);
+    $text-color: get-theme($theme-name, bright);
+
+    background: $bg;
+    color: $text-color;
+  }
+}

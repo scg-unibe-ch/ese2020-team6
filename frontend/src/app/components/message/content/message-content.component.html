@@ -1,23 +1,30 @@
-<div class="messenger-wrapper" theme>
+<div class="message-content-wrapper" theme>
   <div class="receiver">
       'User Name' (Profile Picture)
   </div>
   <div class="messenger">
-    <div class="messages">
-      <ng-template ngFor [ngForOf]="messages" let-message>
-        <div [ngClass]="messageClasses(message)" theme>
-          <div class="body">
-            {{ message.body }}
-          </div>
-          <div class="info">
-            <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
-            <div class="date">
-              {{ formatCreatedAt(message) }}
-            </div>
-          </div>
-        </div>
-      </ng-template>
+    <div class="no-messages" *ngIf="thread.messages.length === 0; else messages">
+      No messages in this thread.
     </div>
+    <ng-template #messages>
+      <div class="messages-wrapper">
+        <div class="messages" #messagesElement>
+          <ng-template ngFor [ngForOf]="thread.messages" let-message>
+            <div [ngClass]="messageClasses(message)">
+              <div class="body">
+                {{ message.body }}
+              </div>
+              <div class="info">
+                <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
+                <div class="date">
+                  {{ formatCreatedAt(message) }}
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-template>
   </div>
   <div class="answer-area">
     <app-text-area  name="answer" placeholder="Enter Message"

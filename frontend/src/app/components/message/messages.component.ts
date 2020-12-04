@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Thread } from 'src/app/models/message/thread.model';
 
 @Component({
   selector: 'app-messages',
@@ -7,15 +8,15 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
-  public threadName: any;
+  public currentThread: Thread;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  showMessage(name: string): void {
-    this.threadName = name;
+  showThread(thread: Thread): void {
+    this.currentThread = thread;
   }
 
 }

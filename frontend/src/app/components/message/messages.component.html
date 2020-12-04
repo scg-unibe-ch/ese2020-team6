@@ -1,8 +1,4 @@
-<div class="grid">
-<app-message-threads class="messenger-wrapper" theme
-    (thread)="showMessage($event)"> 
-</app-message-threads>
-<app-message-content class="messenger-wrapper" style="width: 95%" theme
-    [thread]="threadName"> 
-</app-message-content>
+<div class="messenger-wrapper">
+  <app-message-threads (threadEmitter)="showThread($event)"></app-message-threads>
+  <app-message-content [thread]="currentThread"></app-message-content>
 </div>

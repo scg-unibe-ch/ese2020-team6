@@ -1,8 +1,7 @@
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
+import { User } from '../user/user.model';
 
 export interface MessageModel {
-  messageId: number;
-  messageThreadId: number;
   senderId: number;
   body: string;
   createdAt: Date;
@@ -21,8 +20,6 @@ export class Message implements MessageModel {
 
 
   constructor(
-    public messageId: number,
-    public messageThreadId: number,
     public senderId: number,
     public body: string,
     public createdAt: Date,
@@ -37,13 +34,16 @@ export class Message implements MessageModel {
 
   public static buildFromMessageResponseModel(message: MessageResponseModel): Message {
     return new Message(
-      message.messageId,
-      message.messageThreadId,
       message.senderId,
       message.body,
       new Date(message.createdAt),
       message.readStatus
     )
+  }
+
+  public static buildFromBodyAndUser(body: string, sender: number | User): Message {
+    let senderId: number = sender instanceof User ? (sender as User).userId : (sender as number);
+    return new Message(senderId, body, new Date(), false);
   }
 
   public static compare: (msgOne: Message, msgTwo: Message) => number = (messageOne: Message, messageTwo: Message) => {

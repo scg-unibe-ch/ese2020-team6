@@ -1,119 +1,134 @@
 @import 'variables';
-@import '../messages.component.theme.scss';
 @import './message-content.component.theme.scss';
 
 @each $theme-name in $theme-names {
-  @include messenger-theme($theme-name);
-  @include message-theme($theme-name);
+  @include message-content-theme($theme-name);
 }
 
-.messenger-wrapper {
+.message-content-wrapper {
+  padding: $spaceing-s;
+  border-radius: $border-radius;
   display: grid;
   grid-template-rows: min-content 1fr auto;
   grid-gap: $spaceing-s;
+  width: 100%;
   height: 100%;
 
+
+  .receiver {
+    font-size: 1.7em;
+    line-height: 1em;
+    margin: 0;
+  }
+
+
   .messenger {
-      padding: $spaceing-s;
-      border-radius: $border-radius;
-      height: 100%;
+    border-radius: $border-radius;
+    width: 100%;
+    height: 100%;
+
+    .no-messages {
       width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-      .header {
-          font-size: 1.7em;
-          line-height: 1em;
-          margin: 0;
-          text-transform: uppercase;
-          padding-bottom: $spaceing-l;
-          padding-top: $spaceing-m;
-      }
-
+    .messages-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
 
       .messages {
-          width: 100%;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-auto-rows: min-content;
+        grid-gap: $spaceing-s;
+        overflow-y: auto;
+        padding: $spaceing-s;
+
+        $width: $spaceing-s;
+        $height: $border-radius;
+
+        .message {
+          position: relative;
+          max-width: 80%;
           display: grid;
-          grid-template-columns: 100%;
-          grid-auto-rows: min-content;
-          grid-gap: $spaceing-s;
+          grid-template-rows: auto min-content;
+          grid-gap: $spaceing-xs;
+          padding: $spaceing-xs;
+          border-radius: $border-radius;
 
-          $width: $spaceing-s;
-          $height: $border-radius;
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            height: $height;
+            width: $width;
+          }
 
-          .message {
-            position: relative;
-            max-width: 80%;
-            display: grid;
-            grid-template-rows: auto min-content;
-            grid-gap: $spaceing-xs;
-            padding: $spaceing-xs;
-            border-radius: $border-radius;
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            height: $height;
+            width: $width;
+          }
+
+          &.sent {
+            justify-self: flex-end;
+            border-bottom-right-radius: 0;
 
             &::before {
-              content: '';
-              position: absolute;
-              bottom: 0;
-              height: $height;
-              width: $width;
+              right: - $width;
             }
 
             &::after {
-              content: '';
-              position: absolute;
-              bottom: 0;
-              height: $height;
-              width: $width;
+              right: - $width;
+              border-bottom-left-radius: $border-radius;
+            }
+          }
+
+          &.response {
+            justify-self: flex-start;
+            border-bottom-left-radius: 0;
+
+            &::before {
+              left: - $width;
             }
 
-            &.sent {
-              justify-self: flex-end;
-              border-bottom-right-radius: 0;
-
-              &::before {
-                right: - $width;
-              }
-
-              &::after {
-                right: - $width;
-                border-bottom-left-radius: $border-radius;
-              }
-            }
-
-            &.response {
-              justify-self: flex-start;
-              border-bottom-left-radius: 0;
-
-              &::before {
-                left: - $width;
-              }
-
-              &::after {
-                left: - $width;
-                border-bottom-right-radius: $border-radius;
-              }
-
-              .info {
-                .read-status {
-                  grid-column: 2 / 3;
-                }
-              }
+            &::after {
+              left: - $width;
+              border-bottom-right-radius: $border-radius;
             }
 
             .info {
-              font-size: .6em;
-              line-height: 1em;
-              display: grid;
-              grid-auto-flow: column;
-              grid-auto-columns: max-content;
-              grid-gap: $spaceing-xs;
-
               .read-status {
-                height: 1em;
-                width: 1em;
-                border-radius: 50%;
+                grid-column: 2 / 3;
               }
             }
           }
+
+          .info {
+            font-size: .6em;
+            line-height: 1em;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: max-content;
+            grid-gap: $spaceing-xs;
+
+            .read-status {
+              height: 1em;
+              width: 1em;
+              border-radius: 50%;
+            }
+          }
+        }
       }
+    }
   }
 
 

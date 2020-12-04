@@ -1,24 +1,10 @@
 @import 'variables';
-@import './messages.component.theme.scss';
 
 .messenger-wrapper {
   width: 100%;
   height: 100%;
   border-radius: $border-radius;
-  padding: $spaceing-m;
-
-    @media screen and (max-width: 350px){
-      padding: $spaceing-m;
-    }
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: $spaceing-s;
 }
-
-.grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(33%, 1fr) minmax(67%, 1fr);
-    grid-gap: 20px;
-}
-
-@each $theme-name in $theme-names {
-    @include messenger-theme($theme-name);
-  }

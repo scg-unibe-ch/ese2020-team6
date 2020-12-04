@@ -1,5 +1,5 @@
-import { NgForm } from '@angular/forms';
-import { Component, Input } from '@angular/core';
+import { NgModel } from '@angular/forms';
+import { Component, Input, ElementRef, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Thread, NullThread } from 'src/app/models/message/thread.model';
 import { Message } from 'src/app/models/message/message.model';
@@ -12,42 +12,48 @@ import { User } from 'src/app/models/user/user.model';
   templateUrl: './message-content.component.html',
   styleUrls: ['./message-content.component.scss']
 })
-export class MessageContentComponent {
-  public messages: any = new Array<Message>();
+export class MessageContentComponent implements OnInit, AfterViewChecked{
+  public senderId: number;
 
   private _thread: Thread = NullThread.instance();
   @Input()
   set thread(thread: Thread) {
     if (thread) {
-      this.messages = thread.messages;
+      if (this.senderId) thread.setCurrentSender(this.senderId);
       this._thread = thread;
     }
   }
   get thread(): Thread {
     return this._thread;
   }
-  answer: any;
-  public senderId: number;
+
+  @ViewChild('messagesElement')
+  public messagesElement: ElementRef;
 
   constructor(
     private snackBar: MatSnackBar,
     private userService: UserService
   ) {
-    this.userService.subscribe(new SuccessLoader((user: User) => this.senderId = user.userId));
+    this.userService.subscribe(new SuccessLoader((user: User) => {
+      this.senderId = user.userId;
+      if (!(this.thread instanceof NullThread)) this.thread.setCurrentSender(user);
+    }));
   }
 
-  sendMessage(answer: NgForm): void {
+  public sendMessage(message: NgModel): void {
     if (this._thread instanceof NullThread) {
       this.openSnackBar();
-    } else {
-      const messageId = this.thread.messages[this.thread.messages.length - 1].messageId + 1;
-      const messageThread = this.thread.messages[0].messageThreadId;
-      const senderId = 1;
-      const createdAd = new Date();
-      const readStatus = false;
-      this.answer = new Message(messageId, messageThread, senderId, answer.value, createdAd, readStatus)
-      this.thread.messages.push(this.answer);
+    } else if (message.valid) {
+      this.thread.addMessage(message.value);
     }
+  }
+
+  public ngOnInit(): void {
+    this.scrollToBottom();
+  }
+
+  public ngAfterViewChecked(): void {
+    this.scrollToBottom();
   }
 
   public openSnackBar(): void {
@@ -55,6 +61,12 @@ export class MessageContentComponent {
       duration: 2000,
       panelClass: ['snackbar']
     });
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 
   public messageClasses(message: Message): Array<string> {

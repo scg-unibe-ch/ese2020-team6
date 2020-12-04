@@ -2,10 +2,9 @@ import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/respon
 import { Message } from './message.model';
 import { User, UserModel } from '../user/user.model';
 import { Product } from '../product/product.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 export interface ThreadModel {
-  messageThreadId: number;
-  productId: number;
   product: Product;
   participants: [User, User]; // seller, buyer
   isAccepted: boolean;
@@ -15,10 +14,9 @@ export interface ThreadModel {
 
 export class Thread implements ThreadModel {
   public messages: Array<Message>;
+  private currentSenderId: number;
 
   constructor(
-    public messageThreadId: number,
-    public productId: number,
     public product: Product,
     public participants: [User, User],
     public isAccepted: boolean,
@@ -38,6 +36,19 @@ export class Thread implements ThreadModel {
   public hasParticipant(participant: User): boolean {
     return this.participants.map((existingParticipant: User) => User.equals(existingParticipant, participant))
     .includes(true);
+  }
+
+  public setCurrentSender(sender: number | User): void {
+    this.currentSenderId = sender instanceof User ? (sender as User).userId : (sender as number);
+  }
+
+  public addMessage(body: string): void;
+  public addMessage(body: string, sender: number | User): void;
+  public addMessage(body: string, sender?: number | User): void {
+    if (sender) {
+      this.setCurrentSender(sender);
+    } else if (!this.currentSenderId) throw new Error('No Sender set or passed!')
+    this.messages.push(Message.buildFromBodyAndUser(body, this.currentSenderId));
   }
 
   public static compare: (threadOne: Thread, threadTwo: Thread) => number = (threadOne: Thread, threadTwo: Thread) => {
@@ -81,8 +92,6 @@ export class Thread implements ThreadModel {
 
   public static buildFromThreadResponseModel(thread: ThreadResponseModel): Thread {
     return new Thread(
-      thread.messageThreadId,
-      thread.productId,
       Product.buildFromProductModel(thread.product),
       this.buildParticipants(thread.participants),
       thread.isAccepted,
@@ -104,7 +113,7 @@ export class NullThread extends Thread {
   private static _instance: NullThread;
 
   constructor() {
-    super(null, null, Product.NullProduct, [User.NullUser, User.NullUser], null, new Array<Message>());
+    super(Product.NullProduct, [User.NullUser, User.NullUser], null, new Array<Message>());
   }
 
   public static instance(): NullThread {
