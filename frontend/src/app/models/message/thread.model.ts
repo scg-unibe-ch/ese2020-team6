@@ -43,6 +43,14 @@ export class Thread implements ThreadModel {
     .includes(true);
   }
 
+  public receiver(senderOrSenderId: User | number): User {
+    let senderId: number = senderOrSenderId instanceof User ? (senderOrSenderId as User).userId : senderOrSenderId;
+    let [seller, buyer] = this.participants;
+    if (seller.userId === senderId) return buyer;
+    else if (buyer.userId === senderId) return seller;
+    else return User.NullUser;
+  }
+
   public setCurrentSender(sender: number | User): void {
     this.currentSenderId = sender instanceof User ? (sender as User).userId : (sender as number);
   }

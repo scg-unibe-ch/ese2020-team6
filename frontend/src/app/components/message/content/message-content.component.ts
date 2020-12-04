@@ -79,4 +79,8 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
     return message.fromatCreatedAt;
   }
 
+  get receiver(): User {
+    return this.thread.receiver(this.senderId);
+  }
+
 }

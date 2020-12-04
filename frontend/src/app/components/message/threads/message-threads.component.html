@@ -4,7 +4,7 @@
   </div>
   <div class="threads-wrapper">
     <div class="threads">
-      <button class="thread-button" *ngFor="let thread of threads; index as i;" buttonEmpty theme [name]=thread.name (click)="showMessage(thread)">User {{i}}</button>
+      <button class="thread-button" *ngFor="let thread of threads; index as i;" buttonEmpty theme (click)="showMessage(thread)">{{ receiver(thread).userName }}</button>
     </div>
   </div>
 </div>

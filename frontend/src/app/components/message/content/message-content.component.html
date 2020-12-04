@@ -1,6 +1,6 @@
 <div class="message-content-wrapper" theme>
   <div class="receiver">
-      'User Name' (Profile Picture)
+      {{ receiver.userName }}
   </div>
   <div class="messenger">
     <div class="no-messages" *ngIf="thread.messages.length === 0; else messages">
