@@ -1,4 +1,4 @@
 node_modules/
 *.sqlite
-backend/assets/*picture
+backend/assets/*
 *.sh
