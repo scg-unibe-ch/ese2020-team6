@@ -6,35 +6,11 @@ import { AddressAttributes } from '../models/address.model';
 import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
+import { savePicture } from '../middlewares/multer';
+
 const productController: Router = express.Router();
 
-
-// multer for saving image
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function(req: Request, file: any, cb: any) {
-
-        cb(null, 'assets');
-    },
-    filename: function(req: Request, file: any, cb: any) {
-        cb(null, new Date().toISOString().replace(/:/, '-') + file.fieldname);
-    }
-});
-const fileFilter = (req: Request, file: any, cb: any) => {
-    if (file.mimetype === 'image/jpg' ||
-         file.mimetype === 'image/png' ||
-         file.mimetype === 'image/jpeg') {
-            cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
-productController.post('/post', upload.single('picture'), verifyToken ,
+productController.post('/post', savePicture.single('picture'), verifyToken ,
     (req: any, res: Response) => {
         req.body.sellerId = req.body.tokenPayload.userId;
         req.body.address = JSON.parse(req.body.address);
@@ -109,7 +85,7 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-productController.put('/update/:productId', upload.single('picture'), verifyToken ,
+productController.put('/update/:productId', savePicture.single('picture'), verifyToken ,
     (req: any, res: Response) => {
         req.body.productId = parseInt(req.params.productId, 10);
         if (req.file) {
