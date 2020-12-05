@@ -53,12 +53,10 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
   }
 
   public ngOnInit(): void {
-    console.log("hi")
     this.scrollToBottom();
   }
 
   public ngAfterViewChecked(): void {
-    console.log("hii")
     this.scrollToBottom();
   }
 
