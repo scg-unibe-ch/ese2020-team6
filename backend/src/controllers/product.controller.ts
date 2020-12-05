@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
         cb(null, 'assets');
     },
     filename: function(req: Request, file: any, cb: any) {
-        cb(null, new Date().toISOString() + file.fieldname).replace(/:/, '-') + file.fieldname);
+        cb(null, new Date().toISOString().replace(/:/, '-') + file.fieldname);
     }
 });
 const fileFilter = (req: Request, file: any, cb: any) => {
