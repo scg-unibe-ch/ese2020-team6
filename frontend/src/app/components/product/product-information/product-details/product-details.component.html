@@ -1,5 +1,5 @@
 <div class="content-wrapper" theme>
-  <div class="upper-section section-margin">
+  <div class="upper-section">
     <div class="picture" *ngIf="!isPreview, else prev">
       <img src="http://localhost:3000/{{product.picture}}">
     </div>
@@ -35,8 +35,7 @@
       <map [initAddress]="product.address"></map>
     </div>
   </div>
-  <hr class="separator section-margin"/>
-  <div class="middle-section section-margin">
+  <div class="middle-section">
     <div class="details">
       <app-product-pill [pillValue]="product.offerType" title="Offer Type" [size]="1.3"></app-product-pill>
       <app-product-pill [pillValue]="product.productType" title="Product Type" [size]="1.3"></app-product-pill>
@@ -44,8 +43,7 @@
       <app-product-pill [pillValue]="product.isDeliverable ? 'Yes' : 'No'" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass" title="Delivarable" [size]="1.3"></app-product-pill>
     </div>
   </div>
-  <hr class="separator section-margin"/>
-  <div class="lower-section" style="margin-bottom: 3em">
+  <div class="lower-section">
     <div class="description">
       {{product.description}}
     </div>
@@ -53,8 +51,7 @@
       <ng-content></ng-content>
     </div>
   </div>
-  <hr class="separator section-margin"/>
-  <div class="lower-section">
-    <!--<app-message-content [thread]="creator.userName"></app-message-content>-->
+  <div class="bottom-section">
+    <message-content [thread]="thread"></message-content>
   </div>
 </div>

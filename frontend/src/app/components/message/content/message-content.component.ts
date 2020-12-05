@@ -6,9 +6,11 @@ import { Message } from 'src/app/models/message/message.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { SuccessLoader } from 'src/app/services/service.module';
 import { User } from 'src/app/models/user/user.model';
+import { MessageService } from 'src/app/services/message/message.service';
+import { CutUser } from 'src/app/models/user/cut-user.model';
 
 @Component({
-  selector: 'app-message-content',
+  selector: 'message-content',
   templateUrl: './message-content.component.html',
   styleUrls: ['./message-content.component.scss']
 })
@@ -32,11 +34,12 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
 
   constructor(
     private snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) {
     this.userService.subscribe(new SuccessLoader((user: User) => {
       this.senderId = user.userId;
-      if (!(this.thread instanceof NullThread)) this.thread.setCurrentSender(user);
+      if (!(this.thread instanceof NullThread)) this.thread.setCurrentSender(user.cutUser());
     }));
   }
 
@@ -44,15 +47,18 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
     if (this._thread instanceof NullThread) {
       this.openSnackBar();
     } else if (message.valid) {
-      this.thread.addMessage(message.value);
+      let newMessage = this.thread.newMessage(message.value);
+      this.messageService.send(newMessage);
     }
   }
 
   public ngOnInit(): void {
+    console.log("hi")
     this.scrollToBottom();
   }
 
   public ngAfterViewChecked(): void {
+    console.log("hii")
     this.scrollToBottom();
   }
 
@@ -79,7 +85,7 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
     return message.fromatCreatedAt;
   }
 
-  get receiver(): User {
+  get receiver(): CutUser {
     return this.thread.receiver(this.senderId);
   }
 

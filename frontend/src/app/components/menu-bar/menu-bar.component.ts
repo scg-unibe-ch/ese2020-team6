@@ -20,7 +20,7 @@ export class MenuBarComponent {
 
   @Input()
   public isHome = false;
-  private successLoader = new SuccessLoader<User>((user: User) => this.userName = user.userName);
+  private successLoader = new SuccessLoader((user: User) => this.userName = user.userName);
 
   constructor(
     public userService: UserService

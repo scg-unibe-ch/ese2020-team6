@@ -89,7 +89,6 @@ export class UserService {
           return verifyTokenPromise(loginRequesteeWithToken.token)
           .then((decoded: DecodedToken) => this.doesUserExistById(decoded.userId))
           .then((user: User) => {
-            console.log(user);
             return Promise.resolve(user);
           });
         } else {

@@ -9,7 +9,7 @@ import { UserModel, User } from '../../../../models/user/user.model';
 })
 export abstract class StageNDEExtention<T> extends StageNDEmitter<T> {
 
-  private _product: ProductModel = new NullProduct();
+  private _product: ProductModel = NullProduct.instance();
   @Input()
   set product(product: ProductModel) {
     this._product = product;

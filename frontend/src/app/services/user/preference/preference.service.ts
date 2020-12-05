@@ -7,17 +7,16 @@ import { PreferenceModel } from '../../../models/user/preference/preference.mode
 import { environment } from '../../../../environments/environment';
 import { LoaderObservable } from '../../service.module';
 import { ValueUnloaderCascade } from '../../service.module';
-import { User } from 'src/app/models/user/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreferenceService extends LoaderObservable<PreferenceModel> {
+export class PreferenceService extends LoaderObservable<PreferenceModel, PreferenceModel> {
 
   private _source: Observable<PreferenceModel>;
 
   private loginSuccess = () => this.loadPreferences();
-  private valueUnloaderCascade = new ValueUnloaderCascade<User>(
+  private valueUnloaderCascade = new ValueUnloaderCascade(
     this.loginSuccess,
     () => {},
     this
@@ -55,6 +54,10 @@ export class PreferenceService extends LoaderObservable<PreferenceModel> {
       this._source = undefined
       resolve();
     })
+  }
+
+  protected postProcess(loadedPromise: Promise<PreferenceModel>): Promise<PreferenceModel> {
+    return loadedPromise;
   }
 
   private get(): Promise<PreferenceModel> {

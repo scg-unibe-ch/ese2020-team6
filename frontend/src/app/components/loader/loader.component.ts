@@ -14,7 +14,7 @@ export class LoaderComponent {
   private _success: boolean = true;
 
   @Input()
-  set loader(loader: LoaderObservable<any>) {
+  set loader(loader: LoaderObservable<any, any>) {
     loader.subscribe(this.fullLoader)
   }
 

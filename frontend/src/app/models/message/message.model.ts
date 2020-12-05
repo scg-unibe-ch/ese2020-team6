@@ -1,10 +1,11 @@
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
-import { User } from '../user/user.model';
+import { CutUser } from '../user/cut-user.model';
 import { Thread } from './thread.model';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
 import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
 
 export interface MessageModel {
+  messageId?: number;
   senderId: number;
   body: string;
   createdAt: Date;
@@ -27,6 +28,7 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
     public body: string,
     public createdAt: Date,
     public readStatus: boolean,
+    public messageId?: number
   ) {}
 
   public setThread(thread: Thread): void {
@@ -46,12 +48,13 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
       message.senderId,
       message.body,
       new Date(message.createdAt),
-      message.readStatus
+      message.readStatus,
+      message.messageId
     )
   }
 
-  public static buildFromBodyAndUser(body: string, sender: number | User): Message {
-    let senderId: number = sender instanceof User ? (sender as User).userId : (sender as number);
+  public static buildFromBodyAndCutUser(body: string, sender: number | CutUser): Message {
+    let senderId: number = sender instanceof CutUser ? (sender as CutUser).userId : (sender as number);
     return new Message(senderId, body, new Date(), false);
   }
 
@@ -92,6 +95,21 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
   */
   public isEqualTo(message: Message): boolean {
     return this.compare(message) === 0;
+  }
+
+}
+
+
+export class NullThread extends Message {
+  private static _instance: NullThread;
+
+  constructor() {
+    super(null, null, new Date(), null);
+  }
+
+  public static instance(): NullThread {
+    if (!NullThread._instance) NullThread._instance = new NullThread();
+    return NullThread._instance;
   }
 
 }

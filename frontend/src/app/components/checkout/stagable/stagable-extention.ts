@@ -17,7 +17,7 @@ export abstract class StagableExtention extends Stagable implements OnInit {
 
   @Output()
   public errorEmitter: EventEmitter<string> = new EventEmitter<string>();
-  public product: ProductModel = new NullProduct();
+  public product: ProductModel = NullProduct.instance();
   public seller: CutUserModel = new NullCutUser();
   public buyer: UserModel = User.NullUser;
 

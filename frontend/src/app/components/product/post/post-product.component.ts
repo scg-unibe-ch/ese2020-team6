@@ -36,7 +36,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   public originalOfferTypeStrings: Array<string> = ['Sell', 'Rent'];
   public offerTypeStrings: Array<string> = new Array<string>();
   public isDeliverableStrings: Array<string> = ['Yes', 'No'];
-  public product: ProductModel = new NullProduct();
+  public product: ProductModel = NullProduct.instance();
 
   @ViewChild('postProductForm', { read: NgForm })
   public form: NgForm;

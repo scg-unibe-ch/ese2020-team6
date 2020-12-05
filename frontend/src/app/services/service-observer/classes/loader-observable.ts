@@ -4,39 +4,41 @@ import { ILoaderSubsctiption } from '../interfaces/service-subscription.interfac
 import { ILoaderObserver } from '../interfaces/service-observer.interface';
 import { Observable } from 'rxjs';
 
-export abstract class LoaderObservable<T> extends ServiceObservable<T> implements ILoaderObservable<T> {
+export abstract class LoaderObservable<Input, Output> extends ServiceObservable<Output> implements ILoaderObservable<Input, Output> {
 
   private isLoading: boolean = false;
 
-  public abstract getSource(): Observable<T>;
-  public abstract setSource(source: Observable<T>): Promise<Observable<T>>;
+  public abstract getSource(): Observable<Input>;
+  public abstract setSource(source: Observable<Input>): Promise<Observable<Input>>;
+  public abstract resetSource(): Promise<void>;
+  protected abstract postProcess(loadedPromise: Promise<Input>): Promise<Output>;
 
-  subscriptions: Array<ILoaderSubsctiption<T>>;
-  protected loadedPromise: Promise<T>;
-  protected previousLoadedPromise: Promise<T>;
+  subscriptions: Array<ILoaderSubsctiption<Input, Output>>;
+  protected loadedPromise: Promise<Input>;
+  protected previousLoadedPromise: Promise<Input>;
 
-  public subscribe(observer: ILoaderObserver<T>, handleError?: (error: any) => void): Promise<ILoaderSubsctiption<T>> {
-    return (super.subscribe(observer) as Promise<ILoaderSubsctiption<T>>)
-    .then((subscription: ILoaderSubsctiption<T>) => this.loadAndReturnSubscription(subscription, handleError))
-    .then((subscription: ILoaderSubsctiption<T>) => Promise.resolve(subscription))
+  public subscribe(observer: ILoaderObserver<Input, Output>, handleError?: (error: any) => void): Promise<ILoaderSubsctiption<Input, Output>> {
+    return (super.subscribe(observer) as Promise<ILoaderSubsctiption<Input, Output>>)
+    .then((subscription: ILoaderSubsctiption<Input, Output>) => this.loadAndReturnSubscription(subscription, handleError))
+    .then((subscription: ILoaderSubsctiption<Input, Output>) => Promise.resolve(subscription))
   }
 
-  private loadAndReturnSubscription(subscription: ILoaderSubsctiption<T>, handleError?: (error: any) => void): Promise<ILoaderSubsctiption<T>> {
+  private loadAndReturnSubscription(subscription: ILoaderSubsctiption<Input, Output>, handleError?: (error: any) => void): Promise<ILoaderSubsctiption<Input, Output>> {
     return this.loadSubscription(subscription)
     .then(() => Promise.resolve(subscription))
     .catch((error: any) => {handleError(error); return Promise.resolve(subscription)});
   }
 
-  public unsubscribe(subscription: ILoaderSubsctiption<T>): Promise<ILoaderSubsctiption<T>> {
+  public unsubscribe(subscription: ILoaderSubsctiption<Input, Output>): Promise<ILoaderSubsctiption<Input, Output>> {
     if (this.isLoading) return Promise.reject(new Error('Tried to unsubscribe whilst loading!'))
-    return super.unsubscribe(subscription) as Promise<ILoaderSubsctiption<T>>;
+    return super.unsubscribe(subscription) as Promise<ILoaderSubsctiption<Input, Output>>;
   }
 
   public load(): Promise<void> {
     return this.onLoading()
     .then(() => this.loadAndSavePromise())
     .then(() => this.check(this.loadedPromise))
-    .then(() => this.notifyObservers(this.loadedPromise))
+    .then(() => this.notifyObservers(this.postProcess(this.loadedPromise)))
     .then(() => this.onLoadedSuccess())
     .catch((error: any) => this.catchCheck(error))
     .catch((error: any) => this.notifyObserversFail(error))
@@ -44,10 +46,10 @@ export abstract class LoaderObservable<T> extends ServiceObservable<T> implement
     .then(() => Promise.resolve());
   }
 
-  private loadSubscription(subscription: ILoaderSubsctiption<T>): Promise<void> {
+  private loadSubscription(subscription: ILoaderSubsctiption<Input, Output>): Promise<void> {
     return this.onLoadingObserver(subscription)
     .then(() => this.check(this.loadedPromise))
-    .then(() => this.notifyObserver(subscription, this.loadedPromise))
+    .then(() => this.notifyObserver(subscription, this.postProcess(this.loadedPromise)))
     .then(() => this.onLoadedObserverSuccess(subscription))
     .catch((error: any) => this.catchCheckObserver(subscription, error))
     .catch((error: any) => this.notifyObserverFail(subscription, error))
@@ -60,27 +62,27 @@ export abstract class LoaderObservable<T> extends ServiceObservable<T> implement
     return this.onUnload();
   }
 
-  private loadAndSavePromise(): Promise<T> {
+  private loadAndSavePromise(): Promise<Input> {
     return this.setNewLoadedPromise(this.loadPromise())
   }
 
-  protected loadPromise(): Promise<T> {
+  protected loadPromise(): Promise<Input> {
     return this.getSource().toPromise();
   }
 
-  private setNewLoadedPromise(newLoadedPromise: Promise<T>): Promise<T> {
+  private setNewLoadedPromise(newLoadedPromise: Promise<Input>): Promise<Input> {
     this.previousLoadedPromise = this.loadedPromise;
     this.loadedPromise = newLoadedPromise;
     return this.loadedPromise;
   }
 
-  private onLoadingObserver(subscription: ILoaderSubsctiption<T>): Promise<void> {
+  private onLoadingObserver(subscription: ILoaderSubsctiption<Input, Output>): Promise<void> {
     return subscription.onLoading()
   }
 
   private onLoading(): Promise<void> {
     this.isLoading = true
-    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<T>) => {
+    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<Input, Output>) => {
       return subscription.onLoading()
     })).then(() => Promise.resolve());
   }
@@ -95,31 +97,31 @@ export abstract class LoaderObservable<T> extends ServiceObservable<T> implement
 
   private onLoaded(success: boolean): Promise<void> {
     this.isLoading = false;
-    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<T>) => {
+    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<Input, Output>) => {
       return this.onLoadedObserver(subscription, success)
     })).then(() => Promise.resolve());
   }
 
-  private onLoadedObserverSuccess(subscription: ILoaderSubsctiption<T>): Promise<void> {
+  private onLoadedObserverSuccess(subscription: ILoaderSubsctiption<Input, Output>): Promise<void> {
     return this.onLoadedObserver(subscription, true);
   }
 
-  private onLoadedObserverFail(subscription: ILoaderSubsctiption<T>, error?: any): Promise<void> {
+  private onLoadedObserverFail(subscription: ILoaderSubsctiption<Input, Output>, error?: any): Promise<void> {
     return this.onLoadedObserver(subscription, false).then(() => error ? Promise.reject(error) : Promise.resolve());
     // here we do not throw the error, because it has already been handled (this method only gets called when subscribing)
   }
 
-  private onLoadedObserver(subscription: ILoaderSubsctiption<T>, success: boolean): Promise<void> {
+  private onLoadedObserver(subscription: ILoaderSubsctiption<Input, Output>, success: boolean): Promise<void> {
     return subscription.onLoaded(success)
   }
 
   private onUnload(): Promise<void> {
-    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<T>) => {
+    return Promise.all(this.subscriptions.map((subscription: ILoaderSubsctiption<Input, Output>) => {
       return subscription.onUnload()
     })).then(() => Promise.resolve());
   }
 
-  private check(valueChange: Promise<T>): Promise<void> {
+  private check(valueChange: Promise<Input>): Promise<void> {
     if (valueChange) return Promise.resolve();
     else return Promise.reject(new NoValueChangeError());
   }
@@ -129,7 +131,7 @@ export abstract class LoaderObservable<T> extends ServiceObservable<T> implement
     else return Promise.reject(error)
   }
 
-  private catchCheckObserver(subscription: ILoaderSubsctiption<T>, error: any): Promise<void> {
+  private catchCheckObserver(subscription: ILoaderSubsctiption<Input, Output>, error: any): Promise<void> {
     if (error instanceof NoValueChangeError) return this.onLoadedObserverFail(subscription);
     else return Promise.reject(error)
   }

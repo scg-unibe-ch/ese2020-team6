@@ -5,7 +5,7 @@ import { Threads, NullThreads } from 'src/app/models/message/threads.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 
 @Component({
-  selector: 'app-messages',
+  selector: 'messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss']
 })

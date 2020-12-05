@@ -1,6 +1,7 @@
 import { AddressModel, NullAddress, Address } from '../map/address/address.model';
 import { Equality } from '../compare/equality';
 import { Is } from '../compare/is';
+import { CutUser } from './cut-user.model';
 
 export interface UserModel {
   userId: number;
@@ -39,6 +40,10 @@ export class User implements UserModel {
     public address: Address,
     public picture: string
   ) { }
+
+  public cutUser(): CutUser {
+    return CutUser.buildFromUser(this);
+  }
 
   public static buildFromUserModel(userModel: UserModel): User {
     return new User(

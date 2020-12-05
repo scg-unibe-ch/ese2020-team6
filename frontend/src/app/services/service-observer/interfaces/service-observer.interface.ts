@@ -1,16 +1,16 @@
 import { IServiceObservable, ILoaderObservable } from "./service-observable.interface";
 import { IServiceSubscription, ILoaderSubsctiption } from "./service-subscription.interface";
 
-export interface IServiceObserver<T>  {
-  onSuccess: (value: T) => void;
+export interface IServiceObserver<Output>  {
+  onSuccess: (value: Output) => void;
   onFail: (error: any) => void;
-  buildSubscription(observable: IServiceObservable<T>): IServiceSubscription<T>;
+  buildSubscription(observable: IServiceObservable<Output>): IServiceSubscription<Output>;
 }
 
-export interface ILoaderObserver<T> extends IServiceObserver<T> {
+export interface ILoaderObserver<Input, Output> extends IServiceObserver<Output> {
   onLoading: () => void;
   onLoaded: (success: boolean) => void;
   onUnload: () => void;
-  onUnloadCascade: ILoaderObservable<any>;
-  buildSubscription(observable: ILoaderObservable<T>): ILoaderSubsctiption<T>;
+  onUnloadCascade: ILoaderObservable<any, any>;
+  buildSubscription(observable: ILoaderObservable<Input, Output>): ILoaderSubsctiption<Input, Output>;
 }

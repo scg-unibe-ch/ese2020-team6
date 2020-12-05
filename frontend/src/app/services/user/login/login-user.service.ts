@@ -13,13 +13,11 @@ import {
   transformUser,
   toTokenResponse} from '../../../models/operator/index.module';
 import { LoaderObservable, ValueLoader } from '../../service.module';
-import { User } from 'src/app/models/user/user.model';
-import { Address } from 'src/app/models/map/address/address.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginUserService extends LoaderObservable<UserTokenModel> implements LoginUserRequestBuilder {
+export class LoginUserService extends LoaderObservable<UserTokenModel, UserTokenModel> implements LoginUserRequestBuilder {
 
   private _source: Observable<UserTokenModel>;
 
@@ -30,14 +28,13 @@ export class LoginUserService extends LoaderObservable<UserTokenModel> implement
     .then(() => this.isLoggedIn = true);
   }
   private loginFailure = () => this.logout();
-  private fullLoader = new ValueLoader(this.loginSuccess, this.loginFailure);
 
   constructor(
     private router: Router,
     private httpClient: HttpClient
   ) {
     super();
-    this.subscribe(this.fullLoader);
+    this.subscribe(new ValueLoader(this.loginSuccess, this.loginFailure));
     this.login();
   }
 
@@ -57,6 +54,10 @@ export class LoginUserService extends LoaderObservable<UserTokenModel> implement
     .then(() => this.navigateToLogin())
     .then(() => this.removeUser())
     .then(() => this.isLoggedIn = false);
+  }
+
+  protected postProcess(loadedPromise: Promise<UserTokenModel>): Promise<UserTokenModel> {
+    return loadedPromise;
   }
 
 

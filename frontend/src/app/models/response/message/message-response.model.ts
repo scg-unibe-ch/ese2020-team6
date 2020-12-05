@@ -2,7 +2,6 @@ import { MessageModel } from 'src/app/models/message/message.model'
 import { Is } from '../../compare/is'
 
 export interface MessageResponseModel extends Omit<MessageModel, 'createdAt'> {
-  messageId: number;
   messageThreadId: number;
   createdAt: string;
 }

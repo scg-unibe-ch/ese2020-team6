@@ -4,34 +4,45 @@ import { map } from 'rxjs/operators';
 export function transformator<T, S>(transformationMethod: (model: T) => any,  isType: (value: T) => value is T): OperatorFunction<any, any> {
   return <S>(source: Observable<S>) => {
     return source.pipe(map((value: S) => {
-      transformObject(value, isType, transformationMethod);
-      return value;
+      return transformObject(value, isType, transformationMethod);
     }))
   }
 }
 
 type Path<T> = [string, Array<Path<T>> | T];
 
-function transformObject<T>(object: Object, isType: (value: T) => value is T, transformationMethod: (model: T) => any): void {
+function isPath<T>(path: Path<T>): path is Path<T> {
+  return Array.isArray(path) && path.length == 2 && typeof path[0] === 'string' && path[1] ? true : false;
+}
+
+function isPathArray<T>(pathArray: Array<Path<T>>): pathArray is Array<Path<T>> {
+  if (Array.isArray(pathArray)) {
+    return !pathArray.map((path: Path<T>) => isPath(path)).includes(false);
+  } else return false;
+}
+
+function transformObject<T>(object: Object, isType: (value: T) => value is T, transformationMethod: (model: T) => any): Object {
   let paths: Path<T> = hasType<T>(object, isType);
   if (paths) {
-    console.log(paths);
-    (paths[1] as Array<Path<T>>).forEach((path: Path<T>) => {
-      recursiveTansfromObjectType(path, object, isType, transformationMethod);
-    })
+    if (!isPathArray(paths[1] as Array<Path<T>>)) {
+      return transformationMethod(paths[1] as T);
+    } else {
+      (paths[1] as Array<Path<T>>).forEach((path: Path<T>) => {
+        recursiveTansfromObjectType(path, object, isType, transformationMethod);
+      })
+    }
   }
+  return object;
 }
 
 
-function recursiveTansfromObjectType<T>(paths: Path<T>, object: Object, isType: (value: T) => value is T, transformationMethod: (model: T) => any): void {
-  let parentKey: string = paths[0];
-  let childPaths: Array<Path<T>> | T = paths[1];
-  if (Array.isArray(childPaths)) {
-    (childPaths as Array<Path<T>>).forEach((childPath: Path<T>) => {
+function recursiveTansfromObjectType<T>([parentKey, childPathsOrObject]: Path<T>, object: Object, isType: (value: T) => value is T, transformationMethod: (model: T) => any): void {
+  if (Array.isArray(childPathsOrObject)) {
+    (childPathsOrObject as Array<Path<T>>).forEach((childPath: Path<T>) => {
       recursiveTansfromObjectType<T>(childPath, object[parentKey], isType, transformationMethod);
     });
   } else {
-    object[parentKey] = transformationMethod((childPaths as T));
+    object[parentKey] = transformationMethod(childPathsOrObject as T);
   }
 }
 

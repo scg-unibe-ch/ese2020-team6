@@ -6,7 +6,7 @@ import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
 import { UserModel, User } from 'src/app/models/user/user.model';
 export class ProductInformationBase {
 
-  public product: ProductModel = new NullProduct();
+  public product: ProductModel = NullProduct.instance();
   public creator: CutUserModel = new NullCutUser();
   public currentUser: UserModel = User.NullUser;
 

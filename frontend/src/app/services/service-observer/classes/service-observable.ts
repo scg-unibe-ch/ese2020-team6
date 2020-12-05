@@ -1,13 +1,8 @@
 import { IServiceObservable } from '../interfaces/service-observable.interface';
 import { IServiceObserver } from '../interfaces/service-observer.interface';
 import { IServiceSubscription } from '../interfaces/service-subscription.interface';
-import { Observable } from 'rxjs';
 
 export abstract class ServiceObservable<T> implements IServiceObservable<T> {
-
-  public abstract getSource(): Observable<T>;
-  public abstract setSource(source: Observable<T>): Promise<Observable<T>>;
-  public abstract resetSource(): Promise<void>;
 
   public subscriptions: Array<IServiceSubscription<T>> = new Array<IServiceSubscription<T>>();
 

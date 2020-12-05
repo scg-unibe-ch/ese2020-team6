@@ -18,27 +18,7 @@ export interface ProductModel {
   rejectionMessage: string;
 }
 
-export class NullProduct implements ProductModel {
-  productId: number = null;
-  sellerId: number = null;
-  productType: string = null;
-  offerType: string = null;
-  title: string = null;
-  description: string = null;
-  price: number = null;
-  address: AddressModel = new NullAddress();
-  picture: string = null;
-  category: string = null;
-  subcategory: string = null;
-  isDeliverable: boolean = null;
-  expirationDate: number = null;
-  status: string = null;
-  rejectionMessage: string = null;
-}
-
 export class Product implements ProductModel {
-
-  public static NullProduct: Product = new Product(null,null,null,null,null,null,null,new NullAddress(),null,null,null,null,null,null,null);
 
   constructor(
     public productId: number,
@@ -81,4 +61,18 @@ export class Product implements ProductModel {
       product.rejectionMessage
     )
   }
+}
+
+export class NullProduct extends Product {
+  private static _instance: NullProduct;
+
+  constructor() {
+    super(null, null, null, null, null, null, null, new NullAddress(), null, null, null, null, null, null, null);
+  }
+
+  public static instance(): NullProduct {
+    if (!NullProduct._instance) NullProduct._instance = new NullProduct();
+    return NullProduct._instance;
+  }
+
 }

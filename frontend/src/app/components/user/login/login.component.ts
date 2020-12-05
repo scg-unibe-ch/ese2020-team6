@@ -5,7 +5,7 @@ import { LoginUserRequestBuilder } from '../../../models/request/user/login/logi
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
-import { ValueLoader, ILoaderSubsctiption, ValuePartialLoader } from '../../../services/service.module';
+import { ILoaderSubsctiption, ValuePartialLoader } from '../../../services/service.module';
 import { UserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
 
 @Component({
@@ -36,21 +36,21 @@ export class LoginComponent implements LoginUserRequestBuilder {
       }
     };
   }
-  public valueLoader = new ValuePartialLoader<UserTokenModel>(
+  public valueLoader = new ValuePartialLoader(
     this.loginSuccess,
     this.loginFailure,
     () => {},
     (success: boolean) => this.unsubscribe(success)
   );
 
-  public subscription: ILoaderSubsctiption<UserTokenModel>;
+  public subscription: ILoaderSubsctiption<UserTokenModel, UserTokenModel>;
 
   constructor(
     private router: Router,
     private loginUserService: LoginUserService,
   ) {
     this.loginUserService.subscribe(this.valueLoader)
-    .then((subscription: ILoaderSubsctiption<UserTokenModel>) => this.subscription = subscription);
+    .then((subscription: ILoaderSubsctiption<UserTokenModel, UserTokenModel>) => this.subscription = subscription);
   }
 
   public onSubmit(form: NgForm): void {

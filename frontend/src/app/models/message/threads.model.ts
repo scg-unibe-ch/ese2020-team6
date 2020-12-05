@@ -1,6 +1,7 @@
-import { ThreadResponseModel } from 'src/app/models/response/response-model.module';
-import { User } from '../user/user.model';
+import { ThreadResponseModel, ThreadsResponseModel } from 'src/app/models/response/response-model.module';
+import { CutUser } from '../user/cut-user.model';
 import { Thread, NullThread } from './thread.model';
+import { Product } from '../product/product.model';
 
 
 export interface ThreadsModel {
@@ -13,7 +14,12 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
   constructor(
     threads: Array<Thread>
   ) {
-    this.threads = threads.sort(Thread.compare);
+    this.threads = threads;
+    this.sortThreads();
+  }
+
+  private sortThreads(): void {
+    this.threads.sort(Thread.compare);
   }
 
   get latestThreadDate(): Date {
@@ -36,20 +42,56 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
     return this.threads[Symbol.iterator]();;
   }
 
+  public getByProduct(product: Product): Thread {
+    let foundThread = this.threads.find((thread: Thread) => thread.product.productId === product.productId);
+    return foundThread ? foundThread : NullThread.instance();
+  }
+
   public getByIndex(index: number): Thread {
     return this.threads[index];
   }
 
-  public getByParticipants(participantOne: User, participantTwo: User): Thread {
-    return this.threads.find((thread: Thread) => {
-      let [seller, buyer]: [User, User] = thread.participants;
-      return (User.equals(seller, participantOne) || User.equals(seller, participantTwo))
-          && (User.equals(buyer, participantOne) || User.equals(buyer, participantTwo))
-          && !User.equals(participantOne, participantTwo);
-    })
+  private getThreadIds(): Array<number> {
+    return this.threads.map((thread: Thread) => thread.messageThreadId);
   }
 
-  public static buildFromThreadResponseModelArray(threads: Array<ThreadResponseModel>): Threads {
+  private getThreadById(messageThreadId: number): Thread {
+    let threadIndex = this.getThreadIds().indexOf(messageThreadId);
+    return this.getByIndex(threadIndex);
+  }
+
+  public getByParticipants(participantOne: CutUser, participantTwo: CutUser): Thread {
+    let foundThread = this.threads.find((thread: Thread) => {
+      let [seller, buyer]: [CutUser, CutUser] = thread.participants;
+      return (CutUser.equals(seller, participantOne) || CutUser.equals(seller, participantTwo))
+          && (CutUser.equals(buyer, participantOne) || CutUser.equals(buyer, participantTwo))
+          && !CutUser.equals(participantOne, participantTwo);
+    })
+    return foundThread ? foundThread : NullThread.instance();
+  }
+
+
+  public mergeAndRetreive(threads: Threads): Threads {
+    if (this instanceof NullThreads) {
+      return threads;
+    } else {
+      this.merge(threads);
+      return this;
+    }
+  }
+
+
+  public merge(threads: Threads): void {
+    let oldThreadIds = this.getThreadIds();
+    threads.threads.forEach((thread: Thread) => {
+      if (oldThreadIds.includes(thread.messageThreadId)) {
+        this.getThreadById(thread.messageThreadId).merge(thread);
+      } else this.threads.push(thread);
+    })
+    this.sortThreads();
+  }
+
+  public static buildFromThreadsResponseModel(threads: ThreadsResponseModel): Threads {
     return new Threads(threads.map((thread: ThreadResponseModel) => Thread.buildFromThreadResponseModel(thread)));
   }
 }

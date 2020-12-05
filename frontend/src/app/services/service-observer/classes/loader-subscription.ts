@@ -3,11 +3,11 @@ import { ILoaderObservable } from '../interfaces/service-observable.interface';
 import { ILoaderSubsctiption } from '../interfaces/service-subscription.interface';
 import { ServiceSubsctiption } from './service-subscription';
 
-export class LoaderSubsctiption<T> extends ServiceSubsctiption<T> implements ILoaderSubsctiption<T> {
+export class LoaderSubsctiption<S, T> extends ServiceSubsctiption<T> implements ILoaderSubsctiption<S, T> {
 
   constructor(
-    public observer: ILoaderObserver<T>,
-    public observable: ILoaderObservable<T>
+    public observer: ILoaderObserver<S, T>,
+    public observable: ILoaderObservable<S, T>
   ) {
     super(observer, observable);
   }
@@ -21,11 +21,11 @@ export class LoaderSubsctiption<T> extends ServiceSubsctiption<T> implements ILo
   public onUnload(): Promise<void> {
     return Promise.resolve(this.observer.onUnload());
   }
-  public unsubscribe(): Promise<LoaderSubsctiption<T>> {
-    return this.observable.unsubscribe(this) as Promise<LoaderSubsctiption<T>>;
+  public unsubscribe(): Promise<LoaderSubsctiption<S, T>> {
+    return this.observable.unsubscribe(this) as Promise<LoaderSubsctiption<S, T>>;
   }
-  public resubscribe(observable: ILoaderObservable<T>): Promise<LoaderSubsctiption<T>> {
+  public resubscribe(observable: ILoaderObservable<S, T>): Promise<LoaderSubsctiption<S, T>> {
     this.observable = observable;
-    return observable.resubscribe(this) as Promise<LoaderSubsctiption<T>>;
+    return observable.resubscribe(this) as Promise<LoaderSubsctiption<S, T>>;
   }
 }

@@ -4,7 +4,7 @@ import { LoginUserService } from './login/login-user.service';
 import { GetUserService } from './get/get-user.service';
 import { UserModel, User } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
-import { UserTokenModel, isUserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
+import { UserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
 import { LoaderObservable, ValueUnloaderCascade } from '../service.module';
 import { map } from 'rxjs/operators';
 import { toUser } from 'src/app/models/operator/index.module';
@@ -12,7 +12,7 @@ import { toUser } from 'src/app/models/operator/index.module';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends LoaderObservable<UserModel> {
+export class UserService extends LoaderObservable<User, User> {
 
   private currentUser: User;
   private currentError: any;
@@ -37,6 +37,10 @@ export class UserService extends LoaderObservable<UserModel> {
   ) {
     super();
     this.loginUserService.subscribe(this.valueUnloaderCascade);
+  }
+
+  protected postProcess(loadedPromise: Promise<User>): Promise<User> {
+    return loadedPromise;
   }
 
   public getUserById(userId: number): Observable<CutUserModel> {
@@ -71,12 +75,12 @@ export class UserService extends LoaderObservable<UserModel> {
     }));
   }
 
-  public getSource(): Observable<UserModel> {
+  public getSource(): Observable<User> {
     let login: Observable<UserTokenModel> = this.loginUserService.getSource();
     if (login) return this.loginUserService.getSource().pipe(toUser);
     else return of(User.NullUser);
   }
-  public setSource(): Promise<Observable<UserModel>> {
+  public setSource(): Promise<Observable<User>> {
     return Promise.resolve(empty());
   }
   public resetSource(): Promise<void> {

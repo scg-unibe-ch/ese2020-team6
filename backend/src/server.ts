@@ -6,6 +6,7 @@ import { ConnectionError, ConnectionTimedOutError, TimeoutError, Sequelize } fro
 import { ProductController } from './controllers/product.controller';
 import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
+import { MessageController } from './controllers/message.controller';
 
 import { User } from './models/user.model';
 import { Preference } from './models/preference.model';
@@ -82,6 +83,7 @@ export class Server {
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/product', ProductController)
+            .use('/message', MessageController)
             .options('*', cors(options))
             .use('/assets', express.static('assets'))
             // this is the message you get if you open http://localhost:3000/ when the server is running
