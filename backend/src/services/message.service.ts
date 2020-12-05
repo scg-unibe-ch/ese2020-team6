@@ -50,22 +50,24 @@ export class MessageService {
         });
         return messageThread.messageThreadId;
     }
+/* Unused method
 
     public static createMessageThread(messageThread: MessageThreadCreationAttributes): Promise<MessageThread> {
         return MessageThread.create(messageThread);
       }
+*/
 
-    public static async  saveMessages(text: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
+    /*public static async  saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
         if (roleOfSender === 'buyer') {
             this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId);
             const threadId = await this.getMessageThreadIdByProductId(productId);
             this.getMessageThreadIdByProductId(productId) // more than one thread for a product
             .then((messageThreadId: number) => messageThreadId = threadId)
             .catch((err: any) => Promise.reject()); // handle error better
-            this.insertMessageInMessageThread(threadId, senderId, text);
+            this.insertMessageInMessageThread(threadId, senderId, body);
         } else if (roleOfSender === 'sender') {
           const threadId = await this.getMessageThreadIdByProductId(productId);
-            this.insertMessageInMessageThread(threadId, senderId, text);
+            this.insertMessageInMessageThread(threadId, senderId, body);
             this.setMessageThreadToAccepted(productId);
         } else {
             return Promise.reject();
@@ -73,7 +75,7 @@ export class MessageService {
 
         return Promise.resolve();
     }
-
+*/
      /************************
         Setter helper methods
     *************************/
@@ -99,10 +101,9 @@ export class MessageService {
       }
       public static insertMessageInMessageThread(messageThreadId: number, senderId: number, text: string,
         transaction?: Transaction): Promise<void> {
-          const date = new Date(); // check date
-        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, createdAt: date, readStatus: false},
+        Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, readStatus: false},
           {transaction: transaction});
-        return Promise.resolve();
+        return Promise.resolve(); // promise resolve??
       }
 
     /********************************************************************

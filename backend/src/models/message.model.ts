@@ -23,8 +23,7 @@ import { MessageThread } from './messageThread.model';
     messageId: number;
     messageThreadId: number;
     senderId: number;
-    body: string; // check
-    createdAt: Date;
+    body: string;
     readStatus: boolean;
   }
 
@@ -35,6 +34,7 @@ import { MessageThread } from './messageThread.model';
     public static associations: {
       users: Association<Message, User>,
       messageThread: Association<Message, MessageThread>,
+      message: Association<Message, User> // delete this
 
     };
     // for message thread
@@ -53,8 +53,7 @@ import { MessageThread } from './messageThread.model';
     messageId!: number;
     messageThreadId!: number;
     senderId!: number;
-    body!: string; // check
-    createdAt!: Date;
+    body!: string;
     readStatus!: boolean;
 
       public static initialize(sequelize: Sequelize) {
@@ -76,11 +75,6 @@ import { MessageThread } from './messageThread.model';
                   type: DataTypes.STRING,
                   allowNull: false
               },
-              createdAt: {
-                  type: DataTypes.DATE,
-                  allowNull: false,
-                  defaultValue: Date.now
-              },
               readStatus: {
                   type: DataTypes.BOOLEAN,
                   allowNull: false,
@@ -98,6 +92,7 @@ import { MessageThread } from './messageThread.model';
       public static createAssociations() {
         Message.belongsTo(User, {
           foreignKey: 'userId',
+          // targetKey: 'messageId',
           as: 'messages'
         });
 
