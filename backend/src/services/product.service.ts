@@ -117,7 +117,6 @@ export class ProductService {
   public static updateProduct(userId: number, product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     product.rejectionMessage = null;
     product.isAccepted = false;
-
     return this.isUserSeller(userId, product)
     .then(() => AddressService.addressDoesExist(address))
     .then((existingAddress: Address) => {
@@ -143,7 +142,11 @@ export class ProductService {
     if they are not the same.
   */
   private static isUserSeller(userId: number, product: ProductAttributes): Promise<void> {
-    if (userId === product.sellerId) { return Promise.resolve(); } else { return Promise.reject(new UserIsNotSellerError(product)); }
+    if (userId === product.sellerId) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject(new UserIsNotSellerError(product));
+    }
   }
 
   /*

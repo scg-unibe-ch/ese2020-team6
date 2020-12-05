@@ -1,4 +1,5 @@
 node_modules/
 *.sqlite
-backend/assets/*picture
+backend/assets/*
+!backend/assets/.gitkeep
 *.sh

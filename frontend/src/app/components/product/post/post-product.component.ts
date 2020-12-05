@@ -102,9 +102,22 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   public onSubmit(form: NgForm): void {
     if (form.valid) {
       if (this.isUpdate) {
-        this.productService.updateProduct(this, this.productId).subscribe(
+        const formData = new FormData();
+        formData.append('picture', this.picture);
+        formData.append('category', form.value.category);
+        formData.append('description', form.value.description);
+        formData.append('expirationDate', form.value.expirationDate);
+        formData.append('isDeliverable', form.value.isDeliverableString);
+        formData.append('offerType', form.value.offerType);
+        formData.append('price', form.value.price);
+        formData.append('productType', form.value.productType);
+        formData.append('subcategory', form.value.subcategory);
+        formData.append('title', form.value.title);
+        const addressString = JSON.stringify(form.value.address);
+        formData.append('address', addressString);
+        this.httpClient.put<any>(environment.endpointURL + 'product/update/' + this.productId, formData).subscribe(
           (values) => this.success(),
-          (err) => {}
+          (err) => {console.log(err)}
         );
       } else {
         const formData = new FormData();
