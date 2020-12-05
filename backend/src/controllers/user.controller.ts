@@ -1,39 +1,15 @@
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { PreferenceController } from './preference.controller';
-import { verifyToken, checkForAuth } from '../middlewares/checkAuth';
+import { checkForAuth } from '../middlewares/checkAuth';
 import { UserAttributes, User } from '../models/user.model';
-import { AddressAttributes, Address } from '../models/address.model';
+import { AddressAttributes } from '../models/address.model';
 import { Token } from '../interfaces/token.interface';
+import { savePicture } from '../middlewares/multer';
 
 const userController: Router = express.Router();
 
-// multer for saving image
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function(req: Request, file: any, cb: any) {
-
-        cb(null, 'assets');
-    },
-    filename: function(req: Request, file: any, cb: any) {
-        cb(null, new Date().toISOString().replace(/:/, '-') + file.fieldname);
-    }
-});
-const fileFilter = (req: Request, file: any, cb: any) => {
-    if (file.mimetype === 'image/jpg' ||
-         file.mimetype === 'image/png' ||
-         file.mimetype === 'image/jpeg') {
-            cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
-userController.post('/register', upload.single('picture'),
+userController.post('/register', savePicture.single('picture'),
     (req: any, res: Response) => {
       req.body.address = JSON.parse(req.body.address);
       req.body.picture = req.file.path;
