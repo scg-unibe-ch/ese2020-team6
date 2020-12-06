@@ -17,6 +17,9 @@ import { Subcategory } from './models/subcategory.model';
 import { ItemRented } from './models/item-rented.model';
 import { ItemSold } from './models/item-sold.model';
 import { ServiceRented } from './models/service-rented.model';
+import { Message } from './models/message.model';
+import { MessageThread } from './models/messageThread.model';
+import { MessageThreadParticipants } from './models/messageThreadParticipants.model';
 
 export class Server {
     private server: Application;
@@ -38,6 +41,9 @@ export class Server {
         ItemSold.initialize(this.sequelize);
         ItemRented.initialize(this.sequelize);
         ServiceRented.initialize(this.sequelize);
+        Message.initialize(this.sequelize);
+        MessageThread.initialize(this.sequelize);
+        MessageThreadParticipants.initialize(this.sequelize);
 
         User.createAssociations();
         Product.createAssociations();
@@ -49,6 +55,9 @@ export class Server {
         ItemSold.createAssociations();
         ItemRented.createAssociations();
         ServiceRented.createAssociations();
+        Message.createAssociations();
+        MessageThread.createAssociations();
+        MessageThreadParticipants.createAssociations();
 
         Category.createCategories();
 

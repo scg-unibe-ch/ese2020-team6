@@ -34,8 +34,6 @@ import { MessageThread } from './messageThread.model';
     public static associations: {
       users: Association<Message, User>,
       messageThread: Association<Message, MessageThread>,
-      message: Association<Message, User> // delete this
-
     };
     // for message thread
     public getProducts!: HasManyGetAssociationsMixin<Product>;
@@ -92,7 +90,6 @@ import { MessageThread } from './messageThread.model';
       public static createAssociations() {
         Message.belongsTo(User, {
           foreignKey: 'userId',
-          // targetKey: 'messageId',
           as: 'messages'
         });
 

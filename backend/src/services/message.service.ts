@@ -7,7 +7,7 @@ import { User } from '../models/user.model';
 
 export class MessageService {
 
-  public static saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
+  public static saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<Message> {
     if (roleOfSender === 'buyer') {
         this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
         .then((messageThread: MessageThread) => {
@@ -21,8 +21,13 @@ export class MessageService {
     } else {
         return Promise.reject('Messgae has not been saved');
     }
-    return Promise.resolve();
-}
+    return Message.findOne({ // find with messageId
+      where: {
+        body: body,
+        senderId: senderId
+      }
+    });
+  }
 
     /***********************
         Getter methods

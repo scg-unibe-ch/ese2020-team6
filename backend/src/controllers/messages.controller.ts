@@ -1,7 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import {Message} from '../models/message.model';
 import {MessageThread} from '../models/messageThread.model';
-import {MessageThreadParticipants} from '../models/messageThreadParticipants.model';
 import { handleError } from '../errors/status.error';
 import { verifyToken } from '../middlewares/checkAuth';
 import { MessageService } from '../services/message.service';
@@ -34,4 +33,14 @@ messageController.get('/message/thread/messages/:threadId', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-// saveMesssage
+messageController.post('/message/send', verifyToken,
+     (req: Request, res: Response) => {
+        const body: string = req.body.body;
+        const productId: number = parseInt(req.body.productId, 10);
+        const roleOfSender: string = req.body.roleOfSender;
+        const senderId: number = parseInt(req.body.userId, 10);
+        let response: string;
+        MessageService.saveMessages(body, productId, roleOfSender, senderId)
+        .then((message: Message) => res.send(message))
+        .catch((err: any) => handleError(err, res));
+     });

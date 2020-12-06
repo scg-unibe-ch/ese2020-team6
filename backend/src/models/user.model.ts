@@ -180,7 +180,7 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
       });
 
       User.hasMany(Message, {
-        foreignKey: 'messageId', // error entsteht hier
+        foreignKey: 'senderId', // error entsteht hier
         sourceKey: 'userId',
         as: 'messages'
       });
