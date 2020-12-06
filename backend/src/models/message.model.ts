@@ -42,7 +42,7 @@ import {
               },
                 messageThreadId: {
                     type: DataTypes.INTEGER,
-                    primaryKey: true
+                    // primaryKey: true
               },
               senderId: {
                   type: DataTypes.INTEGER,
