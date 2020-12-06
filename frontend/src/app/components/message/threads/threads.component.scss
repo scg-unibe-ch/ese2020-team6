@@ -34,7 +34,24 @@
       grid-gap: $spaceing-xs;
       overflow-y: auto;
 
-      .thread-button {
+      .thread {
+        display: grid;
+        grid-template-columns: $spaceing-xl auto;
+        grid-gap: $spaceing-s;
+        padding: $spaceing-xs;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: all .1s ease-out;
+
+        .profile-picture {
+          max-height: $spaceing-xl;
+        }
+
+        .username {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
       }
     }
   }

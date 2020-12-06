@@ -27,8 +27,13 @@ export class Thread implements ThreadModel {
     this.sortMessages();
   }
 
+  get hasMessages(): boolean {
+    return this.length > 0;
+  }
+
   get canSendMessage(): boolean {
     if (this.currentSenderId === this.product.sellerId) return true;
+    else if (this.messages.length === 0 && this.isAccepted === false) return true;
     else return this.isAccepted;
   }
 
@@ -41,7 +46,7 @@ export class Thread implements ThreadModel {
   }
 
   get latestMessage(): Message {
-    return this.messages[0]
+    return this.messages[this.length-1]
   }
 
   get length(): number {
@@ -97,7 +102,7 @@ export class Thread implements ThreadModel {
 
 
   public merge(thread: Thread): void {
-    if (this.messageThreadId) {
+    if (this.messageThreadId && this.hasMessages) {
       let latestOldMessageId = this.latestMessage.messageId;
       let newMessageIds = thread.getMessagesIds();
       if (latestOldMessageId) {
@@ -110,11 +115,11 @@ export class Thread implements ThreadModel {
 
   private setThread(thread: Thread): void {
     this.messageThreadId = thread.messageThreadId;
-    this.currentSenderId = thread.currentSenderId;
     this.product = thread.product;
     this.participants = thread.participants;
     this.isAccepted = thread.isAccepted;
     this.messages = thread.messages;
+    this.sortMessages();
   }
 
   /*

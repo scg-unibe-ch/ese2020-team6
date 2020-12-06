@@ -7,6 +7,7 @@ import { SuccessLoader } from 'src/app/services/service.module';
 import { User } from 'src/app/models/user/user.model';
 import { MessageService } from 'src/app/services/message/message.service';
 import { CutUser } from 'src/app/models/user/cut-user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'messages',
@@ -14,6 +15,8 @@ import { CutUser } from 'src/app/models/user/cut-user.model';
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit, AfterViewChecked{
+
+  public endpointUrl = environment.endpointURL;
   public senderId: number;
 
   private _thread: Thread = NullThread.instance();
@@ -21,7 +24,6 @@ export class MessagesComponent implements OnInit, AfterViewChecked{
   set thread(thread: Thread) {
     if (thread) {
       if (this.senderId) thread.setCurrentSender(this.senderId);
-      console.log(thread)
       this._thread = thread;
     }
   }

@@ -1,6 +1,9 @@
 <div class="messages-wrapper-wrapper" theme>
   <div class="receiver">
+    <img class="profile-picture" [src]="receiver.picture ? endpointUrl + receiver.picture : ''">
+    <div class="username">
       {{ receiver.userName }}
+    </div>
   </div>
   <div class="display">
     <loader [loader]="messageService">
@@ -17,8 +20,8 @@
     </loader>
   </div>
   <div class="answer">
-    <app-text-area  name="answer" placeholder="Enter Message"
+    <app-text-area  name="answer" [placeholder]="!thread.canSendMessage ? 'Thread is not accepted yet!' : 'Enter Message'"
     rows="1" ngModel #answer="ngModel" messageValidator></app-text-area>
-    <button class="" button theme (click)="sendMessage(answer)">Send</button>
+    <button class="" button theme (click)="sendMessage(answer)" [disabled]="!thread.canSendMessage">Send</button>
   </div>
 </div>

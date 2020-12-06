@@ -19,7 +19,20 @@
   .receiver {
     font-size: 1.7em;
     line-height: 1em;
-    margin: 0;
+    display: grid;
+    grid-template-columns: 2em auto;
+    grid-gap: $spaceing-s;
+    border-radius: $border-radius;
+
+    .profile-picture {
+      max-height: 2em;
+    }
+
+    .username {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
   }
 
 
