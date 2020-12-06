@@ -2,7 +2,6 @@ import { NgModel } from '@angular/forms';
 import { Component, Input, ElementRef, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Thread, NullThread } from 'src/app/models/message/thread.model';
-import { Message } from 'src/app/models/message/message.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { SuccessLoader } from 'src/app/services/service.module';
 import { User } from 'src/app/models/user/user.model';
@@ -10,11 +9,11 @@ import { MessageService } from 'src/app/services/message/message.service';
 import { CutUser } from 'src/app/models/user/cut-user.model';
 
 @Component({
-  selector: 'message-content',
-  templateUrl: './message-content.component.html',
-  styleUrls: ['./message-content.component.scss']
+  selector: 'messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.scss']
 })
-export class MessageContentComponent implements OnInit, AfterViewChecked{
+export class MessagesComponent implements OnInit, AfterViewChecked{
   public senderId: number;
 
   private _thread: Thread = NullThread.instance();
@@ -22,6 +21,7 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
   set thread(thread: Thread) {
     if (thread) {
       if (this.senderId) thread.setCurrentSender(this.senderId);
+      console.log(thread)
       this._thread = thread;
     }
   }
@@ -35,7 +35,7 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
   constructor(
     private snackBar: MatSnackBar,
     private userService: UserService,
-    private messageService: MessageService
+    public messageService: MessageService
   ) {
     this.userService.subscribe(new SuccessLoader((user: User) => {
       this.senderId = user.userId;
@@ -71,16 +71,6 @@ export class MessageContentComponent implements OnInit, AfterViewChecked{
     try {
       this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
     } catch(err) { }
-  }
-
-  public messageClasses(message: Message): Array<string> {
-    let classes: Array<string> = ['message'];
-    classes.push(message.senderId === this.senderId ? 'sent' : 'response');
-    return classes;
-  }
-
-  public formatCreatedAt(message: Message): string {
-    return message.fromatCreatedAt;
   }
 
   get receiver(): CutUser {

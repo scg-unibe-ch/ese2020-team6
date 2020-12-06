@@ -1,5 +1,5 @@
 @import 'variables';
-@import './message-threads.component.theme.scss';
+@import './threads.component.theme.scss';
 
 @each $theme-name in $theme-names {
     @include threads-theme($theme-name);

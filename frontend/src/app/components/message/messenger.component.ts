@@ -5,11 +5,11 @@ import { Threads, NullThreads } from 'src/app/models/message/threads.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 
 @Component({
-  selector: 'messages',
-  templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.scss']
+  selector: 'messenger',
+  templateUrl: './messenger.component.html',
+  styleUrls: ['./messenger.component.scss']
 })
-export class MessagesComponent implements OnInit {
+export class MessengerComponent implements OnInit {
 
   public currentThread: Thread = NullThread.instance();
   public threads: Threads = NullThreads.instance();

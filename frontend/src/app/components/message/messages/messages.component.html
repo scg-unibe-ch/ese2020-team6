@@ -1,0 +1,24 @@
+<div class="messages-wrapper-wrapper" theme>
+  <div class="receiver">
+      {{ receiver.userName }}
+  </div>
+  <div class="display">
+    <loader [loader]="messageService">
+      <div success class="no-messages" *ngIf="thread.messages.length === 0; else messages">
+        No messages in this thread.
+      </div>
+      <ng-template success #messages>
+        <div class="messages-wrapper">
+          <div class="messages" #messagesElement>
+            <message *ngFor="let message of thread.messages" [message]="message" [senderId]="senderId"></message>
+          </div>
+        </div>
+      </ng-template>
+    </loader>
+  </div>
+  <div class="answer">
+    <app-text-area  name="answer" placeholder="Enter Message"
+    rows="1" ngModel #answer="ngModel" messageValidator></app-text-area>
+    <button class="" button theme (click)="sendMessage(answer)">Send</button>
+  </div>
+</div>

@@ -118,9 +118,6 @@ import { OrderCardListComponent } from './components/order/display/card/list/ord
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
-import { MessagesComponent } from './components/message/messages.component';
-import { MessageThreadsComponent } from './components/message/threads/message-threads.component';
-import { MessageContentComponent } from './components/message/content/message-content.component';
 import { CardModule } from './components/card/card.module';
 import { ThemeModule } from './models/theme/theme.module';
 import { LogoComponent } from './components/icons/logo/logo.component';
@@ -129,6 +126,7 @@ import { PlusComponent } from './components/icons/plus/plus.component';
 import { IconComponent } from './components/icons/logo/icon/icon.component';
 import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
 import { MessageModule } from './components/message/message.module';
+import { LoaderModule } from './components/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -193,8 +191,6 @@ import { MessageModule } from './components/message/message.module';
     OrderCardGridComponent,
     OrderCardListComponent,
     OrderCardDirective,
-    LoaderComponent,
-    LoadingIndicatorComponent,
     LogoComponent,
     SixComponent,
     PlusComponent,
@@ -223,7 +219,8 @@ import { MessageModule } from './components/message/message.module';
     CardModule,
     CustomFormModule,
     ThemeModule,
-    MessageModule
+    MessageModule,
+    LoaderModule
   ],
   providers: [
     {

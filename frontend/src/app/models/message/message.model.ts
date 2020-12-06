@@ -35,14 +35,29 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
     this._thread = thread;
   }
 
+  /*
+    Builds a request from a Message. The request is accepted by the backend on
+    the endpointURL '/message/send'.
+  */
   public request(): SendMessageRequest {
+    if (!this._thread) throw new Error('No Thread set!');
     return new SendMessageRequest(this.body, this._thread.product.productId);
   }
 
+  /*
+    Formats the createdAt date to:
+    dd. mmm. hh:mm
+    whrere mmm is the abbreviation of the month in tree letters.
+  */
   get fromatCreatedAt(): string {
     return Message.messageDateFormat.format(this.createdAt).split(',').join('');
   }
 
+  /*
+    Builds a Message from a message response model.
+
+    Can be used in transformation of a Http response.
+  */
   public static buildFromMessageResponseModel(message: MessageResponseModel): Message {
     return new Message(
       message.senderId,
@@ -53,13 +68,21 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
     )
   }
 
+  /*
+    Builds a Message from a body and a sender.
+  */
   public static buildFromBodyAndCutUser(body: string, sender: number | CutUser): Message {
     let senderId: number = sender instanceof CutUser ? (sender as CutUser).userId : (sender as number);
     return new Message(senderId, body, new Date(), false);
   }
 
-  public static compare: (msgOne: Message, msgTwo: Message) => number = (messageOne: Message, messageTwo: Message) => {
-    return messageOne.compare(messageTwo);
+  /*
+    Compares two messages with a static method.
+
+    Cang be used to sort arrays. See method below.
+  */
+  public static compare(msgOne: Message, msgTwo: Message): number {
+    return msgOne.compare(msgTwo);
   }
 
   /*
@@ -100,16 +123,16 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
 }
 
 
-export class NullThread extends Message {
-  private static _instance: NullThread;
+export class NullMessage extends Message {
+  private static _instance: NullMessage;
 
   constructor() {
     super(null, null, new Date(), null);
   }
 
-  public static instance(): NullThread {
-    if (!NullThread._instance) NullThread._instance = new NullThread();
-    return NullThread._instance;
+  public static instance(): NullMessage {
+    if (!NullMessage._instance) NullMessage._instance = new NullMessage();
+    return NullMessage._instance;
   }
 
 }

@@ -3,15 +3,16 @@ import { ValuePartialLoader, LoaderObservable } from '../../services/service.mod
 
 @Component({
   selector: 'loader',
-  templateUrl: './loader.component.html'
+  templateUrl: './loader.component.html',
+  styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent {
 
 
-  private _loaded: boolean = false;
-  private _loading: boolean = true;
-  private _fail: boolean = false;
-  private _success: boolean = true;
+  public loaded: boolean = false;
+  public loading: boolean = true;
+  public fail: boolean = false;
+  public success: boolean = true;
 
   @Input()
   set loader(loader: LoaderObservable<any, any>) {
@@ -19,31 +20,23 @@ export class LoaderComponent {
   }
 
   public onSuccess = () => {
-    this._fail = false;
-    this._success = true;
+    this.fail = false;
+    this.success = true;
   }
   public onFail = () => {
-    this._fail = true;
-    this._success = false;
+    this.fail = true;
+    this.success = false;
   }
   public onLoading = () => {
-    this._loaded = false;
-    this._loading = true;
+    this.loaded = false;
+    this.loading = true;
   }
   public onLoaded = (success: boolean) => {
-    /*  Uncomment the follwoing and comment out the next four lines of code
-        for a demo of the loader. */
-    /*
-    setTimeout(()=>{
-      this._loaded = true;
-      this._loading = false;
-      this._success = success;
-      this._fail = !success
-    }, 2000)*/
-    this._loaded = true;
-    this._loading = false;
-    this._success = success;
-    this._fail = !success
+    this.loaded = true;
+    this.loading = false;
+    if (!success) {
+      this.onFail();
+    }
   }
 
   private fullLoader = new ValuePartialLoader(
@@ -52,10 +45,5 @@ export class LoaderComponent {
     this.onLoading,
     this.onLoaded
   )
-
-  get loading(): boolean { return this._loading }
-  get loaded(): boolean { return this._loaded }
-  get fail(): boolean { return this._fail }
-  get success(): boolean { return this._success }
 
 }

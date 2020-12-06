@@ -1,0 +1,4 @@
+<div class="messenger">
+  <threads [threads]="threads" [currentThread]="currentThread" (threadEmitter)="showThread($event)"></threads>
+  <messages [thread]="currentThread"></messages>
+</div>

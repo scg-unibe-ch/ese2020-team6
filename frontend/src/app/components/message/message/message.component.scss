@@ -1,0 +1,86 @@
+@import 'variables';
+@import './message.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include message-theme($theme-name);
+}
+
+$width: $spaceing-s;
+$height: $border-radius;
+
+.message {
+  position: relative;
+  max-width: 80%;
+  display: grid;
+  grid-template-rows: auto min-content;
+  grid-gap: $spaceing-xs;
+  padding: $spaceing-xs;
+  border-radius: $border-radius;
+  word-wrap: break-word;
+  word-break: break-all;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: $height;
+    width: $width;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: $height;
+    width: $width;
+  }
+
+  &.sent {
+    justify-self: flex-end;
+    border-bottom-right-radius: 0;
+
+    &::before {
+      right: - $width;
+    }
+
+    &::after {
+      right: - $width;
+      border-bottom-left-radius: $border-radius;
+    }
+  }
+
+  &.response {
+    justify-self: flex-start;
+    border-bottom-left-radius: 0;
+
+    &::before {
+      left: - $width;
+    }
+
+    &::after {
+      left: - $width;
+      border-bottom-right-radius: $border-radius;
+    }
+
+    .info {
+      .read-status {
+        grid-column: 2 / 3;
+      }
+    }
+  }
+
+  .info {
+    font-size: .6em;
+    line-height: 1em;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    grid-gap: $spaceing-xs;
+
+    .read-status {
+      height: 1em;
+      width: 1em;
+      border-radius: 50%;
+    }
+  }
+}

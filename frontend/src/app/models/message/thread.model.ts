@@ -27,6 +27,11 @@ export class Thread implements ThreadModel {
     this.sortMessages();
   }
 
+  get canSendMessage(): boolean {
+    if (this.currentSenderId === this.product.sellerId) return true;
+    else return this.isAccepted;
+  }
+
   private sortMessages(): void {
     this.messages.sort(Message.compare);
   }

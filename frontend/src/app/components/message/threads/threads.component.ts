@@ -7,11 +7,11 @@ import { User } from 'src/app/models/user/user.model';
 import { CutUser } from 'src/app/models/user/cut-user.model';
 
 @Component({
-  selector: 'message-threads',
-  templateUrl: './message-threads.component.html',
-  styleUrls: ['./message-threads.component.scss']
+  selector: 'threads',
+  templateUrl: './threads.component.html',
+  styleUrls: ['./threads.component.scss']
 })
-export class MessageThreadsComponent {
+export class ThreadsComponent {
 
   private senderId: number;
   private _threads: Threads = NullThreads.instance();

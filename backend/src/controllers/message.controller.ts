@@ -78,7 +78,7 @@ messageController.get('/thread', verifyToken,
                 value[0],
                 value[1]
               ],
-              isAccepted: true
+              isAccepted: false
             },
             {
               messageThreadId: 2,
@@ -89,7 +89,7 @@ messageController.get('/thread', verifyToken,
                 value[0],
                 value[1]
               ],
-              isAccepted: true
+              isAccepted: false
             }
           ];
           res.send(tmp);

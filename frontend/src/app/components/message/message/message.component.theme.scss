@@ -1,0 +1,37 @@
+@mixin message-theme($theme-name) {
+  .message.#{$theme-name} {
+
+    $bg: get-theme($theme-name, shady);
+    $answer-bg: get-theme($theme-name, dark);
+    $text-color: get-theme($theme-name, bright);
+    $message-bg: get-theme($theme-name, light);
+    $message-color: get-theme($theme-name, dark);
+    $messenger-bg: get-theme($theme-name, shady);
+    $read-color: get-theme($theme-name, highlight);
+    $unread-color: get-theme($theme-name, warn);
+
+    background: $message-bg;
+    color: $message-color;
+
+
+    &::before {
+      background-color: $message-bg;
+    }
+
+    &::after {
+      background-color: $messenger-bg;
+    }
+
+    .info {
+      .read-status {
+        &.read {
+          background: $read-color;
+        }
+
+        &.unread {
+          background: $unread-color;
+        }
+      }
+    }
+  }
+}
