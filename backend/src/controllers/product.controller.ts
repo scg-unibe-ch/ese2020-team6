@@ -23,7 +23,7 @@ productController.post('/post', savePicture.single('picture'), verifyToken ,
     }
 );
 
-productController.get('/all', verifyToken, verifyIsAdmin,
+productController.get('/all', verifyIsAdmin,
     (req: Request, res: Response) => {
         ProductService.getAllProducts()
         .then((products: Array<ProductAttributes>) => res.send(products))
@@ -50,7 +50,7 @@ productController.delete('/delete/:productId', verifyToken,
     }
 );
 
-productController.get('/unreviewed', verifyToken, verifyIsAdmin,
+productController.get('/unreviewed', verifyIsAdmin,
     (req: Request, res: Response) => {
         ProductService.getAllUnreviewedProducts()
         .then((products: Array<ProductAttributes>) => res.send(products))
@@ -66,7 +66,7 @@ productController.get('/accepted',
     }
 );
 
-productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
+productController.put('/accept/:productId', verifyIsAdmin,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
         ProductService.acceptProduct(productId)
@@ -75,7 +75,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
+productController.put('/reject/:productId', verifyIsAdmin,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
@@ -108,7 +108,7 @@ productController.put('/update/:productId', savePicture.single('picture'), verif
     }
 );
 
-    productController.get('/unreviewd/count', verifyToken, verifyIsAdmin,
+    productController.get('/unreviewd/count', verifyIsAdmin,
     (req: Request, res: Response) => {
         ProductService.getUnreviewdProductsCount()
         .then((amountOfUnreviewd: number) => res.send({amountOfUnreviewd: amountOfUnreviewd}))

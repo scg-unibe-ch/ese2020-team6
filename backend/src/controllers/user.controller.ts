@@ -6,6 +6,7 @@ import { UserAttributes, User } from '../models/user.model';
 import { AddressAttributes } from '../models/address.model';
 import { Token } from '../interfaces/token.interface';
 import { savePicture } from '../middlewares/multer';
+import { handleError } from '../errors/status.error';
 
 const userController: Router = express.Router();
 
@@ -15,21 +16,18 @@ userController.post('/register', savePicture.single('picture'),
       req.body.picture = req.file.path;
       const user: UserAttributes = req.body;
       const address: AddressAttributes = req.body.address;
-        UserService.register(user, address).then((registeredUser: User) => res.send(registeredUser)).catch((err: any) => {
-          if (err.status) {
-            res.status(err.status);
-          } else {
-            res.status(500);
-          }
-          res.send(err);
-        });
+        UserService.register(user, address)
+        .then((registeredUser: User) => res.send(registeredUser))
+        .catch((err: any) => handleError(err, res));
     }
 );
 
 userController.post('/login',
     (req: Request, res: Response) => {
-        req.body.token = new Token(req.headers.authorization);
-        UserService.login(req.body).then(login => res.send(login)).catch((err: any) => res.status(500).send(err));
+        req.body.token = Token.parse(req.headers.authorization);
+        UserService.login(req.body)
+        .then(login => res.send(login))
+        .catch((err: any) => handleError(err, res));
     }
 );
 

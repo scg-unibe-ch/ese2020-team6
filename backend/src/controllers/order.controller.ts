@@ -13,7 +13,9 @@ import { handleError } from '../errors/status.error';
 
 const orderController: Router = express.Router();
 
- orderController.put('/item/buy', verifyToken,
+orderController.use(verifyToken);
+
+orderController.put('/item/buy',
  (req: Request, res: Response) => {
      req.body.paymentMethod = 'wallet';
 
@@ -28,7 +30,7 @@ const orderController: Router = express.Router();
    }
 );
 
-orderController.put('/item/rent', verifyToken,
+orderController.put('/item/rent',
     (req: Request, res: Response) => {
       req.body.paymentMethod = 'wallet';
 
@@ -43,7 +45,7 @@ orderController.put('/item/rent', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-orderController.put('/service/rent', verifyToken,
+orderController.put('/service/rent',
     (req: Request, res: Response) => {
 
       const buyerId: number = req.body.tokenPayload.userId;
@@ -56,7 +58,7 @@ orderController.put('/service/rent', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-orderController.get('/buyer', verifyToken,
+orderController.get('/buyer',
   (req: Request, res: Response) => {
     const buyerId: number = req.body.tokenPayload.userId;
     OrderService.getMyOrders(buyerId).then((orders: Array<Order>) => res.send(orders))
@@ -64,7 +66,7 @@ orderController.get('/buyer', verifyToken,
   }
 );
 
-orderController.get('/seller', verifyToken,
+orderController.get('/seller',
   (req: Request, res: Response) => {
     const sellerId: number = req.body.tokenPayload.userId;
     OrderService.getMyProductOrders(sellerId).then((orders: Array<Order>) => res.send(orders))

@@ -51,8 +51,8 @@ export class LoginUserService extends LoaderObservable<UserTokenModel, UserToken
   }
   public logout(): void {
     this.removeUserFromLocalStorage()
-    .then(() => this.navigateToLogin())
     .then(() => this.removeUser())
+    .then(() => this.navigateToLogin())
     .then(() => this.isLoggedIn = false);
   }
 

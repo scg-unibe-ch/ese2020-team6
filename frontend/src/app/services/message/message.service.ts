@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoaderObservable, ValueUnloaderCascade, ValueLoader } from '../service.module';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Threads, NullThreads } from 'src/app/models/message/threads.model';
 import { UserService } from '../user/user.service';
 

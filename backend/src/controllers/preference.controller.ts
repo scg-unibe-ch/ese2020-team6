@@ -5,14 +5,16 @@ import { PreferenceAttributes } from '../models/preference.model';
 const preferenceController: Router = express.Router();
 const preferenceService: PreferenceService = new PreferenceService();
 
-preferenceController.get('/get', verifyToken, (req: Request, res: Response) => {
+preferenceController.use(verifyToken);
+
+preferenceController.get('/get', (req: Request, res: Response) => {
   const userId: number = req.body.tokenPayload.userId;
   preferenceService.getPreferences(userId)
   .then((preferences: PreferenceAttributes) => res.send(preferences))
   .catch((err: any) => res.status(500).send(err));
 });
 
-preferenceController.put('/set', verifyToken, (req: Request, res: Response) => {
+preferenceController.put('/set', (req: Request, res: Response) => {
   const userId: number = req.body.tokenPayload.userId;
   const newPreferences: PreferenceAttributes = req.body;
   preferenceService.setPreferences(userId, newPreferences)
