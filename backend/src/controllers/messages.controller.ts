@@ -33,3 +33,5 @@ messageController.get('/message/thread/messages/:threadId', verifyToken,
         .then((messages: Array<Message>) => res.send(messages))
         .catch((err: any) => handleError(err, res));
 });
+
+// saveMesssage

@@ -1,13 +1,28 @@
-// import {MessageService} from "../controllers/messages.controller"
-import {Message, MessageCreationAttributes} from '../models/message.model';
+import {Message } from '../models/message.model';
 import {MessageThread, MessageThreadCreationAttributes, MessageThreadAttributes} from '../models/messageThread.model';
 import {MessageThreadParticipants} from '../models/messageThreadParticipants.model';
-import { Transaction, Op, Association } from 'sequelize';
-import { Sequelize, where } from 'sequelize/types';
+import { Transaction } from 'sequelize';
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
-import { User, UserAttributes } from '../models/user.model';
+import { User } from '../models/user.model';
 
 export class MessageService {
+
+  public static saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
+    if (roleOfSender === 'buyer') {
+        this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
+        .then((messageThread: MessageThread) => {
+        this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body); });
+    } else if (roleOfSender === 'sender') {
+      this.getMessageThreadIdByProductId(productId)
+      .then((messageThread: MessageThread) => {
+        this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body);
+        this.setMessageThreadToAccepted(productId);
+      });
+    } else {
+        return Promise.reject('Messgae has not been saved');
+    }
+    return Promise.resolve();
+}
 
     /***********************
         Getter methods
@@ -26,13 +41,6 @@ export class MessageService {
              (messageThreadParticipant: MessageThreadParticipants) => messageThreadParticipant.getMessageThread()
          )));
      }
-     /*messageThread.findAll({
-         where:{
-          '$MessageThreadParticipats.messageThreadParticipantId$' : userId
-         },
-         include: [association: MessageThread.association.messageThreadParticipant]
-     })
-     */
 
     public static getProductThread(productId: number): Promise<Array<MessageThread>> {
         return MessageThread.findAll({
@@ -42,40 +50,14 @@ export class MessageService {
         });
     }
 
-    public static async getMessageThreadIdByProductId(productId: number): Promise<number> {
-        const messageThread = await MessageThread.findOne({
+    public static getMessageThreadIdByProductId(productId: number): Promise<MessageThread> {
+        return MessageThread.findOne({
             where: {
                 productId: productId
             }
         });
-        return messageThread.messageThreadId;
     }
-/* Unused method
 
-    public static createMessageThread(messageThread: MessageThreadCreationAttributes): Promise<MessageThread> {
-        return MessageThread.create(messageThread);
-      }
-*/
-
-    /*public static async  saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<void> {
-        if (roleOfSender === 'buyer') {
-            this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId);
-            const threadId = await this.getMessageThreadIdByProductId(productId);
-            this.getMessageThreadIdByProductId(productId) // more than one thread for a product
-            .then((messageThreadId: number) => messageThreadId = threadId)
-            .catch((err: any) => Promise.reject()); // handle error better
-            this.insertMessageInMessageThread(threadId, senderId, body);
-        } else if (roleOfSender === 'sender') {
-          const threadId = await this.getMessageThreadIdByProductId(productId);
-            this.insertMessageInMessageThread(threadId, senderId, body);
-            this.setMessageThreadToAccepted(productId);
-        } else {
-            return Promise.reject();
-        }
-
-        return Promise.resolve();
-    }
-*/
      /************************
         Setter helper methods
     *************************/
@@ -103,7 +85,7 @@ export class MessageService {
         transaction?: Transaction): Promise<void> {
         Message.create({messageThreadId: messageThreadId, senderId: senderId, body: text, readStatus: false},
           {transaction: transaction});
-        return Promise.resolve(); // promise resolve??
+        return Promise.resolve();
       }
 
     /********************************************************************
