@@ -180,7 +180,7 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
       });
 
       User.hasMany(Message, {
-        foreignKey: 'senderId', // error entsteht hier
+        foreignKey: 'senderId',
         sourceKey: 'userId',
         as: 'messages'
       });
@@ -188,7 +188,7 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
       User.hasMany(MessageThreadParticipants, {
         sourceKey: 'userId',
         foreignKey: 'participantId',
-        as: 'messagethreadparticipants'
+        as: 'messagethreadparticipantids'
       });
     }
 

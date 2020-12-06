@@ -2,23 +2,13 @@ import {
     Sequelize,
     Model,
     DataTypes,
-    HasManyGetAssociationsMixin,
-    HasManyAddAssociationMixin,
-    HasManyHasAssociationMixin,
     Association,
-    HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin,
     Optional,
     BelongsToGetAssociationMixin
   } from 'sequelize';
 
-  // check imports
-
   import { User } from './user.model';
-  import { Product } from './product.model';
-  import { ItemSold } from './item-sold.model';
-  import { ItemRented } from './item-rented.model';
-import { MessageThread } from './messageThread.model';
+  import { MessageThread } from './messageThread.model';
 
   export interface MessageThreadParticipantsAttributes {
     messageThreadId: number;
@@ -34,18 +24,6 @@ import { MessageThread } from './messageThread.model';
       users: Association<MessageThreadParticipants, User>,
       messageThread: Association<MessageThreadParticipants, MessageThread>,
     };
-    // for message thread
-    public getProducts!: HasManyGetAssociationsMixin<Product>;
-    public addProduct!: HasManyAddAssociationMixin<Product, number>;
-    public hasProducts!: HasManyHasAssociationMixin<Product, number>;
-    public countProducts!: HasManyCountAssociationsMixin;
-    public createProduct!: HasManyCreateAssociationMixin<Product>;
-
-    public getUsers!: HasManyGetAssociationsMixin<User>;
-    public addUser!: HasManyAddAssociationMixin<User, number>;
-    public hasUsers!: HasManyHasAssociationMixin<User, number>;
-    public countUsers!: HasManyCountAssociationsMixin;
-    public createUser!: HasManyCreateAssociationMixin<User>;
 
     public getMessageThread!: BelongsToGetAssociationMixin<MessageThread>;
 
@@ -72,9 +50,9 @@ import { MessageThread } from './messageThread.model';
       public static createAssociations() {
 
          MessageThreadParticipants.belongsTo(User, {
-           targetKey: 'participantId',
+           targetKey: 'userId',
            foreignKey: 'userId',
-           as: 'messagethreadparticipants'
+           as: 'messagethreadparticipantids'
          });
 
          MessageThreadParticipants.belongsTo(MessageThread, {

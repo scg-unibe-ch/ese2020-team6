@@ -173,7 +173,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
       Product.hasMany(MessageThread, {
         sourceKey: 'productId',
         foreignKey: 'messageThreadId',
-        as: 'messagethreads'
+        as: 'productmessagethreads'
       });
     }
 

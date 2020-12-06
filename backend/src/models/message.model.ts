@@ -2,22 +2,13 @@ import {
     Sequelize,
     Model,
     DataTypes,
-    HasManyGetAssociationsMixin,
-    HasManyAddAssociationMixin,
-    HasManyHasAssociationMixin,
     Association,
-    HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin,
     Optional
   } from 'sequelize';
 
-  // check imports
 
   import { User } from './user.model';
-  import { Product } from './product.model';
-  import { ItemSold } from './item-sold.model';
-  import { ItemRented } from './item-rented.model';
-import { MessageThread } from './messageThread.model';
+  import { MessageThread } from './messageThread.model';
 
   export interface MessageAttributes {
     messageId: number;
@@ -35,18 +26,6 @@ import { MessageThread } from './messageThread.model';
       users: Association<Message, User>,
       messageThread: Association<Message, MessageThread>,
     };
-    // for message thread
-    public getProducts!: HasManyGetAssociationsMixin<Product>;
-    public addProduct!: HasManyAddAssociationMixin<Product, number>;
-    public hasProducts!: HasManyHasAssociationMixin<Product, number>;
-    public countProducts!: HasManyCountAssociationsMixin;
-    public createProduct!: HasManyCreateAssociationMixin<Product>;
-
-    public getUsers!: HasManyGetAssociationsMixin<User>;
-    public addUser!: HasManyAddAssociationMixin<User, number>;
-    public hasUsers!: HasManyHasAssociationMixin<User, number>;
-    public countUsers!: HasManyCountAssociationsMixin;
-    public createUser!: HasManyCreateAssociationMixin<User>;
 
     messageId!: number;
     messageThreadId!: number;
@@ -95,7 +74,7 @@ import { MessageThread } from './messageThread.model';
 
         Message.belongsTo(MessageThread, {
           foreignKey: 'messageThreadId',
-          as: 'messages'
+          as: 'messagethreads'
         });
       }
   }

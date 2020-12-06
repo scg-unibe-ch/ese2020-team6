@@ -2,18 +2,10 @@ import {
     Sequelize,
     Model,
     DataTypes,
-    HasManyGetAssociationsMixin,
-    HasManyAddAssociationMixin,
-    HasManyHasAssociationMixin,
     Association,
-    HasManyCountAssociationsMixin,
-    HasManyCreateAssociationMixin,
     Optional
   } from 'sequelize';
 
-  // check imports
-
-  import { User } from './user.model';
   import { Product } from './product.model';
   import { MessageThreadParticipants } from './messageThreadParticipants.model';
   import { Message } from './message.model';
@@ -67,13 +59,13 @@ import {
 
         MessageThread.belongsTo(Product, {
           targetKey: 'productId',
-          as: 'messagethreads'
+          as: 'productmessagethreads'
         });
 
         MessageThread.hasMany(MessageThreadParticipants, {
           sourceKey: 'messageThreadId',
-          foreignKey: 'messageThreatParticipantId',
-          as: 'messagethreads'
+          foreignKey: 'messageThreadId',
+          as: 'messagethreadparticipants'
         });
 
         MessageThread.hasMany(Message, {
