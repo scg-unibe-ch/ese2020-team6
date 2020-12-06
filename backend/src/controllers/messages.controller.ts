@@ -7,7 +7,7 @@ import { MessageService } from '../services/message.service';
 
 const messageController: Router = express.Router();
 
-messageController.get('/message/thread/product/:productId', verifyToken,
+messageController.get('/thread/product/:productId', verifyToken,
 (req: Request, res: Response) => {
         const productId: number = parseInt(req.body.productId, 10); // body udr params?
         MessageService.getProductThread(productId)
@@ -16,7 +16,7 @@ messageController.get('/message/thread/product/:productId', verifyToken,
 });
 
 
-messageController.get('/message/thread', verifyToken,
+messageController.get('/thread', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = parseInt(req.body.userId, 10); // body udr params
         MessageService.getMessageThreadsByUserId(userId)
@@ -24,7 +24,7 @@ messageController.get('/message/thread', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-messageController.get('/message/thread/messages/:threadId', verifyToken,
+messageController.get('/thread/messages/:threadId', verifyToken,
     (req: Request, res: Response) => {
         const threadId: number = parseInt(req.body.threadId, 10); // body udr params
         MessageService.getMessagesByThreadId(threadId)
@@ -32,7 +32,7 @@ messageController.get('/message/thread/messages/:threadId', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-messageController.post('/message/send', verifyToken,
+messageController.post('/send', verifyToken,
      (req: Request, res: Response) => {
         const body: string = req.body.body;
         const productId: number = parseInt(req.body.productId, 10);

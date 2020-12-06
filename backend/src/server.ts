@@ -20,6 +20,7 @@ import { ServiceRented } from './models/service-rented.model';
 import { Message } from './models/message.model';
 import { MessageThread } from './models/messageThread.model';
 import { MessageThreadParticipants } from './models/messageThreadParticipants.model';
+import { MessageController } from './controllers/messages.controller';
 
 export class Server {
     private server: Application;
@@ -91,6 +92,7 @@ export class Server {
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/product', ProductController)
+            .use('/message', MessageController)
             .options('*', cors(options))
             .use('/assets', express.static('assets'))
             // this is the message you get if you open http://localhost:3000/ when the server is running
