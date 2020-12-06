@@ -4,27 +4,25 @@ import {MessageThreadParticipants} from '../models/messageThreadParticipants.mod
 import { Transaction } from 'sequelize';
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
 import { User } from '../models/user.model';
+import { promises } from 'fs';
 
 export class MessageService {
 
   public static saveMessages(body: string, productId: number, roleOfSender: string, senderId: number): Promise<Message> {
     if (roleOfSender === 'buyer') {
-        this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
+        return this.findOrCreateMessageThread({productId: productId, isAccepted: false}, senderId)
         .then((messageThread: MessageThread) =>
-        this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body)
-        .then((message: Message) => {
-          return message;
-        }));
-    } else if (roleOfSender === 'sender') {
-      this.getMessageThreadIdByProductId(productId)
+        this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body));
+        } else if (roleOfSender === 'sender') {
+      return this.getMessageThreadIdByProductId(productId)
       .then((messageThread: MessageThread) => {
-        this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body)
-        .then((message: Message) => {
-          return message;
-        });
-        this.setMessageThreadToAccepted(productId); });
+        return Promise.all([
+          this.insertMessageInMessageThread(messageThread.messageThreadId, senderId, body),
+          this.setMessageThreadToAccepted(productId)
+        ]); })
+        .then(([message, messageThread]: [Message, MessageThread]) => Promise.resolve(message));
     } else {
-        return Promise.reject('Messgae has not been saved');
+        return Promise.reject('Message has not been saved');
     }
   }
 
