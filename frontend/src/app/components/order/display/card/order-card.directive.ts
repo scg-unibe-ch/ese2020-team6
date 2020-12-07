@@ -1,12 +1,12 @@
 import { Directive , Input } from '@angular/core';
-import { Order } from '../../../../models/order/order.model';
+import { Order, NullOrder } from '../../../../models/order/order.model';
 
 @Directive({
   selector: '[appOrderCard]'
 })
 export class OrderCardDirective {
 
-  private _order: Order = Order.NullOrder;
+  private _order: Order = NullOrder.instance();
   @Input()
   set order(order: Order) {
     this._order = order;

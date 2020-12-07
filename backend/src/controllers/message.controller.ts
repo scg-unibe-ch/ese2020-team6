@@ -1,85 +1,46 @@
 import express, { Router, Request, Response } from 'express';
+import {Message} from '../models/message.model';
+import {MessageThread} from '../models/messageThread.model';
+import { handleError } from '../errors/status.error';
 import { verifyToken } from '../middlewares/checkAuth';
-import { UserService } from '../services/user.service';
-import { ProductService } from '../services/product.service';
+import { MessageService } from '../services/message.service';
 
 const messageController: Router = express.Router();
-let tmp: any;
-let add1Id = 1;
-const add1: Array<any> = [];
-let accepted = false;
-const add2Id = 3;
-const add2: Array<any> = [
-  {
-    messageId: 1,
-    messageThreadId: 1,
-    senderId: 1,
-    body: 'Some Message for second thread',
-    createdAt: new Date(),
-    readStatus: false
-  },
-  {
-    messageId: 2,
-    messageThreadId: 1,
-    senderId: 2,
-    body: 'Some Other Message for second thread',
-    createdAt: new Date(),
-    readStatus: false
-  }
-];
 
-messageController.post('/send', verifyToken,
-  (req: Request, res: Response) => {
-    accepted = true;
-    add1.push({
-      messageId: add1Id++,
-      messageThreadId: 1,
-      senderId: req.body.tokenPayload.userId,
-      body: req.body.body,
-      createdAt: new Date(),
-      readStatus: false
-    });
-    console.log(add1);
-    res.send();
-  }
-);
+messageController.get('/thread/product/:productId', verifyToken,
+(req: Request, res: Response) => {
+        const productId: number = req.body.productId;
+        MessageService.getProductThread(productId)
+        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
+        .catch((err: any) => handleError(err, res));
+});
+
 
 messageController.get('/thread', verifyToken,
     (req: Request, res: Response) => {
-        const userId: number = parseInt(req.body.tokenPayload.userId, 10);
-        Promise.all([
-          UserService.getUserById(userId),
-          UserService.getUserById(2),
-          ProductService.getProductById(2),
-        ]).then(value => {
-        console.log(add1);
-          tmp = [
-            {
-              messageThreadId: 1,
-              productId: 1,
-              product: value[2],
-              messages: add1,
-              participants: [
-                value[0],
-                value[1]
-              ],
-              isAccepted: accepted
-            },
-            {
-              messageThreadId: 2,
-              productId: 1,
-              product: value[2],
-              messages: add2,
-              participants: [
-                value[0],
-                value[1]
-              ],
-              isAccepted: false
-            }
-          ];
-          res.send(tmp);
-        });
+        const userId: number = req.body.tokenPayload.userId;
+        MessageService.getMessageThreadsByUserId(userId)
+        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
+        .catch((err: any) => handleError(err, res));
 });
 
+messageController.get('/thread/messages/:threadId', verifyToken,
+    (req: Request, res: Response) => {
+        const threadId: number = parseInt(req.params.threadId, 10);
+        MessageService.getMessagesByThreadId(threadId)
+        .then((messages: Array<Message>) => res.send(messages))
+        .catch((err: any) => handleError(err, res));
+});
+
+messageController.post('/send', verifyToken,
+     (req: Request, res: Response) => {
+        const body: string = req.body.body;
+        const productId: number = req.body.productId;
+        const senderId: number = req.body.tokenPayload.userId;
+        const theradId: number = req.body.messageThreadId;
+        MessageService.saveMessage(body, productId, senderId, theradId)
+        .then((message: Message) => res.send(message))
+        .catch((err: any) => handleError(err, res));
+});
 
 export const MessageController: Router = messageController;

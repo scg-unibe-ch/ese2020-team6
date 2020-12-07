@@ -11,30 +11,38 @@ import {
   import { MessageThread } from './messageThread.model';
 
   export interface MessageThreadParticipantsAttributes {
+    messageThreadParticipantId: number;
     messageThreadId: number;
     participantId: number;
   }
 
-  export interface MessageThreadParticipantsCreationAttributes extends Optional<MessageThreadParticipantsAttributes, 'messageThreadId'> { }
+  export interface MessageThreadParticipantsCreationAttributes extends Optional<MessageThreadParticipantsAttributes, 'messageThreadParticipantId'> { }
 
   export class MessageThreadParticipants extends Model<MessageThreadParticipantsAttributes, MessageThreadParticipantsCreationAttributes>
     implements MessageThreadParticipantsAttributes {
 
     public static associations: {
-      users: Association<MessageThreadParticipants, User>,
-      messageThread: Association<MessageThreadParticipants, MessageThread>,
+      user: Association<MessageThreadParticipants, User>,
+      thread: Association<MessageThreadParticipants, MessageThread>,
     };
 
-    public getMessageThread!: BelongsToGetAssociationMixin<MessageThread>;
+    public getThread!: BelongsToGetAssociationMixin<MessageThread>;
+    public getUser!: BelongsToGetAssociationMixin<User>;
 
+    messageThreadParticipantId!: number;
     messageThreadId!: number;
     participantId!: number;
 
       public static initialize(sequelize: Sequelize) {
           MessageThreadParticipants.init({
-                messageThreadId: {
-                    type: DataTypes.INTEGER,
-                    primaryKey: true
+              messageThreadParticipantId: {
+                  type: DataTypes.INTEGER,
+                  primaryKey: true,
+                  autoIncrement: true
+              },
+              messageThreadId: {
+                  type: DataTypes.INTEGER,
+                  allowNull: false
               },
               participantId: {
                   type: DataTypes.INTEGER,
@@ -51,12 +59,12 @@ import {
 
          MessageThreadParticipants.belongsTo(User, {
            targetKey: 'userId',
-           foreignKey: 'userId',
-           as: 'messagethreadparticipantids'
+           foreignKey: 'participantId',
+           as: 'user'
          });
 
          MessageThreadParticipants.belongsTo(MessageThread, {
           foreignKey: 'messageThreadId',
-          as: 'messagethreadparticipants'
+          as: 'thread'
         });
     }}

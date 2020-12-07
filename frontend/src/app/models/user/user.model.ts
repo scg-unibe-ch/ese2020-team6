@@ -2,6 +2,7 @@ import { AddressModel, NullAddress, Address } from '../map/address/address.model
 import { Equality } from '../compare/equality';
 import { Is } from '../compare/is';
 import { CutUser } from './cut-user.model';
+import { environment } from 'src/environments/environment';
 
 export interface UserModel {
   userId: number;
@@ -21,10 +22,6 @@ export interface UserModel {
 
 export class User implements UserModel {
 
-
-  public static NullUser: User = new User(null, null, null, null, null, null,
-    null, null, null, null, null, new NullAddress(), null);
-
   constructor(
     public userId: number,
     public firstName: string,
@@ -40,6 +37,11 @@ export class User implements UserModel {
     public address: Address,
     public picture: string
   ) { }
+
+  get pictureUrl(): string {
+    if (this.picture) return environment.endpointURL + this.picture;
+    else return undefined;
+  }
 
   public cutUser(): CutUser {
     return CutUser.buildFromUser(this);
@@ -101,4 +103,19 @@ export class User implements UserModel {
   public static isLoggedIn(user: User): boolean {
     return User.isUser(user);
   }
+}
+
+export class NullUser extends User {
+  private static _instance: NullUser;
+
+  constructor() {
+    super(null, null, null, null, null, null,
+      null, null, null, null, null, NullAddress.instance(), null);
+  }
+
+  public static instance(): NullUser {
+    if (!NullUser._instance) NullUser._instance = new NullUser();
+    return NullUser._instance;
+  }
+
 }

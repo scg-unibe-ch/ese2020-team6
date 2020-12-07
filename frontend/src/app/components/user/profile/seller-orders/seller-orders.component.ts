@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileNavigationElementModel } from 'src/app/models/user/profile/navigation-element/profile-navigation-element.model';
-import { UserModel } from 'src/app/models/user/user.model';
-import { ProductModel } from 'src/app/models/product/product.model';
 import { OrderService } from 'src/app/services/order/order.service';
-import { UserService } from 'src/app/services/user/user.service';
-import { Orders } from 'src/app/models/order/order.model';
+import { Orders, NullOrders } from 'src/app/models/order/order.module';
 
 @Component({
   selector: 'seller-orders',
@@ -13,7 +10,7 @@ import { Orders } from 'src/app/models/order/order.model';
 })
 export class SellerOrdersComponent implements OnInit {
 
-  private _orders: Orders = Orders.NullOrders;
+  private _orders: Orders = NullOrders.instance();
   set orders(orders: Orders) {
     this._orders = orders;
   }
@@ -25,8 +22,7 @@ export class SellerOrdersComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private route: ActivatedRoute,
-    private userService: UserService
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {

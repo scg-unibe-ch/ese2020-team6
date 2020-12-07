@@ -16,7 +16,7 @@ import { StagableExtention } from './stagable/stagable-extention';
 export class CheckoutComponent implements OnInit {
 
   public product: ProductModel = NullProduct.instance();
-  public seller: CutUserModel = new NullCutUser();
+  public seller: CutUserModel = NullCutUser.instance();
 
   public errorMessage: string;
 

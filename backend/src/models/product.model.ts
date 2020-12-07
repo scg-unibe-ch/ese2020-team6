@@ -37,6 +37,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
       orders: Association<Product, Order>;
       address: Association<Product, Address>;
       user: Association<Product, User>;
+      threads: Association<Product, MessageThread>;
     };
 
     public getSeller!: BelongsToGetAssociationMixin<User>;
@@ -171,9 +172,8 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
       });
 
       Product.hasMany(MessageThread, {
-        sourceKey: 'productId',
-        foreignKey: 'messageThreadId',
-        as: 'productmessagethreads'
+        foreignKey: 'productId',
+        as: 'threads'
       });
     }
 

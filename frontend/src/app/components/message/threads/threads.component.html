@@ -5,7 +5,7 @@
   <div class="threads-wrapper">
     <div class="threads">
       <div class="thread" *ngFor="let thread of threads; index as i;" (click)="showThread(thread)">
-        <img class="profile-picture" [src]="endpointUrl + receiver(thread).picture">
+        <img class="profile-picture" [src]="receiver(thread).pictureUrl">
         <div class="username">
           {{ receiver(thread).userName }}
         </div>

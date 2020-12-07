@@ -1,5 +1,5 @@
-import { Address, AddressModel } from '../map/address/address.model';
-import { UserModel, User } from '../user/user.model';
+import { Address, AddressModel, NullAddress } from '../map/address/address.model';
+import { UserModel, NullUser } from '../user/user.model';
 import { CutUserModel, NullCutUser } from '../user/cut-user.model';
 import { Product, NullProduct } from '../product/product.model';
 
@@ -33,7 +33,7 @@ export interface HoursOrderModelExtention extends PaymentMethodOrderModelExtenti
 
 export class Order implements OrderModel {
 
-  public static NullOrder: Order = new Order(null,null,new NullCutUser(), null, User.NullUser, null, NullProduct.instance());
+  public static NullOrder: Order = new Order(null,null,NullCutUser.instance(), null, NullUser.instance(), null, NullProduct.instance());
 
   constructor(
     public orderId: number,
@@ -99,38 +99,16 @@ export class Order implements OrderModel {
   }
 }
 
-export interface OrdersModel {
-  orders: Array<OrderModel>;
-}
+export class NullOrder extends Order {
+  private static _instance: NullOrder;
 
-export class Orders implements OrdersModel, IterableIterator<Order> {
-
-  public static NullOrders: Orders = new Orders(new Array<Order>());
-
-  constructor(
-    public orders: Array<Order>
-  ) {
+  constructor() {
+    super(null, null, NullCutUser.instance(), null, NullUser.instance(), null,
+    NullProduct.instance(), null, NullAddress.instance(), null);
   }
 
-  public next(): IteratorResult<Order> {
-    return this.orders[Symbol.iterator]().next();
-  }
-
-  [Symbol.iterator](): IterableIterator<Order> {
-    return this.orders[Symbol.iterator]();;
-  }
-
-  public static buildFromOrderModels(orderModels: Array<OrderModel>): Orders {
-    return new Orders(orderModels.map((orderModel: OrderModel) => {
-      return Order.buildFromOrderModel(orderModel);
-    }))
-  }
-
-  get hasOrders(): boolean {
-    return this.orders.length > 0
-  }
-
-  public toString = () : string => {
-    return this.orders.join(' ');
+  public static instance(): NullOrder {
+    if (!NullOrder._instance) NullOrder._instance = new NullOrder();
+    return NullOrder._instance;
   }
 }

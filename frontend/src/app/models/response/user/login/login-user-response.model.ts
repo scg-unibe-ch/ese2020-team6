@@ -1,5 +1,5 @@
 //Models
-import { UserModel, User } from '../../../user/user.model';
+import { UserModel, User, NullUser } from '../../../user/user.model';
 
 export type LoginUserResponseModel = LoginUserResponseUserModel | UserTokenModel;
 
@@ -10,7 +10,7 @@ export interface UserTokenModel {
 }
 
 export class NullUserTokenModel implements UserTokenModel {
-  public user: UserModel = User.NullUser;
+  public user: UserModel = NullUser.instance();
   public token: string = null;
 }
 

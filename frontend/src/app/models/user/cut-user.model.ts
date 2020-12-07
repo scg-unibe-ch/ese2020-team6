@@ -1,6 +1,7 @@
 import { UserModel, User } from './user.model';
 import { Is } from '../compare/is';
 import { Equality } from '../compare/equality';
+import { environment } from 'src/environments/environment';
 
 export interface CutUserModel extends Pick<UserModel, 'userName' | 'email' | 'userId' | 'picture'> {}
 
@@ -21,8 +22,13 @@ export class CutUser implements CutUserModel {
     )
   }
 
+  get pictureUrl(): string {
+    if (this.picture) return environment.endpointURL + this.picture;
+    else return undefined;
+  }
+
   public static buildFromUser(user: User): CutUser {
-    return this.buildFromCutUserModel(user as CutUser);
+    return this.buildFromCutUserModel(user as unknown as CutUser);
   }
 
   public toString = () => this.userName;

@@ -107,17 +107,16 @@ export class Address implements AddressModel {
 }
 
 export class NullAddress extends Address {
-  streetName: string = null;
-  streetType: string = null;
-  addressNumber: string = null;
-  streetAddress: string = null;
-  neighbourhood: string = null;
-  city: string = null;
-  region: string = null;
-  postal: number = null;
-  country: string = null;
+  private static _instance: NullAddress;
 
   constructor() {
-    super(null, null, null, null, null, null, null, null, null)
+    super(null, null, null, null, null, null,
+      null, null, null);
   }
+
+  public static instance(): NullAddress {
+    if (!NullAddress._instance) NullAddress._instance = new NullAddress();
+    return NullAddress._instance;
+  }
+
 }

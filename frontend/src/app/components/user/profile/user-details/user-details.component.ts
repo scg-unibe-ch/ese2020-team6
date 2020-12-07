@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
-import { UserModel, User } from '../../../../models/user/user.model';
+import { UserModel, User, NullUser } from '../../../../models/user/user.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 import { environment } from 'src/environments/environment';
 
@@ -14,14 +14,14 @@ export class UserDetailsComponent implements OnInit {
   public endpointUrl = environment.endpointURL;
 
   public picture: string;
-  public user: UserModel = User.NullUser;
+  public user: User = NullUser.instance();
 
   constructor(
     private userService: UserService,
   ) {}
 
   public ngOnInit(): void {
-    this.userService.subscribe(new SuccessLoader((user: UserModel) => {
+    this.userService.subscribe(new SuccessLoader((user: User) => {
       this.user = user;
       this.picture = user.picture;
     }));

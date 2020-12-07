@@ -11,7 +11,7 @@ export class ShippingComponent extends StageNDEExtention<Address> {
 
   public isHomeAddress: boolean = true;
   public isHomeAddressApproved: boolean = false;
-  public address: Address = new NullAddress();
+  public address: Address = NullAddress.instance();
 
   constructor() {
     super();

@@ -1,7 +1,7 @@
 <div class="content-wrapper" theme>
   <div class="upper-section">
     <div class="picture" *ngIf="!isPreview, else prev">
-      <img class="profile-picture" [src]="endpointUrl + product.picture">
+      <img class="profile-picture" [src]="product.pictureUrl">
     </div>
     <ng-template class="picture" #prev>
       <img src={{picture}} alt="">
@@ -13,9 +13,9 @@
       <div>
         <div class="btnColor">Created By
           <br>
-          <div class="disableColor">{{creator.userName}}</div>
+          <div class="disableColor">{{seller.userName}}</div>
         </div>
-        <img class="profile-picture" [src]="endpointUrl + creator.picture">
+        <img class="profile-picture" [src]="seller.pictureUrl">
       </div>
     </div>
     <div class="information btnColor">

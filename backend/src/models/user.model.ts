@@ -44,8 +44,8 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
       products: Association<User, Product>,
       preference: Association<User, Preference>,
       address: Association<User, Address>,
-      message: Association<User, Message>,
-      messageThreadParticipant: Association<User, MessageThreadParticipants>
+      messages: Association<User, Message>,
+      threads: Association<User, MessageThreadParticipants>
     };
 
     public getOrdersSold!: HasManyGetAssociationsMixin<Order>;
@@ -66,9 +66,8 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
     public countProducts!: HasManyCountAssociationsMixin;
     public createProduct!: HasManyCreateAssociationMixin<Order>;
 
-    public getMessageThreadsByUserId!: HasManyGetAssociationsMixin<Message>; // bruchts dä??
-
-    public getMessageThreadParticipants!: HasManyGetAssociationsMixin<MessageThreadParticipants>; // -> Array<MessageThreadParticipants>
+    public getMessages!: HasManyGetAssociationsMixin<Message>;
+    public getThreads!: HasManyGetAssociationsMixin<MessageThreadParticipants>;
 
     userId!: number;
     firstName!: string;
@@ -181,14 +180,12 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
 
       User.hasMany(Message, {
         foreignKey: 'senderId',
-        sourceKey: 'userId',
         as: 'messages'
       });
 
       User.hasMany(MessageThreadParticipants, {
-        sourceKey: 'userId',
         foreignKey: 'participantId',
-        as: 'messagethreadparticipantids'
+        as: 'threads'
       });
     }
 

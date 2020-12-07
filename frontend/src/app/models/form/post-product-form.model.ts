@@ -11,7 +11,7 @@ export class NullPostProductForm implements PostProductFormModel {
   title: string = null;
   description: string = null;
   price: number = null;
-  address: AddressModel = new NullAddress();
+  address: AddressModel = NullAddress.instance();
   category: string = null;
   subcategory: string = null;
   isDeliverableString: string = null;

@@ -1,13 +1,13 @@
 import { MessageResponseModel } from './message-response.model';
+import { ParticpantResponseModel } from './participant-response.model';
 import { ThreadModel } from '../../message/thread.model';
 import { Is } from '../../compare/is'
-import { UserModel } from '../../user/user.model';
 import { ProductModel } from '../../product/product.model';
 
 export interface ThreadResponseModel extends Omit<ThreadModel, 'messages' | 'participants' | 'product'> {
   product: ProductModel;
   productId: number
-  participants: [UserModel, UserModel];
+  participants: [ParticpantResponseModel, ParticpantResponseModel];
   messages: Array<MessageResponseModel>;
 }
 
@@ -17,7 +17,7 @@ export class ThreadResponse implements ThreadResponseModel {
     public messageThreadId: number,
     public productId: number,
     public product: ProductModel,
-    public participants: [UserModel, UserModel],
+    public participants: [ParticpantResponseModel, ParticpantResponseModel],
     public isAccepted: boolean,
     public messages: Array<MessageResponseModel>
   ) {}

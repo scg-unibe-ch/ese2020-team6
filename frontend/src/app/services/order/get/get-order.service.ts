@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { GetService } from '../../get-service';
-import { environment } from '../../../../environments/environment';
 
-import { Orders, OrderModel } from '../../../models/order/order.model';
+import { Orders, OrderModel } from '../../../models/order/order.module';
 
 import { transformOrder } from '../../../models/operator/order.operator';
 import { transformAddress } from '../../../models/operator/address.operator';

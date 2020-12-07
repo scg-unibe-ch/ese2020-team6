@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
-import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads } from 'src/app/models/operator/index.module';
+import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads, defaultEmpty } from 'src/app/models/operator/index.module';
 
 
 @Injectable({
@@ -62,6 +62,7 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
 
 
   protected postProcess(threadsPromise: Promise<Threads>): Promise<Threads> {
+    threadsPromise.then(console.log)
     return threadsPromise.then((threads: Threads) => Promise.resolve(this.loadedThreads.mergeAndRetreive(threads)));
   }
 
@@ -80,7 +81,7 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
     let threadsRequestObservable = this.httpClient
     .get(environment.endpointURL + 'message/thread')
     .pipe(
-      transformUser(), transformAddress(), transformMessage(),
+      defaultEmpty(NullThreads.instance()), transformUser(), transformAddress(), transformMessage(),
       transfromThread(), transfromThreads()
     );
     this.setSource(threadsRequestObservable);

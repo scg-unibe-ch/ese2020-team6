@@ -1,5 +1,5 @@
 import { Observable} from 'rxjs';
-import { Orders, OrderModel } from '../order/order.model';
+import { Orders, OrderModel } from '../order/order.module';
 
 export function transformOrder(source: Observable<Array<OrderModel>>): Observable<Orders> {
   return new Observable(subscriber => {

@@ -1,4 +1,4 @@
-<app-product-details [product]="product" [creator]="creator">
+<app-product-details [product]="product" [seller]="seller">
   <button (click)="togglePurchase()" *ngIf="isForSale; else isForRent" theme button >Buy</button>
   <ng-template #isForRent>
       <button theme button (click)="togglePurchase()">Rent</button>

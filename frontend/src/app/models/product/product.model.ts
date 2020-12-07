@@ -1,4 +1,5 @@
 import { AddressModel, NullAddress } from '../map/address/address.model';
+import { environment } from 'src/environments/environment';
 
 export interface ProductModel {
   productId: number;
@@ -38,6 +39,12 @@ export class Product implements ProductModel {
     public rejectionMessage: string
   ) { }
 
+
+  get pictureUrl(): string {
+    if (this.picture) return environment.endpointURL + this.picture;
+    else return undefined;
+  }
+
   public toString = () : string => {
     return this.title;
   }
@@ -67,7 +74,7 @@ export class NullProduct extends Product {
   private static _instance: NullProduct;
 
   constructor() {
-    super(null, null, null, null, null, null, null, new NullAddress(), null, null, null, null, null, null, null);
+    super(null, null, null, null, null, null, null, NullAddress.instance(), null, null, null, null, null, null, null);
   }
 
   public static instance(): NullProduct {

@@ -1,4 +1,4 @@
-import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/response/response-model.module';
+import { ThreadResponseModel, MessageResponseModel, ParticpantResponseModel } from 'src/app/models/response/response-model.module';
 import { Message } from './message.model';
 import { CutUser, CutUserModel, NullCutUser } from '../user/cut-user.model';
 import { Product, NullProduct } from '../product/product.model';
@@ -25,6 +25,10 @@ export class Thread implements ThreadModel {
   ) {
     this.messages = messages;
     this.sortMessages();
+  }
+
+  get hasId(): boolean {
+    return this.messageThreadId ? true : false;
   }
 
   get hasMessages(): boolean {
@@ -170,9 +174,11 @@ export class Thread implements ThreadModel {
     )
   }
 
-  private static buildParticipants(participants: Array<CutUserModel>): [CutUser, CutUser] {
+  private static buildParticipants(participants: Array<CutUser | ParticpantResponseModel>): [CutUser, CutUser] {
     if (participants.length !== 2) throw new Error('Thread has either less or more than two users!');
-    return [CutUser.buildFromCutUserModel(participants[0]), CutUser.buildFromCutUserModel(participants[1])];
+    if (participants[0] instanceof CutUser) return participants as [CutUser, CutUser];
+    return [CutUser.buildFromCutUserModel((participants[0] as ParticpantResponseModel).user),
+      CutUser.buildFromCutUserModel((participants[1] as ParticpantResponseModel).user)];
   }
 
   private static buildMessagesArray(messages: Array<MessageResponseModel>): Array<Message> {

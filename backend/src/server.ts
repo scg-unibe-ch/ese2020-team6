@@ -21,7 +21,6 @@ import { ServiceRented } from './models/service-rented.model';
 import { Message } from './models/message.model';
 import { MessageThread } from './models/messageThread.model';
 import { MessageThreadParticipants } from './models/messageThreadParticipants.model';
-import { MessageController } from './controllers/messages.controller';
 
 export class Server {
     private server: Application;

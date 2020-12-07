@@ -23,8 +23,8 @@ import {
   export class Message extends Model<MessageAttributes, MessageCreationAttributes> implements MessageAttributes {
 
     public static associations: {
-      users: Association<Message, User>,
-      messageThread: Association<Message, MessageThread>,
+      sender: Association<Message, User>,
+      thread: Association<Message, MessageThread>,
     };
 
     messageId!: number;
@@ -68,13 +68,14 @@ import {
 
       public static createAssociations() {
         Message.belongsTo(User, {
-          foreignKey: 'userId',
-          as: 'messages'
+          foreignKey: 'senderId',
+          targetKey: 'userId',
+          as: 'sender'
         });
 
         Message.belongsTo(MessageThread, {
           foreignKey: 'messageThreadId',
-          as: 'messagethreads'
+          as: 'thread'
         });
       }
   }

@@ -11,6 +11,6 @@ import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
 export class ProductInformationComponent {
   @Input() isPreview = false;
   @Input() product: ProductModel = NullProduct.instance();
-  @Input() creator: CutUserModel = new NullCutUser();
+  @Input() creator: CutUserModel = NullCutUser.instance();
   @Input() picture: any;
 }

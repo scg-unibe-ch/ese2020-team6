@@ -3,12 +3,12 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
 import { CutUserModel, NullCutUser } from 'src/app/models/user/cut-user.model';
-import { UserModel, User } from 'src/app/models/user/user.model';
+import { UserModel, NullUser } from 'src/app/models/user/user.model';
 export class ProductInformationBase {
 
   public product: ProductModel = NullProduct.instance();
-  public creator: CutUserModel = new NullCutUser();
-  public currentUser: UserModel = User.NullUser;
+  public seller: CutUserModel = NullCutUser.instance();
+  public currentUser: UserModel = NullUser.instance();
 
   constructor(
     protected route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class ProductInformationBase {
 
   private getCreator(creatorId: number): void {
     this.userService.getUserById(creatorId).subscribe((cutUser: CutUserModel) => {
-      this.creator = cutUser;
+      this.seller = cutUser;
       this.getCurrentUser();
     });
   }

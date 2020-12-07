@@ -7,7 +7,7 @@ import { OrderRequestBuilder } from '../../models/request/order/order-request-bu
 import { OrderRequestModel } from '../../models/request/order/order-request-model.module';
 import { OrderResponseModel } from '../../models/response/order/order-response-model.module';
 
-import { Orders } from '../../models/order/order.model';
+import { Orders } from '../../models/order/order.module';
 
 @Injectable({
   providedIn: 'root'

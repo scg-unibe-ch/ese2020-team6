@@ -3,7 +3,9 @@ import {
     Model,
     DataTypes,
     Association,
-    Optional
+    Optional,
+    HasManyGetAssociationsMixin,
+    HasManyCreateAssociationMixin
   } from 'sequelize';
 
   import { Product } from './product.model';
@@ -21,10 +23,14 @@ import {
   export class MessageThread extends Model<MessageThreadAttributes, MessageThreadCreationAttributes> implements MessageThreadAttributes {
 
     public static associations: {
-      message: Association<MessageThread, Message>,
-      products: Association<MessageThread, Product>,
-      messageThreadParticipants: Association<MessageThread, MessageThreadParticipants>
+      messages: Association<MessageThread, Message>,
+      product: Association<MessageThread, Product>,
+      participants: Association<MessageThread, MessageThreadParticipants>
     };
+
+    public getParticipants!: HasManyGetAssociationsMixin<MessageThreadParticipants>;
+    public createParticipant!: HasManyCreateAssociationMixin<MessageThreadParticipants>;
+    public createMessage!: HasManyCreateAssociationMixin<Message>;
 
     messageThreadId!: number;
     productId!: number;
@@ -58,19 +64,18 @@ import {
       public static createAssociations() {
 
         MessageThread.belongsTo(Product, {
-          targetKey: 'productId',
-          as: 'productmessagethreads'
+          foreignKey: 'productId',
+          as: 'product'
         });
 
         MessageThread.hasMany(MessageThreadParticipants, {
-          sourceKey: 'messageThreadId',
           foreignKey: 'messageThreadId',
-          as: 'messagethreadparticipants'
+          as: 'participants'
         });
 
         MessageThread.hasMany(Message, {
           foreignKey: 'messageThreadId',
-          as: 'messagethreads'
+          as: 'messages'
         });
       }
   }

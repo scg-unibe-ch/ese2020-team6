@@ -41,7 +41,13 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
   */
   public request(): SendMessageRequest {
     if (!this._thread) throw new Error('No Thread set!');
-    return new SendMessageRequest(this.body, this._thread.product.productId);
+    if (this._thread.hasId) {
+      return new SendMessageRequest(
+        this.body,
+        this._thread.product.productId,
+        this._thread.messageThreadId
+      );
+    } else return new SendMessageRequest(this.body, this._thread.product.productId);
   }
 
   /*
