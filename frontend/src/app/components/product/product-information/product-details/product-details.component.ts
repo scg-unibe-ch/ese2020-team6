@@ -8,6 +8,7 @@ import { MessageService } from 'src/app/services/message/message.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Threads } from 'src/app/models/message/threads.model';
 import { SuccessLoader } from 'src/app/services/service.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -15,6 +16,8 @@ import { SuccessLoader } from 'src/app/services/service.module';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent {
+
+  public endpointUrl = environment.endpointURL;
 
   public thread: Thread = NullThread.instance();
 

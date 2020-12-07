@@ -1,0 +1,6 @@
+<div class="tip-wrapper" [ngClass]="activated" (mouseenter)="activate()" (mouseleave)="deactivate()" theme>
+  <div #tipElement class="tip" [ngClass]="position">
+    {{ tip }}
+  </div>
+  <ng-content></ng-content>
+</div>

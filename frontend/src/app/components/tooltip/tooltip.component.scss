@@ -1,0 +1,38 @@
+@import 'variables';
+@import 'animations';
+@import 'tooltip.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include tooltip-theme($theme-name);
+}
+
+
+.tip-wrapper {
+  position: relative;
+  .tip {
+    position: absolute;
+    z-index: 100;
+    padding: .4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius;
+    font-size: $spaceing-xs;
+    line-height: 1em;
+    visibility: hidden;
+  }
+
+  &.activated {
+    .tip {
+      @include animation(0, .1s, fade-in, ease-in-out);
+    }
+  }
+
+  &.deactivated {
+    &.not-landed {
+      .tip {
+        @include animation(0, .1s, fade-out, ease-in-out);
+      }
+    }
+  }
+}

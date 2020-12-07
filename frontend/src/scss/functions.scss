@@ -3,6 +3,35 @@
   @return map-get($theme, $theme-color);
 }
 
+@function theme-dark($theme-name) {
+  @return get-theme($theme-name, 'dark');
+}
+
+@function theme-shady($theme-name) {
+  @return get-theme($theme-name, 'shady');
+}
+
+@function theme-accent($theme-name) {
+  @return get-theme($theme-name, 'accent');
+}
+
+@function theme-highlight($theme-name) {
+  @return get-theme($theme-name, 'highlight');
+}
+
+@function theme-light($theme-name) {
+  @return get-theme($theme-name, 'light');
+}
+
+@function theme-bright($theme-name) {
+  @return get-theme($theme-name, 'bright');
+}
+
+@function theme-warn($theme-name) {
+  @return get-theme($theme-name, 'warn');
+}
+
+
 @function to-unit($value) {
   @if type-of($value) != 'string' {
     @error 'Value for `to-unit` should be a string.';

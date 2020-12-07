@@ -69,8 +69,10 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
   public send(requestBuilder: RequestBuilder<SendMessageRequest>): Observable<Message> {
     let message = this.httpClient.post<MessageResponseModel>(environment.endpointURL + 'message/send', requestBuilder.request())
     .pipe(transformMessage());
-    message.subscribe(() => this.hasThreads = false);
-    this.getThreads();
+    message.subscribe(() => {
+      this.hasThreads = false;
+      this.getThreads();
+    });
     return message;
   }
 
@@ -81,7 +83,6 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
       transformUser(), transformAddress(), transformMessage(),
       transfromThread(), transfromThreads()
     );
-
     this.setSource(threadsRequestObservable);
   }
 

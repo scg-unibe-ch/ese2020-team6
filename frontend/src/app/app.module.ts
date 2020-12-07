@@ -116,8 +116,6 @@ import { OrderViewGridComponent } from './components/order/display/view/grid/ord
 import { OrderCardGridComponent } from './components/order/display/card/grid/order-card-grid.component';
 import { OrderCardListComponent } from './components/order/display/card/list/order-card-list.component';
 import { OrderCardDirective } from './components/order/display/card/order-card.directive';
-import { LoaderComponent } from './components/loader/loader.component';
-import { LoadingIndicatorComponent } from './components/loader/indicator/loading-indicator.component';
 import { CardModule } from './components/card/card.module';
 import { ThemeModule } from './models/theme/theme.module';
 import { LogoComponent } from './components/icons/logo/logo.component';
@@ -128,6 +126,7 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
 import { MessageModule } from './components/message/message.module';
 import { LoaderModule } from './components/loader/loader.module';
 import { NewMessagesComponent } from './components/user/profile/profile-navigation/popup/new-messages/new-messages.component';
+import { TooltipModule } from './components/tooltip/tooltip.module';
 
 @NgModule({
   declarations: [
@@ -222,7 +221,8 @@ import { NewMessagesComponent } from './components/user/profile/profile-navigati
     CustomFormModule,
     ThemeModule,
     MessageModule,
-    LoaderModule
+    LoaderModule,
+    TooltipModule
   ],
   providers: [
     {

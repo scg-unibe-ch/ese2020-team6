@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { SuccessLoader } from 'src/app/services/service.module';
 import { User } from 'src/app/models/user/user.model';
 import { CutUser } from 'src/app/models/user/cut-user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'threads',
@@ -12,6 +13,8 @@ import { CutUser } from 'src/app/models/user/cut-user.model';
   styleUrls: ['./threads.component.scss']
 })
 export class ThreadsComponent {
+
+  public endpointUrl = environment.endpointURL;
 
   private senderId: number;
   private _threads: Threads = NullThreads.instance();
@@ -50,5 +53,11 @@ export class ThreadsComponent {
 
   public receiver(thread: Thread): CutUser {
     return thread.receiver(this.senderId);
+  }
+
+  public threadClasses(thread: Thread): Array<string> {
+    let classes = ['thread'];
+    classes.push(thread.isAccepted ? 'accepted' : 'not-accepted');
+    return classes;
   }
 }

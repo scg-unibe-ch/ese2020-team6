@@ -40,7 +40,8 @@
 						],
 						"stylePreprocessorOptions": {
 		            "includePaths": [
-		              "src/scss"
+		              "src/scss",
+									"src/scss/mixins"
 		            ]
 		        },
 						"scripts": [],
@@ -120,7 +121,8 @@
 						],
 						"stylePreprocessorOptions": {
 		            "includePaths": [
-		              "src/scss"
+		              "src/scss",
+									"src/scss/mixins"
 		            ]
 		        },
 						"scripts": [],

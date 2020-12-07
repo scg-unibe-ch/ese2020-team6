@@ -10,6 +10,7 @@ import { ThreadsComponent } from './threads/threads.component';
 import { MessengerComponent } from './messenger.component';
 import { MessageComponent } from './message/message.component';
 import { LoaderModule } from '../loader/loader.module';
+import { TooltipModule } from '../tooltip/tooltip.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LoaderModule } from '../loader/loader.module';
     MessengerComponent,
   ],
   imports: [
+    TooltipModule,
     LoaderModule,
     CustomFormModule,
     ThemeModule,

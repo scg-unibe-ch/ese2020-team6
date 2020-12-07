@@ -5,26 +5,9 @@ import { ProductService } from '../services/product.service';
 
 const messageController: Router = express.Router();
 let tmp: any;
-let add1Id = 3;
-const add1: Array<any> = [
-  {
-    messageId: 1,
-    messageThreadId: 1,
-    senderId: 1,
-    body: 'Some Message',
-    createdAt: new Date(),
-    readStatus: false
-  },
-  {
-    messageId: 2,
-    messageThreadId: 1,
-    senderId: 2,
-    body: 'Some Other Message',
-    createdAt: new Date(),
-    readStatus: false
-  }
-];
-
+let add1Id = 1;
+const add1: Array<any> = [];
+let accepted = false;
 const add2Id = 3;
 const add2: Array<any> = [
   {
@@ -47,7 +30,7 @@ const add2: Array<any> = [
 
 messageController.post('/send', verifyToken,
   (req: Request, res: Response) => {
-    console.log(req.body);
+    accepted = true;
     add1.push({
       messageId: add1Id++,
       messageThreadId: 1,
@@ -56,6 +39,7 @@ messageController.post('/send', verifyToken,
       createdAt: new Date(),
       readStatus: false
     });
+    console.log(add1);
     res.send();
   }
 );
@@ -68,6 +52,7 @@ messageController.get('/thread', verifyToken,
           UserService.getUserById(2),
           ProductService.getProductById(2),
         ]).then(value => {
+        console.log(add1);
           tmp = [
             {
               messageThreadId: 1,
@@ -78,7 +63,7 @@ messageController.get('/thread', verifyToken,
                 value[0],
                 value[1]
               ],
-              isAccepted: false
+              isAccepted: accepted
             },
             {
               messageThreadId: 2,
