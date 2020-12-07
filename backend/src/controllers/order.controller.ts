@@ -1,8 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import { verifyToken } from '../middlewares/checkAuth';
-
 import { OrderService } from '../services/order.service';
-
 import { Order } from '../models/order.model';
 import { ItemSold } from '../models/item-sold.model';
 import { ItemRented } from '../models/item-rented.model';
@@ -12,7 +10,6 @@ import { AddressAttributes } from '../models/address.model';
 import { handleError } from '../errors/status.error';
 
 const orderController: Router = express.Router();
-
 orderController.use(verifyToken);
 
 orderController.put('/item/buy',

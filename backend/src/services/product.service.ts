@@ -3,9 +3,7 @@ import { Product, ProductAttributes, ProductCreationAttributes } from '../models
 import { Address, AddressAttributes } from '../models/address.model';
 import { AddressService } from './address.service';
 import { CO } from '../interfaces/orders.interface';
-
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
-import { UserAttributes } from '../models/user.model';
 import { UserIsNotSellerError, UserIsSellerError } from '../errors/user-seller.error';
 
 interface HasProductId extends Partial<ProductAttributes> {

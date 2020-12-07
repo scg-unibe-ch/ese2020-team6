@@ -1,7 +1,6 @@
-import { Transaction, Sequelize, Op } from 'sequelize';
-import { Category, CategoryAttributes } from '../models/category.model';
-import { Subcategory, SubcategoryAttributes } from '../models/subcategory.model';
-import { StatusError } from '../errors/status.error';
+import { Transaction } from 'sequelize';
+import { Category } from '../models/category.model';
+import { Subcategory } from '../models/subcategory.model';
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
 import { InstanceDoesAlreadyExistError } from '../errors/instance-does-already-exist.error';
 
