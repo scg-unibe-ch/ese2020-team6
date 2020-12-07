@@ -1,3 +1,4 @@
+import { NewMessagesComponent } from './profile-navigation/popup/new-messages/new-messages.component';
 import { ProfileNavigationElementModel } from 'src/app/models/user/profile/navigation-element/profile-navigation-element.model';
 import { PostProductComponent } from 'src/app/components/product/post/post-product.component';
 import { ApproveProductsComponent } from 'src/app/components/user/profile/approve-products/approve-products.component';
@@ -13,10 +14,9 @@ import { MessengerComponent } from 'src/app/components/message/messenger.compone
 
 
 export const defaultProfileComponent = 0;
-
 export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>  = [
   {
-    title: 'User Details',
+    title: 'User Detils',
     path: 'details',
     component: UserDetailsComponent,
     popupComponent: null
@@ -62,7 +62,13 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     path: 'seller',
     component: SellerOrdersComponent,
     popupComponent: null
-  }
+  },
+  {
+    title: 'New Messages',
+    path: 'messages',
+    component: MessengerComponent,
+    popupComponent: NewMessagesComponent
+   },
 ];
 
 export const adminNavigationElements: Array<ProfileNavigationElementModel> = new Array<ProfileNavigationElementModel>();
