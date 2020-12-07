@@ -1,7 +1,3 @@
-import { SelectCategoriesComponent } from './components/product/search-product/select-categories/select-categories.component';
-// --------------------------------------------------------------------------------- //
-
-
 
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
@@ -130,7 +126,7 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
 @NgModule({
   declarations: [
     AppComponent,
-    //Components
+    // Components
     HomeComponent,
     MenuBarComponent,
     LoginComponent,
@@ -181,7 +177,6 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
     RentItemComponent,
     DurationComponent,
     PurchaseServiceComponent,
-    SelectCategoriesComponent,
     SellerOrdersComponent,
     BuyerOrdersComponent,
     OrderViewComponent,
@@ -205,7 +200,7 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
     HttpClientModule,
     RouterModule.forRoot(routes), // gets its information from 'router/router.ts'
     NgbModule,
-    //Angular Material
+    // Angular Material
     MatButtonModule,
     MatListModule,
     MatMenuModule,
