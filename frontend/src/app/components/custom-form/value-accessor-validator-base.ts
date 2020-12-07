@@ -1,6 +1,6 @@
 import { Validator, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from './value-accessor-base';
-import { validate, ValidatorArray, AsyncValidatorArray, ValidationResult } from './validate';
+import { validate, ValidatorArray, AsyncValidatorArray } from './validate';
 import { Observable, of } from 'rxjs';
 import { map, reduce, share } from 'rxjs/operators';
 

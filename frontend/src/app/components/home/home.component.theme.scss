@@ -5,12 +5,21 @@
   $title-bg: map-get($theme, dark);
   $line-color: map-get($theme, warn);
   $text-color: map-get($theme, bright);
+  $bg: get-theme($theme-name, highlight);
   $plus-color: map-get($theme, highlight);
 
   .title-wrapper.#{$theme-name} {
 
     background: $title-bg;
     color: $text-color;
+
+    .title-background-wrapper {
+      .title-background {
+        div {
+          color: $bg;
+        }
+      }
+    }
 
     .title {
       &::before {
@@ -19,14 +28,6 @@
 
       .sub-header {
         color: rgba($text-color, .5);
-      }
-    }
-
-    .go-to-post {
-      .plus {
-        path {
-          fill: $plus-color;
-        }
       }
     }
   }

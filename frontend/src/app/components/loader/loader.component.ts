@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OnLoad } from '../../services/on-load';
+import { ValuePartialLoader, LoaderObservable } from '../../services/service.module';
 
 @Component({
   selector: 'loader',
@@ -8,32 +8,42 @@ import { OnLoad } from '../../services/on-load';
 })
 export class LoaderComponent {
 
-  public _loaded: boolean = false;
-  public _loadError: boolean = false;
-  private _loader: OnLoad<any>;
+
+  public loaded: boolean = false;
+  public loading: boolean = true;
+  public fail: boolean = false;
+  public success: boolean = true;
 
   @Input()
-  set loader(loader: OnLoad<any>) {
-    this._loader = loader;
-    this.setUpLoader();
+  set loader(loader: LoaderObservable<any, any>) {
+    loader.subscribe(this.fullLoader)
   }
 
-  private setUpLoader(): void {
-    // to show loader uncomment following line and comment out the other one:
-    // this._loader.events.onDidLoad((didLoad: boolean) => setTimeout(() => {this._loaded = true; this._loadError = didLoad}, 1000));
-    this._loader.events.onDidLoad((didLoad: boolean) => {this._loaded = true; this._loadError = didLoad});
+  public onSuccess = () => {
+    this.fail = false;
+    this.success = true;
+  }
+  public onFail = () => {
+    this.fail = true;
+    this.success = false;
+  }
+  public onLoading = () => {
+    this.loaded = false;
+    this.loading = true;
+  }
+  public onLoaded = (success: boolean) => {
+    this.loaded = true;
+    this.loading = false;
+    if (!success) {
+      this.onFail();
+    }
   }
 
-  get loading(): boolean {
-    return !this._loaded
-  }
-
-  get loaded(): boolean {
-    return this._loaded
-  }
-
-  get hasError(): boolean {
-    return this._loadError;
-  }
+  private fullLoader = new ValuePartialLoader(
+    this.onSuccess,
+    this.onFail,
+    this.onLoading,
+    this.onLoaded
+  )
 
 }

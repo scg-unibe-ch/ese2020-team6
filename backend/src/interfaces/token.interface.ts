@@ -1,3 +1,6 @@
+import { StatusError } from '../errors/status.error';
+import jwt from 'jsonwebtoken';
+
 export interface DecodedToken {
   userName: string;
   userId: number;
@@ -25,13 +28,38 @@ export class Token {
     return 'Bearer ' + this._token;
   }
 
-  constructor(private tokenOrBearer: string) {
-    if (tokenOrBearer) { this._token = tokenOrBearer.replace(/Bearer /, ''); }
-  }
   private _token: string;
+
+  constructor(userNameOrToken: string, userId?: number) {
+    if (userId) {
+      const secret = process.env.JWT_SECRET;
+      this._token = jwt.sign({
+        userName: userNameOrToken,
+        userId: userId
+      }, secret, { expiresIn: '2h' });
+    } else {
+      this._token = userNameOrToken;
+    }
+  }
 
   public static isToken(token: Token): token is Token {
     return token.token && token.bearerToken ? true : false;
+  }
+
+  public static parse(tokenOrBearer: string) {
+    if (tokenOrBearer) {
+      return new Token(tokenOrBearer.replace(/Bearer /, ''));
+    }
+  }
+
+  public verify(): Promise<DecodedToken> {
+    const secret = process.env.JWT_SECRET;
+    try {
+      const decoded: DecodedToken = jwt.verify(this.token, secret) as DecodedToken;
+      return Promise.resolve(Object.assign(decoded, { token: this }));
+    } catch (error) {
+      return Promise.reject(new StatusError('Unauthorized', 401));
+    }
   }
 
   public toString = () => this._token;

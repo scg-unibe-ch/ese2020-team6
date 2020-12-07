@@ -1,20 +1,21 @@
 import express, { Router, Request, Response } from 'express';
-import { verifyToken, verifyIsAdmin } from '../middlewares/checkAuth';
+import { verifyToken } from '../middlewares/checkAuth';
 
 import { OrderService } from '../services/order.service';
 
-import { User, UserAttributes } from '../models/user.model';
-import { Order, OrderAttributes } from '../models/order.model';
-import { ItemSold, ItemSoldAttributes } from '../models/item-sold.model';
-import { ItemRented, ItemRentedAttributes } from '../models/item-rented.model';
-import { ServiceRented, ServiceRentedAttributes } from '../models/service-rented.model';
-import { Address, AddressAttributes } from '../models/address.model';
+import { Order } from '../models/order.model';
+import { ItemSold } from '../models/item-sold.model';
+import { ItemRented } from '../models/item-rented.model';
+import { ServiceRented } from '../models/service-rented.model';
+import { AddressAttributes } from '../models/address.model';
 
-import { StatusError, handleError } from '../errors/status.error';
+import { handleError } from '../errors/status.error';
 
 const orderController: Router = express.Router();
 
- orderController.put('/item/buy', verifyToken,
+orderController.use(verifyToken);
+
+orderController.put('/item/buy',
  (req: Request, res: Response) => {
      req.body.paymentMethod = 'wallet';
 
@@ -29,7 +30,7 @@ const orderController: Router = express.Router();
    }
 );
 
-orderController.put('/item/rent', verifyToken,
+orderController.put('/item/rent',
     (req: Request, res: Response) => {
       req.body.paymentMethod = 'wallet';
 
@@ -44,7 +45,7 @@ orderController.put('/item/rent', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-orderController.put('/service/rent', verifyToken,
+orderController.put('/service/rent',
     (req: Request, res: Response) => {
 
       const buyerId: number = req.body.tokenPayload.userId;
@@ -57,7 +58,7 @@ orderController.put('/service/rent', verifyToken,
         .catch((err: any) => handleError(err, res));
 });
 
-orderController.get('/buyer', verifyToken,
+orderController.get('/buyer',
   (req: Request, res: Response) => {
     const buyerId: number = req.body.tokenPayload.userId;
     OrderService.getMyOrders(buyerId).then((orders: Array<Order>) => res.send(orders))
@@ -65,7 +66,7 @@ orderController.get('/buyer', verifyToken,
   }
 );
 
-orderController.get('/seller', verifyToken,
+orderController.get('/seller',
   (req: Request, res: Response) => {
     const sellerId: number = req.body.tokenPayload.userId;
     OrderService.getMyProductOrders(sellerId).then((orders: Array<Order>) => res.send(orders))

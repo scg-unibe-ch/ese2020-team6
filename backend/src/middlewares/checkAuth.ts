@@ -1,46 +1,24 @@
-import { COSR } from './../interfaces/orders.interface';
-import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { UserService } from '../services/user.service';
-import { User, UserAttributes } from '../models/user.model';
 import { DecodedToken, Token } from '../interfaces/token.interface';
+import { handleError } from '../errors/status.error';
+import { UserService } from '../services/user.service';
+import connect from 'connect';
+
+export function combineMiddlewares(...middlewares: any[]) {
+  const chain = connect();
+  middlewares.forEach((middleware) => {
+    chain.use(middleware);
+  });
+  return chain;
+}
 
 // this way you can just define a function and export it instead of a whole class
 export function verifyToken(req: Request, res: Response, next: any) {
-  try {
-    verifyTokenPromise(new Token(req.headers.authorization))
-    .then((decoded: DecodedToken) => {
-      req.body.tokenPayload = decoded;
-      next();
-    }).catch((err: any) => res.status(403).send({ message: 'Unauthorized' }));
-  } catch (err) {
-    res.status(403).send({ message: 'Unauthorized' });
-  }
-}
-
-export function verifyTokenPromise(token: Token): Promise<DecodedToken> {
-  const secret = process.env.JWT_SECRET;
-  try {
-    const decoded: DecodedToken = jwt.verify(token.token, secret) as DecodedToken;
-    return Promise.resolve(Object.assign(decoded, { token }));
-  } catch (error) {
-    return Promise.reject(error);
-  }
-}
-
-export function refreshTokenPromise(token: Token): Promise<Token> {
-  return verifyTokenPromise(token)
-  .then((decoded: DecodedToken) => createTokenPromise(decoded.userName, decoded.userId));
-}
-
-export function createTokenPromise(userName: string, userId: number): Promise<Token> {
-  const secret = process.env.JWT_SECRET;
-  const token: Token = new Token(jwt.sign({
-    userName: userName,
-    userId: userId
-  }, secret, { expiresIn: '2h' }));
-
-  return Promise.resolve(token);
+  Token.parse(req.headers.authorization).verify()
+  .then((decoded: DecodedToken) => {
+    req.body.tokenPayload = decoded;
+    next();
+  }).catch((err: any) => res.status(401).send({ message: 'Unauthorized' }));
 }
 
 export function checkForAuth(req: Request, res: Response, next: any) {
@@ -49,21 +27,11 @@ export function checkForAuth(req: Request, res: Response, next: any) {
 }
 
 export function verifyIsAdmin(req: Request, res: Response, next: any) {
-    if (req.body.tokenPayload) {
-        const currentUserId: number = req.body.tokenPayload.userId;
-        User.findOne({
-            where: {
-                userId: currentUserId,
-            }
-        }).then((user: UserAttributes) => {
-            if (user.isAdmin) {
-                req.body.tokenPayload.isAdmin = true;
-                next();
-            } else {
-                res.status(403).send({ message: 'Unauthorized' });
-            }
-        }).catch((err: any) => res.status(403).send(err));
-    } else {
-        res.status(403).send({ message: 'Unauthorized' });
-    }
+    combineMiddlewares(verifyToken, (_req: Request, _res: Response, _next: any) => {
+      const currentUserId: number = _req.body.tokenPayload.userId;
+      UserService.isAdmin(currentUserId).then(() => {
+        _req.body.tokenPayload.isAdmin = true;
+        _next();
+      }).catch((err: any) => handleError(err, res));
+    })(req, res, next);
 }

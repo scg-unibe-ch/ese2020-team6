@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Address, NullAddress } from '../../../../../models/map/address/address.model';
 import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.directive';
 

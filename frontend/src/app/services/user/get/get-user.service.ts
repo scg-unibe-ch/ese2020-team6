@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { share, map } from 'rxjs/operators';
-import { UserModel, NullUser } from '../../../models/user/user.model';
+import { share } from 'rxjs/operators';
+import { UserModel, User } from '../../../models/user/user.model';
 import { CutUserModel, NullCutUser } from '../../../models/user/cut-user.model';
-import { EndpointURLSegment } from '../../../models/endpoint/endpoint-url-segment';
 import { GetService } from '../../get-service';
-import { Address } from '../../../models/map/address/address.model';
-import { transformAddress } from '../../../models/map/address/address.operator';
+import { transformAddress } from '../../../models/operator/address.operator';
 
 
 @Injectable({
@@ -23,8 +21,8 @@ export class GetUserService extends GetService {
 
   public getUserByIdSecured(userId: number): Observable<UserModel> {
     if (userId) {
-      return this.get<UserModel>('userid/' + userId.toString()).pipe(share(), transformAddress);
-    } else { return of(new NullUser()); }
+      return this.get<UserModel>('userid/' + userId.toString()).pipe(share(), transformAddress());
+    } else { return of(User.NullUser); }
   }
 
   public getUserByIdUnsecured(userId: number): Observable<CutUserModel> {

@@ -1,0 +1,65 @@
+@import './functions.scss';
+
+$primary: #4F8AC9;
+$faded: #EBD4C5;
+$fainted: #FBF1EA;
+$success: #73BC58;
+$warn: #c55051;
+
+// theme dark
+$dark-bright: #FFFFFF;
+$dark-light: #89ffe3;
+$dark-highlight: #0eba91;
+$dark-accent: #0a8265;
+$dark-shady: #2f3b52;
+$dark-dark: #242e42;
+$dark-warn: #c55051;
+
+$border-radius: 10px;
+$spaceing-xs: 0.6rem;
+$spaceing-s: .9rem;
+$spaceing-m: 1.2rem;
+$spaceing-l: 1.7rem;
+$spaceing-xl: 2.2rem;
+
+
+// theme bright
+$bright-bright: #1D3557;
+$bright-light: #30566E;
+$bright-highlight: #97B9D3;
+$bright-shady: #C8E8E9;
+$bright-dark: #FFFFFF;
+
+
+
+$bright-accent: #A284C2;
+$bright-warn: #FF3859;
+
+// 7243FF sick
+// 7F98F5 sick
+
+$themes: (
+  "dark" : (
+    "bright": $dark-bright,
+    "light": $dark-light,
+    "highlight": $dark-highlight,
+    "accent": $dark-accent,
+    "shady": $dark-shady,
+    "dark": $dark-dark,
+    "warn": $dark-warn,
+  ),
+  "bright" : (
+    "bright": $bright-bright,
+    "light": $bright-light,
+    "highlight": $bright-highlight,
+    "accent": $bright-accent,
+    "shady": $bright-shady,
+    "dark": $bright-dark,
+    "warn": $bright-warn
+  )
+);
+
+$theme-names: map-keys($themes);
+
+
+$stages-max-size: 4;

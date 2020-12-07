@@ -1,0 +1,61 @@
+@import 'variables';
+@import './threads.component.theme.scss';
+
+@each $theme-name in $theme-names {
+    @include threads-theme($theme-name);
+  }
+
+.threads-wrapper-wrapper {
+  padding: $spaceing-s;
+  border-radius: $border-radius;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-gap: $spaceing-s;
+
+  .header {
+      font-size: 1.7em;
+      line-height: 1em;
+      margin: 0;
+  }
+
+  .threads-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .threads {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-auto-rows: min-content;
+      grid-gap: $spaceing-xs;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .thread {
+        display: grid;
+        grid-template-columns: $spaceing-xl auto min-content;
+        grid-gap: $spaceing-s;
+        padding: $spaceing-xs;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: all .1s ease-out;
+        align-items: center;
+
+        .profile-picture {
+          max-height: $spaceing-xl;
+        }
+
+        .accepted-status {
+          justify-self: flex-end;
+          height: 1em;
+          width: 1em;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

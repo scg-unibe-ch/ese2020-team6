@@ -1,0 +1,91 @@
+@function get-theme($theme-name, $theme-color) {
+  $theme: map-get($themes, $theme-name);
+  @return map-get($theme, $theme-color);
+}
+
+@function theme-dark($theme-name) {
+  @return get-theme($theme-name, 'dark');
+}
+
+@function theme-shady($theme-name) {
+  @return get-theme($theme-name, 'shady');
+}
+
+@function theme-accent($theme-name) {
+  @return get-theme($theme-name, 'accent');
+}
+
+@function theme-highlight($theme-name) {
+  @return get-theme($theme-name, 'highlight');
+}
+
+@function theme-light($theme-name) {
+  @return get-theme($theme-name, 'light');
+}
+
+@function theme-bright($theme-name) {
+  @return get-theme($theme-name, 'bright');
+}
+
+@function theme-warn($theme-name) {
+  @return get-theme($theme-name, 'warn');
+}
+
+
+@function to-unit($value) {
+  @if type-of($value) != 'string' {
+    @error 'Value for `to-unit` should be a string.';
+  }
+
+  $units: ('px': 1px, 'cm': 1cm, 'mm': 1mm, '%': 1%, 'ch': 1ch, 'pc': 1pc, 'in': 1in, 'em': 1em, 'rem': 1rem, 'pt': 1pt, 'ex': 1ex, 'vw': 1vw, 'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax);
+  $parsed-unit: false;
+
+  @each $unit in $units {
+    // str-index - find substring in a string
+    // 'px' in '10px' for example
+
+    // $unit is a pair of ['px': 1px] (item in $units)
+    // nth(['px': 1px], 1) returns 'px'
+    // nth(['px': 1px], 2) returns 1px
+
+    @if (str-index($value, nth($unit, 1))) {
+      $parsed-unit: nth($unit, 2);
+    }
+  }
+
+  @if (not $parsed-unit) {
+    @error 'Invalid unit `#{$value}`.';
+  }
+
+  @return $parsed-unit;
+}
+
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@function linear-points($p1, $p2, $x) {
+
+  $u1: unit(map-get($p1, x));
+  $u2: unit(map-get($p1, y));
+  $u3: unit(map-get($p2, x));
+  $u4: unit(map-get($p2, y));
+
+  $v1: strip-unit(map-get($p1, x));
+  $v2: strip-unit(map-get($p1, y));
+  $v3: strip-unit(map-get($p2, x));
+  $v4: strip-unit(map-get($p2, y));
+
+  @if $u1 == $u3 and $u2 == $u4 {
+    $m: ($v4 -$v2) / ($v3 - $v1); // ratio of 0.2em per 55 dpi
+    $q: $v2 - $v1 * $m;
+    @return linear($m, $x, $q) * to-unit($u2);
+  }
+  @else {
+    @return null;
+  }
+}
+
+@function linear($m, $x, $q) {
+  @return $m * $x + $q
+}

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, HostBinding, Optional, Self, OnChanges } from '@angular/core';
+import { Directive, Input, HostBinding, Optional, Self, OnChanges } from '@angular/core';
 import { ThemeService } from '../../services/theme/theme.service';
 import { ThemeObserver } from './themable';
 import { ButtonDirective } from './button/button.directive';

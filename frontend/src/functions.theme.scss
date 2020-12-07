@@ -1,4 +1,0 @@
-@function get-theme($theme-name, $theme-color) {
-  $theme: map-get($themes, $theme-name);
-  @return map-get($theme, $theme-color); 
-}

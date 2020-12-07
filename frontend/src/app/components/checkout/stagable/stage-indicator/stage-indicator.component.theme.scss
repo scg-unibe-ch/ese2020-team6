@@ -5,10 +5,6 @@
   $active-color: get-theme($theme-name, highlight);
 
   .stage-indicator.#{$theme-name} {
-    .titles {
-
-    }
-
     .graph {
       .circle-wrapper {
         &.default {

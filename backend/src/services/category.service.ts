@@ -319,8 +319,4 @@ export class CategoryService {
     public getAllCategories(): Promise<Array<Category>> {
         return Category.findAll({include: [Category.associations.subcategories]});
     }
-
-    public getAllSubcategories(): Promise<Array<Subcategory>> {
-        return Subcategory.findAll();
-    }
 }

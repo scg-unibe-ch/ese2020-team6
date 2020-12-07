@@ -2,9 +2,8 @@ import { User } from '../models/user.model';
 import { Token } from '../interfaces/token.interface';
 
 export interface LoginResponse {
-  user?: User;
-  token?: string;
-  message?: string;
+  user: User;
+  token: string;
 }
 
 export type LoginRequest = LoginWithToken | LoginWithUsernameEmail;

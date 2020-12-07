@@ -1,0 +1,26 @@
+@mixin message-content-theme($theme-name) {
+  .messages-wrapper-wrapper.#{$theme-name} {
+
+    $bg: get-theme($theme-name, shady);
+    $answer-bg: get-theme($theme-name, dark);
+    $text-color: get-theme($theme-name, bright);
+    $message-bg: get-theme($theme-name, light);
+    $message-color: get-theme($theme-name, dark);
+    $messenger-bg: get-theme($theme-name, shady);
+    $read-color: get-theme($theme-name, highlight);
+    $unread-color: get-theme($theme-name, warn);
+
+    background: $bg;
+    color: $text-color;
+
+    .display {
+      .no-messages {
+        color: rgba($text-color, .3);
+      }
+    }
+
+    .answer {
+      background: $answer-bg;
+    }
+  }
+}

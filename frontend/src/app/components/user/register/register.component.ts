@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { RegisterUserRequestBuilder } from '../../../models/request/user/register/register-user-request-builder.interface';
 import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
 import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
-import { LoginUserResponseModel } from '../../../models/response/user/login/login-user-response.model';
 import { RegisterUserRequestModel } from '../../../models/request/user/register/register-user-request.model';
 import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
@@ -75,7 +74,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   }
 
   private registerSuccess(): void {
-    this.loginUserService.login(this).events.onLogin((res: LoginUserResponseModel) => this.loginSuccess());
+    this.loginUserService.login(this)
   }
 
   private registerError(err: any): void {

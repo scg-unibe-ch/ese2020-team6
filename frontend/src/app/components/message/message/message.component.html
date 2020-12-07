@@ -1,0 +1,11 @@
+<div [ngClass]="messageClasses(message)" theme>
+  <div class="body">
+    {{ message.body }}
+  </div>
+  <div class="info">
+    <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
+    <div class="date">
+      {{ formatCreatedAt(message) }}
+    </div>
+  </div>
+</div>

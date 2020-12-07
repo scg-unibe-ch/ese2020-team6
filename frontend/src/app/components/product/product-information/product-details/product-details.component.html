@@ -1,0 +1,57 @@
+<div class="content-wrapper" theme>
+  <div class="upper-section">
+    <div class="picture" *ngIf="!isPreview, else prev">
+      <img class="profile-picture" [src]="endpointUrl + product.picture">
+    </div>
+    <ng-template class="picture" #prev>
+      <img src={{picture}} alt="">
+    </ng-template>
+    <div class="title">
+      <div>{{product.title}}</div>
+    </div>
+    <div class="creator">
+      <div>
+        <div class="btnColor">Created By
+          <br>
+          <div class="disableColor">{{creator.userName}}</div>
+        </div>
+        <img class="profile-picture" [src]="endpointUrl + creator.picture">
+      </div>
+    </div>
+    <div class="information btnColor">
+      Price:
+      <div class="disableColor"> {{product.price}}{{priceLabel}}</div>
+      <br>
+      Category:
+      <div class="disableColor">{{product.category}}</div>
+      <br>
+      Subcategory:
+      <div class="disableColor">{{product.subcategory}}</div>
+      <br>
+      Expiration Date:
+      <div class="disableColor">{{formatExpirationDate()}}</div>
+    </div>
+    <div class="location">
+      <map [initAddress]="product.address"></map>
+    </div>
+  </div>
+  <div class="middle-section">
+    <div class="details">
+      <app-product-pill [pillValue]="product.offerType" title="Offer Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.productType" title="Product Type" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.status" [indicatorPillColorClassFn]="statusIndicatorPillColorClass" title="Status" [size]="1.3"></app-product-pill>
+      <app-product-pill [pillValue]="product.isDeliverable ? 'Yes' : 'No'" [indicatorPillColorClassFn]="deliverableIndicatorPillColorClass" title="Delivarable" [size]="1.3"></app-product-pill>
+    </div>
+  </div>
+  <div class="lower-section">
+    <div class="description">
+      {{product.description}}
+    </div>
+    <div class="options">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="bottom-section">
+    <messages [thread]="thread"></messages>
+  </div>
+</div>

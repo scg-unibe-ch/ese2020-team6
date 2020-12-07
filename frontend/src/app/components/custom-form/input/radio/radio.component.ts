@@ -1,5 +1,5 @@
 import { Component, Input, ContentChildren, QueryList, TemplateRef } from '@angular/core';
-import { NgModel, NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessorBase } from '../../value-accessor-base';
 import { RadioLabelDirective } from '../../../custom-form/input/radio/label/radio-label.directive';
 

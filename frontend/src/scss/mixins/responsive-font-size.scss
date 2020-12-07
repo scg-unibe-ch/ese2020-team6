@@ -1,0 +1,20 @@
+@mixin responsive-font-size() {
+  $p1: ( x: 110, y: 1em );
+  $p2: ( x: 200, y: 1.1em );
+
+  $max-dpi: 500;
+  $min-dpi: 50;
+  $step: 10;
+  $current-dpi: $min-dpi;
+  @while $current-dpi < $max-dpi {
+    html, body, app-root {
+      @media screen and (min-resolution: $current-dpi + dpi) and (max-resolution: $current-dpi + $step + dpi) {
+        $dpi-value: $current-dpi + $step/2;
+        font-size: linear-points($p1, $p2, $dpi-value) !important;
+      }
+    }
+
+    $current-dpi: $current-dpi + $step;
+  }
+
+}

@@ -6,6 +6,7 @@ import { ConnectionError, ConnectionTimedOutError, TimeoutError, Sequelize } fro
 import { ProductController } from './controllers/product.controller';
 import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
+import { MessageController } from './controllers/message.controller';
 
 import { User } from './models/user.model';
 import { Preference } from './models/preference.model';

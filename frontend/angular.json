@@ -34,11 +34,16 @@
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
-							"src/styles.scss",
-							"src/variables.scss",
+							"src/scss/index.scss",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
+						"stylePreprocessorOptions": {
+		            "includePaths": [
+		              "src/scss",
+									"src/scss/mixins"
+		            ]
+		        },
 						"scripts": [],
 						"allowedCommonJsDependencies": [
             	"esri-leaflet-geocoder"
@@ -110,11 +115,16 @@
 						],
 						"styles": [
 							"./node_modules/bootstrap/scss/bootstrap.scss",
-							"src/styles.scss",
-							"src/variables.scss",
+							"src/scss/index.scss",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
 						],
+						"stylePreprocessorOptions": {
+		            "includePaths": [
+		              "src/scss",
+									"src/scss/mixins"
+		            ]
+		        },
 						"scripts": [],
 						"allowedCommonJsDependencies": [
             	"esri-leaflet-geocoder"

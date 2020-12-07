@@ -1,11 +1,9 @@
 import { ElementRef } from '@angular/core';
-import * as Esri from 'esri-leaflet';
 import * as Geocoder from 'esri-leaflet-geocoder';
-import * as Leaflet from 'leaflet';
 import { MapLocations } from './map-locations';
-import { SearchResultModel, SearchResultsModel } from '../../models/map/search/search-model.module';
-import { Address, SearchAddressModel } from '../../models/map/address/address.model';
-import { Location, LocationModel } from '../../models/map/location/location.model';
+import { SearchResultsModel } from '../../models/map/search/search-model.module';
+import { SearchAddressModel } from '../../models/map/address/address.model';
+import { LocationModel } from '../../models/map/location/location.model';
 
 export class MapSearch extends MapLocations {
 

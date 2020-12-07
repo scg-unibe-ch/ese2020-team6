@@ -1,4 +1,7 @@
 import { AddressModel, NullAddress, Address } from '../map/address/address.model';
+import { Equality } from '../compare/equality';
+import { Is } from '../compare/is';
+import { CutUser } from './cut-user.model';
 
 export interface UserModel {
   userId: number;
@@ -16,24 +19,12 @@ export interface UserModel {
   picture: string;
 }
 
-export class NullUser implements UserModel {
-  userId: number = null;
-  firstName: string = null;
-  lastName: string = null;
-  userName: string = null;
-  email: string = null;
-  password: string = null;
-  phonenumber: number = null;
-  addressId: number = null;
-  gender: string = null;
-  isAdmin: boolean = null;
-  wallet: number = null;
-  address: AddressModel = new NullAddress();
-  picture: string = null;
-}
-
-
 export class User implements UserModel {
+
+
+  public static NullUser: User = new User(null, null, null, null, null, null,
+    null, null, null, null, null, new NullAddress(), null);
+
   constructor(
     public userId: number,
     public firstName: string,
@@ -50,6 +41,10 @@ export class User implements UserModel {
     public picture: string
   ) { }
 
+  public cutUser(): CutUser {
+    return CutUser.buildFromUser(this);
+  }
+
   public static buildFromUserModel(userModel: UserModel): User {
     return new User(
       userModel.userId,
@@ -63,7 +58,7 @@ export class User implements UserModel {
       userModel.gender,
       userModel.isAdmin,
       userModel.wallet,
-      userModel.address,
+      Address.buildFromAddressModel(userModel.address),
       userModel.picture
     )
   }
@@ -72,19 +67,38 @@ export class User implements UserModel {
 
 
   public static isUser(user: User): user is User {
-    return user.userId
-        && user.firstName
-        && user.lastName
-        && user.userName
-        && user.email
-        && user.password
-        && user.phonenumber
-        && user.addressId
-        && user.gender
-        && (user.isAdmin !== undefined || user.isAdmin !== null)
-        && user.wallet
-        && user.address
-        && Address.isAddress(user.address)
-        && user.picture ? true : false;
+    return User.isUserModel(user as UserModel);
+  }
+
+  public static isUserModel(user: UserModel): user is UserModel {
+    let userCopy: any = Object.assign({}, user);
+    delete userCopy.address;
+    return Is.is(userCopy, [
+      'userId',
+      'firstName',
+      'lastName',
+      'userName',
+      'email',
+      'password',
+      'phonenumber',
+      'addressId',
+      'gender',
+      'isAdmin',
+      'wallet',
+      'picture'
+    ]) && Address.isAddressModel(user.address);
+  }
+
+  public static equals(userOne: User, userTwo: User): boolean {
+    let userOneCopy: any = Object.assign({}, userOne);
+    let userTwoCopy: any = Object.assign({}, userTwo);
+    delete userOneCopy.address;
+    delete userTwoCopy.address;
+    return Equality.equals(userOneCopy, userTwoCopy)
+        && Equality.equals(userOne.address, userTwo.address);
+  }
+
+  public static isLoggedIn(user: User): boolean {
+    return User.isUser(user);
   }
 }

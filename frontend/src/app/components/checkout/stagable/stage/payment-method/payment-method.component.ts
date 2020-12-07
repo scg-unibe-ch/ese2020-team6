@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.directive';
 
 @Component({

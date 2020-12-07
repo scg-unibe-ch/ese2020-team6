@@ -1,0 +1,94 @@
+@import 'variables';
+@import './messages.component.theme.scss';
+
+@each $theme-name in $theme-names {
+  @include message-content-theme($theme-name);
+}
+
+.messages-wrapper-wrapper {
+  padding: $spaceing-s;
+  border-radius: $border-radius;
+  display: grid;
+  grid-template-rows: min-content 1fr auto;
+  grid-gap: $spaceing-s;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+
+
+  .receiver {
+    font-size: 1.1em;
+    line-height: 1em;
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-gap: $spaceing-s;
+    border-radius: $border-radius;
+
+    .profile-picture {
+      max-height: $spaceing-xl;
+    }
+
+    .receiver-info {
+      display: grid;
+      align-items: center;
+
+      .username {
+      }
+
+      .email {
+        font-size: .7em;
+        line-height: 1em;
+      }
+    }
+
+
+  }
+
+
+  .display {
+    border-radius: $border-radius;
+    width: 100%;
+    height: 100%;
+
+    .no-messages {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .messages-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      .messages {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-auto-rows: min-content;
+        grid-gap: $spaceing-s;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: $spaceing-s;
+
+        message {
+          width: 100%;
+          display: grid;
+        }
+      }
+    }
+  }
+
+  .answer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-gap: $spaceing-s;
+      height: auto;
+      border-radius: $border-radius;
+      line-height: 1em;
+      padding: $spaceing-s;
+  }
+}

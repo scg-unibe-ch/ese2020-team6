@@ -1,0 +1,138 @@
+@mixin button-theme($theme-name) {
+  .button-#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $btn-hover-bg: map-get($theme, light);
+    $btn-hover-color: map-get($theme, dark);
+    $btn-default-bg: map-get($theme, highlight);
+    $btn-default-color: map-get($theme, bright);
+
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: $spaceing-xs;
+    margin: 0;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all .1s ease-out;
+
+    background: $btn-default-bg;
+    color: $btn-default-color;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background: $btn-hover-bg;
+      color: $btn-hover-color;
+    }
+
+    &:disabled {
+      background: rgba($btn-default-bg, .3);
+      color: rgba($btn-default-color, .3);
+      cursor: default;
+    }
+  }
+}
+
+
+
+@mixin button-empty-theme($theme-name) {
+  .button-empty-#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $btn-hover-bg: map-get($theme, light);
+    $btn-hover-color: map-get($theme, dark);
+    $btn-default-bg: map-get($theme, highlight);
+    $btn-default-color: map-get($theme, bright);
+
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: $spaceing-xs;
+    margin: 0;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all .1s ease-out;
+
+
+    background: rgba($btn-default-bg, .1);
+    color: $btn-default-color;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background: $btn-hover-bg;
+      color: $btn-hover-color;
+    }
+
+    &:disabled {
+      background: rgba($btn-default-bg, .3);
+      color: rgba($btn-default-color, .2);
+      cursor: default;
+    }
+  }
+}
+
+@mixin button-warn-theme($theme-name) {
+  .button-warn-#{$theme-name} {
+
+    $theme: map-get($themes, $theme-name);
+
+    $btn-hover-bg: map-get($theme, warn);
+    $btn-hover-color: map-get($theme, dark);
+    $btn-default-bg: map-get($theme, warn);
+    $btn-default-color: map-get($theme, bright);
+
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: $spaceing-xs;
+    margin: 0;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all .1s ease-out;
+
+
+    background: $btn-default-bg;
+    color: $btn-default-color;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background: lighten(saturate($btn-hover-bg, 50%), 15%);
+      color: $btn-hover-color;
+    }
+
+    &:disabled {
+      background: rgba($btn-default-bg, .3);
+      color: rgba($btn-default-color, .2);
+      cursor: default;
+    }
+  }
+}
+
+@each $theme-name in $theme-names {
+  @include button-theme($theme-name);
+  @include button-empty-theme($theme-name);
+  @include button-warn-theme($theme-name);
+}

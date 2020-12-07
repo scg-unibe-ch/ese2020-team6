@@ -1,0 +1,8 @@
+@mixin tooltip-theme($theme-name) {
+  .tip-wrapper.#{$theme-name} {
+    .tip {
+      background: theme-dark($theme-name);
+      color: theme-light($theme-name);
+    }
+  }
+}

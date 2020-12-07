@@ -5,7 +5,10 @@ import { ValueAccessorValidatorBase } from '../value-accessor-validator-base';
 @Component({
   selector: 'app-text-area',
   templateUrl: './text-area.component.html',
-  styleUrls: ['./text-area.component.scss'],
+  styleUrls: [
+    '../input/base/input-base.component.scss',
+    '../input/base/input-base.component.theme.scss'
+  ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: TextAreaComponent, multi: true}
   ]

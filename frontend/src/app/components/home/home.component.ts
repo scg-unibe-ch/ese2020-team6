@@ -4,6 +4,7 @@ import { UserService } from '../../services/user/user.service';
 import { ProductModel } from '../../models/product/product.model';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { ValueLoader } from 'src/app/services/service.module';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent {
     private viewContainerRef: ViewContainerRef
   ) {
     productService.getAllAcceptedProducts().subscribe((products: Array<ProductModel>) => this.products = products);
-    userService.events.onLoad(() => this.isLoggedIn = true, (err: any) => this.isLoggedIn = false);
+    userService.subscribe(new ValueLoader(() => this.isLoggedIn = true, (err: any) => this.isLoggedIn = false));
   }
 
   public show(tpl): void {

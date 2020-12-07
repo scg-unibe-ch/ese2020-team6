@@ -1,13 +1,11 @@
-import { Sequelize, Transaction, Op } from 'sequelize';
-import { User, UserAttributes, UserCreationAttributes} from '../models/user.model';
+import { Transaction, Op } from 'sequelize';
+import { User, UserAttributes} from '../models/user.model';
 import { Address, AddressAttributes } from '../models/address.model';
-import { Order } from '../models/order.model';
 
 import { AddressService } from './address.service';
 import { OrderService } from './order.service';
 
-import { CutUser } from '../interfaces/cut-user.interface';
-import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
+import { OrderSubType } from '../interfaces/order-sub-type.interface';
 import {
   LoginResponse,
   LoginRequest,
@@ -16,12 +14,10 @@ import {
   isLoginWithUserNameEmail,
   isLoginWithToken } from '../interfaces/login.interface';
 import { CO } from '../interfaces/orders.interface';
-import { createTokenPromise, verifyTokenPromise } from '../middlewares/checkAuth';
 import { DecodedToken, Token } from '../interfaces/token.interface';
 import { StatusError } from '../errors/status.error';
 
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 interface HasUserId extends Partial<UserAttributes> {
   userId: number;
@@ -46,6 +42,20 @@ export class UserService {
         userId: user.userId,
         picture: user.picture
       };
+    }
+
+    public static isAdmin(userId: number): Promise<void> {
+      return User.findOne({
+          where: {
+              userId: userId,
+          }
+      }).then((user: UserAttributes) => {
+        if (user.isAdmin) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(new StatusError('Unauthorized', 401));
+        }
+      });
     }
 
     public static register(user: UserAttributes, address: AddressAttributes): Promise<User> {
@@ -73,7 +83,6 @@ export class UserService {
     }
 
     public static login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
-        const secret = process.env.JWT_SECRET;
         if (isLoginWithUserNameEmail(loginRequestee as LoginWithUsernameEmail)) {
           const loginRequesteeWithUsernameEmail: LoginWithUsernameEmail = loginRequestee as LoginWithUsernameEmail;
           return this.doesUserExistByUsernameEmail(loginRequesteeWithUsernameEmail.userName, loginRequesteeWithUsernameEmail.email)
@@ -81,20 +90,24 @@ export class UserService {
 
             // compares the hash with the password from the lognin request
             if (bcrypt.compareSync(loginRequesteeWithUsernameEmail.password, existingUser.password)) {
-                return createTokenPromise(existingUser.userName, existingUser.userId)
-                .then((token: Token) => Promise.resolve({ user: existingUser, token: token.toString() }));
+                const token = new Token(existingUser.userName, existingUser.userId);
+                return Promise.resolve({ user: existingUser, token: token.toString() });
             } else {
-                return Promise.reject({ message: 'Not authorized' });
+                return Promise.reject(new StatusError('Unauthorized', 401));
             }
           });
         } else if (isLoginWithToken(loginRequestee as LoginWithToken)) {
           const loginRequesteeWithToken: LoginWithToken = loginRequestee as LoginWithToken;
-          return verifyTokenPromise(loginRequesteeWithToken.token)
-          .then((decoded: DecodedToken) => this.doesUserExistById(decoded.userId))
-          .then((user: User) => Promise.resolve(user));
+          return this.refreshLogin(loginRequesteeWithToken);
         } else {
           return Promise.reject(new StatusError('Login Request does not contain the necessary infromation!', 400));
         }
+    }
+
+    private static refreshLogin(loginRequestee: LoginWithToken): Promise<User> {
+      return loginRequestee.token.verify()
+      .then((decoded: DecodedToken) => this.doesUserExistById(decoded.userId))
+      .then((user: User) => Promise.resolve(user));
     }
 
     private static getUserByEitherAttributes(attributes: Object): Promise<User> {
@@ -138,7 +151,7 @@ export class UserService {
           { wallet: checkedOrder.seller.wallet + total },
           { transaction: transaction }
         )
-      ])).catch((err) => Promise.reject(err));
+      ]));
     }
 
     private static updateOnlyUser(user: HasUserId): Promise<void> {
@@ -146,7 +159,7 @@ export class UserService {
         where: {
           userId: user.userId
         }
-      }).then(() => Promise.resolve()).catch((err: any) => Promise.reject(err));
+      }).then(() => Promise.resolve());
     }
 
   /************************************************
@@ -161,8 +174,7 @@ export class UserService {
 
     public static getCutUserById(userId: number): Promise<{userName: string, email: string, userId: number}> {
       return this.getUserById(userId)
-      .then((user: User) => Promise.resolve(UserService.cutUserInformation(user)))
-      .catch((err: any) => Promise.reject(err));
+      .then((user: User) => Promise.resolve(UserService.cutUserInformation(user)));
     }
 
     private static getUserByUsernameOrEmail(username: string, email: string): Promise<User> {
@@ -175,25 +187,25 @@ export class UserService {
     public static doesUserExistById(userId: number): Promise<User> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
-      }).catch((err: any) => this.handleError(err));
+      });
     }
 
     public static doesUserNotExistById(userId: number): Promise<void> {
       return this.getUserById(userId).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userId: userId}, existingUser);
-      }).catch((err: any) => this.handleError(err));
+      });
     }
 
     public static doesUserExistByUsernameEmail(username: string, email: string): Promise<User> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldExist(existingUser);
-      }).catch((err: any) => this.handleError(err));
+      });
     }
 
     public static doesUserNotExistByUsernameEmail(username: string, email: string): Promise<void> {
       return this.getUserByUsernameOrEmail(username, email).then((existingUser: User) => {
         return this.handleUserShouldNotExist({userName: username, email: email}, existingUser);
-      }).catch((err: any) => this.handleError(err));
+      });
     }
 
     private static handleUserShouldExist(user: User): Promise <User> {
@@ -208,23 +220,19 @@ export class UserService {
       if (existingUser) {
         if (attributes.userName && attributes.email) {
           if (attributes.email === existingUser.email && attributes.userName === existingUser.userName) {
-            return Promise.reject({ message: 'Username, Email already in use', status: 409 });
+            return Promise.reject(new StatusError('Username, Email already in use', 409));
           } else if (attributes.userName === existingUser.userName) {
-            return Promise.reject({ message: 'Username already in use', status: 409 });
+            return Promise.reject(new StatusError('Username already in use', 409));
           } else {
-            return Promise.reject({ message: 'Email already in use', status: 409 });
+            return Promise.reject(new StatusError('Email already in use', 409));
           }
         } else if (attributes.userId === existingUser.userId) {
-          return Promise.reject({ message: 'User already exists!', status: 409 });
+          return Promise.reject(new StatusError('User already exists!', 409));
         } else {
-          return Promise.reject({ message: 'User already exists!', status: 409 });
+          return Promise.reject(new StatusError('User already exists!', 409));
         }
       } else {
         return Promise.resolve();
       }
-    }
-
-    private static handleError(err: any): Promise <any> {
-      return Promise.reject(err);
     }
 }

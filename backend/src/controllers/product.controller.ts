@@ -6,35 +6,11 @@ import { AddressAttributes } from '../models/address.model';
 import { CategoryController } from './category.controller';
 import { OrderController } from './order.controller';
 
+import { savePicture } from '../middlewares/multer';
+
 const productController: Router = express.Router();
 
-
-// multer for saving image
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function(req: Request, file: any, cb: any) {
-
-        cb(null, 'assets');
-    },
-    filename: function(req: Request, file: any, cb: any) {
-        cb(null, new Date().toISOString() + file.fieldname);
-    }
-});
-const fileFilter = (req: Request, file: any, cb: any) => {
-    if (file.mimetype === 'image/jpg' ||
-         file.mimetype === 'image/png' ||
-         file.mimetype === 'image/jpeg') {
-            cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
-productController.post('/post', upload.single('picture'), verifyToken ,
+productController.post('/post', savePicture.single('picture'), verifyToken ,
     (req: any, res: Response) => {
         req.body.sellerId = req.body.tokenPayload.userId;
         req.body.address = JSON.parse(req.body.address);
@@ -47,7 +23,7 @@ productController.post('/post', upload.single('picture'), verifyToken ,
     }
 );
 
-productController.get('/all', verifyToken, verifyIsAdmin,
+productController.get('/all', verifyIsAdmin,
     (req: Request, res: Response) => {
         ProductService.getAllProducts()
         .then((products: Array<ProductAttributes>) => res.send(products))
@@ -74,11 +50,11 @@ productController.delete('/delete/:productId', verifyToken,
     }
 );
 
-productController.get('/unreviewed', verifyToken, verifyIsAdmin,
-(   req: Request, res: Response) => {
+productController.get('/unreviewed', verifyIsAdmin,
+    (req: Request, res: Response) => {
         ProductService.getAllUnreviewedProducts()
-    .then((products: Array<ProductAttributes>) => res.send(products))
-    .catch((err: any) => res.status(500).send(err));
+        .then((products: Array<ProductAttributes>) => res.send(products))
+        .catch((err: any) => res.status(500).send(err));
     }
 );
 
@@ -90,7 +66,7 @@ productController.get('/accepted',
     }
 );
 
-productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
+productController.put('/accept/:productId', verifyIsAdmin,
     (req: Request, res: Response) => {
         const productId: number = parseInt(req.params.productId, 10);
         ProductService.acceptProduct(productId)
@@ -99,7 +75,7 @@ productController.put('/accept/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
+productController.put('/reject/:productId', verifyIsAdmin,
     (req: Request, res: Response) => {
         const rejectionMessage: string = req.body.rejectionMessage;
         const productId: number = parseInt(req.params.productId, 10);
@@ -109,19 +85,18 @@ productController.put('/reject/:productId', verifyToken, verifyIsAdmin,
     }
 );
 
-interface MulterRequest extends Request {
-  file: any;
-}
-
-productController.put('/update/:productId', verifyToken,
-    (req: MulterRequest, res: Response) => {
-      req.body.productId = parseInt(req.params.productId, 10);
-      const product: ProductAttributes = req.body as ProductAttributes;
-      const address: AddressAttributes = req.body.address as AddressAttributes;
-
-      ProductService.updateProduct(product, address)
-      .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
-      .catch((err: any) => res.status(500).send(err));
+productController.put('/update/:productId', savePicture.single('picture'), verifyToken ,
+    (req: any, res: Response) => {
+        req.body.productId = parseInt(req.params.productId, 10);
+        if (req.file) {
+          req.body.picture = req.file.path;
+        }
+        const userId: number = req.body.tokenPayload.userId;
+        const product: ProductAttributes = req.body;
+        const address: AddressAttributes = JSON.parse(req.body.address);
+        ProductService.updateProduct(userId, product, address)
+        .then((updatedProduct: ProductAttributes) => res.send(updatedProduct))
+        .catch((err: any) => res.status(500).send(err));
     });
 
  productController.get('/myproducts/:userId', verifyToken,
@@ -133,7 +108,7 @@ productController.put('/update/:productId', verifyToken,
     }
 );
 
-    productController.get('/unreviewd/count', verifyToken, verifyIsAdmin,
+    productController.get('/unreviewd/count', verifyIsAdmin,
     (req: Request, res: Response) => {
         ProductService.getUnreviewdProductsCount()
         .then((amountOfUnreviewd: number) => res.send({amountOfUnreviewd: amountOfUnreviewd}))

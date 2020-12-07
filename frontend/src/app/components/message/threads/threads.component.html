@@ -1,0 +1,19 @@
+<div class="threads-wrapper-wrapper" theme>
+  <div class="header">
+      Threads
+  </div>
+  <div class="threads-wrapper">
+    <div class="threads">
+      <div class="thread" *ngFor="let thread of threads; index as i;" (click)="showThread(thread)">
+        <img class="profile-picture" [src]="endpointUrl + receiver(thread).picture">
+        <div class="username">
+          {{ receiver(thread).userName }}
+        </div>
+        <tooltip tip="Pending" position="left">
+          <div *ngIf="!thread.isAccepted" class="accepted-status" [ngClass]="thread.isAccepted ? 'accepted' : 'not-accepted'">
+          </div>
+        </tooltip>
+      </div>
+    </div>
+  </div>
+</div>

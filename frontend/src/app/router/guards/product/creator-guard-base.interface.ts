@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, of, concat } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { pluck, map,  mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
 import { ProductService } from '../../../services/product/product.service';
+import { ProductModel } from 'src/app/models/product/product.model';
 
 export abstract class CreatorGuardBase implements CanActivate {
 
@@ -18,19 +18,13 @@ export abstract class CreatorGuardBase implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userService.getUserObservable().pipe(mergeMap((user: UserModel) => {
-      if (user) {
-        const productId: number = parseInt(next.parent.params.productId, 10);
-        const creatorIdObservable = this.productService.getProductById(productId).pipe(pluck('userId'));
-        const isCreatorOrNotObservable = creatorIdObservable.pipe(map((creatorId: number) => this.needsNoRedirect(creatorId, user.userId)));
-        isCreatorOrNotObservable.subscribe((needsNoRedirect: boolean) => {
-          if (!needsNoRedirect) {
-            this.redirect(next, state);
-          }
-        })
-        return isCreatorOrNotObservable;
-      } else return of(false);
-    }));
+    return this.userService.getSource().pipe(mergeMap((user: UserModel) => {
+      const productId: number = parseInt(next.parent.params.productId, 10);
+      return this.productService.getProductById(productId)
+      .pipe(map((product: ProductModel) => {
+        return this.needsNoRedirect(product.sellerId, user.userId) ? true : this.redirect(next, state);
+      }))
+    }))
   }
 
   private needsNoRedirect(creatorId: number, currentUserId: number): boolean {
@@ -40,10 +34,10 @@ export abstract class CreatorGuardBase implements CanActivate {
 
   abstract creatorNeedsToMatchCurrentUser(): boolean;
 
-  protected redirect(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
+  protected redirect(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): UrlTree {
     let pathSegmentArray: Array<string> = state.url.split("/").reverse();
     pathSegmentArray[0] = next.data.canActivate.destination;
-    this.router.navigate([pathSegmentArray.reverse().join("/")])
+    return this.router.parseUrl(pathSegmentArray.reverse().join("/"))
   }
 
 }

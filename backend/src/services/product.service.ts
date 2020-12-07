@@ -5,6 +5,8 @@ import { AddressService } from './address.service';
 import { CO } from '../interfaces/orders.interface';
 
 import { InstanceDoesNotExistError } from '../errors/instance-does-not-exist.error';
+import { UserAttributes } from '../models/user.model';
+import { UserIsNotSellerError, UserIsSellerError } from '../errors/user-seller.error';
 
 interface HasProductId extends Partial<ProductAttributes> {
   productId: number;
@@ -112,13 +114,12 @@ export class ProductService {
 
     The product update process is normal and fairly easy.
   */
-  public static updateProduct(product: ProductAttributes, address: AddressAttributes): Promise<Product> {
+  public static updateProduct(userId: number, product: ProductAttributes, address: AddressAttributes): Promise<Product> {
     product.rejectionMessage = null;
     product.isAccepted = false;
-
-    const checkIfAddressDoesExist: Promise<Address> = AddressService.addressDoesExist(address);
-
-    return checkIfAddressDoesExist.then((existingAddress: Address) => {
+    return this.isUserSeller(userId, product)
+    .then(() => AddressService.addressDoesExist(address))
+    .then((existingAddress: Address) => {
       product.addressId = existingAddress.addressId;
       return this.updateOnlyProduct(product).then(() => {
         return this.getProductById(product.productId);
@@ -132,6 +133,39 @@ export class ProductService {
       });
     });
   }
+
+  /*
+    Checks if a user is the seller of the product.
+
+    The method compares the sellerId of the product with the userId of the user
+    and returns a resolved promise if they are the same. And a rejected Product
+    if they are not the same.
+  */
+  private static isUserSeller(userId: number, product: ProductAttributes): Promise<void> {
+    if (userId === product.sellerId) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject(new UserIsNotSellerError(product));
+    }
+  }
+
+  /*
+    Checks if a user is not the seller of the product.
+
+    The method inverts the promise returned from isUserSeller and returns a new promise.
+  */
+  private static isUserNotSeller(userId: number, product: ProductAttributes): Promise<void> {
+    return this.isUserSeller(userId, product)
+    .then(() => Promise.reject(new UserIsSellerError(product)))
+    .catch((error: any) => {
+      if (error instanceof UserIsNotSellerError) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject(error);
+      }
+    });
+  }
+
 
   /*
     Updates only the product. The address of the product will not be updated
