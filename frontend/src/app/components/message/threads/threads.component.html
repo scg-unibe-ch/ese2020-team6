@@ -9,6 +9,10 @@
         <div class="username">
           {{ receiver(thread).userName }}
         </div>
+        <tooltip tip="Pending" position="left">
+          <div *ngIf="!thread.isAccepted" class="accepted-status" [ngClass]="thread.isAccepted ? 'accepted' : 'not-accepted'">
+          </div>
+        </tooltip>
       </div>
     </div>
   </div>

@@ -17,22 +17,31 @@
 
 
   .receiver {
-    font-size: 1.7em;
+    font-size: 1.1em;
     line-height: 1em;
     display: grid;
-    grid-template-columns: 2em auto;
+    grid-template-columns: min-content auto;
     grid-gap: $spaceing-s;
     border-radius: $border-radius;
 
     .profile-picture {
-      max-height: 2em;
+      max-height: $spaceing-xl;
     }
 
-    .username {
-      display: flex;
-      justify-content: flex-start;
+    .receiver-info {
+      display: grid;
       align-items: center;
+
+      .username {
+      }
+
+      .email {
+        font-size: .7em;
+        line-height: 1em;
+      }
     }
+
+
   }
 
 

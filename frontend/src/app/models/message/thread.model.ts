@@ -133,7 +133,7 @@ export class Thread implements ThreadModel {
     returns > 0: this older than thread
   */
   public compare(thread: Thread): number {
-    if (this.length > 0 && thread.length > 0) return this.latestMessageDate.getTime() - thread.latestMessageDate.getTime();
+    if (this.length > 0 && thread.length > 0) return thread.latestMessageDate.getTime() - this.latestMessageDate.getTime();
     else if (this.length > 0 && thread.length === 0) return -1;
     else if (this.length === 0 && thread.length > 0) return 1;
     else return 0;

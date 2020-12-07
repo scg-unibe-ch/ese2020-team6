@@ -1,0 +1,36 @@
+@import 'keyframe';
+@import 'animation';
+
+@each $theme-name in $theme-names {
+  @include keyframe(pulsate-#{$theme-name}) {
+      0% {
+          background: theme-light($theme-name);
+      }
+
+      100% {
+          background: theme-accent($theme-name);
+      }
+  }
+}
+
+@include keyframe(fade-in) {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@include keyframe(fade-out) {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

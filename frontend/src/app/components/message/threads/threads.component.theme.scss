@@ -1,15 +1,16 @@
+@import 'animations';
 @mixin threads-theme($theme-name) {
 
   .threads-wrapper-wrapper.#{$theme-name} {
 
-    $message-bg: get-theme($theme-name, dark);
-    $bg: get-theme($theme-name, shady);
-    $text-color: get-theme($theme-name, bright);
+    $message-bg: theme-dark($theme-name);
+    $bg: theme-shady($theme-name);
+    $text-color: theme-bright($theme-name);
 
-    $btn-hover-bg: get-theme($theme-name, light);
-    $btn-hover-color: get-theme($theme-name, dark);
-    $btn-default-bg: get-theme($theme-name, highlight);
-    $btn-default-color: get-theme($theme-name, bright);
+    $btn-hover-bg: theme-light($theme-name);
+    $btn-hover-color: theme-dark($theme-name);
+    $btn-default-bg: theme-highlight($theme-name);
+    $btn-default-color: theme-bright($theme-name);
 
     background: $bg;
     color: $text-color;
@@ -33,6 +34,12 @@
             background: rgba($btn-default-bg, .3);
             color: rgba($btn-default-color, .2);
             cursor: default;
+          }
+
+          .accepted-status {
+            &.not-accepted {
+              @include animation(0, 2s, pulsate-#{$theme-name}, ease-in-out, infinite, alternate);
+            }
           }
         }
       }

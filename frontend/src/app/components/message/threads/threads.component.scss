@@ -33,24 +33,27 @@
       grid-auto-rows: min-content;
       grid-gap: $spaceing-xs;
       overflow-y: auto;
+      overflow-x: hidden;
 
       .thread {
         display: grid;
-        grid-template-columns: $spaceing-xl auto;
+        grid-template-columns: $spaceing-xl auto min-content;
         grid-gap: $spaceing-s;
         padding: $spaceing-xs;
         border-radius: $border-radius;
         cursor: pointer;
         transition: all .1s ease-out;
+        align-items: center;
 
         .profile-picture {
           max-height: $spaceing-xl;
         }
 
-        .username {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
+        .accepted-status {
+          justify-self: flex-end;
+          height: 1em;
+          width: 1em;
+          border-radius: 50%;
         }
       }
     }

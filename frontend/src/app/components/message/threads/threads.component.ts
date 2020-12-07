@@ -54,4 +54,10 @@ export class ThreadsComponent {
   public receiver(thread: Thread): CutUser {
     return thread.receiver(this.senderId);
   }
+
+  public threadClasses(thread: Thread): Array<string> {
+    let classes = ['thread'];
+    classes.push(thread.isAccepted ? 'accepted' : 'not-accepted');
+    return classes;
+  }
 }
