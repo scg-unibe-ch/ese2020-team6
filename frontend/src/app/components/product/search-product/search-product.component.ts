@@ -22,9 +22,9 @@ export class SearchProductComponent {
   private categories: Categories;
   public categoryStrings: Array<string> = new Array<string>();
   public subcategoryStrings: Array<string> = new Array<string>();
-  deliverable = 'Select Deliverable';
-  toggleChange = true;
-  isShown = false;
+  public deliverable = 'Select Deliverable';
+  public toggleChange = true;
+  public isShown = false;
 
 
   constructor(
@@ -41,7 +41,7 @@ export class SearchProductComponent {
 
   }
 
-  changeVisibility(): void {
+  public changeVisibility(): void {
     if (this.deliverable === 'Select Deliverable'){
       this.deliverable = 'Undo Deliverable';
       this.criteria.deliverable = false;
@@ -53,7 +53,7 @@ export class SearchProductComponent {
     }
   }
 
-  OfferTypeShow(entry: any): void {
+  public OfferTypeShow(entry: any): void {
     if (entry === 'Service'){
       this.optionArray = ['Rent'];
     }else{
@@ -62,7 +62,7 @@ export class SearchProductComponent {
     this.isShown = true;
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     this.criteriaChange.emit(this.criteria);
   }
 

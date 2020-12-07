@@ -21,7 +21,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
   private values: RegisterUserFormModel;
   public registerErrorMessage = '';
   public picture: string;
-  previewPicture: string;
+  public previewPicture: string;
 
   constructor(
     private router: Router,
