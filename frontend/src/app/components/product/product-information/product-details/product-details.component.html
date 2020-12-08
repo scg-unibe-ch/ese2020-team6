@@ -9,7 +9,7 @@
     <div class="title">
       <div>{{product.title}}</div>
     </div>
-    <div class="creator" [ngClass]="product.seller.hasPicture ? 'picture': 'no-picture'">
+    <div class="creator" *ngIf="product.seller" [ngClass]="product.seller.hasPicture ? 'picture': 'no-picture'">
       <div>
         <div class="btnColor">Created By
           <br>

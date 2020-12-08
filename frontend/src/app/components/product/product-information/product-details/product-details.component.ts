@@ -50,6 +50,7 @@ export class ProductDetailsComponent {
   @Input()
   set product(product: Product) {
     this._product = product;
+    console.log(product)
     this.updateThread();
   }
   get product() { return this._product; }
