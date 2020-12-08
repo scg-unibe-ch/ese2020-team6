@@ -121,6 +121,7 @@ import { SixComponent } from './components/icons/logo/six/six.component';
 import { PlusComponent } from './components/icons/plus/plus.component';
 import { IconComponent } from './components/icons/logo/icon/icon.component';
 import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
+import { PaypalComponent } from './paypal/paypal.component';
 
 
 @NgModule({
@@ -191,7 +192,8 @@ import { LogoCenterComponent } from './components/icons/logo/center/logo-center.
     SixComponent,
     PlusComponent,
     IconComponent,
-    LogoCenterComponent
+    LogoCenterComponent,
+    PaypalComponent
   ],
   imports: [
     BrowserModule,
