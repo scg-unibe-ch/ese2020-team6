@@ -130,6 +130,7 @@ export class User extends Associations<UserAttributes, UserCreationAttributes> i
             },
             picture: {
               type: DataTypes.STRING,
+              allowNull: true
             },
             wallet: {
                 type: DataTypes.FLOAT(5, 2),

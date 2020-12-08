@@ -13,7 +13,7 @@ const userController: Router = express.Router();
 userController.post('/register', savePicture.single('picture'),
     (req: any, res: Response) => {
       req.body.address = JSON.parse(req.body.address);
-      req.body.picture = req.file.path;
+      if (req.file) { req.body.picture = req.file.path; }
       const user: UserAttributes = req.body;
       const address: AddressAttributes = req.body.address;
         UserService.register(user, address)

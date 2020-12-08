@@ -13,8 +13,7 @@ productController.post('/post', savePicture.single('picture'), verifyToken ,
     (req: any, res: Response) => {
         req.body.sellerId = req.body.tokenPayload.userId;
         req.body.address = JSON.parse(req.body.address);
-        // if (req.file.path != null) req.body.picture = req.file.path;
-        req.body.picture = req.file.path;
+        if (req.file) { req.body.picture = req.file.path; }
         const product: ProductAttributes = req.body;
         const address: AddressAttributes = req.body.address;
         ProductService.createProduct(product, address)
