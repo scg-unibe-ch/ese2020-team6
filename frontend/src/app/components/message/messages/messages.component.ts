@@ -38,7 +38,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked{
       this.openSnackBar();
     } else if (message.valid) {
       let newMessage = this.thread.newMessage(message.value);
-      this.messageService.send(newMessage);
+      this.messageService.send(newMessage).subscribe(() => message.reset());
     }
   }
 

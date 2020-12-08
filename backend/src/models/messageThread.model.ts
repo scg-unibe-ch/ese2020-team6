@@ -14,8 +14,7 @@ import {
   import { MessageThreadParticipants } from './messageThreadParticipants.model';
   import { Message } from './message.model';
 import { User } from './user.model';
-import { StatusError } from '../errors/status.error';
-import { UsersDoNotBelongToThreadError } from '../errors/users-do-not-belong-to-thread.error';
+import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-to-thread.error';
 
   export interface MessageThreadAttributes {
     messageThreadId: number;
@@ -111,17 +110,19 @@ import { UsersDoNotBelongToThreadError } from '../errors/users-do-not-belong-to-
       .then(() => Promise.resolve());
     }
 
-    public areParticipants(...users: Array<User>): Promise<void> {
-      return this.getParticipants().then((participants: Array<MessageThreadParticipants>) =>
-        Promise.all(participants.map((participant: MessageThreadParticipants) => participant.getUser()))
-      ).then((participants: Array<User>) => {
-        const userCheck = !participants.map((participant: User) => {
-          return users.map((user: User) => user.userId === participant.userId).includes(true);
-        }).includes(false);
+    public isParticipant(user: User): Promise<void> {
+      return this.getParticipants().then((participants: Array<MessageThreadParticipants>) => {
+        return Promise.all(participants.map((participant: MessageThreadParticipants) => {
+          return participant.getUser();
+        }));
+      }).then((participants: Array<User>) => {
+        const userCheck = participants.map((participant: User) => {
+            return user.userId === participant.userId;
+        }).includes(true);
         if (userCheck) {
           return Promise.resolve();
         } else {
-          return Promise.reject(new UsersDoNotBelongToThreadError(this.messageThreadId));
+          return Promise.reject(new UserDoesNotBelongToThreadError(this.messageThreadId));
         }
       });
     }

@@ -7,7 +7,7 @@ import { ProductService } from './product.service';
 import { Product } from '../models/product.model';
 import { UserService } from './user.service';
 import { StatusError } from '../errors/status.error';
-import { UsersDoNotBelongToThreadError } from '../errors/users-do-not-belong-to-thread.error';
+import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-to-thread.error';
 
 export class MessageService {
 
@@ -70,9 +70,9 @@ export class MessageService {
   private static insertMessageIntoExistingThread(
     body: string, [thread, seller, sender]: [MessageThread, User, User], transaction: Transaction
   ): Promise<Message> {
-    return thread.areParticipants(seller, sender)
+    return thread.isParticipant(sender)
     .catch((error: any) => {
-      if (error instanceof UsersDoNotBelongToThreadError) {
+      if (error instanceof UserDoesNotBelongToThreadError) {
         return Promise.reject(new StatusError(error.message, 400));
       } else {
         return Promise.reject(error);
