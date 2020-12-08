@@ -49,6 +49,20 @@
           max-height: $spaceing-xl;
         }
 
+        .thread-label {
+          display: grid;
+          grid-template-columns: min-content;
+          align-items: center;
+
+          .username {
+            font-size: 1em;
+          }
+
+          .product {
+            font-size: .7em;
+          }
+        }
+
         .accepted-status {
           justify-self: flex-end;
           height: 1em;

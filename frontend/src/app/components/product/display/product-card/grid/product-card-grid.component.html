@@ -1,6 +1,6 @@
-<div class="product-card" [routerLink]="routerLink" theme>
-  <div class="picture flex-align-center">
-    <img [src]="product.pictureUrl"> <!--placeholder image-->
+<div class="product-card" [routerLink]="routerLink" theme [ngClass]="product.hasPicture ? 'picture': 'no-picture'">
+  <div class="picture flex-align-center" *ngIf="product.hasPicture">
+    <img [src]="product.pictureUrl">
   </div>
   <div class="title flex-align-center">
     <div>{{product.title ? product.title : 'No Title available!'}}</div>

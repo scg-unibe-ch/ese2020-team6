@@ -1,6 +1,6 @@
 <div class="content-wrapper" theme>
-  <div class="upper-section">
-    <div class="picture" *ngIf="!isPreview, else prev">
+  <div class="upper-section" [ngClass]="product.hasPicture ? 'picture': 'no-picture'">
+    <div class="picture" *ngIf="!isPreview && product.hasPicture, else prev">
       <img class="product-picture" [src]="product.pictureUrl">
     </div>
     <ng-template class="picture" #prev>
@@ -9,13 +9,13 @@
     <div class="title">
       <div>{{product.title}}</div>
     </div>
-    <div class="creator">
+    <div class="creator" [ngClass]="product.seller.hasPicture ? 'picture': 'no-picture'">
       <div>
         <div class="btnColor">Created By
           <br>
           <div class="disableColor">{{product.seller.userName}}</div>
         </div>
-        <img class="profile-picture" [src]="product.seller.pictureUrl">
+        <img  *ngIf="product.seller.hasPicture" class="profile-picture" [src]="product.seller.pictureUrl">
       </div>
     </div>
     <div class="information btnColor">

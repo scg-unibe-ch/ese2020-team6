@@ -16,6 +16,14 @@
   grid-gap: $spaceing-s;
   border-radius: $border-radius;
   padding: $spaceing-s;
+
+  &.picture {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  &.no-picture {
+    grid-template-columns: 0 1fr 1fr 1fr;
+  }
 }
 
 .picture {

@@ -4,6 +4,10 @@
 $picture-dim: 300px;
 $svg-width: 100px;
 
+.product-card {
+  height: 100%;
+}
+
 @include product-card(
   auto $svg-width,
   auto auto auto auto,

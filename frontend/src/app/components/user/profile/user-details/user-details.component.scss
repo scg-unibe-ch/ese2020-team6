@@ -26,6 +26,13 @@
     padding: $spaceing-m;
     border-radius: $border-radius;
 
+    &.picture {
+      grid-template-columns: 3fr minmax(5em, 1fr);
+    }
+    &.no-picture {
+      grid-template-columns: 1fr;
+    }
+
 
     .name-wrapper {
       height: 100%;

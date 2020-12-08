@@ -16,7 +16,7 @@ import { MessengerComponent } from 'src/app/components/message/messenger.compone
 export const defaultProfileComponent = 0;
 export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>  = [
   {
-    title: 'User Detils',
+    title: 'User Details',
     path: 'details',
     component: UserDetailsComponent,
     popupComponent: null

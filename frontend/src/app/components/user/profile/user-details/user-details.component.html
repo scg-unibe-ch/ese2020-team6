@@ -1,5 +1,5 @@
 <div class="user" theme>
-  <div class="name-picture-wrapper">
+  <div class="name-picture-wrapper" [ngClass]="user.hasPicture ? 'picture': 'no-picture'">
 
     <div class="name-wrapper">
       <div class="name">
@@ -8,7 +8,7 @@
         <div class="userid"><span class="hashtag">#</span><span class="id">{{user.userId}}</span></div>
       </div>
     </div>
-    <div class="picture-wrapper-wrapper">
+    <div class="picture-wrapper-wrapper" *ngIf="user.hasPicture">
       <div class="picture-wrapper">
         <img class="picture" [src]="user.pictureUrl">
       </div>
