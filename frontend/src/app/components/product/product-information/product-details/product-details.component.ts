@@ -32,7 +32,8 @@ export class ProductDetailsComponent {
 
   public endpointUrl = environment.endpointURL;
 
-
+  @Input()
+  public messages: boolean = false;
 
   private _thread: Thread = NullThread.instance();
   set thread(thread: Thread) {
