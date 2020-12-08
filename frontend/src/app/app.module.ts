@@ -121,7 +121,7 @@ import { SixComponent } from './components/icons/logo/six/six.component';
 import { PlusComponent } from './components/icons/plus/plus.component';
 import { IconComponent } from './components/icons/logo/icon/icon.component';
 import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
-import { PaypalComponent } from './paypal/paypal.component';
+import { PaypalComponent } from './components/paypal/paypal.component';
 
 
 @NgModule({
@@ -167,7 +167,7 @@ import { PaypalComponent } from './paypal/paypal.component';
     NavigationElementComponent,
     PreferencesComponent,
     SearchProductComponent,
-    CheckoutComponent,
+    //CheckoutComponent,          muess dä wük wäg????
     BuyItemComponent,
     ShippingComponent,
     StageIndicatorComponent,

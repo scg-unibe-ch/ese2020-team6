@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { UserService } from '../../services/user/user.service';
@@ -6,6 +6,8 @@ import { CheckoutRouteParametersModel } from '../../models/checkout/checkout-rou
 import { ProductModel, NullProduct } from '../../models/product/product.model';
 import { CutUserModel, NullCutUser } from '../../models/user/cut-user.model';
 import { StagableExtention } from './stagable/stagable-extention';
+import { PaypalComponent } from '../paypal/paypal.component';
+import { BrowserModule } from '@angular/platform-browser'; //bruchts das?
 
 
 @Component({
@@ -13,6 +15,13 @@ import { StagableExtention } from './stagable/stagable-extention';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
+
+@NgModule({
+  imports: [ BrowserModule ],
+  declarations: [ PaypalComponent ]
+  //bootstrap: [ App ]
+})
+
 export class CheckoutComponent implements OnInit {
 
   public product: ProductModel = new NullProduct();

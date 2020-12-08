@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ProductAttributes} from '../../../../backend/src/models/product.model';
+import { ProductAttributes} from '../../../../../backend/src/models/product.model';
 //import { Product } from '../models/product/product.model'
 
 declare var paypal;
+var productAttributes: ProductAttributes;
 
 @Component({
   selector: 'app-paypal',
@@ -12,11 +13,10 @@ declare var paypal;
 export class PaypalComponent implements OnInit {
   @ViewChild('paypal', {static: true}) paypalElement: ElementRef;
 
-  //Hardcoded product
-  product = {
-    price:this.ProductAttributes.price,
-    description: 'New thing to buy'
-    //img: 'assets/picture.jpg'
+  product = { 
+    price: productAttributes.price,
+    description: productAttributes.description,
+    img: productAttributes.picture
   };
   paidFor = false;
   constructor() { }
@@ -28,7 +28,7 @@ export class PaypalComponent implements OnInit {
           return actions.order.create({
             purchase_units: [
               {
-                description: this.product.description,
+                description: this.product.description, //change 
                 amount: {
                   currency_code: 'CHF',
                   value: this.product.price
