@@ -726,10 +726,10 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		<summary>Request</summary>
 
 
-	Header: Authorization: Bearer  + `token`
-	</details>
+		Header: Authorization: Bearer  + `token`
+		</details>
 
-	<details>
+		<details>
 		<summary>Response</summary>git a
 
 		Code: 200 | 403
@@ -741,6 +741,402 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 	```
 	</details>
+
+### `/preference`
+- GET `/get`
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number"
+		},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"preference": {
+
+				"userId": "number",
+				"theme": "string" 
+		},
+	```
+	</details>
+
+- PUT `/set`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number",
+			"newPreference": "string"
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"preference": {
+
+				"userId": "number",
+  				"theme": "string"
+		},
+
+	```
+	</details>
+
+### `/categories`
+
+- GET ` ` 
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+
+		},
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"category": {
+
+				"categoryId": "number",
+				"category": "string" 
+		},
+	```
+	</details>
+
+### `/order`
+- PUT `/item/buy`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"buyerId": "number",
+			"productId": "number",
+			"paymentMethod": "string",
+			"shippingAddress": "addressAttributes"
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"item-sold": {
+
+				"itemSoldId": "number",
+				"oderId": "number",
+				"paymentMethod": "number",
+				"shippingAddressId": "number"
+					  
+		},
+
+	```
+	</details>
+
+- PUT `/item/rent`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"buyerId": "number",
+			"productId": "number",
+			"paymentMethod": "string",
+			"hours": "number",
+			"shippingAddress": "addressAttributes"
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"item-rented": {
+
+				"itemRentedId": "number",
+				"oderId": "number",
+				"paymentMethod": "number",
+				"shippingAddressId": "number",
+				"hours": "number"
+					  
+		},
+
+	```
+	</details>
+
+- PUT `/service/rent`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"buyerId": "number",
+			"productId": "number",
+			"paymentMethod": "string",
+			"hours": "number"
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"service-rented": {
+
+				"serviceRentedId": "number",
+				"oderId": "number",
+				"paymentMethod": "number",
+				"shippingAddressId": "number",
+				"hours": "number"
+					  
+		},
+
+	```
+	</details>	
+
+- GET `/buyer`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"buyerId": "number"
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"order": {
+
+				"orderId": "number",
+				"buyerId": "number",
+				"productId": "number",
+				"sellerId": "number"
+
+		},
+
+	```
+	</details>
+
+- GET `/seller`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"sellerId": "number"
+
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"order": {
+
+				"orderId": "number",
+				"buyerId": "number",
+				"productId": "number",
+				"sellerId": "number"
+					  
+		},
+
+	```
+	</details>
+
+### `/messages`
+- GET `/thread`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"userId": "number"
+
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"messageThread": {
+
+				"messageThreadId": "number",
+				"productId": "number",
+				"isAccepted": "boolean"
+					  
+		},
+
+	```
+	</details>	
+
+- PUT `/thread/readstatus`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"messageThreadId": "number",
+			"participantId": "number"
+
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"messageThread": {
+
+				"messageThreadId": "number",
+				"productId": "number",
+				"isAccepted": "boolean"
+					  
+		},
+
+	```
+	</details>	
+
+- GET `/thread/unread/count/`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"participantId": "number"
+
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"messageThread": {
+
+				"messageThreadId": "number",
+				"productId": "number",
+				"isAccepted": "boolean"
+					  
+		},
+
+	```
+	</details>	
+
+- POST `/send`
+	<details>
+		<summary>Request</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"body": "string",
+			"productId": "number",
+			"senderId": "number",
+			"threadId": "number"
+
+		}
+
+	```
+	</details>
+	<details>
+		<summary>Response</summary>
+
+		Code: 200
+		Body:
+	```json
+		{
+			"message": {
+
+				"messageId": "number",
+				"messageThreadId": "number",
+				"senderId": "number",
+				"body": "string",
+				"readstatus": "boolean"
+					  
+		},
+
+	```
+	</details>	
 
 ### `/`
 - GET
