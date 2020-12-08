@@ -1,5 +1,6 @@
-import { AddressModel, NullAddress } from '../map/address/address.model';
+import { AddressModel, NullAddress, Address } from '../map/address/address.model';
 import { environment } from 'src/environments/environment';
+import { Is } from '../compare/is';
 
 export interface ProductModel {
   productId: number;
@@ -67,6 +68,24 @@ export class Product implements ProductModel {
       product.status,
       product.rejectionMessage
     )
+  }
+
+  static isProductModel(productModel: ProductModel): productModel is ProductModel {
+    let productModelCopy: any = Object.assign({}, productModel);
+    delete productModelCopy.address;
+    return Is.is(productModelCopy, [
+      'productId',
+      'sellerId',
+      'productType',
+      'offerType',
+      'title',
+      'description',
+      'price',
+      'picture',
+      'isDeliverable',
+      'status',
+      'rejectionMessage'
+    ]) && Address.isAddressModel(productModel.address);
   }
 }
 

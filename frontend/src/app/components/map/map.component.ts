@@ -2,8 +2,9 @@ import { AfterViewInit, Input, Component, ElementRef, ViewChild } from '@angular
 
 import { MapLocations } from './map-locations';
 import * as Leaflet from 'leaflet';
-import { Address } from '../../models/map/address/address.model';
+import { Address, NullAddress } from '../../models/map/address/address.model';
 import { Location } from '../../models/map/location/location.model';
+
 
 @Component({
   selector: 'map',
@@ -12,14 +13,7 @@ import { Location } from '../../models/map/location/location.model';
 })
 export class MapComponent extends MapLocations implements AfterViewInit {
 
-  private _initLocationText: string;
-  @Input()
-  set initLocationText(value: string) {
-    this._initLocationText = value;
-    this.updateLocationText();
-  };
-
-  private _initAddress: Address;
+  private _initAddress: Address = NullAddress.instance();
   @Input()
   set initAddress(value: Address) {
     this._initAddress = value;
@@ -39,17 +33,8 @@ export class MapComponent extends MapLocations implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.setContainer(this.mapContainer);
     this.build();
-    if (this._initLocationText) {
-      this.updateLocationText();
-    } else if (this._initAddress) {
+    if (!(this._initAddress instanceof NullAddress)) {
       this.updateAdress();
-    }
-  }
-
-  private updateLocationText(): void {
-    if (this.mapContainer) {
-      this.clearLocations();
-      this.pushLocationByText(this._initLocationText, 1);
     }
   }
 

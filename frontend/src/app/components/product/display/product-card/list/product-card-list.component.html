@@ -1,6 +1,6 @@
 <div class="product-card" [routerLink]="routerLink" theme>
   <div class="picture flex-align-center">
-    <img src="product.pictureUrl"> <!--placeholder image-->
+    <img [src]="product.pictureUrl"> <!--placeholder image-->
   </div>
   <div class="title flex-align-center">
     <div>{{product.title ? product.title : 'No Title available!'}}</div>

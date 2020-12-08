@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { ProductModel } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
-import { environment } from '../../../../environments/environment';
 import { transformAddress } from '../../../models/operator/address.operator';
 import { transformCategory } from '../../../models/operator/category.operator';
-import { Categories, CategoryModel } from '../../../models/category/category.model';
+import { Categories, CategoryModel } from '../../../models/category/category.module';
 
 @Injectable({
   providedIn: 'root'

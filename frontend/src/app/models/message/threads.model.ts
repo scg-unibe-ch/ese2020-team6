@@ -9,10 +9,9 @@ export interface ThreadsModel {
 }
 
 export class Threads implements ThreadsModel, IterableIterator<Thread>{
-  public threads: Array<Thread>;
 
   constructor(
-    threads: Array<Thread>
+    public threads: Array<Thread>
   ) {
     this.threads = threads;
     this.sortThreads();

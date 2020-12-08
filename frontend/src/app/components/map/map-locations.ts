@@ -6,7 +6,7 @@ import { Map } from './map';
 
 import { SearchResultsModel } from '../../models/map/search/search-model.module';
 import { LocationModel } from '../../models/map/location/location.model';
-import { Address } from '../../models/map/address/address.model';
+import { Address, NullAddress } from '../../models/map/address/address.model';
 
 export class MapLocations extends Map {
 
@@ -42,17 +42,17 @@ export class MapLocations extends Map {
   }
 
   public pushLocationByAddress(address: Address, maxResults?: number): void {
-    this.pushLocationByText(address.toString(), maxResults);
-
+    if (!(address instanceof NullAddress)) this.pushLocationByText(address.toString(), maxResults);
   }
 
-  public pushLocationByText(locationText: string, maxResults?: number): void {
+  private pushLocationByText(locationText: string, maxResults?: number): void {
     Geocoder.geocode().text(locationText).run((err, searchResults: SearchResultsModel<any>) => {
       if (err) {
         console.log(err);
         return;
+      } else {
+        this.pushLocationBySearchResults(searchResults, maxResults);
       }
-      this.pushLocationBySearchResults(searchResults, maxResults);
     });
   }
 

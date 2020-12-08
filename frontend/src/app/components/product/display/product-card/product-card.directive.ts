@@ -1,5 +1,5 @@
 import { Directive , Input } from '@angular/core';
-import { ProductModel } from 'src/app/models/product/product.model';
+import { Product } from 'src/app/models/product/product.model';
 
 @Directive({
   selector: '[product-card]',
@@ -7,7 +7,7 @@ import { ProductModel } from 'src/app/models/product/product.model';
 export class ProductCardDirective {
 
   @Input()
-  product: ProductModel;
+  product: Product;
 
   @Input()
   path: '';

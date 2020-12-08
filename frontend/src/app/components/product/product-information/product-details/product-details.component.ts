@@ -50,6 +50,7 @@ export class ProductDetailsComponent {
   set product(product: Product) {
     this._product = product;
     this.updateThread();
+    console.log(product)
   }
   get product() { return this._product; }
 

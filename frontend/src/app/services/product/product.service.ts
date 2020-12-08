@@ -1,4 +1,4 @@
-import { Categories } from '../../models/category/category.model';
+import { Categories } from '../../models/category/category.module';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProductService } from './post/post-product.service';

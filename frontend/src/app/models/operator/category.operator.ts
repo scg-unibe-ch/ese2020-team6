@@ -1,6 +1,5 @@
-import { Observable, Subscription} from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Categories, CategoryModel } from '../category/category.model';
+import { Observable} from 'rxjs';
+import { Categories, CategoryModel } from '../category/category.module';
 
 export function transformCategory(source: Observable<Array<CategoryModel>>): Observable<Categories> {
   return new Observable(subscriber => {

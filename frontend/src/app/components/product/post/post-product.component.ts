@@ -17,7 +17,7 @@ import {
   UpdateProductRequest } from 'src/app/models/request/product/product-request-model-builder.module';
 import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
 import { PostProductForm } from 'src/app/models/form/post-product-form.model';
-import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
+import { Categories, Category, Subcategory } from 'src/app/models/category/category.module';
 
 @Component({
   selector: 'app-post-product',
@@ -68,7 +68,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
   private getCategories(product?: ProductModel): void {
     this.productService.getCategories().subscribe((categories: Categories) => {
       this.categories = categories;
-      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.categoryStrings = categories.categories.map((category: Category) => category.toString());
       this.subcategoryStrings = new Array<string>();
       if (product) {
         this.updateSubCategoryStrings(product.category);

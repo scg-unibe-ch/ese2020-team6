@@ -9,3 +9,4 @@ export * from './message.operator';
 export * from './thread.operator';
 export * from './threads.operator';
 export * from './default-empty.operator';
+export * from './product.operator';

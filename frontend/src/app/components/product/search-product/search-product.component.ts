@@ -2,7 +2,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { ProductModel } from 'src/app/models/product/product.model';
 import { Component, EventEmitter, Output, Input} from '@angular/core';
 import { SearchModel, Search } from 'src/app/models/request/search/search.model';
-import { Categories, Category, Subcategory } from 'src/app/models/category/category.model';
+import { Categories, Category, Subcategory } from 'src/app/models/category/category.module';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchProductComponent {
   public ngOnInit(): void {
     this.productService.getCategories().subscribe((categories: Categories) => {
       this.categories = categories;
-      this.categoryStrings = categories.allCategories.map((category: Category) => category.toString());
+      this.categoryStrings = categories.categories.map((category: Category) => category.toString());
       this.subcategoryStrings = new Array<string>();
     });
 
