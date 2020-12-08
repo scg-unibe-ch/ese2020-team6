@@ -9,6 +9,7 @@ import { Threads } from 'src/app/models/message/threads.model';
 import { SuccessLoader } from 'src/app/services/service.module';
 import { environment } from 'src/environments/environment';
 import { NullUser, User } from 'src/app/models/user/user.model';
+import { Participants } from 'src/app/models/message/participants.model';
 
 @Component({
   selector: 'app-product-details',
@@ -38,7 +39,7 @@ export class ProductDetailsComponent {
   set thread(thread: Thread) {
     if (!(thread instanceof NullThread)) this._thread = thread;
     else this.thread = new Thread(
-      this.product, [this.seller, this.sender], false, new Array<Message>()
+      this.product, new Participants(this.seller, [this.sender]), false, new Array<Message>()
     );
   }
   get thread(): Thread { return this._thread; }
@@ -50,7 +51,6 @@ export class ProductDetailsComponent {
   set product(product: Product) {
     this._product = product;
     this.updateThread();
-    console.log(product)
   }
   get product() { return this._product; }
 

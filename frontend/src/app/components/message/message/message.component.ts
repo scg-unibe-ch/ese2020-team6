@@ -11,14 +11,11 @@ export class MessageComponent {
   @Input()
   public message: Message = NullMessage.instance();
 
-  @Input()
-  public senderId: number;
-
   constructor() { }
 
   public messageClasses(message: Message): Array<string> {
     let classes: Array<string> = ['message'];
-    classes.push(message.senderId === this.senderId ? 'sent' : 'response');
+    classes.push(message.isSender ? 'sent' : 'response');
     return classes;
   }
 

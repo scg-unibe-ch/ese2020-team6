@@ -7,28 +7,11 @@ import { MessageService } from '../services/message.service';
 
 const messageController: Router = express.Router();
 
-messageController.get('/thread/product/:productId', verifyToken,
-(req: Request, res: Response) => {
-        const productId: number = req.body.productId;
-        MessageService.getProductThread(productId)
-        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
-        .catch((err: any) => handleError(err, res));
-});
-
-
 messageController.get('/thread', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = req.body.tokenPayload.userId;
         MessageService.getMessageThreadsByUserId(userId)
         .then((messageThread: Array<MessageThread>) => res.send(messageThread))
-        .catch((err: any) => handleError(err, res));
-});
-
-messageController.get('/thread/messages/:threadId', verifyToken,
-    (req: Request, res: Response) => {
-        const threadId: number = parseInt(req.params.threadId, 10);
-        MessageService.getMessagesByThreadId(threadId)
-        .then((messages: Array<Message>) => res.send(messages))
         .catch((err: any) => handleError(err, res));
 });
 

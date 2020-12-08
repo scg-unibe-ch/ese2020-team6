@@ -3,6 +3,9 @@
     {{ message.body }}
   </div>
   <div class="info">
+    <div class="sender">
+      {{ message.sender.userName }}
+    </div>
     <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
     <div class="date">
       {{ formatCreatedAt(message) }}

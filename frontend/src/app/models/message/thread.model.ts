@@ -1,12 +1,15 @@
-import { ThreadResponseModel, MessageResponseModel, ParticpantResponseModel } from 'src/app/models/response/response-model.module';
+import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/response/response-model.module';
 import { Message } from './message.model';
-import { CutUser, CutUserModel, NullCutUser } from '../user/cut-user.model';
+import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Product, NullProduct } from '../product/product.model';
+import { Participants, NullParticipants } from './participants.model';
+import { Participant, NullParticipant } from './participant.model';
+import { Receivers } from './receivers.model'
 
 export interface ThreadModel {
   messageThreadId?: number;
   product: Product;
-  participants: [CutUser, CutUser]; // seller, buyer
+  participants: Participants; // seller, buyer
   isAccepted: boolean;
   messages: Array<Message>;
 }
@@ -14,11 +17,11 @@ export interface ThreadModel {
 
 export class Thread implements ThreadModel {
   public messages: Array<Message>;
-  private currentSenderId: number;
+  private _currentSender: CutUser = NullCutUser.instance();
 
   constructor(
     public product: Product,
-    public participants: [CutUser, CutUser],
+    public participants: Participants,
     public isAccepted: boolean,
     messages: Array<Message>,
     public messageThreadId?: number
@@ -27,53 +30,13 @@ export class Thread implements ThreadModel {
     this.sortMessages();
   }
 
-  get hasId(): boolean {
-    return this.messageThreadId ? true : false;
-  }
-
-  get hasMessages(): boolean {
-    return this.length > 0;
-  }
-
-  get canSendMessage(): boolean {
-    if (this.currentSenderId === this.product.sellerId) return true;
-    else if (this.messages.length === 0 && this.isAccepted === false) return true;
-    else return this.isAccepted;
-  }
-
-  private sortMessages(): void {
-    this.messages.sort(Message.compare);
-  }
-
-  get latestMessageDate(): Date {
-    if (this.length > 0) return this.latestMessage.createdAt;
-  }
-
-  get latestMessage(): Message {
-    return this.messages[this.length-1]
-  }
-
-  get length(): number {
-    return this.messages.length;
-  }
+  private sortMessages(): void { this.messages.sort(Message.compare); }
 
   public hasParticipant(participant: CutUser): boolean {
-    return this.participants.map((existingParticipant: CutUser) => CutUser.equals(existingParticipant, participant))
-    .includes(true);
+    return this.participants.find(participant) instanceof NullParticipant;
   }
 
-  public receiver(senderOrSenderId: CutUser | number): CutUser {
-    if (!senderOrSenderId) return NullCutUser.instance();
-    let senderId: number = typeof senderOrSenderId === 'number' ? senderOrSenderId : (senderOrSenderId as CutUser).userId;
-    let [seller, buyer] = this.participants;
-    if (seller.userId === senderId) return buyer;
-    else if (buyer.userId === senderId) return seller;
-    else return NullCutUser.instance();
-  }
-
-  public setCurrentSender(sender: number | CutUser): void {
-    this.currentSenderId = sender instanceof CutUser ? (sender as CutUser).userId : (sender as number);
-  }
+  public getByUserId(userId: number): Participant { return this.participants.find(userId); }
 
   private addMessage(message: Message, sort?: boolean): void {
     this.messages.push(message);
@@ -85,34 +48,26 @@ export class Thread implements ThreadModel {
     this.sortMessages();
   }
 
-  public newMessage(body: string): Message;
-  public newMessage(body: string, sender: number | CutUser): Message;
-  public newMessage(body: string, sender?: number | CutUser): Message {
-    if (sender) {
-      this.setCurrentSender(sender);
-    } else if (!this.currentSenderId) throw new Error('No Sender set or passed!')
-    let message: Message = Message.buildFromBodyAndCutUser(body, this.currentSenderId);
+  public newMessage(body: string): Message {
+    if (this.currentSender instanceof NullCutUser) throw new Error('No Sender set or passed!')
+    let message: Message = Message.buildFromBodyAndCutUser(body, this.currentSender);
     message.setThread(this);
     return message;
   }
 
-  public static compare: (threadOne: Thread, threadTwo: Thread) => number = (threadOne: Thread, threadTwo: Thread) => {
-    return threadOne.compare(threadTwo);
-  }
-
-  private getMessagesIds(): Array<number> {
+  private ids(): Array<number> {
     return this.messages.map((message: Message) => message.messageId);
   }
 
-
   public merge(thread: Thread): void {
-    if (this.messageThreadId && this.hasMessages) {
+    if (this.messageThreadId && this.hasMessages && this.messageThreadId === thread.messageThreadId) {
       let latestOldMessageId = this.latestMessage.messageId;
-      let newMessageIds = thread.getMessagesIds();
+      let newMessageIds = thread.ids();
       if (latestOldMessageId) {
         let indexOfLatestOldMessageIdInNewTread = newMessageIds.indexOf(latestOldMessageId);
         let newMessages = thread.messages.slice(indexOfLatestOldMessageIdInNewTread + 1);
         this.addMessages(newMessages);
+        this.isAccepted = thread.isAccepted;
       }
     } else this.setThread(thread);
   }
@@ -164,25 +119,41 @@ export class Thread implements ThreadModel {
     return this.compare(thread) === 0;
   }
 
-  public static buildFromThreadResponseModel(thread: ThreadResponseModel): Thread {
-    return new Thread(
-      Product.buildFromProductModel(thread.product),
-      Thread.buildParticipants(thread.participants),
-      thread.isAccepted,
-      Thread.buildMessagesArray(thread.messages),
-      thread.messageThreadId
-    )
+  public static compare: (threadOne: Thread, threadTwo: Thread) => number = (threadOne: Thread, threadTwo: Thread) => {
+    return threadOne.compare(threadTwo);
   }
 
-  private static buildParticipants(participants: Array<CutUser | ParticpantResponseModel>): [CutUser, CutUser] {
-    if (participants.length !== 2) throw new Error('Thread has either less or more than two users!');
-    if (participants[0] instanceof CutUser) return participants as [CutUser, CutUser];
-    return [CutUser.buildFromCutUserModel((participants[0] as ParticpantResponseModel).user),
-      CutUser.buildFromCutUserModel((participants[1] as ParticpantResponseModel).user)];
+  public static buildFromThreadResponseModel(thread: ThreadResponseModel): Thread {
+    if (!(thread instanceof Thread)) {
+      return new Thread(
+        Product.buildFromProductModel(thread.product),
+        Participants.buildFromParticipantsResponseModel(thread.participants),
+        thread.isAccepted,
+        Thread.buildMessagesArray(thread.messages),
+        thread.messageThreadId
+      )
+    } else return thread;
   }
 
   private static buildMessagesArray(messages: Array<MessageResponseModel>): Array<Message> {
     return messages.map((message: MessageResponseModel) => Message.buildFromMessageResponseModel(message));
+  }
+
+  set currentSender(sender: CutUser) {
+    this._currentSender = sender;
+    this.messages.forEach((message: Message) => message.currentSender = sender);
+  }
+  get currentSender(): CutUser { return this._currentSender; }
+  get latestMessageDate(): Date { if (this.length > 0) return this.latestMessage.createdAt; }
+  get latestMessage(): Message { return this.messages[this.length-1] }
+  get length(): number { return this.messages.length; }
+  get receivers(): Receivers { return new Receivers(this); }
+  get hasId(): boolean { return this.messageThreadId ? true : false; }
+  get hasMessages(): boolean { return this.length > 0; }
+  get canSendMessage(): boolean {
+    if (this.currentSender.userId === this.product.sellerId) return true;
+    else if (this.messages.length === 0 && this.isAccepted === false) return true;
+    else return this.isAccepted;
   }
 }
 
@@ -190,7 +161,7 @@ export class NullThread extends Thread {
   private static _instance: NullThread;
 
   constructor() {
-    super(NullProduct.instance(), [NullCutUser.instance(), NullCutUser.instance()], null, new Array<Message>());
+    super(NullProduct.instance(), NullParticipants.instance(), null, new Array<Message>());
   }
 
   public static instance(): NullThread {

@@ -12,6 +12,7 @@ import { SendMessageRequest } from 'src/app/models/request/message/send/send-mes
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
 import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads, defaultEmpty } from 'src/app/models/operator/index.module';
+import { NullCutUser, CutUser } from 'src/app/models/user/cut-user.model';
 
 
 @Injectable({
@@ -22,8 +23,10 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
   private _source: Observable<Threads>;
   public loadedThreads: Threads = NullThreads.instance();
   private hasThreads: boolean = false;
+  private currentSender: CutUser = NullCutUser.instance();
 
   private userSuccess = (user: User) => {
+    this.currentSender = user.cutUser();
     this.getThreads()
     this.httpClient.get(environment.endpointURL + 'message/thread').pipe(transformUser(), transformAddress(), transformMessage(), transfromThread(), transfromThreads());
   }
@@ -62,8 +65,11 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
 
 
   protected postProcess(threadsPromise: Promise<Threads>): Promise<Threads> {
-    threadsPromise.then(console.log)
-    return threadsPromise.then((threads: Threads) => Promise.resolve(this.loadedThreads.mergeAndRetreive(threads)));
+    return threadsPromise.then((threads: Threads) => {
+      let mergedThreads: Threads = this.loadedThreads.mergeAndRetreive(threads);
+      mergedThreads.currentSender = this.currentSender;
+      return Promise.resolve(mergedThreads);
+    });
   }
 
 
@@ -97,7 +103,8 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
   public resetSource(): Promise<void> {
     return new Promise<void>(resolve => {
       this._source = undefined
-      this.loadedThreads = undefined;
+      this.loadedThreads = NullThreads.instance();
+      this.currentSender = NullCutUser.instance();
       resolve();
     })
   }

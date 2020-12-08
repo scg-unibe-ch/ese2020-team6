@@ -1,5 +1,5 @@
 import { MessageResponseModel } from 'src/app/models/response/response-model.module';
-import { CutUser } from '../user/cut-user.model';
+import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Thread } from './thread.model';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
 import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
@@ -10,9 +10,12 @@ export interface MessageModel {
   body: string;
   createdAt: Date;
   readStatus: boolean;
+  sender: CutUser;
 }
 
 export class Message implements MessageModel, RequestBuilder<SendMessageRequest> {
+
+  private _currentSender: CutUser = NullCutUser.instance();
 
   private static messageDateFormatOptions: Intl.DateTimeFormatOptions = {
     localeMatcher: 'lookup',
@@ -25,6 +28,7 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
 
   constructor(
     public senderId: number,
+    public sender: CutUser,
     public body: string,
     public createdAt: Date,
     public readStatus: boolean,
@@ -67,6 +71,7 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
   public static buildFromMessageResponseModel(message: MessageResponseModel): Message {
     return new Message(
       message.senderId,
+      CutUser.buildFromCutUserModel(message.sender),
       message.body,
       new Date(message.createdAt),
       message.readStatus,
@@ -77,9 +82,8 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
   /*
     Builds a Message from a body and a sender.
   */
-  public static buildFromBodyAndCutUser(body: string, sender: number | CutUser): Message {
-    let senderId: number = sender instanceof CutUser ? (sender as CutUser).userId : (sender as number);
-    return new Message(senderId, body, new Date(), false);
+  public static buildFromBodyAndCutUser(body: string, sender: CutUser): Message {
+    return new Message(sender.userId, sender, body, new Date(), false);
   }
 
   /*
@@ -126,6 +130,14 @@ export class Message implements MessageModel, RequestBuilder<SendMessageRequest>
     return this.compare(message) === 0;
   }
 
+  set currentSender(sender: CutUser) { this._currentSender = sender; }
+  get currentSender(): CutUser { return this._currentSender; }
+  get isSender(): boolean {
+    if (!(this.sender instanceof NullCutUser) && !(this.currentSender instanceof NullCutUser)) {
+      return this.sender.userId === this.currentSender.userId;
+    } else return false;
+  }
+
 }
 
 
@@ -133,7 +145,7 @@ export class NullMessage extends Message {
   private static _instance: NullMessage;
 
   constructor() {
-    super(null, null, new Date(), null);
+    super(null, NullCutUser.instance(), null, new Date(), null);
   }
 
   public static instance(): NullMessage {

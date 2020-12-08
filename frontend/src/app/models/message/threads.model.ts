@@ -1,7 +1,7 @@
 import { ThreadResponseModel, ThreadsResponseModel } from 'src/app/models/response/response-model.module';
-import { CutUser } from '../user/cut-user.model';
 import { Thread, NullThread } from './thread.model';
 import { Product } from '../product/product.model';
+import { CutUser, NullCutUser } from '../user/cut-user.model';
 
 
 export interface ThreadsModel {
@@ -9,6 +9,8 @@ export interface ThreadsModel {
 }
 
 export class Threads implements ThreadsModel, IterableIterator<Thread>{
+
+  private _currentSender: CutUser = NullCutUser.instance();
 
   constructor(
     public threads: Array<Thread>
@@ -21,26 +23,6 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
     this.threads.sort(Thread.compare);
   }
 
-  get latestThreadDate(): Date {
-    return this.latestThread.latestMessageDate;
-  }
-
-  get latestThread(): Thread {
-    return this.threads[0]
-  }
-
-  get length(): number {
-    return this.threads.length;
-  }
-
-  public next(): IteratorResult<Thread> {
-    return this.threads[Symbol.iterator]().next();
-  }
-
-  [Symbol.iterator](): IterableIterator<Thread> {
-    return this.threads[Symbol.iterator]();;
-  }
-
   public getByProduct(product: Product): Thread {
     let foundThread = this.threads.find((thread: Thread) => thread.product.productId === product.productId);
     return foundThread ? foundThread : NullThread.instance();
@@ -50,25 +32,14 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
     return this.threads[index];
   }
 
-  private getThreadIds(): Array<number> {
-    return this.threads.map((thread: Thread) => thread.messageThreadId);
-  }
-
-  private getThreadById(messageThreadId: number): Thread {
-    let threadIndex = this.getThreadIds().indexOf(messageThreadId);
+  private getById(messageThreadId: number): Thread {
+    let threadIndex = this.ids().indexOf(messageThreadId);
     return this.getByIndex(threadIndex);
   }
 
-  public getByParticipants(participantOne: CutUser, participantTwo: CutUser): Thread {
-    let foundThread = this.threads.find((thread: Thread) => {
-      let [seller, buyer]: [CutUser, CutUser] = thread.participants;
-      return (CutUser.equals(seller, participantOne) || CutUser.equals(seller, participantTwo))
-          && (CutUser.equals(buyer, participantOne) || CutUser.equals(buyer, participantTwo))
-          && !CutUser.equals(participantOne, participantTwo);
-    })
-    return foundThread ? foundThread : NullThread.instance();
+  private ids(): Array<number> {
+    return this.threads.map((thread: Thread) => thread.messageThreadId);
   }
-
 
   public mergeAndRetreive(threads: Threads): Threads {
     if (this instanceof NullThreads) {
@@ -79,20 +50,39 @@ export class Threads implements ThreadsModel, IterableIterator<Thread>{
     }
   }
 
-
   public merge(threads: Threads): void {
-    let oldThreadIds = this.getThreadIds();
+    let oldThreadIds = this.ids();
     threads.threads.forEach((thread: Thread) => {
       if (oldThreadIds.includes(thread.messageThreadId)) {
-        this.getThreadById(thread.messageThreadId).merge(thread);
+        this.getById(thread.messageThreadId).merge(thread);
       } else this.threads.push(thread);
     })
     this.sortThreads();
   }
 
-  public static buildFromThreadsResponseModel(threads: ThreadsResponseModel): Threads {
-    return new Threads(threads.map((thread: ThreadResponseModel) => Thread.buildFromThreadResponseModel(thread)));
+  public next(): IteratorResult<Thread> {
+    return this.threads[Symbol.iterator]().next();
   }
+  [Symbol.iterator](): IterableIterator<Thread> {
+    return this.threads[Symbol.iterator]();
+  }
+  public map(callback: (currentValue: Thread, index?: number, array?: Array<Thread>) => any, thisArg?: any): Array<any> {
+    if (thisArg) return this.threads.map(callback, thisArg);
+    else return this.threads.map(callback);
+  }
+
+  public static buildFromThreadsResponseModel(threads: ThreadsResponseModel): Threads {
+    if (!(threads instanceof Threads)) return new Threads(threads.map((thread: ThreadResponseModel) => Thread.buildFromThreadResponseModel(thread)));
+    else return threads;
+  }
+  set currentSender(sender: CutUser) {
+    this._currentSender = sender;
+    this.threads.forEach((thread: Thread) => thread.currentSender = sender);
+  }
+  get currentSender(): CutUser { return this._currentSender; }
+  get latestThreadDate(): Date { return this.latestThread.latestMessageDate; }
+  get latestThread(): Thread { return this.threads[0]; }
+  get length(): number { return this.threads.length; }
 }
 
 

@@ -76,18 +76,9 @@ export class User implements UserModel {
     let userCopy: any = Object.assign({}, user);
     delete userCopy.address;
     return Is.is(userCopy, [
-      'userId',
-      'firstName',
-      'lastName',
-      'userName',
-      'email',
-      'password',
-      'phonenumber',
-      'addressId',
-      'gender',
-      'isAdmin',
-      'wallet',
-      'picture'
+      'userId', 'firstName', 'lastName', 'userName',
+      'email', 'password', 'phonenumber', 'addressId',
+      'gender', 'isAdmin', 'wallet', 'picture'
     ]) && Address.isAddressModel(user.address);
   }
 

@@ -14,6 +14,7 @@ import {
     messageThreadParticipantId: number;
     messageThreadId: number;
     participantId: number;
+    isSeller: boolean;
   }
 
   export interface MessageThreadParticipantsCreationAttributes extends Optional<MessageThreadParticipantsAttributes, 'messageThreadParticipantId'> { }
@@ -32,6 +33,7 @@ import {
     messageThreadParticipantId!: number;
     messageThreadId!: number;
     participantId!: number;
+    isSeller!: boolean;
 
       public static initialize(sequelize: Sequelize) {
           MessageThreadParticipants.init({
@@ -48,6 +50,11 @@ import {
                   type: DataTypes.INTEGER,
                   allowNull: false
               },
+              isSeller: {
+                  type: DataTypes.BOOLEAN,
+                  allowNull: false,
+                  defaultValue: false
+              }
           },
               {
                   sequelize,
