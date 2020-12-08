@@ -1,4 +1,4 @@
-import { MessageResponseModel } from './message-response.model';
+import { MessageResponseModel, MessageResponse } from './message-response.model';
 import { ParticpantResponseModel } from './participant-response.model';
 import { ThreadModel } from '../../message/thread.model';
 import { Is } from '../../compare/is'
@@ -23,6 +23,16 @@ export class ThreadResponse implements ThreadResponseModel {
   ) {}
 
   public static isThreadResponseModel(thread: ThreadResponseModel): thread is ThreadResponseModel {
-    return Is.is(thread, ['messageThreadId', 'product', 'productId', 'participants', 'isAccepted', 'messages'])
+    if (Array.isArray(thread.messages)) {
+
+      let messagesCheck = thread.messages.map(
+        (message: MessageResponseModel) => {
+          return MessageResponse.isMessageResponseModel(message)
+        }
+      )
+
+      Is.is(thread, ['messageThreadId', 'product', 'productId', 'participants', 'isAccepted'])
+      && !(messagesCheck.includes(false));
+    } else return false;
   }
 }

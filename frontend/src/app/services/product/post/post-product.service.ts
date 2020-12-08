@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
-import { PostProductResponseModel } from 'src/app/models/response/response-model.module';
+import { PostProductResponseModel } from 'src/app/models/response/response.module';
 import { PostProductRequestBuilder } from 'src/app/models/request/request.module';
 import { environment } from 'src/environments/environment';
 import { transformAddress } from 'src/app/models/operator/address.operator';

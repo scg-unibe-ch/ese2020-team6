@@ -1,4 +1,4 @@
-import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/response/response-model.module';
+import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/response/response.module';
 import { Message } from './message.model';
 import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Product, NullProduct } from '../product/product.model';
@@ -85,15 +85,17 @@ export class Thread implements ThreadModel, RequestBuilder<ReadStatusRequest> {
     })
   }
 
-  private insertNewMessages(thread: Thread): void {
+  private insertNewMessages(thread: Thread): Array<Message> {
+    let newMessages = new Array<Message>();
     let latestOldMessageId = this.latestMessage.messageId;
     let newMessageIds = thread.ids();
     if (latestOldMessageId) {
       let indexOfLatestOldMessageIdInNewTread = newMessageIds.indexOf(latestOldMessageId);
-      let newMessages = thread.messages.slice(indexOfLatestOldMessageIdInNewTread + 1);
+      newMessages = thread.messages.slice(indexOfLatestOldMessageIdInNewTread + 1);
       this.addMessages(newMessages);
       this.isAccepted = thread.isAccepted;
     }
+    return newMessages;
   }
   private updateAccepted(thread: Thread): void {
     this.isAccepted = thread.isAccepted;

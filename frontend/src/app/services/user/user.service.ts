@@ -4,7 +4,7 @@ import { LoginUserService } from './login/login-user.service';
 import { GetUserService } from './get/get-user.service';
 import { UserModel, User, NullUser } from '../../models/user/user.model';
 import { CutUserModel } from '../../models/user/cut-user.model';
-import { UserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
+import { UserTokenModel } from 'src/app/models/response/response.module';
 import { LoaderObservable, ValueUnloaderCascade } from '../service.module';
 import { map } from 'rxjs/operators';
 import { toUser } from 'src/app/models/operator/index.module';

@@ -36,5 +36,9 @@
     .disableColor {
       color: $disable-Color;
     }
+
+    .warn {
+      color: theme-warn($theme-name);
+    }
   }
 }

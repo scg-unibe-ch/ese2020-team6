@@ -15,7 +15,7 @@ export class MessengerComponent implements OnInit, OnChanges {
   public threads: Threads = NullThreads.instance();
 
   constructor(
-    private messageService: MessageService
+    public messageService: MessageService
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes)

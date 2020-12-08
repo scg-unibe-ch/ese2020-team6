@@ -112,7 +112,8 @@ export class MessageService {
           {
             association: MessageThread.associations.product,
             include: [
-              Product.associations.address
+              Product.associations.address,
+              Product.associations.seller
             ]
           }
         ]

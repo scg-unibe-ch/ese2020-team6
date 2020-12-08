@@ -1,7 +1,7 @@
 <div class="content-wrapper" theme>
   <div class="upper-section">
     <div class="picture" *ngIf="!isPreview, else prev">
-      <img class="profile-picture" [src]="product.pictureUrl">
+      <img class="product-picture" [src]="product.pictureUrl">
     </div>
     <ng-template class="picture" #prev>
       <img src={{picture}} alt="">
@@ -13,9 +13,9 @@
       <div>
         <div class="btnColor">Created By
           <br>
-          <div class="disableColor">{{seller.userName}}</div>
+          <div class="disableColor">{{product.seller.userName}}</div>
         </div>
-        <img class="profile-picture" [src]="seller.pictureUrl">
+        <img class="profile-picture" [src]="product.seller.pictureUrl">
       </div>
     </div>
     <div class="information btnColor">
@@ -28,8 +28,10 @@
       Subcategory:
       <div class="disableColor">{{product.subcategory}}</div>
       <br>
-      Expiration Date:
-      <div class="disableColor">{{formatExpirationDate()}}</div>
+      <div [ngClass]="product.isExpired ? 'warn' : ''">
+        Expiration Date:
+      </div>
+      <div class="disableColor">{{product.fromatExpirationDate}}</div>
     </div>
     <div class="location">
       <map [initAddress]="product.address"></map>

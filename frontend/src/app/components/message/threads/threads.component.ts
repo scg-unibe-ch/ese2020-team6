@@ -18,7 +18,6 @@ export class ThreadsComponent {
   set threads(threads: Threads) {
     this._threads = threads;
     if (!(this.currentThread instanceof NullThread)) this.setThread(this.currentThread);
-    else this.setFirstThread();
   }
   get threads(): Threads {
     return this._threads
@@ -32,19 +31,15 @@ export class ThreadsComponent {
     private messageService: MessageService
   ) {}
 
-  private setFirstThread(): void {
-    if (this.threads.length > 0) this.setThread(this.threads.getByIndex(0));
+  private setThread(thread: Thread): void {
+    this.threadEmitter.emit(thread);
   }
 
-  private setThread(thread: Thread): void {
+  public showThread(thread: Thread): void {
     if (thread.messageThreadId !== this.currentThread.messageThreadId) {
       this.messageService.setReadStatus(thread);
       this.threadEmitter.emit(thread);
     }
-  }
-
-  public showThread(name: string): void {
-    this.threadEmitter.emit(name);
   }
 
   public threadClasses(thread: Thread): Array<string> {

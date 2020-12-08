@@ -16,7 +16,7 @@ export class UpdateProductRequest implements UpdateProductRequestModel {
     public category: string,
     public subcategory: string,
     public isDeliverable: boolean,
-    public expirationDate: number,
+    public expirationDate: Date,
   ) { }
 
   public toString = () : string => {
@@ -35,7 +35,7 @@ export class UpdateProductRequest implements UpdateProductRequestModel {
       postProductForm.category,
       postProductForm.subcategory,
       postProductForm.isDeliverableString === 'Yes' ? true : false,
-      postProductForm.expirationDate,
+      new Date(postProductForm.expirationDate),
     )
   }
 }

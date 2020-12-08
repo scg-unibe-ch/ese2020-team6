@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../../../services/product/product.service';
-import { ProductModel } from '../../../../models/product/product.model';
+import { Products, NullProducts } from 'src/app/models/product/products.model';
 
 @Component({
   selector: 'app-approve-products',
@@ -8,14 +8,14 @@ import { ProductModel } from '../../../../models/product/product.model';
 })
 export class ApproveProductsComponent {
 
-  public unacceptedProducts: Array<ProductModel>;
+  public unacceptedProducts: Products = NullProducts.instance();
   public displayList = false;
 
   constructor(
     private productService: ProductService
   ) {
     this.productService.getAllUnreviewedProducts()
-    .subscribe((unacceptedProducts: Array<ProductModel>) => this.unacceptedProducts = unacceptedProducts);
+    .subscribe((unacceptedProducts: Products) => this.unacceptedProducts = unacceptedProducts);
   }
 
   get isList(): boolean {

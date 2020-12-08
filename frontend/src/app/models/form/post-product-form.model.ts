@@ -1,8 +1,10 @@
 import { ProductModel } from '../product/product.model';
 import { AddressModel, NullAddress } from '../map/address/address.model';
 
-export interface PostProductFormModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'isDeliverable' | 'rejectionMessage' | 'status' | 'picture'> {
+export interface PostProductFormModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'isDeliverable' | 'rejectionMessage' | 'status' | 'picture' | 'seller' | 'category' | 'expirationDate'> {
   isDeliverableString: string;
+  category: string;
+  expirationDate: string;
 }
 
 export class NullPostProductForm implements PostProductFormModel {
@@ -15,7 +17,7 @@ export class NullPostProductForm implements PostProductFormModel {
   category: string = null;
   subcategory: string = null;
   isDeliverableString: string = null;
-  expirationDate: number = null;
+  expirationDate: string = null;
 }
 
 export class PostProductForm implements PostProductFormModel {
@@ -29,7 +31,7 @@ export class PostProductForm implements PostProductFormModel {
     public category: string,
     public subcategory: string,
     public isDeliverableString: string,
-    public expirationDate: number
+    public expirationDate: string
   ) { }
 
   public toString = () : string => {
@@ -44,10 +46,10 @@ export class PostProductForm implements PostProductFormModel {
       description: product.description,
       price: product.price,
       address: product.address,
-      category: product.category,
+      category: product.category.toString(),
       subcategory: product.subcategory,
       isDeliverableString: product.isDeliverable ? 'Yes' : 'No',
-      expirationDate: product.expirationDate
+      expirationDate: product.expirationDate.toString()
     }
   }
 }

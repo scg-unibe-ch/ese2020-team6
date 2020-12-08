@@ -1,4 +1,4 @@
-import { MessageResponseModel } from 'src/app/models/response/response-model.module';
+import { MessageResponseModel } from 'src/app/models/response/response.module';
 import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Thread } from './thread.model';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';

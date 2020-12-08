@@ -10,3 +10,4 @@ export * from './thread.operator';
 export * from './threads.operator';
 export * from './default-empty.operator';
 export * from './product.operator';
+export * from './products.operator';

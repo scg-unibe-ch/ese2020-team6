@@ -2,6 +2,7 @@ import { UserModel, User } from './user.model';
 import { Is } from '../compare/is';
 import { Equality } from '../compare/equality';
 import { environment } from 'src/environments/environment';
+import { CutUserResponseModel } from '../response/response.module';
 
 export interface CutUserModel extends Pick<UserModel, 'userName' | 'email' | 'userId' | 'picture'> {}
 
@@ -13,13 +14,17 @@ export class CutUser implements CutUserModel {
     public picture: string
   ) { }
 
-  public static buildFromCutUserModel(cutUserModel: CutUserModel): CutUser {
+  public static buildFromCutUserModel(cutUser: CutUserModel): CutUser {
     return new CutUser(
-      cutUserModel.userId,
-      cutUserModel.userName,
-      cutUserModel.email,
-      cutUserModel.picture
+      cutUser.userId,
+      cutUser.userName,
+      cutUser.email,
+      cutUser.picture
     )
+  }
+
+  public static buildFromCutUserResponseModel(cutUser: CutUserResponseModel): CutUser {
+    return CutUser.buildFromCutUserModel(cutUser);
   }
 
   get pictureUrl(): string {

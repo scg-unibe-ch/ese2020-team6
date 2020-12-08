@@ -1,15 +1,16 @@
+@import 'variables';
+
 .fail {
   height: 100%;
 }
 
-.success {
+.loading-wrapper {
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .loading {
-    height: 100%;
-  }
-
-  .loaded {
-    height: 100%;
+    height: $spaceing-l;
   }
 }

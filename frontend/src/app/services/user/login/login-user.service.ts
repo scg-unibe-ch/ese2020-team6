@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { LoginUserRequestBuilder, LoginUserRequestModel } from 'src/app/models/request/request.module';
-import { LoginUserResponseModel, UserTokenModel } from '../../../models/response/user/login/login-user-response.model';
+import { LoginUserResponseModel, UserTokenModel } from '../../../models/response/response.module';
 import { environment } from '../../../../environments/environment';
 import {
   transformAddress,

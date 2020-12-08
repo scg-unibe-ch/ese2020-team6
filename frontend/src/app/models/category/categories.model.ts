@@ -1,5 +1,6 @@
 import { Subcategory } from './subcategory.model';
 import { Category, CategoryModel } from './category.model';
+import { CategoriesResponseModel, CategoryResponseModel } from '../response/response.module';
 
 export interface CategoriesModel {
   categories: Array<Category>;
@@ -58,6 +59,18 @@ export class Categories implements CategoriesModel {
     return new Categories(categoryModels.map((categoryModel: CategoryModel) => {
       return Category.buildFromCategoryModel(categoryModel);
     }));
+  }
+
+  public static buildFromCategoriesResponseModel(categories: CategoriesResponseModel): Categories {
+    if (!(categories instanceof Categories)) {
+      return new Categories(
+        Categories.buildCategoriesArray(categories)
+      )
+    } else return categories;
+  }
+
+  private static buildCategoriesArray(categories: Array<CategoryResponseModel>): Array<Category> {
+    return categories.map((category: CategoryResponseModel) => Category.buildFromCategoryResponseModel(category));
   }
 
 }

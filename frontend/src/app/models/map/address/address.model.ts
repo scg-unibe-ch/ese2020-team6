@@ -1,6 +1,7 @@
 import { SearchResultModel } from '../search/search-result.model';
 import { Equality } from 'src/app/models/compare/equality';
 import { Is } from 'src/app/models/compare/is';
+import { AddressResponseModel } from '../../response/response.module';
 
 export interface AddressModel {
   streetName: string;
@@ -81,6 +82,10 @@ export class Address implements AddressModel {
       address.postal,
       address.country
     )
+  }
+
+  public static buildFromAddressResponseModel(address: AddressResponseModel): Address {
+    return Address.buildFromAddressModel(address);
   }
 
   public static equals(addressOne: Address, addressTwo: Address): boolean {

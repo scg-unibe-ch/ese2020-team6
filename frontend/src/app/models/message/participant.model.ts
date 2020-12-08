@@ -1,5 +1,5 @@
 import { CutUser, NullCutUser } from 'src/app/models/user/cut-user.model';
-import { ParticpantResponseModel } from '../response/response-model.module';
+import { ParticpantResponseModel } from '../response/response.module';
 
 
 export interface ParticipantModel {

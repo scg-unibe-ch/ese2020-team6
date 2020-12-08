@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import {
   AcceptProductResponseModel,
-  RejectProductResponseModel } from '../../../models/response/product/product-response-model.module';
+  RejectProductResponseModel } from '../../../models/response/product/product-response.module';
 import {
   AcceptProductRequestBuilder,
   AcceptProductRequestModel,

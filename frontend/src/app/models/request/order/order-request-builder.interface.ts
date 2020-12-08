@@ -4,7 +4,7 @@ import { StagableExtention } from 'src/app/components/checkout/stagable/stagable
 import { StageModel } from 'src/app/models/checkout/stage/stage.model';
 import { OrderService } from 'src/app/services/order/order.service';
 import { OrderRequestModel } from './order-request.model';
-import { OrderResponseModel } from 'src/app/models/response/order/order-response-model.module';
+import { OrderResponseModel } from 'src/app/models/response/response.module';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 

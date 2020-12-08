@@ -1,6 +1,6 @@
 import { OperatorFunction} from 'rxjs';
 import { transformator } from './transformator';
-import { MessageResponseModel, MessageResponse } from '../response/response-model.module';
+import { MessageResponseModel, MessageResponse } from '../response/response.module';
 import { Message } from '../message/message.model';
 
 export function transformMessage<T>(): OperatorFunction<any, any> {

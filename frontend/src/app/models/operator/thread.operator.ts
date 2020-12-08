@@ -1,6 +1,6 @@
 import { OperatorFunction} from 'rxjs';
 import { transformator } from './transformator';
-import { ThreadResponseModel, ThreadResponse } from '../response/response-model.module';
+import { ThreadResponseModel, ThreadResponse } from '../response/response.module';
 import { Thread } from '../message/thread.model';
 
 export function transfromThread<T>(): OperatorFunction<any, any> {

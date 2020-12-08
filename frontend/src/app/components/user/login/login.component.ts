@@ -5,7 +5,7 @@ import { LoginUserRequestBuilder, LoginUserRequestModel } from 'src/app/models/r
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
 import { ILoaderSubsctiption, ValuePartialLoader } from '../../../services/service.module';
-import { UserTokenModel } from 'src/app/models/response/user/login/login-user-response.model';
+import { UserTokenModel } from 'src/app/models/response/response.module';
 
 @Component({
   selector: 'app-login',

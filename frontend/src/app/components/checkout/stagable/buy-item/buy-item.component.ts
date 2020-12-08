@@ -6,7 +6,7 @@ import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
 import { OrderService } from '../../../../services/order/order.service';
 import { OrderRequestBuilder, ShippingRequestExtension } from 'src/app/models/request/request.module';
-import { ShippingResponseExtension } from '../../../../models/response/order/order-response-model.module';
+import { ShippingResponseExtension } from '../../../../models/response/order/order-response.module';
 
 @Component({
   selector: 'buy-item',

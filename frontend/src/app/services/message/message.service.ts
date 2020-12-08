@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { SendMessageRequest, ReadStatusRequest } from 'src/app/models/request/request.module';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
-import { MessageResponseModel, ThreadResponseModel } from 'src/app/models/response/response-model.module';
+import { MessageResponseModel, ThreadResponseModel } from 'src/app/models/response/response.module';
 import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads, defaultEmpty } from 'src/app/models/operator/index.module';
 import { NullCutUser, CutUser } from 'src/app/models/user/cut-user.model';
 import { Thread } from 'src/app/models/message/thread.model';
@@ -98,7 +98,7 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
     let threadsRequestObservable = this.httpClient
     .get(environment.endpointURL + 'message/thread')
     .pipe(
-      defaultEmpty(NullThreads.instance()), transformUser(), transformAddress(), transformMessage(),
+      defaultEmpty(NullThreads.instance()), transformUser(), transformAddress(),
       transfromThread(), transfromThreads()
     );
     this.setSource(threadsRequestObservable);

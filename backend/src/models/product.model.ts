@@ -36,7 +36,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     public static associations: {
       orders: Association<Product, Order>;
       address: Association<Product, Address>;
-      user: Association<Product, User>;
+      seller: Association<Product, User>;
       threads: Association<Product, MessageThread>;
     };
 

@@ -1,4 +1,3 @@
-import { PopupComponent } from './../../../../../../models/user/profile/navigation/popup/popup.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import {
   UpdateProductResponseModel,
-  DeleteProductResponseModel } from 'src/app/models/response/response-model.module';
+  DeleteProductResponseModel } from 'src/app/models/response/response.module';
 import {
   UpdateProductRequestBuilder,
   UpdateProductRequestModel } from 'src/app/models/request/request.module';

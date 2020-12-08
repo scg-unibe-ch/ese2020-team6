@@ -319,7 +319,7 @@ export class ProductService {
       where: {
         [operator]: where
       },
-      include: [Product.associations.address]
+      include: [Product.associations.address, Product.associations.seller]
     };
   }
 

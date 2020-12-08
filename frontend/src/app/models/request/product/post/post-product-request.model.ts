@@ -2,7 +2,7 @@ import { ProductModel } from '../../../product/product.model';
 import { PostProductFormModel } from '../../../form/post-product-form.model';
 import { AddressModel } from '../../../map/address/address.model';
 
-export interface PostProductRequestModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'rejectionMessage' | 'status'>{}
+export interface PostProductRequestModel extends Omit<ProductModel, 'productId' | 'sellerId' | 'rejectionMessage' | 'status' | 'seller' | 'category'>{}
 
 export class PostProductRequest implements PostProductRequestModel {
   constructor(
@@ -16,7 +16,7 @@ export class PostProductRequest implements PostProductRequestModel {
     public category: string,
     public subcategory: string,
     public isDeliverable: boolean,
-    public expirationDate: number,
+    public expirationDate: Date,
   ) { }
 
   public toString = () : string => {
@@ -35,7 +35,7 @@ export class PostProductRequest implements PostProductRequestModel {
       postProductForm.category,
       postProductForm.subcategory,
       postProductForm.isDeliverableString === 'Yes' ? true : false,
-      postProductForm.expirationDate,
+      new Date(postProductForm.expirationDate),
     )
   }
 }

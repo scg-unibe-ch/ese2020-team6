@@ -26,7 +26,6 @@ export class ProductDetailsComponent {
   private updateThread(): void {
     if (
       !(this.product instanceof NullProduct) &&
-      !(this.seller instanceof NullCutUser) &&
       !(this.sender instanceof NullUser)
     ) this.getThread();
   }
@@ -39,7 +38,7 @@ export class ProductDetailsComponent {
   set thread(thread: Thread) {
     if (!(thread instanceof NullThread)) this._thread = thread;
     else this.thread = new Thread(
-      this.product, new Participants(this.seller, [this.sender]), false, new Array<Message>()
+      this.product, new Participants(this.product.seller, [this.sender]), false, new Array<Message>()
     );
   }
   get thread(): Thread { return this._thread; }
@@ -51,18 +50,9 @@ export class ProductDetailsComponent {
   set product(product: Product) {
     this._product = product;
     this.updateThread();
+    console.log(product)
   }
   get product() { return this._product; }
-
-
-
-  private _seller: CutUser = NullCutUser.instance();
-  @Input()
-  set seller(seller: CutUser) {
-    this._seller = seller;
-    this.updateThread();
-  }
-  get seller(): CutUser { return this._seller; }
 
 
 
@@ -106,12 +96,5 @@ export class ProductDetailsComponent {
   get priceLabel(): string {
     if (this.product.productType === 'Service' || this.product.offerType === 'Rent') { return '$/h'; }
     else { return '$'; }
-  }
-
-  formatExpirationDate(): any {
-    let expirationDate: string;
-    expirationDate = String(this.product.expirationDate);
-    expirationDate = expirationDate.substring(0, 10);
-    return expirationDate;
   }
 }

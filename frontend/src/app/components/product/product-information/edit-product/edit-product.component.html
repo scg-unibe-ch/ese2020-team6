@@ -1,4 +1,4 @@
-<app-product-details [product]="product" [seller]="seller">
+<app-product-details [product]="product">
   <button theme button [routerLink]="['/product/post', product.productId]">Update</button>
   <button theme button (click)="toggleDelete()">Delete</button>
 </app-product-details>

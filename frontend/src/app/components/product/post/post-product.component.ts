@@ -71,7 +71,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
       this.categoryStrings = categories.categories.map((category: Category) => category.toString());
       this.subcategoryStrings = new Array<string>();
       if (product) {
-        this.updateSubCategoryStrings(product.category);
+        this.updateSubCategoryStrings(product.category.toString());
         this.form.setValue(PostProductForm.buildFromProductModel(product));
       }
     });

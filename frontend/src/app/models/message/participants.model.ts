@@ -1,6 +1,6 @@
 import { CutUser, NullCutUser } from 'src/app/models/user/cut-user.model';
 import { NoBuyerError, NoSellerError } from 'src/app/models/error/error.module';
-import { ParticpantResponseModel } from '../response/response-model.module';
+import { ParticpantResponseModel } from '../response/response.module';
 import { Participant, NullParticipant } from './participant.model';
 
 export interface ParticipantsModel {

@@ -3,6 +3,7 @@ import { Equality } from '../compare/equality';
 import { Is } from '../compare/is';
 import { CutUser } from './cut-user.model';
 import { environment } from 'src/environments/environment';
+import { UserResponseModel } from '../response/response.module';
 
 export interface UserModel {
   userId: number;
@@ -47,21 +48,39 @@ export class User implements UserModel {
     return CutUser.buildFromUser(this);
   }
 
-  public static buildFromUserModel(userModel: UserModel): User {
+  public static buildFromUserModel(user: UserModel): User {
     return new User(
-      userModel.userId,
-      userModel.firstName,
-      userModel.lastName,
-      userModel.userName,
-      userModel.email,
-      userModel.password,
-      userModel.phonenumber,
-      userModel.addressId,
-      userModel.gender,
-      userModel.isAdmin,
-      userModel.wallet,
-      Address.buildFromAddressModel(userModel.address),
-      userModel.picture
+      user.userId,
+      user.firstName,
+      user.lastName,
+      user.userName,
+      user.email,
+      user.password,
+      user.phonenumber,
+      user.addressId,
+      user.gender,
+      user.isAdmin,
+      user.wallet,
+      Address.buildFromAddressModel(user.address),
+      user.picture
+    )
+  }
+
+  public static buildFromUserResponseModel(user: UserResponseModel): User {
+    return new User(
+      user.userId,
+      user.firstName,
+      user.lastName,
+      user.userName,
+      user.email,
+      user.password,
+      user.phonenumber,
+      user.addressId,
+      user.gender,
+      user.isAdmin,
+      user.wallet,
+      Address.buildFromAddressResponseModel(user.address),
+      user.picture
     )
   }
 

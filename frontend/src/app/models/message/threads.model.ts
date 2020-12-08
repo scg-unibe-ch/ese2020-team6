@@ -1,4 +1,4 @@
-import { ThreadResponseModel, ThreadsResponseModel } from 'src/app/models/response/response-model.module';
+import { ThreadResponseModel, ThreadsResponseModel } from 'src/app/models/response/response.module';
 import { Thread, NullThread } from './thread.model';
 import { Product } from '../product/product.model';
 import { CutUser, NullCutUser } from '../user/cut-user.model';

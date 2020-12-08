@@ -40,7 +40,7 @@ export class Search implements SearchModel {
     }
 
     private productHasCategory(product: ProductModel): boolean {
-      if (this.categories.length > 0) return this.categories.includes(product.category);
+      if (this.categories.length > 0) return this.categories.includes(product.category.toString());
       else return true;
     }
 

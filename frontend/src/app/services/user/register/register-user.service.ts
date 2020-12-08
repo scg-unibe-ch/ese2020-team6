@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
+import { RegisterUserResponseModel } from '../../../models/response/response.module';
 import { environment } from '../../../../environments/environment';
 import { transformAddress , transformUser } from '../../../models/operator/index.module';
 

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { ProductModel } from '../../../models/product/product.model';
+import { ProductModel, Product } from '../../../models/product/product.model';
 import { GetService } from '../../get-service';
-import { transformAddress } from '../../../models/operator/address.operator';
-import { transformCategory } from '../../../models/operator/category.operator';
 import { Categories, CategoryModel } from '../../../models/category/category.module';
+import { transformProducts, transformAddress, transformCategories, transformProduct } from 'src/app/models/operator/index.module';
+import { Products } from 'src/app/models/product/products.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,28 +19,28 @@ export class GetProductService extends GetService {
     super('product/', httpClient);
   }
 
-  public getAllProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('all').pipe(transformAddress());
+  public getAllProducts(): Observable<Products> {
+    return this.get<Array<ProductModel>>('all').pipe(transformProducts());
   }
 
-  public getAllAcceptedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('accepted').pipe(transformAddress());
+  public getAllAcceptedProducts(): Observable<Products> {
+    return this.get<Array<ProductModel>>('accepted').pipe(transformProducts());
   }
 
-  public getMyRejectedProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('rejected/' + userId.toString()).pipe(transformAddress());
+  public getMyRejectedProducts(userId: number): Observable<Products> {
+    return this.get<Array<ProductModel>>('rejected/' + userId.toString()).pipe(transformProducts());
   }
 
-  public getAllUnreviewedProducts(): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('unreviewed').pipe(transformAddress());
+  public getAllUnreviewedProducts(): Observable<Products> {
+    return this.get<Array<ProductModel>>('unreviewed').pipe(transformProducts());
   }
 
-  public getMyProducts(userId: number): Observable<Array<ProductModel>> {
-    return this.get<Array<ProductModel>>('myproducts/' + userId.toString()).pipe(transformAddress());
+  public getMyProducts(userId: number): Observable<Products> {
+    return this.get<Array<ProductModel>>('myproducts/' + userId.toString()).pipe(transformProducts());
   }
 
-  public getProductById(productId: number): Observable<ProductModel> {
-    return this.get<ProductModel>('details/' + productId.toString()).pipe(transformAddress());
+  public getProductById(productId: number): Observable<Product> {
+    return this.get<ProductModel>('details/' + productId.toString()).pipe(transformProduct());
   }
 
   public getMyRejectedProductsCount(userId: number): Observable<number> {
@@ -52,6 +52,6 @@ export class GetProductService extends GetService {
   }
 
   public getCategories(): Observable<Categories> {
-    return this.get<Array<CategoryModel>>('category/categories').pipe(transformCategory);
+    return this.get<Array<CategoryModel>>('category/categories').pipe(transformCategories());
   }
 }

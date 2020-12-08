@@ -4,7 +4,7 @@ import {
   LoginUserResponseModel,
   LoginUserResponseUserModel,
   UserTokenModel,
-  isLoginUserResponseUserModel } from '../response/user/login/login-user-response.model';
+  isLoginUserResponseUserModel } from '../response/response.module';
 import { User } from '../user/user.model';
 
 export function toTokenResponse(source: Observable<LoginUserResponseModel>): Observable<UserTokenModel> {

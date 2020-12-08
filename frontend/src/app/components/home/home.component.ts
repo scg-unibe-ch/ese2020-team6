@@ -1,10 +1,10 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../../services/product/product.service';
 import { UserService } from '../../services/user/user.service';
-import { ProductModel } from '../../models/product/product.model';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ValueLoader } from 'src/app/services/service.module';
+import { NullProducts, Products } from 'src/app/models/product/products.model';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ import { ValueLoader } from 'src/app/services/service.module';
 })
 export class HomeComponent {
 
-  public products: Array<ProductModel> = new Array();
+  public products: Products = NullProducts.instance();
   public isLoggedIn = false;
   showDropdown: any;
   newReload: any;
@@ -24,7 +24,7 @@ export class HomeComponent {
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef
   ) {
-    productService.getAllAcceptedProducts().subscribe((products: Array<ProductModel>) => this.products = products);
+    productService.getAllAcceptedProducts().subscribe((products: Products) => this.products = products);
     userService.subscribe(new ValueLoader(() => this.isLoggedIn = true, (err: any) => this.isLoggedIn = false));
   }
 

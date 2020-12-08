@@ -1,4 +1,4 @@
-import { ThreadResponseModel } from '../response-model.module';
+import { ThreadResponseModel } from '../response.module';
 
 export interface ThreadsResponseModel extends Array<ThreadResponseModel>{};
 

@@ -6,7 +6,7 @@ import {
   LoginUserRequestBuilder,
   LoginUserRequestModel,
   RegisterUserRequestModel } from 'src/app/models/request/request.module';
-import { RegisterUserResponseModel } from '../../../models/response/user/register/register-user-response.model';
+import { RegisterUserResponseModel } from '../../../models/response/response.module';
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
 import { RegisterUserService } from '../../../services/user/register/register-user.service';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
