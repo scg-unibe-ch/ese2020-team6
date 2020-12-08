@@ -37,7 +37,6 @@ export class ProductDetailsComponent {
 
   private _thread: Thread = NullThread.instance();
   set thread(thread: Thread) {
-    console.log(thread)
     if (!(thread instanceof NullThread)) this._thread = thread;
     else {
       this.thread = new Thread(
@@ -55,7 +54,6 @@ export class ProductDetailsComponent {
   set product(product: Product) {
     this._product = product;
     this.updateThread();
-    console.log(product)
   }
   get product() { return this._product; }
 
