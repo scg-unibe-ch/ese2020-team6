@@ -20,7 +20,6 @@ export class TooltipComponent implements AfterViewInit {
     this.tipDim = this.nativeTip.getBoundingClientRect();
     this.nativeTipParent = this.nativeTip.parentElement;
     this.parentDim = this.nativeTipParent.getBoundingClientRect();
-    console.log(this.nativeTip.getBoundingClientRect())
   }
 
   private static padding: number = 5;

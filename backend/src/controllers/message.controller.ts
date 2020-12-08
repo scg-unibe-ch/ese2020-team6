@@ -29,10 +29,7 @@ messageController.get('/thread/unread/count', verifyToken,
     (req: Request, res: Response) => {
         const participantId = req.body.tokenPayload.userId;
         MessageService.getUnreadCount(participantId)
-        .then((count: Count<MessageThread>) => {
-          console.log(count);
-          res.send(count);
-        })
+        .then((count: Count<MessageThread>) => res.send(count))
         .catch((err: any) => handleError(err, res));
 });
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { UserService } from '../../../services/user/user.service';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AuthAdminGuard implements CanActivate {
       if (!isLoggedIn) return goToLogin;
       else if (!isAdmin) return goToDesination;
       else return true;
-    }))
+    }, catchError((error: any) => of(goToLogin))))
   }
 
 }

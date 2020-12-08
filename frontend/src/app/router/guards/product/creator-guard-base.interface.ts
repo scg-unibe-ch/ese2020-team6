@@ -1,6 +1,6 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { pluck, map,  mergeMap } from 'rxjs/operators';
+import { pluck, map,  mergeMap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
 import { UserModel } from '../../../models/user/user.model';
@@ -23,7 +23,7 @@ export abstract class CreatorGuardBase implements CanActivate {
       return this.productService.getProductById(productId)
       .pipe(map((product: ProductModel) => {
         return this.needsNoRedirect(product.sellerId, user.userId) ? true : this.redirect(next, state);
-      }))
+      }, catchError((error: any) => of(false))))
     }))
   }
 
