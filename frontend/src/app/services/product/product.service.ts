@@ -89,9 +89,9 @@ export class ProductService {
     return this.getProductService.getCategories();
   }
 
-  public static filter(products: Array<ProductModel>, filter: Search): Array<ProductModel> {
-    return products.filter((product: ProductModel) => {
+  public static filter(products: Products, filter: Search): Products {
+    return new Products(products.products.filter((product: Product) => {
       return filter.filter(product);
-    });
+    }));
   }
 }

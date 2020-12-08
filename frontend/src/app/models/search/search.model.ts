@@ -1,5 +1,4 @@
-import { AddressModel, NullAddress } from 'src/app/models/map/address/address.model';
-import { ProductModel } from 'src/app/models/product/product.model';
+import { Product } from 'src/app/models/product/product.model';
 
 export interface SearchModel {
     titleAndDescription: string;
@@ -26,7 +25,7 @@ export class Search implements SearchModel {
     public deliverable: boolean = null;
     public status: string = '';
 
-    public filter(product: ProductModel): boolean {
+    public filter(product: Product): boolean {
       if (!this.productHasCategory(product)) return false;
       else if (!this.productHasSubCategory(product)) return false;
       else if (!this.productIsInPriceRange(product)) return false;
@@ -39,44 +38,44 @@ export class Search implements SearchModel {
       else return true;
     }
 
-    private productHasCategory(product: ProductModel): boolean {
+    private productHasCategory(product: Product): boolean {
       if (this.categories.length > 0) return this.categories.includes(product.category.toString());
       else return true;
     }
 
-    private productHasSubCategory(product: ProductModel): boolean {
+    private productHasSubCategory(product: Product): boolean {
       if (this.subcategories.length > 0) return this.subcategories.includes(product.subcategory);
       else return true;
     }
 
-    private productIsInPriceRange(product: ProductModel): boolean {
+    private productIsInPriceRange(product: Product): boolean {
       return this.priceMin <= product.price && product.price <= this.priceMax;
     }
 
-    private productHasDeliverableStatus(product: ProductModel): boolean {
+    private productHasDeliverableStatus(product: Product): boolean {
       if (this.deliverable) return this.deliverable == product.isDeliverable;
       else return true;
     }
 
-    private productHasProductType(product: ProductModel): boolean {
+    private productHasProductType(product: Product): boolean {
       return Search.stringContainsKeyword(product.productType, this.productType);
     }
 
-    private productHasOfferType(product: ProductModel): boolean {
+    private productHasOfferType(product: Product): boolean {
       return Search.stringContainsKeyword(product.offerType, this.offerType);
     }
 
-    private productHasStatus(product: ProductModel): boolean {
+    private productHasStatus(product: Product): boolean {
       return Search.stringContainsKeyword(product.status, this.status);
     }
 
-    private keywordInTitleOrDescription(product: ProductModel): boolean {
+    private keywordInTitleOrDescription(product: Product): boolean {
       let keywordInTitle: boolean = Search.stringContainsKeyword(product.title, this.titleAndDescription);
       let keywordInDescription: boolean = Search.stringContainsKeyword(product.description, this.titleAndDescription);
       return keywordInTitle || keywordInDescription;
     }
 
-    private keywordInAddress(product: ProductModel): boolean {
+    private keywordInAddress(product: Product): boolean {
       return Search.stringContainsKeyword(product.address.toString(), this.location)
     }
 

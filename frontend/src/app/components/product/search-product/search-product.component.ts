@@ -3,6 +3,7 @@ import { ProductModel } from 'src/app/models/product/product.model';
 import { Component, EventEmitter, Output, Input} from '@angular/core';
 import { SearchModel, Search } from 'src/app/models/search/search.model';
 import { Categories, Category, Subcategory } from 'src/app/models/category/category.module';
+import { Products } from 'src/app/models/product/products.model';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class SearchProductComponent {
   @Output()
   public criteriaChange = new EventEmitter<SearchModel>();
   @Input()
-  public productArray: Array<ProductModel>;
+  public products: Products;
 
   public criteria: Search = new Search();
 
