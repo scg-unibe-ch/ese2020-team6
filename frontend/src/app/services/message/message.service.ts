@@ -8,11 +8,12 @@ import { User } from 'src/app/models/user/user.model';
 import { Message } from 'src/app/models/message/message.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
+import { SendMessageRequest, ReadStatusRequest } from 'src/app/models/request/request.module';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
-import { MessageResponseModel } from 'src/app/models/response/response-model.module';
+import { MessageResponseModel, ThreadResponseModel } from 'src/app/models/response/response-model.module';
 import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads, defaultEmpty } from 'src/app/models/operator/index.module';
 import { NullCutUser, CutUser } from 'src/app/models/user/cut-user.model';
+import { Thread } from 'src/app/models/message/thread.model';
 
 
 @Injectable({
@@ -63,6 +64,11 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
     } else this.load();
   }
 
+  private updateThreads(): void {
+    this.hasThreads = false;
+    this.getThreads();
+  }
+
 
   protected postProcess(threadsPromise: Promise<Threads>): Promise<Threads> {
     return threadsPromise.then((threads: Threads) => {
@@ -76,11 +82,15 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
   public send(requestBuilder: RequestBuilder<SendMessageRequest>): Observable<Message> {
     let message = this.httpClient.post<MessageResponseModel>(environment.endpointURL + 'message/send', requestBuilder.request())
     .pipe(transformMessage());
-    message.subscribe(() => {
-      this.hasThreads = false;
-      this.getThreads();
-    });
+    message.subscribe(() => this.updateThreads());
     return message;
+  }
+
+  public setReadStatus(requestBuilder: RequestBuilder<ReadStatusRequest>): Observable<Thread> {
+    let thread = this.httpClient.put<ThreadResponseModel>(environment.endpointURL + 'message/thread/readstatus', requestBuilder.request())
+    .pipe(transfromThread())
+    thread.subscribe(() => this.updateThreads())
+    return thread;
   }
 
   private sendRequest(): void {

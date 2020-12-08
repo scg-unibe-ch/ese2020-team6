@@ -5,8 +5,7 @@ import { PaymentMethodComponent } from '../stage/payment-method/payment-method.c
 import { ProductService } from '../../../../services/product/product.service';
 import { UserService } from '../../../../services/user/user.service';
 import { OrderService } from '../../../../services/order/order.service';
-import { OrderRequestBuilder } from '../../../../models/request/order/order-request-builder.module';
-import { ShippingRequestExtension } from '../../../../models/request/order/order-request-model.module';
+import { OrderRequestBuilder, ShippingRequestExtension } from 'src/app/models/request/request.module';
 import { ShippingResponseExtension } from '../../../../models/response/order/order-response-model.module';
 
 @Component({

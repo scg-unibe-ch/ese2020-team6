@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { OrderRequestBuilder } from '../../../models/request/order/order-request-builder.module';
-import { OrderRequestModel } from '../../../models/request/order/order-request-model.module';
+import { OrderRequestBuilder, OrderRequestModel } from '../../../models/request/request.module';
 import { OrderResponseModel } from '../../../models/response/order/order-response-model.module';
 
 @Injectable({

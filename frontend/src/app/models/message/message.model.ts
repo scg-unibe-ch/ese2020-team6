@@ -2,7 +2,7 @@ import { MessageResponseModel } from 'src/app/models/response/response-model.mod
 import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Thread } from './thread.model';
 import { RequestBuilder } from 'src/app/models/request/request-builder.interface';
-import { SendMessageRequest } from 'src/app/models/request/message/send/send-message-request.model';
+import { SendMessageRequest } from 'src/app/models/request/message/message-request.module';
 
 export interface MessageModel {
   messageId?: number;

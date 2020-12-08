@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { PutOrderService } from './put/put-order.service';
 import { GetOrderService } from './get/get-order.service';
 
-import { OrderRequestBuilder } from '../../models/request/order/order-request-builder.module';
-import { OrderRequestModel } from '../../models/request/order/order-request-model.module';
+import { OrderRequestBuilder, OrderRequestModel } from '../../models/request/request.module';
 import { OrderResponseModel } from '../../models/response/order/order-response-model.module';
 
 import { Orders } from '../../models/order/order.module';

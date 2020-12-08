@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { LoginUserRequestBuilder } from '../../../models/request/user/login/login-user-request-builder.interface';
-import { LoginUserRequestModel } from '../../../models/request/user/login/login-user-request.model';
+import { LoginUserRequestBuilder, LoginUserRequestModel } from 'src/app/models/request/request.module';
 import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
 import { ILoaderSubsctiption, ValuePartialLoader } from '../../../services/service.module';

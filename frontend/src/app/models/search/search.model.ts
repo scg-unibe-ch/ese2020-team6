@@ -1,5 +1,5 @@
-import { AddressModel, NullAddress } from '../../map/address/address.model';
-import { ProductModel } from '../../product/product.model';
+import { AddressModel, NullAddress } from 'src/app/models/map/address/address.model';
+import { ProductModel } from 'src/app/models/product/product.model';
 
 export interface SearchModel {
     titleAndDescription: string;

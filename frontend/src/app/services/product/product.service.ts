@@ -11,13 +11,13 @@ import {
   RejectProductResponseModel,
   UpdateProductResponseModel,
   PostProductResponseModel,
-  DeleteProductResponseModel } from '../../models/response/product/product-response-model.module';
+  DeleteProductResponseModel } from '../../models/response/response-model.module';
 import {
   PostProductRequestBuilder,
   UpdateProductRequestBuilder,
   AcceptProductRequestBuilder,
-  RejectProductRequestBuilder } from '../../models/request/product/product-request-builder.module';
-import { Search } from '../../models/request/search/search.model';
+  RejectProductRequestBuilder } from 'src/app/models/request/request.module';
+import { Search } from 'src/app/models/search/search.model';
 
 
 @Injectable({

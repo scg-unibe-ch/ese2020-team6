@@ -1,12 +1,12 @@
 import { ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StagableExtention } from '../../../../components/checkout/stagable/stagable-extention';
-import { StageModel } from '../../../../models/checkout/stage/stage.model';
-import { OrderService } from '../../../../services/order/order.service';
+import { StagableExtention } from 'src/app/components/checkout/stagable/stagable-extention';
+import { StageModel } from 'src/app/models/checkout/stage/stage.model';
+import { OrderService } from 'src/app/services/order/order.service';
 import { OrderRequestModel } from './order-request.model';
-import { OrderResponseModel } from '../../../response/order/order-response-model.module';
-import { ProductService } from '../../../../services/product/product.service';
-import { UserService } from '../../../../services/user/user.service';
+import { OrderResponseModel } from 'src/app/models/response/order/order-response-model.module';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 export abstract class OrderRequestBuilder<S extends OrderRequestModel, T extends OrderResponseModel> extends StagableExtention {

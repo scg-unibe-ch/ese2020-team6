@@ -9,7 +9,7 @@ import {
   AcceptProductRequestBuilder,
   RejectProductRequestBuilder,
   AcceptProductRequestModel,
-  RejectProductRequestModel } from 'src/app/models/request/product/product-request-model-builder.module';
+  RejectProductRequestModel } from 'src/app/models/request/request.module';
 
 @Component({
   selector: 'app-review-product',

@@ -1,6 +1,6 @@
 import { PostProductRequestModel } from '../../../request/product/post/post-product-request.model';
 import { PostProductFormModel } from '../../../form/post-product-form.model';
-import { AddressModel, NullAddress } from '../../../map/address/address.model';
+import { AddressModel } from '../../../map/address/address.model';
 
 export interface UpdateProductRequestModel extends PostProductRequestModel {}
 

@@ -8,7 +8,7 @@ import {
   AcceptProductRequestBuilder,
   AcceptProductRequestModel,
   RejectProductRequestBuilder,
-  RejectProductRequestModel } from '../../../models/request/product/product-request-model-builder.module';
+  RejectProductRequestModel } from 'src/app/models/request/request.module';
 
 import { environment } from '../../../../environments/environment';
 import { transformAddress } from '../../../models/operator/address.operator';

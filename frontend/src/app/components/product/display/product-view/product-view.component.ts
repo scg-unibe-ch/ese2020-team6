@@ -1,5 +1,5 @@
-import { Search } from 'src/app/models/request/search/search.model';
-import { SearchProductComponent } from './../../search-product/search-product.component';
+import { Search } from 'src/app/models/search/search.model';
+import { SearchProductComponent } from 'src/app/components/product/search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';

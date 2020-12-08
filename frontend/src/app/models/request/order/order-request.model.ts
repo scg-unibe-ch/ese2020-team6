@@ -1,4 +1,4 @@
-import { OrderModel, ShippingOrderModelExtention, HoursOrderModelExtention } from '../../../order/order.model';
+import { ShippingOrderModelExtention, HoursOrderModelExtention } from 'src/app/models/order/order.model';
 
 export interface OrderRequestModel {
   productId: number;

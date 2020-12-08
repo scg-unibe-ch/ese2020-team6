@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import {
   UpdateProductResponseModel,
-  DeleteProductResponseModel } from '../../../models/response/product/product-response-model.module';
+  DeleteProductResponseModel } from 'src/app/models/response/response-model.module';
 import {
   UpdateProductRequestBuilder,
-  UpdateProductRequestModel } from '../../../models/request/product/product-request-model-builder.module';
+  UpdateProductRequestModel } from 'src/app/models/request/request.module';
 
-import { environment } from '../../../../environments/environment';
-import { transformAddress } from '../../../models/operator/address.operator';
+import { environment } from 'src/app/../environments/environment';
+import { transformAddress } from 'src/app/models/operator/address.operator';
 
 @Injectable({
   providedIn: 'root'

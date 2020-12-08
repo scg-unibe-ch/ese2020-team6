@@ -14,7 +14,7 @@ import {
   PostProductRequest,
   UpdateProductRequestBuilder,
   UpdateProductRequestModel,
-  UpdateProductRequest } from 'src/app/models/request/product/product-request-model-builder.module';
+  UpdateProductRequest } from 'src/app/models/request/request.module';
 import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
 import { PostProductForm } from 'src/app/models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from 'src/app/models/category/category.module';

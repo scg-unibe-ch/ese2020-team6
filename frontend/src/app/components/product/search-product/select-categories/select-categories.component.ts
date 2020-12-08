@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter  } from '@angular/core';
-import { SearchModel } from 'src/app/models/request/search/search.model';
+import { SearchModel } from 'src/app/models/search/search.model';
 import { ProductModel } from 'src/app/models/product/product.model';
 
 @Component({
