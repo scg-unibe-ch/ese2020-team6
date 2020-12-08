@@ -1,10 +1,8 @@
 import { Transaction, Op } from 'sequelize';
 import { User, UserAttributes} from '../models/user.model';
 import { Address, AddressAttributes } from '../models/address.model';
-
 import { AddressService } from './address.service';
 import { OrderService } from './order.service';
-
 import { OrderSubType } from '../interfaces/order-sub-type.interface';
 import {
   LoginResponse,
@@ -16,7 +14,6 @@ import {
 import { CO } from '../interfaces/orders.interface';
 import { DecodedToken, Token } from '../interfaces/token.interface';
 import { StatusError } from '../errors/status.error';
-
 import bcrypt from 'bcrypt';
 
 interface HasUserId extends Partial<UserAttributes> {

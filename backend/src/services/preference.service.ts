@@ -1,8 +1,6 @@
 
 import { Preference, PreferenceAttributes } from '../models/preference.model';
 
-const { Op } = require('sequelize');
-
 export class PreferenceService {
 
   public setPreferences(userId: number, preferences: PreferenceAttributes): Promise<Preference> {

@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
+import { Sequelize, DataTypes, Association, Optional, BelongsToGetAssociationMixin } from 'sequelize';
 import { Order } from './order.model';
 import { Address } from './address.model';
 import { OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';

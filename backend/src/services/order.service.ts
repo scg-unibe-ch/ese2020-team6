@@ -1,16 +1,15 @@
 import { Association, Transaction, Model, ModelCtor, Op } from 'sequelize';
 
-import { Product, ProductAttributes } from '../models/product.model';
-import { User, UserAttributes } from '../models/user.model';
-import { Order, OrderAttributes, OrderCreationAttributes } from '../models/order.model';
-import { ItemSold, ItemSoldAttributes, ItemSoldCreationAttributes } from '../models/item-sold.model';
-import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '../models/item-rented.model';
-import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
-import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
+import { Product } from '../models/product.model';
+import { User} from '../models/user.model';
+import { Order, OrderCreationAttributes } from '../models/order.model';
+import { ItemSold } from '../models/item-sold.model';
+import { ItemRented } from '../models/item-rented.model';
+import { ServiceRented } from '../models/service-rented.model';
+import { Address, AddressCreationAttributes } from '../models/address.model';
 
-import { OrderSubTypeCtor, OrderSubType, OrderSubTypeAttributes } from '../interfaces/order-sub-type.interface';
-import { HasCreationArrtibutes,
-  CO, COST, COCOST,
+import { OrderSubType } from '../interfaces/order-sub-type.interface';
+import { CO, COCOST,
   CIS, COIS, COISExPromise,
   CIR, COIR, COIRExPromise,
   CSR, COSR, COSRExPromise
