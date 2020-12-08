@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileNavigationElementModel } from 'src/app/models/user/profile/navigation-element/profile-navigation-element.model';
 import { OrderService } from 'src/app/services/order/order.service';
-import { Orders, NullOrders } from 'src/app/models/order/order.module';
+import { Orders, NullOrders } from 'src/app/models/order/orders.model';
 
 @Component({
   selector: 'seller-orders',
