@@ -39,9 +39,12 @@ export class ProductDetailsComponent {
   set thread(thread: Thread) {
     console.log(thread)
     if (!(thread instanceof NullThread)) this._thread = thread;
-    else this.thread = new Thread(
-      this.product, new Participants(this.product.seller, [this.sender]), false, new Array<Message>()
-    );
+    else {
+      this.thread = new Thread(
+        this.product, new Participants(this.product.seller, [this.sender]), false, new Array<Message>()
+      );
+      this.thread.currentSender = this.sender;
+    }
   }
   get thread(): Thread { return this._thread; }
 
