@@ -6,7 +6,7 @@
     <div class="threads">
       <div class="thread" *ngFor="let thread of threads; index as i;" (click)="showThread(thread)">
         <img class="profile-picture" [src]="thread.receivers.users()[0].pictureUrl">
-        <div class="thread-label">
+        <div class="thread-label" style="margin-left: 20px;">
           <div class="username">
             {{ thread.receivers }}
           </div>
