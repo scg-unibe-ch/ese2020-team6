@@ -3,8 +3,8 @@ import { SearchProductComponent } from 'src/app/components/product/search-produc
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
-import { ProductModel } from 'src/app/models/product/product.model';
 import { ProductService } from 'src/app/services/product/product.service';
+import { Products, NullProducts } from 'src/app/models/product/products.model';
 
 @Component({
   selector: 'app-product-view',
@@ -14,8 +14,8 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class ProductViewComponent {
   overlayRef: any;
   @Input() path = '';
-  @Input() products: Array<ProductModel>;
-  filteredProducts: Array<ProductModel>;
+  @Input() products: Products = NullProducts.instance();
+  filteredProducts: Products = NullProducts.instance();
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
   public CategoryName;
