@@ -6,8 +6,13 @@
     <div class="threads">
       <div class="thread" *ngFor="let thread of threads; index as i;" (click)="showThread(thread)">
         <img class="profile-picture" [src]="thread.receivers.users()[0].pictureUrl">
-        <div class="username">
-          {{ thread.receivers }}
+        <div class="thread-label">
+          <div class="username">
+            {{ thread.receivers }}
+          </div>
+          <div class="product">
+            {{ thread.product.title }}
+          </div>
         </div>
         <tooltip tip="Pending" position="left">
           <div *ngIf="!thread.isAccepted" class="accepted-status" [ngClass]="thread.isAccepted ? 'accepted' : 'not-accepted'">
