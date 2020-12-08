@@ -193,15 +193,6 @@ h1 {
   margin-bottom: 2em;
 }
 
-::ng-deep .snackbar {
-  background: #DBA295;
-  border: 2px solid #352e34;
-  height: 150px;
-  width: 200px;
-  letter-spacing: 2px;
-  color: #352e34;
-}
-
 @each $theme-name in $theme-names {
   @include post-theme($theme-name);
 }

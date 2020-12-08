@@ -7,6 +7,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { OrderService } from '../../../../services/order/order.service';
 import { OrderRequestBuilder, HoursRequestExtension } from 'src/app/models/request/request.module';
 import { HoursResponseExtension } from '../../../../models/response/order/order-response.module';
+import { PopupService } from 'src/app/services/popup/popup.service';
 
 @Component({
   selector: 'pruchase-service',
@@ -23,7 +24,8 @@ export class PurchaseServiceComponent extends OrderRequestBuilder<HoursRequestEx
     productService: ProductService,
     userService: UserService,
     orderService: OrderService,
-    router: Router
+    router: Router,
+    popupService: PopupService
   ) {
     super(
       componentFactoryResolver,
@@ -43,7 +45,8 @@ export class PurchaseServiceComponent extends OrderRequestBuilder<HoursRequestEx
       productService,
       userService,
       orderService,
-      router
+      router,
+      popupService
     );
   }
 

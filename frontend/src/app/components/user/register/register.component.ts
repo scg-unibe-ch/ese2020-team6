@@ -10,6 +10,7 @@ import { RegisterUserResponseModel } from '../../../models/response/response.mod
 import { RegisterUserFormModel } from '../../../models/form/register-user-form.model';
 import { RegisterUserService } from '../../../services/user/register/register-user.service';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
+import { PopupService } from 'src/app/services/popup/popup.service';
 
 @Component({
   selector: 'app-register',
@@ -28,6 +29,7 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
     private router: Router,
     private registerUserService: RegisterUserService,
     private loginUserService: LoginUserService,
+    private popupService: PopupService
   ) {}
 
   public validateCrossFieldPassword(form: NgForm): void {
@@ -59,6 +61,8 @@ export class RegisterComponent implements LoginUserRequestBuilder, RegisterUserR
          (res: RegisterUserResponseModel) => this.registerSuccess(),
          (err: any) => this.registerError(err)
        );
+    } else {
+      this.popupService.openPopup('root', 'The input is not valid!', 'warn');
     }
   }
 
