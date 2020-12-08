@@ -11,7 +11,16 @@ messageController.get('/thread', verifyToken,
     (req: Request, res: Response) => {
         const userId: number = req.body.tokenPayload.userId;
         MessageService.getMessageThreadsByUserId(userId)
-        .then((messageThread: Array<MessageThread>) => res.send(messageThread))
+        .then((messageThreads: Array<MessageThread>) => res.send(messageThreads))
+        .catch((err: any) => handleError(err, res));
+});
+
+messageController.put('/thread/readstatus', verifyToken,
+    (req: Request, res: Response) => {
+        const messageThreadId = req.body.messageThreadId;
+        const participantId = req.body.tokenPayload.userId;
+        MessageService.setToRead(messageThreadId, participantId)
+        .then((messageThread: MessageThread) => res.send(messageThread))
         .catch((err: any) => handleError(err, res));
 });
 

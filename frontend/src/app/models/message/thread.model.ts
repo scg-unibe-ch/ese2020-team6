@@ -5,6 +5,9 @@ import { Product, NullProduct } from '../product/product.model';
 import { Participants, NullParticipants } from './participants.model';
 import { Participant, NullParticipant } from './participant.model';
 import { Receivers } from './receivers.model'
+import { ReadStatusRequest } from '../request/request.module';
+import { RequestBuilder } from '../request/request-builder.interface';
+import { NoMessageThreadIdError } from '../error/error.module';
 
 export interface ThreadModel {
   messageThreadId?: number;
@@ -15,7 +18,7 @@ export interface ThreadModel {
 }
 
 
-export class Thread implements ThreadModel {
+export class Thread implements ThreadModel, RequestBuilder<ReadStatusRequest> {
   public messages: Array<Message>;
   private _currentSender: CutUser = NullCutUser.instance();
 
@@ -30,13 +33,22 @@ export class Thread implements ThreadModel {
     this.sortMessages();
   }
 
+
+  public request(): ReadStatusRequest {
+    if (this.messageThreadId) return { messageThreadId: this.messageThreadId }
+    else throw new NoMessageThreadIdError(this.product.productId);
+  }
+
   private sortMessages(): void { this.messages.sort(Message.compare); }
 
   public hasParticipant(participant: CutUser): boolean {
     return this.participants.find(participant) instanceof NullParticipant;
   }
 
-  public getByUserId(userId: number): Participant { return this.participants.find(userId); }
+  public getParticipantById(userId: number): Participant { return this.participants.find(userId); }
+  public getMessageById(messageId: number): Message {
+    return this.messages.find((message: Message) => message.messageId === messageId)
+  }
 
   private addMessage(message: Message, sort?: boolean): void {
     this.messages.push(message);
@@ -61,15 +73,30 @@ export class Thread implements ThreadModel {
 
   public merge(thread: Thread): void {
     if (this.messageThreadId && this.hasMessages && this.messageThreadId === thread.messageThreadId) {
-      let latestOldMessageId = this.latestMessage.messageId;
-      let newMessageIds = thread.ids();
-      if (latestOldMessageId) {
-        let indexOfLatestOldMessageIdInNewTread = newMessageIds.indexOf(latestOldMessageId);
-        let newMessages = thread.messages.slice(indexOfLatestOldMessageIdInNewTread + 1);
-        this.addMessages(newMessages);
-        this.isAccepted = thread.isAccepted;
-      }
+      this.updateReadStatus(thread)
+      this.insertNewMessages(thread)
+      this.updateAccepted(thread)
     } else this.setThread(thread);
+  }
+
+  private updateReadStatus(thread: Thread): void {
+    this.messages.forEach((message: Message) => {
+      message.readStatus = thread.getMessageById(message.messageId).readStatus
+    })
+  }
+
+  private insertNewMessages(thread: Thread): void {
+    let latestOldMessageId = this.latestMessage.messageId;
+    let newMessageIds = thread.ids();
+    if (latestOldMessageId) {
+      let indexOfLatestOldMessageIdInNewTread = newMessageIds.indexOf(latestOldMessageId);
+      let newMessages = thread.messages.slice(indexOfLatestOldMessageIdInNewTread + 1);
+      this.addMessages(newMessages);
+      this.isAccepted = thread.isAccepted;
+    }
+  }
+  private updateAccepted(thread: Thread): void {
+    this.isAccepted = thread.isAccepted;
   }
 
   private setThread(thread: Thread): void {

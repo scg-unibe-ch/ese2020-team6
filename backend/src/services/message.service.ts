@@ -11,75 +11,82 @@ import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-t
 
 export class MessageService {
 
-  public static saveMessage(body: string, productId: number, senderId: number, threadId?: number): Promise<Message> {
-    return MessageThread.sequelize.transaction((transaction: Transaction) => {
-      if (threadId) {
-          return MessageThread.findByPk(threadId)
-          .then((thread: MessageThread) => this.findSellerAndSender(thread, productId, senderId))
-          .then((values: [MessageThread, User, User]) => MessageService.insertMessageIntoExistingThread(body, values, transaction));
-      } else {
-          return MessageService.createThread(productId, senderId, transaction)
-          .then(([thread, sender]: [MessageThread, User]) => {
-            return thread.insert(body, sender, transaction);
-          });
-      }
-  });
-  }
-
-  private static findSellerAndSender(
-    thread: MessageThread, productId: number, senderId: number
-  ): Promise<[MessageThread, User, User]> {
-    return Promise.all([
-      Promise.resolve(thread),
-      ProductService.getProductById(productId).then((product: Product) => UserService.getUserById(product.sellerId)),
-      UserService.getUserById(senderId)
-    ]);
-  }
-
-  private static createThread(
-    productId: number, senderId: number, transaction: Transaction
-  ): Promise<[MessageThread, User]> {
-    return MessageThread.create({ productId: productId, isAccepted: false },
-    { transaction: transaction })
-    .then((thread: MessageThread) => this.findSellerAndSender(thread, productId, senderId))
-    .then(([thread, seller, sender]: [MessageThread, User, User]) =>
-      MessageService.addParticipants(thread, seller, sender, transaction));
-  }
-
-
-  private static addParticipants(
-    thread: MessageThread, seller: User, sender: User, transaction: Transaction
-  ): Promise<[MessageThread, User]> {
-    if (seller.userId === sender.userId) {
-      return Promise.reject(new StatusError('Seller cannot create a new thread on his product!', 400));
-    } else {
-      return Promise.all([
-        thread.createParticipant({
-          participantId: seller.userId,
-          isSeller: true
-        }, { transaction: transaction }),
-        thread.createParticipant({
-          participantId: sender.userId,
-          isSeller: false
-        }, { transaction: transaction })
-      ]).then(() => Promise.resolve([thread, sender]));
-
+    public static saveMessage(body: string, productId: number, senderId: number, threadId?: number): Promise<Message> {
+      return MessageThread.sequelize.transaction((transaction: Transaction) => {
+        if (threadId) {
+            return MessageThread.findByPk(threadId)
+            .then((thread: MessageThread) => this.findSellerAndSender(thread, productId, senderId))
+            .then((values: [MessageThread, User, User]) => MessageService.insertMessageIntoExistingThread(body, values, transaction));
+        } else {
+            return MessageService.createThread(productId, senderId, transaction)
+            .then(([thread, sender]: [MessageThread, User]) => {
+              return thread.insert(body, sender, transaction);
+            });
+        }
+    });
     }
-  }
 
-  private static insertMessageIntoExistingThread(
-    body: string, [thread, seller, sender]: [MessageThread, User, User], transaction: Transaction
-  ): Promise<Message> {
-    return thread.isParticipant(sender)
-    .catch((error: any) => {
-      if (error instanceof UserDoesNotBelongToThreadError) {
-        return Promise.reject(new StatusError(error.message, 400));
+    private static findSellerAndSender(
+      thread: MessageThread, productId: number, senderId: number
+    ): Promise<[MessageThread, User, User]> {
+      return Promise.all([
+        Promise.resolve(thread),
+        ProductService.getProductById(productId).then((product: Product) => UserService.getUserById(product.sellerId)),
+        UserService.getUserById(senderId)
+      ]);
+    }
+
+    private static createThread(
+      productId: number, senderId: number, transaction: Transaction
+    ): Promise<[MessageThread, User]> {
+      return MessageThread.create({ productId: productId, isAccepted: false },
+      { transaction: transaction })
+      .then((thread: MessageThread) => this.findSellerAndSender(thread, productId, senderId))
+      .then(([thread, seller, sender]: [MessageThread, User, User]) =>
+        MessageService.addParticipants(thread, seller, sender, transaction));
+    }
+
+
+    private static addParticipants(
+      thread: MessageThread, seller: User, sender: User, transaction: Transaction
+    ): Promise<[MessageThread, User]> {
+      if (seller.userId === sender.userId) {
+        return Promise.reject(new StatusError('Seller cannot create a new thread on his product!', 400));
       } else {
-        return Promise.reject(error);
+        return Promise.all([
+          thread.createParticipant({
+            participantId: seller.userId,
+            isSeller: true
+          }, { transaction: transaction }),
+          thread.createParticipant({
+            participantId: sender.userId,
+            isSeller: false
+          }, { transaction: transaction })
+        ]).then(() => Promise.resolve([thread, sender]));
+
       }
-    })
-    .then(() => thread.insert(body, sender, transaction));
-  }
+    }
+
+    private static insertMessageIntoExistingThread(
+      body: string, [thread, seller, sender]: [MessageThread, User, User], transaction: Transaction
+    ): Promise<Message> {
+      return thread.isParticipant(sender)
+      .catch((error: any) => {
+        if (error instanceof UserDoesNotBelongToThreadError) {
+          return Promise.reject(new StatusError(error.message, 400));
+        } else {
+          return Promise.reject(error);
+        }
+      })
+      .then(() => thread.insert(body, sender, transaction));
+    }
+
+
+
+    static setToRead(messageThreadId: number, participantId: number): Promise<MessageThread> {
+      return MessageThread.findByPk(messageThreadId)
+      .then((thread: MessageThread) => thread.setToRead(participantId));
+    }
 
     /***********************
         Getter methods

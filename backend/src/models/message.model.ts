@@ -3,7 +3,8 @@ import {
     Model,
     DataTypes,
     Association,
-    Optional
+    Optional,
+    Transaction
   } from 'sequelize';
 
 
@@ -76,5 +77,10 @@ import {
           foreignKey: 'messageThreadId',
           as: 'thread'
         });
+      }
+
+      public setToRead(transaction?: Transaction): Promise<void> {
+        return this.update({ readStatus: true }, { transaction: transaction })
+        .then(() => Promise.resolve());
       }
   }

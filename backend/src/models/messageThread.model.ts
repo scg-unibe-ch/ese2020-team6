@@ -36,6 +36,7 @@ import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-t
     public createParticipant!: HasManyCreateAssociationMixin<MessageThreadParticipants>;
     public createMessage!: HasManyCreateAssociationMixin<Message>;
     public getProduct!: BelongsToGetAssociationMixin<Product>;
+    public getMessages!: HasManyGetAssociationsMixin<Message>;
 
     messageThreadId!: number;
     productId!: number;
@@ -83,6 +84,19 @@ import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-t
           as: 'messages'
         });
       }
+
+    public setToRead(participantId: number): Promise<MessageThread> {
+      return this.getMessages()
+      .then((messages: Array<Message>) => Promise.all(
+        messages.map((message: Message) => {
+          if (message.senderId !== participantId) {
+            return message.setToRead();
+          } else {
+            return Promise.resolve();
+          }
+        })
+      )).then(() => Promise.resolve(this));
+    }
 
     public insert(body: string, sender: User, transaction: Transaction): Promise<Message> {
       return this.updateIsAccepted(sender, transaction)

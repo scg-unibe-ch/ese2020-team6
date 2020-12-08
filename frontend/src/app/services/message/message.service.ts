@@ -14,6 +14,7 @@ import { MessageResponseModel, ThreadResponseModel } from 'src/app/models/respon
 import { transformMessage, transformUser, transformAddress, transfromThread, transfromThreads, defaultEmpty } from 'src/app/models/operator/index.module';
 import { NullCutUser, CutUser } from 'src/app/models/user/cut-user.model';
 import { Thread } from 'src/app/models/message/thread.model';
+import { share } from 'rxjs/operators';
 
 
 @Injectable({
@@ -81,14 +82,14 @@ export class MessageService extends LoaderObservable<Threads, Threads> {
 
   public send(requestBuilder: RequestBuilder<SendMessageRequest>): Observable<Message> {
     let message = this.httpClient.post<MessageResponseModel>(environment.endpointURL + 'message/send', requestBuilder.request())
-    .pipe(transformMessage());
+    .pipe(share(), transformMessage());
     message.subscribe(() => this.updateThreads());
     return message;
   }
 
   public setReadStatus(requestBuilder: RequestBuilder<ReadStatusRequest>): Observable<Thread> {
     let thread = this.httpClient.put<ThreadResponseModel>(environment.endpointURL + 'message/thread/readstatus', requestBuilder.request())
-    .pipe(transfromThread())
+    .pipe(share(), transfromThread())
     thread.subscribe(() => this.updateThreads())
     return thread;
   }
