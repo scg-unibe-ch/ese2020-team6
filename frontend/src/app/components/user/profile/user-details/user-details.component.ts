@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
-import { UserModel, User, NullUser } from '../../../../models/user/user.model';
+import { User, NullUser } from '../../../../models/user/user.model';
 import { SuccessLoader } from 'src/app/services/service.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-details',
@@ -11,9 +10,6 @@ import { environment } from 'src/environments/environment';
 })
 export class UserDetailsComponent implements OnInit {
 
-  public endpointUrl = environment.endpointURL;
-
-  public picture: string;
   public user: User = NullUser.instance();
 
   constructor(
@@ -23,7 +19,6 @@ export class UserDetailsComponent implements OnInit {
   public ngOnInit(): void {
     this.userService.subscribe(new SuccessLoader((user: User) => {
       this.user = user;
-      this.picture = user.picture;
     }));
   }
 

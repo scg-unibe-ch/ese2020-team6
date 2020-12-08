@@ -1,7 +1,7 @@
 
 <div class="messages-wrapper-wrapper" theme>
   <div *ngFor="let receiver of thread.receivers" class="receiver">
-    <img class="profile-picture" [src]="receiver.pictureUrl">
+    <img *ngIf="receiver.hasPicture" class="profile-picture" [src]="receiver.pictureUrl">
     <div class="receiver-info">
       <div class="username">
         {{ receiver.userName }}

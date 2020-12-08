@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { Threads, NullThreads } from 'src/app/models/message/threads.model';
 import { Thread, NullThread } from 'src/app/models/message/thread.model';
-import { environment } from 'src/environments/environment';
 import { MessageService } from 'src/app/services/message/message.service';
 
 @Component({
@@ -10,8 +9,6 @@ import { MessageService } from 'src/app/services/message/message.service';
   styleUrls: ['./threads.component.scss']
 })
 export class ThreadsComponent {
-
-  public endpointUrl = environment.endpointURL;
 
   private _threads: Threads = NullThreads.instance();
   @Input()

@@ -1,6 +1,4 @@
-<loader [loader]="messageService">
-  <div success class="messenger">
-    <threads [threads]="threads" [currentThread]="currentThread" (threadEmitter)="showThread($event)"></threads>
-    <messages [thread]="currentThread"></messages>
-  </div>
-</loader>
+<div success class="messenger">
+  <threads [threads]="threads" [currentThread]="currentThread" (threadEmitter)="showThread($event)"></threads>
+  <messages [thread]="currentThread"></messages>
+</div>

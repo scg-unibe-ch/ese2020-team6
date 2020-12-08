@@ -3,7 +3,6 @@ import { Component, Input, ElementRef, ViewChild, OnInit, AfterViewChecked } fro
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Thread, NullThread } from 'src/app/models/message/thread.model';
 import { MessageService } from 'src/app/services/message/message.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'messages',
@@ -11,8 +10,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit, AfterViewChecked{
-
-  public endpointUrl = environment.endpointURL;
 
   private _thread: Thread = NullThread.instance();
   @Input()

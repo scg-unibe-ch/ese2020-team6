@@ -7,7 +7,6 @@ import { MessageService } from 'src/app/services/message/message.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Threads } from 'src/app/models/message/threads.model';
 import { SuccessLoader } from 'src/app/services/service.module';
-import { environment } from 'src/environments/environment';
 import { NullUser, User } from 'src/app/models/user/user.model';
 import { Participants } from 'src/app/models/message/participants.model';
 
@@ -29,8 +28,6 @@ export class ProductDetailsComponent {
       !(this.sender instanceof NullUser)
     ) this.getThread();
   }
-
-  public endpointUrl = environment.endpointURL;
 
   @Input()
   public messages: boolean = false;

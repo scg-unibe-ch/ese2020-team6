@@ -6,7 +6,6 @@ export interface ProductsModel {
 }
 
 export class Products implements ProductsModel, IterableIterator<Product> {
-
   constructor(
     public products: Array<Product>
   ) { }
@@ -39,6 +38,9 @@ export class Products implements ProductsModel, IterableIterator<Product> {
   private static buildProductsArray(products: Array<ProductResponseModel>): Array<Product> {
     return products.map((product: ProductResponseModel) => Product.buildFromProductResponseModel(product));
   }
+
+  get length(): number { return this.products.length; }
+  get hasProducts(): boolean { return this.length > 0; }
 }
 
 export class NullProducts extends Products {

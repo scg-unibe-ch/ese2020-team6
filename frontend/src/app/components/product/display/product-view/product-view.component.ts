@@ -2,7 +2,7 @@ import { Search } from 'src/app/models/search/search.model';
 import { SearchProductComponent } from 'src/app/components/product/search-product/search-product.component';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, ViewChild, ViewContainerRef, PipeTransform } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, PipeTransform, SimpleChanges } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Products, NullProducts } from 'src/app/models/product/products.model';
 
@@ -18,12 +18,12 @@ export class ProductViewComponent {
   filteredProducts: Products = NullProducts.instance();
   @ViewChild(SearchProductComponent)
   child: SearchProductComponent;
-  public CategoryName;
+  public CategoryName: string;
   private displayList = true;
   showDropdown: boolean;
   newReload: boolean;
 
-  ngOnChanges(changes) {
+  public ngOnChanges(changes: SimpleChanges) {
     if (changes.products.currentValue) {
       this.filteredProducts = changes.products.currentValue;
     }
@@ -40,15 +40,6 @@ export class ProductViewComponent {
 
   get isList(): boolean {
     return this.displayList;
-  }
-
-  get hasProducts(): boolean {
-    if (this.products) {
-      return this.products.length !== 0;
-    }
-    else {
-      return false;
-    }
   }
 
 

@@ -8,7 +8,7 @@ export interface Constraint {
 
 export class Constraints {
   anyCharacter: Constraint = {
-    regExp: /^.*$/,
+    regExp: /^$/,
     error: '' //no error, because it can habe any character
   }
   oneNumber: Constraint = {

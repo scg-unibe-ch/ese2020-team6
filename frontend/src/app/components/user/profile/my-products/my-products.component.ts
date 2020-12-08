@@ -14,7 +14,6 @@ import { NullProducts, Products } from 'src/app/models/product/products.model';
 export class MyProductsComponent implements OnInit {
   public products: Products = NullProducts.instance();
   public currentContent: ProfileNavigationElementModel;
-  public userId: number;
 
   constructor(
     private productService: ProductService,
@@ -28,8 +27,7 @@ export class MyProductsComponent implements OnInit {
         this.currentContent = navigationElement;
       });
     this.userService.subscribe(new SuccessLoader((user: User) => {
-      this.userId = user.userId;
-      this.productService.getMyProducts(this.userId).subscribe((myProducts: Products) => {
+      this.productService.getMyProducts(user.userId).subscribe((myProducts: Products) => {
         this.products = myProducts;
       });
     }));
