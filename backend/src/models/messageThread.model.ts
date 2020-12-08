@@ -15,6 +15,7 @@ import {
   import { Message } from './message.model';
 import { User } from './user.model';
 import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-to-thread.error';
+import { Count } from '../interfaces/count.interface';
 
   export interface MessageThreadAttributes {
     messageThreadId: number;
@@ -84,6 +85,17 @@ import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-t
           as: 'messages'
         });
       }
+
+    public getUnreadCount(): Promise<Count<MessageThread>> {
+      return this.getMessages().then((messages: Array<Message>) => {
+        let count = 0;
+        messages.forEach((message: Message) => {
+          if (!message.readStatus) {  count++; }
+        });
+        console.log(new Count(count, this));
+        return Promise.resolve(new Count(count, this));
+      });
+    }
 
     public setToRead(participantId: number): Promise<MessageThread> {
       return this.getMessages()

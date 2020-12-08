@@ -1,4 +1,4 @@
-import { ThreadResponseModel, MessageResponseModel } from 'src/app/models/response/response.module';
+import { ThreadResponseModel, MessageResponseModel, SimpleThreadResponseModel } from 'src/app/models/response/response.module';
 import { Message } from './message.model';
 import { CutUser, NullCutUser } from '../user/cut-user.model';
 import { Product, NullProduct } from '../product/product.model';
@@ -15,6 +15,26 @@ export interface ThreadModel {
   participants: Participants; // seller, buyer
   isAccepted: boolean;
   messages: Array<Message>;
+}
+
+
+export class SimpleThread implements Pick<ThreadModel, 'messageThreadId' | 'isAccepted'> {
+  constructor(
+    public messageThreadId: number,
+    public productId: number,
+    public isAccepted: boolean
+  ) { }
+
+  public static buildFromSimpleThreadResponseModel(thread: SimpleThreadResponseModel): SimpleThread {
+    if (!(thread instanceof SimpleThread)) {
+      return new SimpleThread(
+        thread.messageThreadId,
+        thread.productId,
+        thread.isAccepted,
+      )
+    } else return thread;
+  }
+
 }
 
 

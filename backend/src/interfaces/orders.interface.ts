@@ -1,13 +1,13 @@
-import { Optional, Model } from 'sequelize';
-import { Product, ProductAttributes } from '../models/product.model';
-import { User, UserAttributes } from '../models/user.model';
-import { Order, OrderAttributes, OrderCreationAttributes } from '../models/order.model';
-import { ItemSold, ItemSoldAttributes, ItemSoldCreationAttributes } from '../models/item-sold.model';
-import { ItemRented, ItemRentedAttributes, ItemRentedCreationAttributes } from '../models/item-rented.model';
-import { ServiceRented, ServiceRentedAttributes, ServiceRentedCreationAttributes} from '../models/service-rented.model';
-import { Address, AddressAttributes, AddressCreationAttributes } from '../models/address.model';
+import { Model } from 'sequelize';
+import { Product } from '../models/product.model';
+import { User } from '../models/user.model';
+import { Order } from '../models/order.model';
+import { ItemSold } from '../models/item-sold.model';
+import { ItemRented } from '../models/item-rented.model';
+import { ServiceRented} from '../models/service-rented.model';
+import { Address } from '../models/address.model';
 
-import { OrderSubType, OrderSubTypeAttributes } from './order-sub-type.interface';
+import { OrderSubType } from './order-sub-type.interface';
 
 export interface HasCreationArrtibutes<M extends Model> {
   creationAttributes: M['_creationAttributes'];

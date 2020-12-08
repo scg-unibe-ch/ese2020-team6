@@ -4,6 +4,7 @@ import {MessageThread} from '../models/messageThread.model';
 import { handleError } from '../errors/status.error';
 import { verifyToken } from '../middlewares/checkAuth';
 import { MessageService } from '../services/message.service';
+import { Count } from '../interfaces/count.interface';
 
 const messageController: Router = express.Router();
 
@@ -21,6 +22,17 @@ messageController.put('/thread/readstatus', verifyToken,
         const participantId = req.body.tokenPayload.userId;
         MessageService.setToRead(messageThreadId, participantId)
         .then((messageThread: MessageThread) => res.send(messageThread))
+        .catch((err: any) => handleError(err, res));
+});
+
+messageController.get('/thread/unread/count', verifyToken,
+    (req: Request, res: Response) => {
+        const participantId = req.body.tokenPayload.userId;
+        MessageService.getUnreadCount(participantId)
+        .then((count: Count<MessageThread>) => {
+          console.log(count);
+          res.send(count);
+        })
         .catch((err: any) => handleError(err, res));
 });
 

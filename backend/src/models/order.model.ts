@@ -5,7 +5,7 @@ import { Product } from './product.model';
 import { ItemSold } from './item-sold.model';
 import { ItemRented } from './item-rented.model';
 import { ServiceRented } from './service-rented.model';
-import { Associations } from '../classes/associations.class';
+import { Associations } from '../interfaces/associations.interface';
 
 export interface OrderAttributes {
     orderId: number;

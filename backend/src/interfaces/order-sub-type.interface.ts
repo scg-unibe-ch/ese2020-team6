@@ -1,6 +1,6 @@
 import { BelongsToGetAssociationMixin, Optional } from 'sequelize';
 import { Order } from '../models/order.model';
-import { Associations } from '../classes/associations.class';
+import { Associations } from './associations.interface';
 
 type OrderSubTypeBuilder<M extends OrderSubType<any, any>> = new () => M;
 export type OrderSubTypeCtor<M extends OrderSubType<any, any>> = typeof OrderSubType & OrderSubTypeBuilder<M>;

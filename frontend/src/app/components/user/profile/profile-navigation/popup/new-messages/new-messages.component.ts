@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'src/app/services/message/message.service';
+import { SuccessLoader } from 'src/app/services/service.module';
+import { SimpleThread } from 'src/app/models/message/thread.model';
+import { Count } from 'src/app/models/count/count.model';
 
 @Component({
   selector: 'app-new-messages',
@@ -8,11 +12,17 @@ import { Component, OnInit } from '@angular/core';
 export class NewMessagesComponent implements OnInit {
   public popupNumber: number;
   public popupDisplay = false;
-  constructor() { }
+  constructor(
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void {
-    this.popupDisplay = true;
-    this.popupNumber = 1;
+    this.messageService.subscribe(new SuccessLoader(() => {
+      this.messageService.unreadCount.subscribe((count: Count<SimpleThread>) => {
+        this.popupNumber = count.total;
+        this.popupDisplay = (count.total !== 0);
+      });
+    }));
   }
 
 }

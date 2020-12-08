@@ -36,3 +36,18 @@ export class ThreadResponse implements ThreadResponseModel {
     } else return false;
   }
 }
+
+export interface SimpleThreadResponseModel extends Pick<ThreadResponseModel, 'messageThreadId' | 'productId' | 'isAccepted'> {}
+
+export class SimpleThreadResponse implements SimpleThreadResponseModel {
+
+  constructor(
+    public messageThreadId: number,
+    public productId: number,
+    public isAccepted: boolean
+  ) {}
+
+  public static isSimpleThreadResponseModel(thread: SimpleThreadResponseModel): thread is SimpleThreadResponseModel {
+      return Is.is(thread, ['messageThreadId', 'productId', 'isAccepted']);
+  }
+}

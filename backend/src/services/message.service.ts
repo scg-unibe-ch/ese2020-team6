@@ -8,6 +8,7 @@ import { Product } from '../models/product.model';
 import { UserService } from './user.service';
 import { StatusError } from '../errors/status.error';
 import { UserDoesNotBelongToThreadError } from '../errors/user-does-not-belong-to-thread.error';
+import { Count } from '../interfaces/count.interface';
 
 export class MessageService {
 
@@ -120,11 +121,16 @@ export class MessageService {
       }));
      }
 
-    // public static setToRead(messageThreadId: number): Promise<Array<Message>> {
-    //     Message.update({ readStatus: true}, {
-    //       where: {
-    //         messageThreadId: messageThreadId
-    //       }
-    //     });
-    //   }
+     public static getUnreadCount(userId: number): Promise<Count<MessageThread>> {
+       return User.findByPk(userId).then((user: User) => user.getThreads())
+       .then((threads: Array<MessageThreadParticipants>) => Promise.all(
+         threads.map((thread: MessageThreadParticipants) => thread.getThread())
+       )).then((threads: Array<MessageThread>) => {
+         return Promise.all(threads.map((thread: MessageThread) => {
+           return thread.getUnreadCount();
+         }));
+       }).then((counts: Array<Count<MessageThread>>) => {
+        return Promise.resolve(new Count(counts));
+       });
+     }
 }

@@ -59,7 +59,7 @@ export class ProductService {
         association: Product.associations.address,
         include : [ Address.associations.products ]
       }]
-    }).catch((err: any) => {console.log(err); return Promise.reject(err); });
+    });
   }
 
 

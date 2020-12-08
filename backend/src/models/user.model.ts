@@ -15,7 +15,7 @@ import { Product } from './product.model';
 import { Preference } from './preference.model';
 import { Address } from './address.model';
 import { CutUser } from '../interfaces/cut-user.interface';
-import { Associations } from '../classes/associations.class';
+import { Associations } from '../interfaces/associations.interface';
 import { Message } from './message.model';
 import { MessageThreadParticipants } from './messageThreadParticipants.model';
 

@@ -31,7 +31,7 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     title: 'Messages',
     path: 'messages',
     component: MessengerComponent,
-    popupComponent: null
+    popupComponent: NewMessagesComponent
   },
   {
     title: 'My Products',
@@ -62,13 +62,7 @@ export const defaultUserNavigationElements: Array<ProfileNavigationElementModel>
     path: 'seller',
     component: SellerOrdersComponent,
     popupComponent: null
-  },
-  {
-    title: 'New Messages',
-    path: 'messages',
-    component: MessengerComponent,
-    popupComponent: NewMessagesComponent
-   },
+  }
 ];
 
 export const adminNavigationElements: Array<ProfileNavigationElementModel> = new Array<ProfileNavigationElementModel>();
