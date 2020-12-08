@@ -121,6 +121,7 @@ import { IconComponent } from './components/icons/logo/icon/icon.component';
 import { LogoCenterComponent } from './components/icons/logo/center/logo-center.component';
 import { MessageModule } from './components/message/message.module';
 import { LoaderModule } from './components/loader/loader.module';
+import { NewMessagesComponent } from './components/user/profile/profile-navigation/popup/new-messages/new-messages.component';
 import { TooltipModule } from './components/tooltip/tooltip.module';
 
 @NgModule({
@@ -189,7 +190,8 @@ import { TooltipModule } from './components/tooltip/tooltip.module';
     SixComponent,
     PlusComponent,
     IconComponent,
-    LogoCenterComponent
+    LogoCenterComponent,
+    NewMessagesComponent
   ],
   imports: [
     BrowserModule,
