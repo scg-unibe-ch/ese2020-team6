@@ -52,8 +52,13 @@ export class Product implements ProductModel {
 
 
   get pictureUrl(): string {
-    if (this.picture) return environment.endpointURL + this.picture;
+    if (this.picture !== 'undefined' || this.picture !== null) return environment.endpointURL + this.picture;
     else return undefined;
+  }
+
+  get hasPicture(): boolean {
+    if (this.picture === 'undefined' || this.picture === null) return false;
+    else return true;
   }
 
   get fromatExpirationDate(): string {
