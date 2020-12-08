@@ -1,0 +1,13 @@
+@mixin popup-theme($theme-name) {
+  .popup.#{$theme-name} {
+    color: theme-bright($theme-name);
+
+    &.success {
+      background: theme-highlight($theme-name);
+    }
+
+    &.warn {
+      background: theme-warn($theme-name);
+    }
+  }
+}

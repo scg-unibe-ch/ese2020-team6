@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from 'src/app/models/theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { CustomFormModule } from '../custom-form/custom-form.module';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MessagesComponent } from './messages/messages.component';
 import { ThreadsComponent } from './threads/threads.component';
@@ -25,14 +24,7 @@ import { TooltipModule } from '../tooltip/tooltip.module';
     CustomFormModule,
     ThemeModule,
     FormsModule,
-    CommonModule,
-    MatSnackBarModule
-  ],
-  providers: [
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: {duration: 2500}
-    }
+    CommonModule
   ],
   exports: [
     MessageComponent,

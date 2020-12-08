@@ -6,6 +6,7 @@ import { LoginUserFormModel } from '../../../models/form/login-user-form.model';
 import { LoginUserService } from '../../../services/user/login/login-user.service';
 import { ILoaderSubsctiption, ValuePartialLoader } from '../../../services/service.module';
 import { UserTokenModel } from 'src/app/models/response/response.module';
+import { PopupService } from 'src/app/services/popup/popup.service';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +48,7 @@ export class LoginComponent implements LoginUserRequestBuilder {
   constructor(
     private router: Router,
     private loginUserService: LoginUserService,
+    private popupService: PopupService
   ) {
     this.loginUserService.subscribe(this.valueLoader)
     .then((subscription: ILoaderSubsctiption<UserTokenModel, UserTokenModel>) => this.subscription = subscription);
@@ -59,6 +61,8 @@ export class LoginComponent implements LoginUserRequestBuilder {
       this.loginErrorMessage = '';
       this.userInteraction = true;
       this.loginUserService.login(this);
+    } else {
+      this.popupService.openPopup('root', 'The input is not valid!', 'warn');
     }
   }
 

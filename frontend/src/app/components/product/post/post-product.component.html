@@ -26,7 +26,7 @@
         <map-search class="address" name="address" placeholder="Address" ngModel #address="ngModel" mapSearchValidator></map-search>
         <div class="action-wrapper">
           <button theme buttonEmpty (click)="showPreview(preview)" type="button">Preview</button>
-          <button *ngIf="!isUpdate, else updateButton" theme button type="submit" [disabled]="!postProductForm.valid">Create</button>
+          <button *ngIf="!isUpdate, else updateButton" theme button type="submit">Create</button>
           <ng-template #updateButton>
               <button theme button type="submit">Update</button>
           </ng-template>

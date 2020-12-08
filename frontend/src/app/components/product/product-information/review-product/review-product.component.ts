@@ -10,6 +10,7 @@ import {
   RejectProductRequestBuilder,
   AcceptProductRequestModel,
   RejectProductRequestModel } from 'src/app/models/request/request.module';
+import { PopupService } from 'src/app/services/popup/popup.service';
 
 @Component({
   selector: 'app-review-product',
@@ -28,6 +29,7 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
     private router: Router,
     productService: ProductService,
     userService: UserService,
+    private popupService: PopupService
   ) {
     super(route, productService, userService);
   }
@@ -58,6 +60,8 @@ export class ReviewProductComponent extends ProductInformationBase implements Ac
       this.values = form.value;
       this.productService.rejectProduct(this).subscribe();
       this.router.navigate(['/user/profile/reviewproducts']);
+    } else {
+      this.popupService.openPopup('root', 'The input is not valid!', 'warn');
     }
   }
 

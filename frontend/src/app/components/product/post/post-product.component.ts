@@ -3,7 +3,6 @@ import { Component, TemplateRef, ViewContainerRef, ViewChild } from '@angular/co
 import { ActivatedRoute, Router } from '@angular/router';
 import {Overlay, OverlayConfig} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from 'src/app/services/product/product.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -18,6 +17,7 @@ import {
 import { ProductModel, NullProduct } from 'src/app/models/product/product.model';
 import { PostProductForm } from 'src/app/models/form/post-product-form.model';
 import { Categories, Category, Subcategory } from 'src/app/models/category/category.module';
+import { PopupService } from 'src/app/services/popup/popup.service';
 
 @Component({
   selector: 'app-post-product',
@@ -47,9 +47,9 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
     private router: Router,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
-    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private httpClient: HttpClient,
+    private popupService: PopupService
   ) {
   }
 
@@ -139,11 +139,13 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
           (err) => {}
         );
       }
+    } else {
+      this.popupService.openPopup('root', 'The input is not valid!', 'warn');
     }
   }
 
   private success(): void {
-    this.openSnackBar();
+    this.popupService.openPopup('root', 'Your Product has been ' + (this.isUpdate ? 'updated' : 'created') + '!', 'success')
     this.router.navigate(['/user/profile/myproducts']);
   }
 
@@ -155,13 +157,6 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
   public buildPostProductRequest(): PostProductRequestModel {
     return PostProductRequest.buildFromPostProductFormModel(this.form.value, this.picture);
-  }
-
-  public openSnackBar(): void {
-    this.snackBar.open('Your product is created', '', {
-      duration: 2000,
-      panelClass: ['snackbar']
-    });
   }
 
   public showPreview(tpl: TemplateRef<any>): void {

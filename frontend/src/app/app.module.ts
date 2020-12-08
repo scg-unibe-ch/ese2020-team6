@@ -17,7 +17,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FullscreenOverlayContainer, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 
 //  Interceptors
@@ -123,6 +122,7 @@ import { MessageModule } from './components/message/message.module';
 import { LoaderModule } from './components/loader/loader.module';
 import { NewMessagesComponent } from './components/user/profile/profile-navigation/popup/new-messages/new-messages.component';
 import { TooltipModule } from './components/tooltip/tooltip.module';
+import { PopupModule } from './components/popup/popup.module';
 
 @NgModule({
   declarations: [
@@ -209,7 +209,6 @@ import { TooltipModule } from './components/tooltip/tooltip.module';
     MatCardModule,
     MatTabsModule,
     MatToolbarModule,
-    MatSnackBarModule,
     OverlayModule,
     MatSlideToggleModule,
     CardModule,
@@ -217,16 +216,13 @@ import { TooltipModule } from './components/tooltip/tooltip.module';
     ThemeModule,
     MessageModule,
     LoaderModule,
-    TooltipModule
+    TooltipModule,
+    PopupModule
   ],
   providers: [
     {
       provide: OverlayContainer,
       useClass: FullscreenOverlayContainer
-    },
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: {duration: 2500}
     },
     {
       provide: HTTP_INTERCEPTORS,
