@@ -254,7 +254,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -341,7 +341,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/product/all`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -381,7 +381,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/products/details/:productId`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -426,7 +426,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/products/unreviewed`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -467,7 +467,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/products/accepted`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -592,7 +592,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/myproducts/:userId`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -633,7 +633,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/unreviewed/count`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -656,7 +656,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/rejected/count/:userId`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -681,7 +681,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 
 - GET `/rejected/:userId`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
@@ -809,9 +809,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 		Code: 200
 		Body:
 	```json
-		{
-
-		},
+		{},
 	```
 	</details>
 	<details>
