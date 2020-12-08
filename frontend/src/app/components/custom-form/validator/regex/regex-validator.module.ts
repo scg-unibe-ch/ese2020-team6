@@ -15,6 +15,7 @@ import { DescriptionValidator } from './directive/description-validator.directiv
 import { PriceValidator } from './directive/price-validator.directive';
 import { LocationValidator } from './directive/location-validator.directive';
 import { MessageValidator } from './directive/message-validator.directive';
+import { HoursValidator } from './directive/hours-validator.directive';
 
 
 @NgModule({
@@ -31,7 +32,10 @@ import { MessageValidator } from './directive/message-validator.directive';
     DescriptionValidator,
     PriceValidator,
     LocationValidator,
-    MessageValidator
+    MessageValidator,
+    HoursValidator,
+    HouseNumberValidator,
+
   ],
   imports: [
     CommonModule
@@ -49,7 +53,8 @@ import { MessageValidator } from './directive/message-validator.directive';
     DescriptionValidator,
     PriceValidator,
     LocationValidator,
-    MessageValidator
+    MessageValidator,
+    HoursValidator,
   ]
 })
 export class RegexValidatorModule { }

@@ -33,8 +33,6 @@ export interface HoursOrderModelExtention extends PaymentMethodOrderModelExtenti
 
 export class Order implements OrderModel {
 
-  public static NullOrder: Order = new Order(null,null,NullCutUser.instance(), null, NullUser.instance(), null, NullProduct.instance());
-
   constructor(
     public orderId: number,
     public sellerId: number,
@@ -53,6 +51,8 @@ export class Order implements OrderModel {
 
     this.transFormOrderSubTypes(orderModel);
 
+    let shippingAddress = orderModel.shippingAddress ? Address.buildFromAddressModel(orderModel.shippingAddress) : NullAddress.instance();
+
     return new Order(
       orderModel.orderId,
       orderModel.sellerId,
@@ -62,7 +62,7 @@ export class Order implements OrderModel {
       orderModel.productId,
       orderModel.product,
       orderModel.paymentMethod,
-      Address.buildFromAddressModel(orderModel.shippingAddress),
+      shippingAddress,
       orderModel.hours
     );
   }
@@ -96,6 +96,10 @@ export class Order implements OrderModel {
 
   public toString = () : string => {
     return 'The product ' + this.product.title + ' from the seller ' + this.seller.userName + ' has been purchased by ' + this.buyer.userName;
+  }
+
+  get hasShippingAddress(): boolean {
+    return !(this.shippingAddress instanceof NullAddress);
   }
 }
 
