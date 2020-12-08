@@ -745,7 +745,7 @@ Some endpoints can be called in a [browser](http://localhost:3000), others have 
 ### `/preference`
 - GET `/get`
 	<details>
-		<summary>Response</summary>
+		<summary>Request</summary>
 
 		Code: 200
 		Body:
