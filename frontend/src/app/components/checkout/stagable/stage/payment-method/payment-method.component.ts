@@ -9,7 +9,7 @@ import { StageNDEExtention } from '../stage-navigation-data-emitter-extention.di
 export class PaymentMethodComponent extends StageNDEExtention<string> {
   public options: Array<[string, string]> = [
     ['Wallet', 'wallet'],
-    ['PayPal', 'paypal']
+    //['PayPal', 'paypal']
   ]
   public paymentMethod: string;
 

@@ -9,7 +9,6 @@ categoryController.get('/categories',
     categoryService.getAllCategories()
     .then((categoires: Array<Category>) => res.send(categoires))
     .catch((err: any) => {
-      console.log(err);
       res.status(500).send(err); });
 });
 

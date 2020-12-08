@@ -117,7 +117,7 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
         formData.append('address', addressString);
         this.httpClient.put<any>(environment.endpointURL + 'product/update/' + this.productId, formData).subscribe(
           (values) => this.success(),
-          (err) => {console.log(err)}
+          (err) => {}
         );
       } else {
         const formData = new FormData();
@@ -136,9 +136,8 @@ export class PostProductComponent implements PostProductRequestBuilder, UpdatePr
 
         this.httpClient.post<any>(environment.endpointURL + 'product/post', formData).subscribe(
           (res) => this.success(),
-          (err) => {console.log(err)}
+          (err) => {}
         );
-        // this.productService.postProduct(this).subscribe((values) => this.success());
       }
     }
   }

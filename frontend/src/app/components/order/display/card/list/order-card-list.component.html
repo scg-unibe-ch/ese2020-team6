@@ -33,7 +33,7 @@
         {{ order.paymentMethod }}
       </div>
     </div>
-    <div *ngIf="order.shippingAddress" class="shippingAddress info" [routerLink]="['','map', order.shippingAddress.toRouterString()]">
+    <div *ngIf="order.hasShippingAddress" class="shippingAddress info" [routerLink]="['','map', order.shippingAddress.toRouterString()]">
       <div class="label">
         Shipping Address
       </div>
