@@ -3,12 +3,18 @@
     {{ message.body }}
   </div>
   <div class="info">
-    <div class="sender">
-      {{ message.sender.userName }}
-    </div>
-    <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
-    <div class="date">
-      {{ formatCreatedAt(message) }}
-    </div>
+    <tooltip tip="Sender" position="top">
+      <div class="sender">
+        {{ message.sender.userName }}
+      </div>
+    </tooltip>
+    <tooltip tip="Read Status" position="top">
+      <div class="read-status" [ngClass]="message.readStatus ? 'read' : 'unread'"></div>
+    </tooltip>
+    <tooltip tip="Sending Date" position="top">
+      <div class="date">
+        {{ formatCreatedAt(message) }}
+      </div>
+    </tooltip>
   </div>
 </div>

@@ -16,13 +16,14 @@ export class TooltipComponent implements AfterViewInit {
   private parentDim: DOMRect;
   @ViewChild('tipElement')
   set tipElement(tipElement: ElementRef) {
-      this.nativeTip = tipElement.nativeElement;
-      this.tipDim = this.nativeTip.getBoundingClientRect();
-      this.nativeTipParent = this.nativeTip.parentElement;
-      this.parentDim = this.nativeTipParent.getBoundingClientRect();
+    this.nativeTip = tipElement.nativeElement;
+    this.tipDim = this.nativeTip.getBoundingClientRect();
+    this.nativeTipParent = this.nativeTip.parentElement;
+    this.parentDim = this.nativeTipParent.getBoundingClientRect();
+    console.log(this.nativeTip.getBoundingClientRect())
   }
 
-  private static padding: number = 10;
+  private static padding: number = 5;
 
   @Input()
   public tip: string;

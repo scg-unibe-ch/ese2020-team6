@@ -11,6 +11,7 @@
   position: relative;
   .tip {
     position: absolute;
+    width: 60px;
     z-index: 100;
     padding: .4rem;
     display: flex;
@@ -20,6 +21,8 @@
     font-size: $spaceing-xs;
     line-height: 1em;
     visibility: hidden;
+    word-wrap: normal;
+    word-break: normal;
   }
 
   &.activated {
