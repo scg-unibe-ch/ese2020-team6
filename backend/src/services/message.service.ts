@@ -127,7 +127,7 @@ export class MessageService {
          threads.map((thread: MessageThreadParticipants) => thread.getThread())
        )).then((threads: Array<MessageThread>) => {
          return Promise.all(threads.map((thread: MessageThread) => {
-           return thread.getUnreadCount();
+           return thread.getUnreadCount(userId);
          }));
        }).then((counts: Array<Count<MessageThread>>) => {
         return Promise.resolve(new Count(counts));

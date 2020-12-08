@@ -86,13 +86,12 @@ import { Count } from '../interfaces/count.interface';
         });
       }
 
-    public getUnreadCount(): Promise<Count<MessageThread>> {
+    public getUnreadCount(senderId: number): Promise<Count<MessageThread>> {
       return this.getMessages().then((messages: Array<Message>) => {
         let count = 0;
         messages.forEach((message: Message) => {
-          if (!message.readStatus) {  count++; }
+          if (message.senderId !== senderId && !message.readStatus) {  count++; }
         });
-        console.log(new Count(count, this));
         return Promise.resolve(new Count(count, this));
       });
     }
